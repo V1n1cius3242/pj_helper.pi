@@ -5,5 +5,11 @@
 }
 
 body{
-font-family: ;
+font-family: 'Montserrat', sans-serif;
+}
+
+header{
+    height: 12vh;
+    background-color:  aqua;
+
 }
