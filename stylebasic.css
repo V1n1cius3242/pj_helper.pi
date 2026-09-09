@@ -8,8 +8,41 @@ body{
 font-family: 'Montserrat', sans-serif;
 }
 
-header{
+.header{
     height: 12vh;
     background-color:  aqua;
-
 }
+
+.carrossel{}
+
+.supCarrossel{}
+
+.imgSobreposta{}
+
+.text-card{}
+
+.textSup{}
+
+.card{}
+
+.img-card{}
+
+.text-card{}
+
+.img{}
+
+.mini-card{}
+
+.img-minicard{}
+
+.mtv-card{}
+
+.fundo{}
+
+.footer{}
+
+.footer-icon{}
+
+.footer-text1{}
+
+.footer-text2{}
