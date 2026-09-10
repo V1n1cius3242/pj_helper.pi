@@ -18,6 +18,7 @@ font-family: 'Montserrat', sans-serif;
 .iconimg {
   width: 90px;
   margin-left: 30px;
+  display: flex;
 }
 nav {
   display: flex;
@@ -27,6 +28,11 @@ nav {
 .navitens {
   text-decoration: none;
   color: #333;
+  font-weight: bold ;
+}
+.designloginnav{
+  font-weight: bold ;
+  text-decoration: none;
 }
 .supCarrossel {
   width: 100%;
