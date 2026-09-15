@@ -8,7 +8,7 @@ font-family: 'Montserrat', sans-serif;
 }
 .header {
   height: 10vh;
-  background-color: rgba(255, 255, 255, 0.336);
+  background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   margin-top: 0;
@@ -100,11 +100,13 @@ nav {
   }
 }
 .image-group-1 {
-      position: relative;
-      margin-left: 40vh;
-      margin-top: 15vh;
-      width: 480px;
-      height: 380px;
+  position: relative;
+  float: left; 
+  margin-left: 5vw; 
+  margin-top: 15vh;
+  width: 40%; 
+  max-width: 480px; 
+  height: 380px;
     }
 
     .img-rounded-large {
@@ -137,8 +139,10 @@ nav {
     }
 
     .text-card{
-      margin-left: 50%;
+      width: 45%;
       float: right;
+      margin-right: 5%;
+      margin-top: 15vh;
       
     }
 
