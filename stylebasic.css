@@ -41,6 +41,7 @@ nav {
   text-decoration: none;
 }
 .supCarrossel {
+  position: relative;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -109,7 +110,7 @@ nav {
   height: 380px;
     }
 
-    .img-rounded-large {
+.img-rounded-large {
       position: absolute;
       right: 0;
       top: 0;
@@ -149,11 +150,12 @@ nav {
       color: rgb(18, 153, 41);
     }
 
+.textSup h1{
+  position: relative;
+  text-align: center;
+}
+
 .imgSobreposta{}
-
-.text-card{}
-
-.textSup{}
 
 .card{}
 
