@@ -40,13 +40,7 @@ nav {
   font-weight: bold ;
   text-decoration: none;
 }
-.supCarrossel {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
+
 .carrossel {
   position: relative;
   width: 100%;
@@ -101,8 +95,7 @@ nav {
   }
 }
 .image-group-1 {
-    position: relative;
-  float: left; 
+  position: relative;
   margin-left: 5vw; 
   margin-top: 15vh;
   width: 40%; 
@@ -140,9 +133,7 @@ nav {
 
     .text-card{
       width: 45%;
-      float: right;
-      margin-right: 5%;
-      margin-top: 15vh;
+     
       
     }
 
@@ -150,9 +141,17 @@ nav {
       color: rgb(18, 153, 41);
     }
 
-.textSup h1{
+.supCarrossel{
   position: relative;
+  z-index: 20;
   text-align: center;
+  background-color: aqua;
+  height: 10vh;
+  width: 25%;
+}
+.itenscarrossel{
+  align-items: center;
+  object-fit: cover;
 }
 
 .imgSobreposta{}
