@@ -39,6 +39,8 @@ nav {
   font-weight: bold ;
   text-decoration: none;   /*botão de login que ainda tem que ser estilizado*/
 }
+
+/*INICIO DO CARROSSEL DE IMAGENS*/
 .carrossel {
   position: relative;
   width: 100%;          /*carrossel com position relative pra eu conseguir colocar texto em cima depois*/
@@ -53,7 +55,7 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 2; 
-  background:linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 40%),rgba(255, 255, 255, 0.452);
+  background:linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 40%),rgba(255, 255, 255, 0.774);
 }
 .carrossel img {
   position: absolute;
@@ -93,43 +95,94 @@ nav {
   text-align: center;  /*texto geral dentro da div fica alinhado*/
   position: absolute;  /*garante que esse bloco fique por cima do carrossel, no html ele fica no topo*/
   z-index: 100;
-  background-color: aqua;
   margin-top: 22vh;
   margin-left: 25%; /*depois precisamos editar no @media*/
   align-items: center;
   height: 55vh;
   width: 50%;
 }
+/*FINAL DO CARROSSEL DE IMAGENS*/
+
 .sobrebutton {
-  background-color: #ffffff;
+  background-color: #ffffff;    /*1° botão que vem antes do primeiro texto e leva a página de sobre*/
   cursor: pointer;
   text-align: center;
   border-radius: 30px;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   height: 35px;
   color: #414141;
-  
   border: 1px solid #eeeeee; 
-  
-  /* Transição suave para o texto e para a borda */
-  transition: color 0.6s ease, border-color 0.3s ease;
+  transition: color 0.6s ease, border-color 0.6s ease; 
 }
-
 .sobrebutton:hover {
-  color: rgb(6, 117, 21);       /* Texto verde */
-  border-color: rgb(6, 117, 21); /* Apenas a borda existente muda para verde */
+  color: #09c055;     
+  border-color: #09c055;
 }
-
 .text1sup{ /*1° texto da div sup do carrossel "contratos"*/
   font-size:xx-large;
   margin-top: 10px;
+}
+.text1sup{ /*1° texto da div sup do carrossel "contratos"*/
+  font-size: 64px; 
+  margin-top: 20px;
+}
+.text1sup h1 {
+  font-size: inherit;
+  margin: 0;
+  line-height: 80px;
+}
 
+/*INICIO CARROSSEL DE LETRAS*/
+.carrosselletra {
+    height: 80px; 
+    overflow: hidden;  /*esconde as palavras que estão fora do foco */
+    vertical-align: middle;
 }
-.itenscarrossel{
-  align-items: center;
-  object-fit: cover;
+.carrossel-lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: carrosselSubir 9s infinite cubic-bezier(0.85, 0, 0.15, 1);
 }
+.carrossel-item {
+    height: 80px;
+    line-height: 80px; 
+    font-size: 64px; 
+    font-weight: bold;
+    margin: 0;
+    color:#09c055 ;
+}
+@keyframes carrosselSubir {
+    0%, 25% { transform: translateY(0); }         /* 1° Palavra (Digitais) */
+    33%, 58% { transform: translateY(-80px); }    /* 2° Palavra (Seguros) */
+    66%, 91% { transform: translateY(-160px); }   /* 3° Palavra (Rápidos) */
+    100% { transform: translateY(-240px); }       /* Reseta para a 1° repetida */
+}
+/*FINAL DO CARROSSEL DE LETRAS*/
+.text2sup{
+  margin-top: 40px;
+  font-size: 20px;    /*texto sobre a empresa, logo abaixo dos botões*/
+  width: 70%;
+  margin-left: 15vh;
+  color: #414141;
+}
+.button1sup{
+  height: 60px;
+  border-radius: 30px;
+  padding: 0 30px;
+  color: #414141;
+  border-color:#41414144;
+  margin-right: 40px;
+}
+.button2sup{
+  height: 60px;
+  margin-top: 60px;
+  border-radius: 30px;
+  padding: 0 40px;
+  color: #414141;
+  border-color: #41414144;
+} 
 .image-group-1 {
   position: relative;
   margin-left: 5vw; 
