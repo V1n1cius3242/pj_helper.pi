@@ -163,7 +163,6 @@ nav {
   margin-left: 15%;
   color: #414141;
 }
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
 .button1sup {
   height: 60px;
   border-radius: 30px;
@@ -187,6 +186,7 @@ nav {
 .grupo-botoes{
   margin-top: 25px;
 }
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
