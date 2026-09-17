@@ -4,7 +4,10 @@ const url = require('url')
 const callback = (req,res)=>{
 
     var rota = url.parse(req.url,true)
-    res.writeHead(200,{'content-type':'application/json;charset=utf-8'})
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+    res.setHeader('Content-Type', 'application/json;charset=utf-8')
 
 }
 
