@@ -7,29 +7,28 @@ body{
 font-family: 'Montserrat', sans-serif;
 }
 .header {
-  height: 8vh;
+  height: 9vh;
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
+  display: flex;  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
-  z-index: 999;
+  z-index: 999;                        /*z-index garante que o header passe por cima de tudo, além do position fixed*/
   width: 100%; 
-  justify-content: space-between;
+  justify-content: space-between; /*auto-explicativo*/
   align-items: center;
   padding: 0 300px; 
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 .iconimg {
-  width: 70px;
+  width: 75px;
   margin-left: 30px;
-  display: flex;
 }
 nav {
-  display: flex;
+  display: flex; /*garantem o alinhamento dessa bomba*/
   gap: 30px; 
-  margin-right: 20px;
+  margin-right: 25px;
 }
 .navitens {
   text-decoration: none;
@@ -38,30 +37,26 @@ nav {
 }
 .designloginnav{
   font-weight: bold ;
-  text-decoration: none;
+  text-decoration: none;   /*botão de login que ainda tem que ser estilizado*/
 }
-
 .carrossel {
   position: relative;
-  width: 100%;
+  width: 100%;          /*carrossel com position relative pra eu conseguir colocar texto em cima depois*/
   height: 100vh; 
-  overflow: hidden;
+  overflow: hidden; /*faz com que a imagem não estoure lá embaixo do degrade*/
 }
 .carrossel:after {
   content: '';
-  position: absolute;
+  position: absolute; /*garante com que os efeitos fiquem em cima do carrossel*/
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 2; 
-  pointer-events: none; 
   background:linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 40%),rgba(255, 255, 255, 0.452);
 }
 .carrossel img {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 110vh;
   object-fit: cover;
@@ -93,6 +88,18 @@ nav {
   100% {
     opacity: 0;
   }
+}
+.supCarrossel{
+  position: absolute;  /*garante que esse bloco fique por cima do carrossel, no html ele fica no topo*/
+  z-index: 100;
+  background-color: aqua;
+  margin-top: 40vh;
+  height: 10vh;
+  width: 25%;
+}
+.itenscarrossel{
+  align-items: center;
+  object-fit: cover;
 }
 .image-group-1 {
   position: relative;
@@ -141,18 +148,6 @@ nav {
       color: rgb(18, 153, 41);
     }
 
-.supCarrossel{
-  position: relative;
-  z-index: 20;
-  text-align: center;
-  background-color: aqua;
-  height: 10vh;
-  width: 25%;
-}
-.itenscarrossel{
-  align-items: center;
-  object-fit: cover;
-}
 
 .imgSobreposta{}
 
