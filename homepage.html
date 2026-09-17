@@ -14,7 +14,7 @@
   
   <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
   <nav>
-    <a class="navitens" href="homepage.html" style="color:rgb(18, 153, 41);">Home</a>
+    <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
     <a class="navitens" href="catalogo.html">Clientes</a>
     <a class="navitens" href="paginasobre.html">Sobre</a>
     <a class="designloginnav" href="login.html">Login</a>   <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
@@ -22,7 +22,9 @@
 </div>
     <main>
         <div class="supCarrossel">
-            <button class="sobrebutton" href="paginasobre.html">Plataforma de intermediação segura</button> 
+            <a href="paginasobre.html">
+                <button class="sobrebutton">Plataforma de intermediação segura</button>
+            </a>
             <div class="text1sup"><h1>Contratos</h1></div>
             <div class="carrosselletra">
             <ul class="carrossel-lista">
@@ -34,8 +36,16 @@
             </div>
             <div class="text2sup">Conectamos MEIs e microempresas a grandes empresas com segurança contratual, valores justos e prazos garantidos.
             A ponte que seu negócio precisa para crescer.</div>
-            <button class="button1sup">Ver Clientes</button>
-            <button class="button2sup">Cadastre-se</button> <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
+            <div class="grupo-botoes">
+                <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button> 
+                <button class="shiny-cta">
+            <span class="shiny-cta-content">
+                 Cadastre-se
+            </span>
+        </button> <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
+            </div>
+               
+            
             
         </div>
     <div class="itenscarrossel">
