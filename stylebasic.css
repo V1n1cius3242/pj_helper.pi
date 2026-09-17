@@ -90,12 +90,41 @@ nav {
   }
 }
 .supCarrossel{
+  text-align: center;  /*texto geral dentro da div fica alinhado*/
   position: absolute;  /*garante que esse bloco fique por cima do carrossel, no html ele fica no topo*/
   z-index: 100;
   background-color: aqua;
-  margin-top: 40vh;
-  height: 10vh;
-  width: 25%;
+  margin-top: 22vh;
+  margin-left: 25%; /*depois precisamos editar no @media*/
+  align-items: center;
+  height: 55vh;
+  width: 50%;
+}
+.sobrebutton {
+  background-color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 30px;
+  padding: 10px;
+  margin-top: 10px;
+  height: 35px;
+  color: #414141;
+  
+  border: 1px solid #eeeeee; 
+  
+  /* Transição suave para o texto e para a borda */
+  transition: color 0.6s ease, border-color 0.3s ease;
+}
+
+.sobrebutton:hover {
+  color: rgb(6, 117, 21);       /* Texto verde */
+  border-color: rgb(6, 117, 21); /* Apenas a borda existente muda para verde */
+}
+
+.text1sup{ /*1° texto da div sup do carrossel "contratos"*/
+  font-size:xx-large;
+  margin-top: 10px;
+
 }
 .itenscarrossel{
   align-items: center;
