@@ -13,31 +13,136 @@ font-family: 'Montserrat', sans-serif;
   display: flex;  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
+  top: 0; 
+  left: 0; 
   z-index: 999;  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
   width: 100%; 
   justify-content: space-between; /*auto-explicativo*/
   align-items: center;
-  padding: 0 300px; 
+  padding: 0 10%; 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 .iconimg {
   width: 75px;
-  margin-left: 30px;
 }
 nav {
-  display: flex; /*garantem o alinhamento dessa bomba*/
+  display: flex;
+  align-items: center; 
   gap: 30px; 
-  margin-right: 25px;
 }
 .navitens {
   text-decoration: none;
   color: #333;
   font-weight: bold ;
 }
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.shiny-cta1:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta1:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.shiny-cta1 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 10px 20px; 
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta1::after { /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta-content1 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
+
 .designloginnav{
   font-weight: bold ;
-  text-decoration: none;   /*botão de login que ainda tem que ser estilizado*/
+  text-decoration: none;  
 }
 /*INICIO DO CARROSSEL DE IMAGENS*/
 .carrossel {
