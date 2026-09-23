@@ -214,13 +214,20 @@ nav {
   padding: 10px;
   margin-top: 30px;
   height: 40px;
-  color: #202020;
-  border: 1px solid #d6d6d6; 
+  color: #000000;
+  border: 1px solid #d3d3d3; 
   transition: color 0.6s ease, border-color 0.6s ease; 
 }
 .sobrebutton:hover {
   color:#3faf6e;     
   border-color:#3faf6e;
+}
+.iconverde { 
+  transition: filter 0.6s ease;
+  padding: 1,2px;
+}
+.sobrebutton:hover .iconverde { 
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;  /*forçar a imagem a ficar verde*/
 }
 .text1sup{ /*1° texto da div sup do carrossel "contratos"*/
   font-size:xx-large;
@@ -273,9 +280,11 @@ nav {
   height: 48px;
   border-radius: 30px;
   padding: 0 30px;
-  color: #414141;
   margin-right: 40px;
   cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: #4d4d4d;
   border: 1px solid #00000025;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
@@ -543,7 +552,6 @@ box-sizing: border-box;
   font-size: 20px;
   font-weight: bold; /*DIV GERAL PARA OS CARDS*/
   margin-top: 10px;
-
 }
 .textcard1{
   margin-top: 15px;
@@ -555,14 +563,32 @@ box-sizing: border-box;
   width: 35px;
   margin-top: 6px; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
   display: fixed;
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 .imgcardsub2{
   width: 40px;
   margin-top: 6px;
   display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 .imgcardsub3{
   width: 30px;
   margin-top: 10px;
   display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.textimgfoco{
+  background-color: aqua;
+  height: 45vh;
+  width: 45%;
+  border-radius: 20px;
+  margin: 0 auto;
+  margin-top: 20vh;
+  display: grid;      /*DIV PAI PARA OS CARDS*/
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  box-sizing: border-box;
+}
+.imgfoco{
+
 }
