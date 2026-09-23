@@ -504,7 +504,7 @@ color: #333;
 }
 .cards {
 height: 40vh;
-max-width: 900px; /* Limita o tamanho horizontal para os cards ficarem pequenos */
+max-width: 900px; 
 margin: 0 auto;
 margin-top: 4%;
 display: grid;
@@ -512,19 +512,12 @@ grid-template-columns: repeat(3, 1fr); /* Mantém os 3 cards na linha */
 gap: 20px; 
 padding: 20px;
 box-sizing: border-box;
-}.cards {
-  max-width: 900px;
-  margin: 4% auto 0 auto;
-  display: grid;      /*DIV PAI PARA OS CARDS*/
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
+margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
 }
 .card {
   background-color: #ffffff;
   border-radius: 20px;
-  border: 1px solid rgba(65, 65, 65, 0.24);
+  border: 1px solid rgba(65, 65, 65, 0.151);
   box-sizing: border-box;
   padding: 20px;
   min-height: 230px;       /*DIV GERAL PARA OS CARDS*/
@@ -578,17 +571,43 @@ box-sizing: border-box;
   filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 .textimgfoco{
-  background-color: aqua;
-  height: 45vh;
-  width: 45%;
+  background-color: rgb(255, 255, 255);
+  height: 55vh;
+  width: 40%;
   border-radius: 20px;
+  border-color: #414141;
+   border: 1px solid rgba(65, 65, 65, 0.137);
   margin: 0 auto;
   margin-top: 20vh;
   display: grid;      /*DIV PAI PARA OS CARDS*/
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+
   box-sizing: border-box;
 }
-.imgfoco{
-
+.imgfoco{      /*DIV GERAL PARA OS CARDS*/
+  display: flex;  
+  flex-direction: column;  
+  justify-content: flex-start; 
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.imgfoco img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  overflow: hidden;
+}
+.subfoco{
+  margin-top: 20vh;
+  font-size: 25px;
+  font-weight: bold;
+}
+.textfoco{
+  margin-left: 20px;
 }
