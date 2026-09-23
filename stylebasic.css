@@ -465,6 +465,7 @@ nav {
 }
 .text-card {
   flex: 1;
+  margin-left: 6%;
 }
 .span {
   color:#3faf6e;
@@ -482,6 +483,35 @@ nav {
 .span2{
   color: #3faf6e;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 8%;
   font-size:medium  ;
+}
+.subspan2{
+  font-size: 35px;
+  text-align: center;
+  margin-top: 10px;
+}
+.textspan2{
+  text-align: center;
+  margin-top: 10px;
+  color: #333;
+}
+.cards {
+  height: 40vh;
+  max-width: 900px; /* Limita o tamanho horizontal para os cards ficarem pequenos */
+  margin: 0 auto;
+  margin-top: 4%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Mantém os 3 cards na linha */
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.card {
+  background-color: #ffffff;
+  height: 100%; 
+  border-radius: 20px;
+  border: 1px solid #41414141;
+  box-sizing: border-box;
+  overflow-y: auto; /* Se o conteúdo do card for grande, ele rola só dentro dele */
 }
