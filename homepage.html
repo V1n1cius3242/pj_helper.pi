@@ -7,23 +7,51 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylebasic.css">
-    <title>Document</title>
+    <title>PJ Helper - Home</title>
 </head>
 <body>
     <div class="header">
   
   <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
   <nav>
-    <a class="navitens" href="homepage.html" style="color:rgb(18, 153, 41);">Home</a>
+    <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
     <a class="navitens" href="catalogo.html">Clientes</a>
     <a class="navitens" href="paginasobre.html">Sobre</a>
-    <a class="designloginnav" href="login.html">Login</a>
+    <button class="shiny-cta1">
+            <span class="shiny-cta-content1">
+                 Login
+            </span>
+        </button>   <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
   </nav>
 </div>
     <main>
         <div class="supCarrossel">
-            <button class="sobrebutton">Plataforma de intermediação segura</button>
+            <a href="paginasobre.html">
+                <button class="sobrebutton"><img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt=""> Plataforma de intermediação segura 
+                <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt=""></button>
+            </a>
             <div class="text1sup"><h1>Contratos</h1></div>
+            <div class="carrosselletra">
+            <ul class="carrossel-lista">
+                <li class="carrossel-item">Confiáveis</li>
+                <li class="carrossel-item">Seguros</li>
+                <li class="carrossel-item">Garantidos</li>      
+                <li class="carrossel-item">Confiáveis</li>
+            </ul>
+            </div>
+            <div class="text2sup">Conectamos MEIs e microempresas a grandes empresas com segurança contratual, valores justos e prazos garantidos.
+            A ponte que seu negócio precisa para crescer.</div>
+            <div class="grupo-botoes">
+                <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button> 
+                <button class="shiny-cta">
+            <span class="shiny-cta-content">
+                 Cadastre-se
+            </span>
+        </button> <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
+            </div>
+               
+            
+            
         </div>
     <div class="itenscarrossel">
         <div class="carrossel">
@@ -33,7 +61,7 @@
         </div>
     </div>
     
-    <section>
+    <section class="grupotextimg">
         <div class="image-group-1">
        
         <img class="img-rounded-large" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Profissional com tablet" />
@@ -41,31 +69,51 @@
         <img class="img-circle-overlay" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600" alt="Técnico de capacete amarela" />
       </div>
         <div class="text-card">
-            <span>SOBRE NÓS</span>
-            <h2>O elo entre o pequeno empreendedor e o grande mercado</h2>
-            <p>
-            A PJ Helper nasceu para resolver um problema real: MEIs e microempresas com serviços de qualidade que não conseguem alcançar grandes empresas. Nós fazemos essa ponte com segurança contratual e transparência. Imagine um produtor rural que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós garantimos que cada contrato seja cumprido.
+            <span class="span">SOBRE NÓS</span>
+            <h2 class="titulospan">O elo entre o <span style="color: #3faf6e;">pequeno empreendedor</span> e o <span style="color: #3faf6e;">grande mercado</span></h2>
+            <p class="textspan">A PJ Helper nasceu para resolver um problema real: MEIs e microempresas com serviços de qualidade que não conseguem alcançar grandes empresas.
+Nós fazemos essa ponte com segurança contratual e transparência. Imagine um produtor rural que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós garantimos que cada contrato seja cumprido.
             </p>
-            <button href="cadastro.html">Quero me cadastrar</button>
+            <button class="shiny-cta">
+            <span class="shiny-cta-content">
+                 Quero me cadastrar
+            </span>
+        </button>
         </div>
     </section>
     <section>
-        <div class="textSup">
-            <h1>Algo</h1>
+        <div class="textpasso">
+            <h3 class="span2">PASSO A PASSO</h3>
+            <h2 class="subspan2">Como funciona?</h2>
+            <p class="textspan2">Em três etapas simples, conectamos seu negócio a novas oportunidades.</p>
+        </div>
+        <div class="cards">
+            <div class="card">
+            <div class="imgcard"><img class="imgcardsub1" src="/icon/verificacao-da-lista-da-area-de-transferencia.png" alt=""></div>
+            <div class="numcard" style="color:#3faf6e;"><strong>01</strong></div>
+            <div class="nomecard">Cadastro</div>
+            <div class="textcard1">MEIs e empresas se cadastram com CNPJ. Verificamos tudo para garantir segurança.</div>
         </div>
         <div class="card">
-            <div class="img-card"></div>
+            <div class="imgcard"><img class="imgcardsub2" src="/icon/aperto-de-maos.png" alt=""></div>
+            <div class="numcard" style="color:#3faf6e;"><strong>02</strong></div>
+            <div class="nomecard">Conexão</div>
+            <div class="textcard1">Empresas encontram MEIs por categoria de serviço. A plataforma conecta quem precisa a quem resolve.</div>
         </div>
         <div class="card">
-            <div class="img-card"></div>
+            <div class="imgcard"><img class="imgcardsub3" src="/icon/documento.png" alt=""></div>
+            <div class="numcard" style="color:#3faf6e;"><strong>03</strong></div>
+            <div class="nomecard">Contrato Garantido</div>
+            <div class="textcard1">Geramos contratos formais com cláusulas claras. Fiscalizamos valores, prazos e entregas.</div>
         </div>
-        <div class="card">
-            <div class="img-card"></div>
         </div>
+    
     </section>
     <section>
-        <div class="text-card">
-            <div class="img"></div>
+        <div class="textimgfoco">
+            <div class="textfoco">  <div class="subfoco">Dedicação e Foco </div>Nossa equipe acompanha cada contrato de perto. Do primeiro contato à entrega final, estamos presentes para garantir
+             que tudo funcione como acordado. Seu crescimento é o nosso sucesso.</div>
+            <div class="imgfoco"><img src="/icon/grupoimg1.avif" alt=""></div>
         </div>
     </section>
     <section>
@@ -87,7 +135,7 @@
     </section>
     <section>
         <div class="fundo">
-            <div>
+            <div class="buttonsfinais">
                 <button href="cadastro.html">Criar conta grátis</button>
                 <button href="catalogo.html">Ver clientes</button>
             </div>

@@ -13,32 +13,138 @@ font-family: 'Montserrat', sans-serif;
   display: flex;  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
-  z-index: 999;                        /*z-index garante que o header passe por cima de tudo, além do position fixed*/
+  top: 0; 
+  left: 0; 
+  z-index: 999;  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
   width: 100%; 
   justify-content: space-between; /*auto-explicativo*/
   align-items: center;
-  padding: 0 300px; 
+  padding: 0 10%; 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 .iconimg {
   width: 75px;
-  margin-left: 30px;
 }
 nav {
-  display: flex; /*garantem o alinhamento dessa bomba*/
+  display: flex;
+  align-items: center; 
   gap: 30px; 
-  margin-right: 25px;
 }
 .navitens {
   text-decoration: none;
   color: #333;
   font-weight: bold ;
 }
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.shiny-cta1:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta1:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.shiny-cta1 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 10px 20px; 
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta1::after { /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta-content1 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
+
 .designloginnav{
   font-weight: bold ;
-  text-decoration: none;   /*botão de login que ainda tem que ser estilizado*/
+  text-decoration: none;  
 }
+/*INICIO DO CARROSSEL DE IMAGENS*/
 .carrossel {
   position: relative;
   width: 100%;          /*carrossel com position relative pra eu conseguir colocar texto em cima depois*/
@@ -53,7 +159,7 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 2; 
-  background:linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 40%),rgba(255, 255, 255, 0.452);
+  background:linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 40%),rgba(255, 255, 255, 0.774);
 }
 .carrossel img {
   position: absolute;
@@ -69,7 +175,6 @@ nav {
 .carrossel img:nth-child(2) {
   animation-delay: 4s; 
 }
-
 .carrossel img:nth-child(3) {
   animation-delay: 8s; }
 
@@ -93,114 +198,416 @@ nav {
   text-align: center;  /*texto geral dentro da div fica alinhado*/
   position: absolute;  /*garante que esse bloco fique por cima do carrossel, no html ele fica no topo*/
   z-index: 100;
-  background-color: aqua;
   margin-top: 22vh;
   margin-left: 25%; /*depois precisamos editar no @media*/
   align-items: center;
   height: 55vh;
   width: 50%;
+  animation: entraGrupo 1.2s ease-out forwards; /*animação sendo utilizada em duas partes do site (AQUI E NA ".image-group-1"  ), talvez fazer mudança - NÃO ESQUECE*/
 }
+/*FINAL DO CARROSSEL DE IMAGENS*/
 .sobrebutton {
-  background-color: #ffffff;
+  background-color: #ffffff;    /*1° botão que vem antes do primeiro texto e leva a página de sobre*/
   cursor: pointer;
   text-align: center;
   border-radius: 30px;
   padding: 10px;
-  margin-top: 10px;
-  height: 35px;
-  color: #414141;
-  
-  border: 1px solid #eeeeee; 
-  
-  /* Transição suave para o texto e para a borda */
-  transition: color 0.6s ease, border-color 0.3s ease;
+  margin-top: 30px;
+  height: 40px;
+  color: #000000;
+  border: 1px solid #d3d3d3; 
+  transition: color 0.6s ease, border-color 0.6s ease; 
 }
-
 .sobrebutton:hover {
-  color: rgb(6, 117, 21);       /* Texto verde */
-  border-color: rgb(6, 117, 21); /* Apenas a borda existente muda para verde */
+  color:#3faf6e;     
+  border-color:#3faf6e;
 }
-
+.iconverde { 
+  transition: filter 0.6s ease;
+  padding: 1,2px;
+}
+.sobrebutton:hover .iconverde { 
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;  /*forçar a imagem a ficar verde*/
+}
 .text1sup{ /*1° texto da div sup do carrossel "contratos"*/
   font-size:xx-large;
   margin-top: 10px;
-
 }
-.itenscarrossel{
-  align-items: center;
-  object-fit: cover;
+.text1sup{ /*1° texto da div sup do carrossel "contratos"*/
+  font-size: 64px; 
+  margin-top: 20px;
 }
-.image-group-1 {
+.text1sup h1 {
+  font-size: inherit;
+  margin: 0;
+  line-height: 80px;
+}
+/*INICIO CARROSSEL DE LETRAS*/
+.carrosselletra {
+    height: 80px; 
+    overflow: hidden;  /*esconde as palavras que estão fora do foco */
+    vertical-align: middle;
+}
+.carrossel-lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: carrosselSubir 9s infinite cubic-bezier(0.85, 0, 0.15, 1);
+}
+.carrossel-item {
+    height: 80px;
+    line-height: 80px; 
+    font-size: 64px; 
+    font-weight: bold;
+    margin: 0;
+    color:#3faf6e ;
+}
+@keyframes carrosselSubir {
+    0%, 25% { transform: translateY(0); }         /* 1° Palavra (Digitais) */
+    33%, 58% { transform: translateY(-80px); }    /* 2° Palavra (Seguros) */
+    66%, 91% { transform: translateY(-160px); }   /* 3° Palavra (Rápidos) */
+    100% { transform: translateY(-240px); }       /* Reseta para a 1° repetida */
+}
+/*FINAL DO CARROSSEL DE LETRAS*/
+.text2sup{
+  margin-top: 40px;
+  font-size: 20px;/*texto sobre a empresa, logo abaixo dos botões*/
+  width: 70%;
+  margin-left: 15%;
+  color: #414141;
+}
+.button1sup {
+  height: 48px;
+  border-radius: 30px;
+  padding: 0 30px;
+  margin-right: 40px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: #4d4d4d;
+  border: 1px solid #00000025;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+}
+.button1sup:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+.button1sup:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+.grupo-botoes{
+  margin-top: 25px;
+}
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.shiny-cta:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.shiny-cta {
+  margin-top: 3%;
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
   position: relative;
-  margin-left: 5vw; 
-  margin-top: 15vh;
+  padding: 15px 30px;
+  cursor: pointer;
+
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
+  background:
+  linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box,
+  conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,
+  #047857 5%,
+  var(--gradient-shine) 15%,
+  #047857 30%,
+  transparent 40%,
+  transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta::after { /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta-content {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 9999px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
+
+.image-group-1 { 
+  margin-left: 1%; 
+  margin-top: 12%;
   width: 40%; 
   max-width: 480px; 
   height: 380px;
+  opacity: 0;
+  animation: entraGrupo 1.2s ease-out forwards;
     }
+  @keyframes entraGrupo {
+  from {
+    opacity: 0;
+    transform: translateY(40px);  /*alterar para funcionar apenas quando o site for rolado para cima depois (!!!!NÃO ESQUECER!!!!)*/
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+}
+.grupotextimg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.image-group-1 {
+position: relative;
+width: 450px;
+height: 420px;
+flex-shrink: 0; /* Não deixa a área da imagem esmagar em telas menores */
+}
 
 .img-rounded-large {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 300px;
-      height: 360px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
+position: absolute;
+right: 0;
+top: 0;
+width: 300px;
+height: 360px;
+border-radius: 10px;
+object-fit: cover;
+}
 
-    .img-circle-overlay {
-      position: absolute;
-      left: 10px;
-      bottom: 0;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #ffffff;
-    }
+.img-circle-overlay {
+position: absolute;
+left: 20px;
+bottom: 0;
+width: 220px;
+height: 220px;
+border-radius: 50%;
+object-fit: cover;
+border: 4px solid #ffffff;
+z-index: 2; /* Garante que fica em cima da imagem grande */
+}
+.text-card {
+flex: 1;
+margin-left: 6%;
+}
+.span {
+color:#3faf6e;
+font-weight: bold;
+}
+.titulospan{
+margin-top: 2%;
+font-size: 35px;
+}
+.textspan{
+margin-top: 3%;
+font-size: 19px;
+}
+.span2{
+color: #3faf6e;
+text-align: center;
+margin-top: 8%;
+font-size:medium  ;
+}
+.subspan2{
+font-size: 35px;
+text-align: center;
+margin-top: 10px;
+}
+.textspan2{
+text-align: center;
+margin-top: 10px;
+color: #333;
+}
+.cards {
+height: 40vh;
+max-width: 900px; 
+margin: 0 auto;
+margin-top: 4%;
+display: grid;
+grid-template-columns: repeat(3, 1fr); /* Mantém os 3 cards na linha */
+gap: 20px; 
+padding: 20px;
+box-sizing: border-box;
+margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
+}
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(65, 65, 65, 0.151);
+  box-sizing: border-box;
+  padding: 20px;
+  min-height: 230px;       /*DIV GERAL PARA OS CARDS*/
+  display: flex;  
+  flex-direction: column;  
+  justify-content: flex-start; 
+  align-items: center;        
+  text-align: center;         
+}
+.imgcard {
+  background-color: #c9ffdf;
+  height:50px;
+  width: 50px;
+  margin-top: 20px;     /*DIV GERAL PARA OS CARDS*/
+  margin-bottom: 15px; 
+  border-radius: 100px;  
+}
+.numcard {
+  font-size: 40px;
+  line-height: 1; /*DIV GERAL PARA OS CARDS*/
+  margin-top: 5px;
+  margin-bottom: 5px; 
+}
+.nomecard{
+  font-size: 20px;
+  font-weight: bold; /*DIV GERAL PARA OS CARDS*/
+  margin-top: 10px;
+}
+.textcard1{
+  margin-top: 15px;
+  font-size: 16px;
+  color: #0a0a0a; /*DIV GERAL PARA OS CARDS*/
 
-    .img-single-rounded {
-      width: 500px;
-      height: 320px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
+}
+.imgcardsub1{
+  width: 35px;
+  margin-top: 6px; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  display: fixed;
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.imgcardsub2{
+  width: 40px;
+  margin-top: 6px;
+  display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.imgcardsub3{
+  width: 30px;
+  margin-top: 10px;
+  display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.textimgfoco{
+  background-color: rgb(255, 255, 255);
+  height: 55vh;
+  width: 40%;
+  border-radius: 20px;
+  border-color: #414141;
+   border: 1px solid rgba(65, 65, 65, 0.137);
+  margin: 0 auto;
+  margin-top: 20vh;
+  display: grid;      /*DIV PAI PARA OS CARDS*/
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 
-    .text-card{
-      width: 45%;
-     
-      
-    }
-
-    .text-card span{
-      color: rgb(18, 153, 41);
-    }
-
-
-.imgSobreposta{}
-
-.card{}
-
-.img-card{}
-
-.text-card{}
-
-.img{}
-
-.mini-card{}
-
-.img-minicard{}
-
-.mtv-card{}
-
-.fundo{}
-
-.footer{}
-
-.footer-icon{}
-
-.footer-text1{}
-
-.footer-text2{}
-
+  box-sizing: border-box;
+}
+.imgfoco{      /*DIV GERAL PARA OS CARDS*/
+  display: flex;  
+  flex-direction: column;  
+  justify-content: flex-start; 
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.imgfoco img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  overflow: hidden;
+}
+.subfoco{
+  margin-top: 20vh;
+  font-size: 25px;
+  font-weight: bold;
+}
+.textfoco{
+  margin-left: 20px;
+}
