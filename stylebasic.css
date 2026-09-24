@@ -611,3 +611,86 @@ margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
 .textfoco{
   margin-left: 20px;
 }
+
+.mincards {
+height: 15vh;
+max-width: 980px; 
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(4, 1fr); /* Mantém os 3 cards na linha */
+gap: 35px; 
+padding: 10px;
+box-sizing: border-box;
+margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
+}
+.mincard {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(65, 65, 65, 0.151);
+  box-sizing: border-box;
+  padding: 20px;
+  min-height: 220px;       /*DIV GERAL PARA OS CARDS*/
+  display: flex;  
+  flex-direction: column;  
+  justify-content: flex-start; 
+  align-items: center;        
+  text-align: center;         
+}
+.minimgcard {
+  background-color: #c9ffdf;
+  height:45px;
+  width: 45px;
+  margin-top: 2px;     /*DIV GERAL PARA OS CARDS*/
+  margin-bottom: 15px; 
+  border-radius: 100px;  
+}
+.minnomecard{
+  font-size: 15px;
+  font-weight: bold; /*DIV GERAL PARA OS CARDS*/
+  margin-top: 10px;
+}
+.mintextcard1{
+  margin-top: 13px;
+  font-size: 14px;
+  color: #0a0a0a; /*DIV GERAL PARA OS CARDS*/
+
+}
+.minimgcardsub1{
+  width: 25px;
+  margin-top: 9px; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  display: fixed;
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.minimgcardsub2{
+ width: 25px;
+  margin-top: 9px;
+  display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.minimgcardsub3{
+  width: 25px;
+  margin-top: 9px;
+  display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.minimgcardsub4{
+ width: 25px;
+  margin-top: 9px;
+  display: fixed; /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+.mtv-card{
+  background-color: rgb(255, 255, 255);
+  height: 55vh;
+  width: 40%;
+  border-radius: 20px;
+  border-color: #414141;
+   border: 1px solid rgba(65, 65, 65, 0.137);
+  margin: 0 auto;
+  margin-top: 20vh;
+  display: grid;      /*DIV PAI PARA OS CARDS*/
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  box-sizing: border-box;
+}
