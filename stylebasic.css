@@ -935,3 +935,175 @@ color: #ffffff;
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   will-change: transform, opacity;
 }
+/* ==========================================================================
+   MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Header e Menu Nav */
+    .header {
+        padding: 0 5%;
+        height: 8vh;
+    }
+    .iconimg {
+        width: 60px;
+    }
+    nav {
+        gap: 15px;
+    }
+    .navitens {
+        font-size: 14px;
+    }
+    .shiny-cta1 {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+
+    /* Bloco Superior do Carrossel (Texto Principal) */
+    .supCarrossel {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 15vh;
+        height: auto;
+    }
+    .text1sup {
+        font-size: 40px;
+        line-height: 50px;
+    }
+    .carrossel-item {
+        font-size: 40px;
+        height: 55px;
+        line-height: 55px;
+    }
+    .carrosselletra {
+        height: 55px;
+    }
+    @keyframes carrosselSubir {
+        0%, 25% { transform: translateY(0); }
+        33%, 58% { transform: translateY(-55px); }
+        66%, 91% { transform: translateY(-110px); }
+        100% { transform: translateY(-165px); }
+    }
+    .text2sup {
+        width: 100%;
+        margin-left: 0;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    .button1sup {
+        margin-right: 10px;
+        padding: 0 20px;
+        height: 44px;
+        font-size: 14px;
+    }
+    .shiny-cta {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    /* Seção Sobre Nós (Texto e Imagens) */
+    .grupotextimg {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 20px;
+    }
+    .image-group-1 {
+        display: none;
+    }
+    
+    .text-card {
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center;
+    }
+    .titulospan {
+        font-size: 28px;
+    }
+    .textspan {
+        font-size: 16px;
+    }
+
+    /* Passo a Passo (Grid de Cards) */
+    .cards {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 25px;
+        margin-top: 8%;
+    }
+    .card {
+        min-height: auto;
+    }
+
+    /* Bloco Dedicação e Foco */
+    .textimgfoco {
+        grid-template-columns: 1fr;
+        width: 90%;
+        height: auto;
+        margin-top: 10vh;
+    }
+    .imgfoco {
+        height: 250px;
+        order: -1; /* Joga a imagem para cima do texto no celular */
+    }
+    .imgfoco img {
+        border-radius: 20px 20px 0 0;
+    }
+    .subfoco {
+        margin-top: 20px;
+        font-size: 22px;
+    }
+    .textfoco {
+        margin-right: 20px;
+        padding-bottom: 25px;
+    }
+
+    /* Vantagens (Minicards) */
+    .mincards {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 20px;
+    }
+    .mincard {
+        min-height: auto;
+    }
+
+    /* Card de Frase (Steve Jobs) */
+    .mtv-card {
+        width: 90%;
+        height: auto;
+        padding-bottom: 20px;
+        margin-top: 10vh;
+    }
+    .mtv-card h1 {
+        font-size: 20px;
+        margin-top: 20px;
+    }
+
+    /* Footer */
+    .footer {
+        height: auto;
+        padding: 40px 20px;
+    }
+    .subspanfooter {
+        font-size: 28px;
+    }
+    .buttonsfinais {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+    .button1footer {
+        margin: 0;
+        width: 80%;
+    }
+    .shiny-cta2 {
+        width: 80%;
+        text-align: center;
+    }
+    .footer-icon img {
+        margin-top: 40px;
+    }
+    .linha {
+        width: 90%;
+    }
+}
+
