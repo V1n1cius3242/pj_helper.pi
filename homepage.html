@@ -14,21 +14,21 @@
   
   <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
   <nav>
-    <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
-    <a class="navitens" href="catalogo.html">Clientes</a>
-    <a class="navitens" href="paginasobre.html">Sobre</a>
-    <button class="shiny-cta1">
+    <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a> <!--FUNCIONANDO!-->
+    <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
+    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
+    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
             <span class="shiny-cta-content1">
                  Login
             </span>
-        </button>   <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
+        </button>   <!--BUTTON FUNCIONANDO!-->
   </nav>
 </div>
     <main>
         <div class="supCarrossel">
             <a href="paginasobre.html">
-                <button class="sobrebutton"><img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt=""> Plataforma de intermediação segura 
-                <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt=""></button>
+                <button class="sobrebutton"><img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt=""> Plataforma de intermediação segura  
+                <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt=""></button> <!--BUTTON FUNCIONANDO!-->
             </a>
             <div class="text1sup"><h1>Contratos</h1></div>
             <div class="carrosselletra">
@@ -42,12 +42,13 @@
             <div class="text2sup">Conectamos MEIs e microempresas a grandes empresas com segurança contratual, valores justos e prazos garantidos.
             A ponte que seu negócio precisa para crescer.</div>
             <div class="grupo-botoes">
-                <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button> 
-                <button class="shiny-cta">
-            <span class="shiny-cta-content">
+                <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button> <!--BUTTON FUNCIONANDO!-->
+
+                <button onclick="window.location.href='cadastro.html'" class="shiny-cta"> <!--BUTTON FUNCIONANDO!-->
+                <span class="shiny-cta-content">
                  Cadastre-se
-            </span>
-        </button> <!--BOTÃO A MODIFICAR NO CSS (ANIMAÇÃO PRONTA)-->
+                 </span>
+                </button> 
             </div>
                
             
@@ -62,7 +63,7 @@
     </div>
     
     <section class="grupotextimg">
-        <div class="image-group-1">
+        <div class="image-group-1 animar-ao-rolar">
        
         <img class="img-rounded-large" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Profissional com tablet" />
         
@@ -72,9 +73,9 @@
             <span class="span">SOBRE NÓS</span>
             <h2 class="titulospan">O elo entre o <span style="color: #3faf6e;">pequeno empreendedor</span> e o <span style="color: #3faf6e;">grande mercado</span></h2>
             <p class="textspan">A PJ Helper nasceu para resolver um problema real: MEIs e microempresas com serviços de qualidade que não conseguem alcançar grandes empresas.
-Nós fazemos essa ponte com segurança contratual e transparência. Imagine um produtor rural que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós garantimos que cada contrato seja cumprido.
+            Nós fazemos essa ponte com segurança contratual e transparência. Imagine um produtor rural que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós garantimos que cada contrato seja cumprido.
             </p>
-            <button class="shiny-cta">
+            <button onclick="window.location.href='cadastro.html'" class="shiny-cta"> <!--BUTTON FUNCIONANDO!-->
             <span class="shiny-cta-content">
                  Quero me cadastrar
             </span>
@@ -150,19 +151,33 @@ Nós fazemos essa ponte com segurança contratual e transparência. Imagine um p
             <p class="mtv-cardmin">-Steve Jobs</p>
         </div>
     </section>
-    <section>
-        <div class="fundo">
-            <div class="buttonsfinais">
-                <button href="cadastro.html">Criar conta grátis</button>
-                <button href="catalogo.html">Ver clientes</button>
-            </div>
-        </div>
-    </section>
     </main>
     <footer class="footer">
-        <div class="footer-icon"></div>
-        <div class="footer-text1"></div>
-        <div class="footer-text2"></div>
+        <section class="bloco1footer">
+        <h3 class="spanfooter">COMEÇE HOJE  </h3>
+        <h2 class="subspanfooter">Pronto para <span style="color: #3faf6e;">crescer?</span></h2> 
+        <p>Cadastre-se agora e conecte seu negócio a grandes oportunidades.</p>
+        </section>
+        <section>
+           <div class="fundo">
+            <div class="buttonsfinais">
+                <button  onclick="window.location.href='cadastro.html'" class="shiny-cta2" href="cadastro.html">Criar conta grátis</button>  <!--BUTTON FUNCIONANDO!-->
+                <button  onclick="window.location.href='catalogo.html'" class="button1footer" href="catalogo.html">Ver clientes</button>  <!--BUTTON FUNCIONANDO!-->
+            </div>
+        </div>  
+        </section>
+        <section class="bloco2footer">
+        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+        </section>
+       <section class="linhafooter">
+    <div class="linha"></div>
+    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+</section>
+
     </footer>
+
 </body>
 </html>
