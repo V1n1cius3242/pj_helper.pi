@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylebasic.css">
+    <link rel="shortcut icon" href="/icon/IconPJ.png">
     <title>PJ Helper - Home</title>
 </head>
 <body>
@@ -50,8 +52,6 @@
                  </span>
                 </button> 
             </div>
-               
-            
             
         </div>
     <div class="itenscarrossel">
@@ -62,7 +62,7 @@
         </div>
     </div>
     
-    <section class="grupotextimg">
+    <section class="grupotextimg escondido">
         <div class="image-group-1 animar-ao-rolar">
        
         <img class="img-rounded-large" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Profissional com tablet" />
@@ -83,25 +83,25 @@
         </div>
     </section>
     <section>
-        <div class="textpasso">
+        <div class="textpasso escondido">
             <h3 class="span2">PASSO A PASSO</h3>
             <h2 class="subspan2">Como funciona?</h2>
             <p class="textspan2">Em três etapas simples, conectamos seu negócio a novas oportunidades.</p>
         </div>
-        <div class="cards">
+        <div class="cards  escondido">
             <div class="card">
             <div class="imgcard"><img class="imgcardsub1" src="/icon/verificacao-da-lista-da-area-de-transferencia.png" alt=""></div>
             <div class="numcard" style="color:#3faf6e;"><strong>01</strong></div>
             <div class="nomecard">Cadastro</div>
             <div class="textcard1">MEIs e empresas se cadastram com CNPJ. Verificamos tudo para garantir segurança.</div>
         </div>
-        <div class="card">
+        <div class="card escondido">
             <div class="imgcard"><img class="imgcardsub2" src="/icon/aperto-de-maos.png" alt=""></div>
             <div class="numcard" style="color:#3faf6e;"><strong>02</strong></div>
             <div class="nomecard">Conexão</div>
             <div class="textcard1">Empresas encontram MEIs por categoria de serviço. A plataforma conecta quem precisa a quem resolve.</div>
         </div>
-        <div class="card">
+        <div class="card escondido">
             <div class="imgcard"><img class="imgcardsub3" src="/icon/documento.png" alt=""></div>
             <div class="numcard" style="color:#3faf6e;"><strong>03</strong></div>
             <div class="nomecard">Contrato Garantido</div>
@@ -111,34 +111,35 @@
     
     </section>
     <section>
-        <div class="textimgfoco">
-            <div class="textfoco">  <div class="subfoco">Dedicação e Foco </div>Nossa equipe acompanha cada contrato de perto. Do primeiro contato à entrega final, estamos presentes para garantir
+        <div class="textimgfoco escondido">
+            <div class="textfoco"> 
+            <div class="subfoco">Dedicação e Foco </div>Nossa equipe acompanha cada contrato de perto. Do primeiro contato à entrega final, estamos presentes para garantir
              que tudo funcione como acordado. Seu crescimento é o nosso sucesso.</div>
             <div class="imgfoco"><img src="/icon/grupoimg1.avif" alt=""></div>
         </div>
     </section>
     <section>
-        <div>
+        <div class="escondido">
             <h3 class="span2">VANTAGENS</h3>
             <h2 class="subspan2">Por que usar a PJ Helper?</h2>
         </div>
-         <div class="mincards">
+         <div class="mincards escondido">
             <div class="mincard">
             <div class="minimgcard"><img class="minimgcardsub1" src="/icon/escudo.png" alt=""></div>
             <div class="minnomecard">Segurança Jurídica</div>
             <div class="mintextcard1">Contratos fiscalizados pela nossa equipe do início ao fim.</div>
         </div>
-        <div class="mincard">
+        <div class="mincard escondido">
             <div class="minimgcard"><img class="minimgcardsub2" src="/icon/dolar.png" alt=""></div>
             <div class="minnomecard">Taxa Transparente</div>
             <div class="mintextcard1">Apenas 5% a 10% sobre o contrato. Sem surpresas.  </div>
         </div>
-        <div class="mincard">
+        <div class="mincard escondido">
             <div class="minimgcard"><img class="minimgcardsub3" src="/icon/almoco-foguete.png" alt=""></div>
             <div class="minnomecard">Acesso ao Mercado</div>
             <div class="mintextcard1">MEIs ganham visibilidade para empresas consolidadas.</div>
         </div>
-        <div class="mincard">
+        <div class="mincard escondido">
             <div class="minimgcard"><img class="minimgcardsub4" src="/icon/verificacao-de-cracha.png" alt=""></div>
             <div class="minnomecard">Tudo Formalizado</div>
             <div class="mintextcard1">Transações via CNPJ, rastreáveis e profissionais.</div>
@@ -146,7 +147,7 @@
          </div>
     </section>
     <section>
-        <div class="mtv-card">
+        <div class="mtv-card escondido">
             <h1 class="mtv-cardtext">"O único modo de fazer um excelente trabalho é amar o que você faz."</h1>
             <p class="mtv-cardmin">-Steve Jobs</p>
         </div>
@@ -178,6 +179,20 @@
 </section>
 
     </footer>
+ <script>
+const observador = new IntersectionObserver((entradas) => {
+  entradas.forEach((entrada) => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('animar-ao-rolar');
+      observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+    }
+  });
+}, { 
+  rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+});
+
+document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+</script>
 
 </body>
 </html>

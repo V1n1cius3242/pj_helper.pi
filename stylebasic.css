@@ -595,6 +595,7 @@ margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
 }
 .subfoco{
   margin-top: 20vh;
+  margin-bottom:12px;
   font-size: 25px;
   font-weight: bold;
 }
@@ -696,6 +697,8 @@ margin: 4% auto 0 auto;   /*DIV PAI PARA OS CARDS*/
   color: #5c5c5c;
   font-weight: 600;
 }
+
+/*FOOTER E ANIMAÇÃO BASE*/
 .footer{
   background-color: #171717 ;
   height: 70vh;
@@ -919,9 +922,16 @@ color: #ffffff;
     transform: translateY(0);
   }
 }
+/* Estado inicial: o item fica invisível e um pouco abaixo do lugar original */
+.escondido {
+  opacity: 0;
+  transform: translateY(50px);
+}
 
+/* Estado ativo: disparado pelo JavaScript ao rolar a página */
 .animar-ao-rolar {
-  animation: fadeInUp linear both;
-  animation-timeline: view();
-  animation-range: entry 5% cover 35%;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: transform, opacity;
 }
