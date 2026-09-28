@@ -935,30 +935,79 @@ color: #ffffff;
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   will-change: transform, opacity;
 }
+/* Esconde o ícone das 3 linhas no computador */
+.menu-icon-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+.menu-icon-hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
 /* ==========================================================================
    MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* Header e Menu Nav */
     .header {
         padding: 0 5%;
         height: 8vh;
+        position: fixed;
     }
     .iconimg {
         width: 60px;
     }
+    /* 1. Ativa o botão hambúrguer no celular */
+    .menu-icon-hamburger {
+        display: flex;
+    }
+    /* 2. Transforma o seu 'nav' em uma lista vertical oculta */
     nav {
-        gap: 15px;
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 8vh; /* Alinha perfeitamente abaixo do seu header de 8vh */
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.96); /* Fundo limpo mantendo a identidade visual */
+        backdrop-filter: blur(10px); 
+        -webkit-backdrop-filter: blur(10px);
+        padding: 25px 0;
+        gap: 25px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+        align-items: center;
+        z-index: 998;
     }
     .navitens {
-        font-size: 14px;
+        font-size: 16px;
+        width: 100%;
+        text-align: center;
+        display: block;
     }
     .shiny-cta1 {
-        padding: 8px 15px;
-        font-size: 13px;
+        padding: 10px 25px;
+        font-size: 14px;
+        width: 70%;
+        text-align: center;
+    }                              
+    #menu-toggle:checked ~ nav { /* Abre o menu nav vertical ao clicar no botão hambúrguer */
+        display: flex;
     }
-
-    /* Bloco Superior do Carrossel (Texto Principal) */
+    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
     .supCarrossel {
         width: 90%;
         margin-left: 5%;
@@ -996,30 +1045,37 @@ color: #ffffff;
         font-size: 14px;
     }
     .shiny-cta {
+        margin-top: 25px;
         padding: 12px 20px;
         font-size: 14px;
     }
 
-    /* Seção Sobre Nós (Texto e Imagens) */
+    /* Seção Sobre Nós*/
     .grupotextimg {
+      margin-top: 40px;
         flex-direction: column;
         gap: 40px;
         padding: 0 20px;
     }
     .image-group-1 {
-        display: none;
+        display: none; /*imagem escondids que não queremos*/
     }
     
     .text-card {
         margin-left: 0;
         margin-top: 20px;
-        text-align: center;
+        
     }
     .titulospan {
-        font-size: 28px;
+        font-size: 26px;
+        font-weight: 600;
+        margin-top: 20px;
     }
     .textspan {
         font-size: 16px;
+        margin-top: 20px;
+        color: #313131;
+        
     }
 
     /* Passo a Passo (Grid de Cards) */
@@ -1042,7 +1098,7 @@ color: #ffffff;
     }
     .imgfoco {
         height: 250px;
-        order: -1; /* Joga a imagem para cima do texto no celular */
+        order: -1; 
     }
     .imgfoco img {
         border-radius: 20px 20px 0 0;
