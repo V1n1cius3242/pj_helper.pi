@@ -1048,6 +1048,7 @@ color: #ffffff;
         margin-top: 25px;
         padding: 12px 20px;
         font-size: 14px;
+        margin-bottom: 120px;
     }
 
     /* Seção Sobre Nós*/
@@ -1094,7 +1095,8 @@ color: #ffffff;
         grid-template-columns: 1fr;
         width: 90%;
         height: auto;
-        margin-top: 10vh;
+        margin-top: 20vh;
+        margin-bottom: 20vh;
     }
     .imgfoco {
         height: 250px;
