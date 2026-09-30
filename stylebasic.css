@@ -954,214 +954,293 @@ color: #ffffff;
 /* ==========================================================================
    MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px)
    ========================================================================== */
-@media (max-width: 768px) {
-    .header {
-        padding: 0 5%;
-        height: 8vh;
-        position: fixed;
-    }
-    .iconimg {
-        width: 60px;
-    }
-    /* 1. Ativa o botão hambúrguer no celular */
-    .menu-icon-hamburger {
-        display: flex;
-    }
-    /* 2. Transforma o seu 'nav' em uma lista vertical oculta */
-    nav {
-        display: none; 
-        flex-direction: column;
-        position: absolute;
-        top: 8vh; /* Alinha perfeitamente abaixo do seu header de 8vh */
-        left: 0;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.96); /* Fundo limpo mantendo a identidade visual */
-        backdrop-filter: blur(10px); 
-        -webkit-backdrop-filter: blur(10px);
-        padding: 25px 0;
-        gap: 25px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
-        align-items: center;
-        z-index: 998;
-    }
-    .navitens {
-        font-size: 16px;
-        width: 100%;
-        text-align: center;
-        display: block;
-    }
-    .shiny-cta1 {
-        padding: 10px 25px;
-        font-size: 14px;
-        width: 70%;
-        text-align: center;
-    }                              
-    #menu-toggle:checked ~ nav { /* Abre o menu nav vertical ao clicar no botão hambúrguer */
-        display: flex;
-    }
-    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
-    }
-    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
-        opacity: 0;
-    }
-    #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
-    }
-    .supCarrossel {
-        width: 90%;
-        margin-left: 5%;
-        margin-top: 15vh;
-        height: auto;
-    }
-    .text1sup {
-        font-size: 40px;
-        line-height: 50px;
-    }
-    .carrossel-item {
-        font-size: 40px;
-        height: 55px;
-        line-height: 55px;
-    }
-    .carrosselletra {
-        height: 55px;
-    }
-    @keyframes carrosselSubir {
-        0%, 25% { transform: translateY(0); }
-        33%, 58% { transform: translateY(-55px); }
-        66%, 91% { transform: translateY(-110px); }
-        100% { transform: translateY(-165px); }
-    }
-    .text2sup {
-        width: 100%;
-        margin-left: 0;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-    .button1sup {
-        margin-right: 10px;
-        padding: 0 20px;
-        height: 44px;
-        font-size: 14px;
-    }
-    .shiny-cta {
-        margin-top: 25px;
-        padding: 12px 20px;
-        font-size: 14px;
-        margin-bottom: 120px;
-    }
+/* ========================================================================== 
+   MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px) 
+   ========================================================================== */ 
+@media (max-width: 768px) { 
+  .header { 
+    padding: 0 5%; 
+    height: 8vh; 
+    position: fixed; 
+  } 
 
-    /* Seção Sobre Nós*/
-    .grupotextimg {
-      margin-top: 40px;
-        flex-direction: column;
-        gap: 40px;
-        padding: 0 20px;
-    }
-    .image-group-1 {
-        display: none; /*imagem escondids que não queremos*/
-    }
-    
-    .text-card {
-        margin-left: 0;
-        margin-top: 20px;
-        
-    }
-    .titulospan {
-        font-size: 26px;
-        font-weight: 600;
-        margin-top: 20px;
-    }
-    .textspan {
-        font-size: 16px;
-        margin-top: 20px;
-        color: #313131;
-        
-    }
+  .iconimg { 
+    width: 60px; 
+  } 
 
-    /* Passo a Passo (Grid de Cards) */
-    .cards {
-        grid-template-columns: 1fr;
-        height: auto;
-        gap: 25px;
-        margin-top: 8%;
-    }
-    .card {
-        min-height: auto;
-    }
+  /* 1. Ativa o botão hambúrguer no celular */ 
+  .menu-icon-hamburger { 
+    display: flex; 
+  } 
 
-    /* Bloco Dedicação e Foco */
-    .textimgfoco {
-        grid-template-columns: 1fr;
-        width: 90%;
-        height: auto;
-        margin-top: 20vh;
-        margin-bottom: 20vh;
-    }
-    .imgfoco {
-        height: 250px;
-        order: -1; 
-    }
-    .imgfoco img {
-        border-radius: 20px 20px 0 0;
-    }
-    .subfoco {
-        margin-top: 20px;
-        font-size: 22px;
-    }
-    .textfoco {
-        margin-right: 20px;
-        padding-bottom: 25px;
-    }
+  /* 2. Transforma o seu 'nav' em uma lista vertical oculta */ 
+  nav { 
+    display: none; 
+    flex-direction: column; 
+    position: absolute; 
+    top: 8vh; /* Alinha perfeitamente abaixo do seu header de 8vh */ 
+    left: 0; 
+    width: 100%; 
+    background-color: rgba(255, 255, 255, 0.96); /* Fundo limpo mantendo a identidade visual */ 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    padding: 25px 0; 
+    gap: 25px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
+    align-items: center; 
+    z-index: 998; 
+  } 
 
-    /* Vantagens (Minicards) */
-    .mincards {
-        grid-template-columns: 1fr;
-        height: auto;
-        gap: 20px;
-    }
-    .mincard {
-        min-height: auto;
-    }
+  .navitens { 
+    font-size: 16px; 
+    width: 100%; 
+    text-align: center; 
+    display: block; 
+  } 
 
-    /* Card de Frase (Steve Jobs) */
-    .mtv-card {
-        width: 90%;
-        height: auto;
-        padding-bottom: 20px;
-        margin-top: 10vh;
-    }
-    .mtv-card h1 {
-        font-size: 20px;
-        margin-top: 20px;
-    }
+  .shiny-cta1 { 
+    padding: 10px 25px; 
+    font-size: 14px; 
+    width: 70%; 
+    text-align: center; 
+  } 
 
-    /* Footer */
-    .footer {
-        height: auto;
-        padding: 40px 20px;
-    }
-    .subspanfooter {
-        font-size: 28px;
-    }
-    .buttonsfinais {
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 30px;
-    }
-    .button1footer {
-        margin: 0;
-        width: 80%;
-    }
-    .shiny-cta2 {
-        width: 80%;
-        text-align: center;
-    }
-    .footer-icon img {
-        margin-top: 40px;
-    }
-    .linha {
-        width: 90%;
-    }
-}
+  #menu-toggle:checked ~ nav { 
+    /* Abre o menu nav vertical ao clicar no botão hambúrguer */ 
+    display: flex; 
+  } 
 
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
+    transform: rotate(45deg) translate(5px, 6px); 
+  } 
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
+    opacity: 0; 
+  } 
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
+    transform: rotate(-45deg) translate(5px, -6px); 
+  } 
+
+  /* CORREÇÃO DO CARROSSEL: Garante que as imagens preencham a tela sem vazamentos */
+  .carrossel { 
+    position: relative; 
+    width: 100%; 
+    height: 100vh; 
+    overflow: hidden; 
+  } 
+  .carrossel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Impede que a imagem encolha e mostre o fundo nas laterais/base */
+  }
+
+  /* CORREÇÃO DO GRADIENTE: Corrigido o erro de sintaxe que gerava a linha visual */
+  .carrossel:after { 
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 10; 
+    background: linear-gradient(to top, #f5f5f5 0%, rgba(245, 245, 245, 0.651) 40%, rgba(245, 245, 245, 0.705) 100%);
+  } 
+
+  .supCarrossel { 
+    width: 90%; 
+    margin-left: 5%; 
+    margin-top: 15vh; 
+    height: auto; 
+  } 
+
+  .text1sup { 
+    font-size: 40px; 
+    line-height: 50px; 
+  } 
+
+  .carrossel-item { 
+    font-size: 40px; 
+    height: 55px; 
+    line-height: 55px; 
+  } 
+
+  .carrosselletra { 
+    height: 55px; 
+  } 
+
+  @keyframes carrosselSubir { 
+    0%, 25% { transform: translateY(0); } 
+    33%, 58% { transform: translateY(-55px); } 
+    66%, 91% { transform: translateY(-110px); } 
+    100% { transform: translateY(-165px); } 
+  } 
+
+  .text2sup { 
+    width: 100%; 
+    margin-left: 0; 
+    font-size: 16px; 
+    margin-top: 20px; 
+  } 
+
+  .button1sup { 
+    margin-right: 10px; 
+    padding: 0 20px; 
+    height: 44px; 
+    font-size: 14px; 
+  } 
+
+  .shiny-cta { 
+    margin-top: 25px; 
+    padding: 12px 20px; 
+    font-size: 14px; 
+    margin-bottom: 120px; 
+  } 
+
+  /* Seção Sobre Nós*/ 
+  .grupotextimg { 
+    margin-top: 40px; 
+    flex-direction: column; 
+    gap: 40px; 
+    padding: 0 20px; 
+  } 
+
+  .image-group-1 { 
+    display: none; 
+  } 
+
+  .text-card { 
+    margin-left: 0; 
+    margin-top: 20px; 
+  } 
+
+  .titulospan { 
+    font-size: 26px; 
+    font-weight: 600; 
+    margin-top: 20px; 
+  } 
+
+  .textspan { 
+    font-size: 16px; 
+    margin-top: 20px; 
+    color: #313131; 
+  } 
+
+  /* Passo a Passo (Grid de Cards) */ 
+  .subspan2 { 
+    font-size: 26px; 
+    font-weight: 600; 
+  } 
+
+  .cards { 
+    grid-template-columns: 1fr; 
+    height: auto; 
+    gap: 25px; 
+    margin-top: 8%; 
+  } 
+
+  .nomecard { 
+    font-size: 18px; 
+    font-weight: 600; 
+  } 
+
+  .card { 
+    min-height: auto; 
+    color: #313131; 
+  } 
+
+  /* Bloco Dedicação e Foco */ 
+  .textimgfoco { 
+    grid-template-columns: 1fr; 
+    width: 90%; 
+    height: auto; 
+    margin-top: 18vh; 
+    margin-bottom: 20vh; 
+  } 
+
+  .imgfoco { 
+    height: 250px; 
+    order: -1; 
+  } 
+
+  .imgfoco img { 
+    border-radius: 20px 20px 0 0; 
+  } 
+
+  .subfoco { 
+    margin-top: 20px; 
+    font-size: 20px; 
+    font-weight: 600; 
+  } 
+
+  .textfoco { 
+    margin-right: 20px; 
+    padding-bottom: 25px; 
+    color: #313131; 
+  } 
+
+  /* Vantagens (Minicards) */ 
+  .minnomecard { 
+    font-size: 18px; 
+    font-weight: 600; 
+  } 
+
+  /* CORREÇÃO DE CHAVES: Este bloco agora está corretamente aninhado dentro da Media Query */
+  .mincards { 
+    grid-template-columns: 1fr; 
+    height: auto; 
+    gap: 20px; 
+  } 
+
+  .mincard { 
+    min-height: auto; 
+  } 
+
+  /* Card de Frase (Steve Jobs) */ 
+  .mtv-card { 
+    width: 90%; 
+    height: auto; 
+    padding-bottom: 20px; 
+    margin-top: 10vh; 
+  } 
+
+  .mtv-card h1 { 
+    font-size: 20px; 
+    margin-top: 20px; 
+  } 
+
+  /* Footer */ 
+  .footer { 
+    height: auto; 
+    padding: 40px 20px; 
+  } 
+
+  .subspanfooter { 
+    font-size: 26px; 
+    font-weight: 600; 
+  } 
+
+  .buttonsfinais { 
+    flex-direction: column; 
+    gap: 15px; 
+    margin-top: 30px; 
+  } 
+
+  .button1footer { 
+    margin: 0; 
+    width: 80%; 
+  } 
+
+  .shiny-cta2 { 
+    width: 80%; 
+    text-align: center; 
+  } 
+
+  .footer-icon img { 
+    margin-top: 40px; 
+  } 
+
+  .linha { 
+    width: 90%; 
+  } 
+} /* Fecha a Media Query corretamente aqui no final */
