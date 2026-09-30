@@ -951,9 +951,6 @@ color: #ffffff;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
-/* ==========================================================================
-   MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px)
-   ========================================================================== */
 /* ========================================================================== 
    MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px) 
    ========================================================================== */ 
@@ -963,25 +960,20 @@ color: #ffffff;
     height: 8vh; 
     position: fixed; 
   } 
-
   .iconimg { 
     width: 60px; 
   } 
-
-  /* 1. Ativa o botão hambúrguer no celular */ 
   .menu-icon-hamburger { 
     display: flex; 
   } 
-
-  /* 2. Transforma o seu 'nav' em uma lista vertical oculta */ 
-  nav { 
-    display: none; 
+   nav { 
+    display: flex; 
     flex-direction: column; 
     position: absolute; 
-    top: 8vh; /* Alinha perfeitamente abaixo do seu header de 8vh */ 
+    top: 8vh; 
     left: 0; 
     width: 100%; 
-    background-color: rgba(255, 255, 255, 0.96); /* Fundo limpo mantendo a identidade visual */ 
+    background-color: rgba(255, 255, 255, 0.651); 
     backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px); 
     padding: 25px 0; 
@@ -989,25 +981,35 @@ color: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
     align-items: center; 
     z-index: 998; 
-  } 
+    opacity: 0;
+    visibility: hidden;
+      transform: scaleY(0); 
+    transform-origin: top center; 
 
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.4s;
+  } 
+  
+  #menu-toggle:checked ~ nav { 
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); 
+    
+    /* CONFIGURAÇÃO DA IDA: Mantém o tempo de abertura que você já tinha configurado */
+    transition: opacity 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.1s;
+  }
   .navitens { 
-    font-size: 16px; 
+    font-size: 18px; /* Fonte levemente maior para melhor toque no celular */
     width: 100%; 
     text-align: center; 
     display: block; 
   } 
 
   .shiny-cta1 { 
-    padding: 10px 25px; 
+    padding: 12px 25px; 
     font-size: 14px; 
-    width: 70%; 
+    width: 90%; 
     text-align: center; 
-  } 
-
-  #menu-toggle:checked ~ nav { 
-    /* Abre o menu nav vertical ao clicar no botão hambúrguer */ 
-    display: flex; 
+    margin-top: 10px;
   } 
 
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
@@ -1032,7 +1034,7 @@ color: #ffffff;
   .carrossel img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Impede que a imagem encolha e mostre o fundo nas laterais/base */
+    object-fit: cover; 
   }
 
   /* CORREÇÃO DO GRADIENTE: Corrigido o erro de sintaxe que gerava a linha visual */
@@ -1185,7 +1187,6 @@ color: #ffffff;
     font-weight: 600; 
   } 
 
-  /* CORREÇÃO DE CHAVES: Este bloco agora está corretamente aninhado dentro da Media Query */
   .mincards { 
     grid-template-columns: 1fr; 
     height: auto; 
@@ -1243,4 +1244,4 @@ color: #ffffff;
   .linha { 
     width: 90%; 
   } 
-} /* Fecha a Media Query corretamente aqui no final */
+}
