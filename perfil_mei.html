@@ -1,0 +1,144 @@
+<script>
+    const user = JSON.parse(localStorage.getItem('usuarioLogado'))
+    if (!user || user.tipo !== 'mei') window.location.href = 'login.html'
+
+    let meiPerfilId = null // Guarda o ID do perfil MEI para vincular serviços e fotos
+
+    function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+
+    async function carregarTudo() {
+        // Carregar Perfil Existente
+        const resP = await fetch(`http://localhost:3000/perfil-mei?usuario_id=${user.id}`)
+        const perfil = await resP.json()
+        if (perfil.id) {
+            meiPerfilId = perfil.id // Armazena o ID do perfil MEI
+            document.getElementById('razao_social').value = perfil.razao_social || ''
+            document.getElementById('nome_fantasia').value = perfil.nome_fantasia || ''
+            document.getElementById('cnpj').value = perfil.cnpj || ''
+            document.getElementById('telefone').value = perfil.telefone || ''
+            document.getElementById('categoria').value = perfil.categoria || ''
+            document.getElementById('anos_experiencia').value = perfil.anos_experiencia || 0
+            document.getElementById('cidade').value = perfil.cidade || ''
+            document.getElementById('site').value = perfil.site || ''
+            document.getElementById('instagram').value = perfil.instagram || ''
+            document.getElementById('resumo_servico').value = perfil.resumo_servico || ''
+            document.getElementById('apresentacao').value = perfil.apresentacao || ''
+
+            carregarServicosEPortfolio(perfil.id)
+        }
+
+        // Notificações
+        const resN = await fetch(`http://localhost:3000/notificacoes?usuario_id=${user.id}`)
+        const notifs = await resN.json()
+        document.getElementById('listaNotifs').innerHTML = notifs.map(n => `<li>${n.mensagem} <small>(${new Date(n.criado_em).toLocaleDateString()})</small></li>`).join('') || '<li>Nenhuma notificação.</li>'
+
+        carregarContratos()
+    }
+
+    async function carregarServicosEPortfolio(meiId) {
+        const resS = await fetch(`http://localhost:3000/servicos?mei_id=${meiId}`)
+        const servs = await resS.json()
+        document.getElementById('listaServicos').innerHTML = servs.map(s => `<li><strong>${s.titulo}</strong> - R$ ${s.preco} (${s.descricao || ''})</li>`).join('')
+
+        const resPort = await fetch(`http://localhost:3000/portfolio?mei_id=${meiId}`)
+        const ports = await resPort.json()
+        document.getElementById('galeriaPort').innerHTML = ports.map(p => `
+            <div class="card-port">
+                <img src="${p.imagem_url}" onerror="this.src='https://via.placeholder.com/140x90?text=Sem+Imagem'">
+                <small><strong>${p.titulo}</strong></small>
+            </div>
+        `).join('')
+    }
+
+    async function carregarContratos() {
+        const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=mei`)
+        const contratos = await resC.json()
+        document.getElementById('listaContratos').innerHTML = contratos.map(c => `
+            <div style="border:1px solid #ccc; padding:10px; margin-bottom:8px; border-radius:5px;">
+                <h4>${c.titulo_servico} - R$ ${c.valor}</h4>
+                <p>${c.descricao || ''}</p>
+                <p>Status: <strong>${c.status.toUpperCase()}</strong></p>
+                ${c.status === 'pendente' ? `
+                    <button onclick="responderContrato(${c.id}, 'aceito',${c.empresa_usuario_id})" style="background:#28a745; width:auto;">Aceitar</button>
+                    <button onclick="responderContrato(${c.id}, 'recusado',${c.empresa_usuario_id})" style="background:#dc3545; width:auto;">Recusar</button>
+                ` : ''}
+            </div>
+        `).join('') || '<p>Nenhum contrato ativo.</p>'
+    }
+
+    async function responderContrato(id, status, empresaId) {
+        await fetch('http://localhost:3000/atualizar-contrato', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contrato_id: id, status, notificar_usuario_id: empresaId })
+        })
+        carregarContratos()
+    }
+
+    // Evento Perfil MEI
+    document.getElementById('formPerfilMei').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const dados = {
+            usuario_id: user.id,
+            razao_social: document.getElementById('razao_social').value,
+            nome_fantasia: document.getElementById('nome_fantasia').value,
+            cnpj: document.getElementById('cnpj').value,
+            telefone: document.getElementById('telefone').value,
+            categoria: document.getElementById('categoria').value,
+            anos_experiencia: document.getElementById('anos_experiencia').value,
+            cidade: document.getElementById('cidade').value,
+            site: document.getElementById('site').value,
+            instagram: document.getElementById('instagram').value,
+            resumo_servico: document.getElementById('resumo_servico').value,
+            apresentacao: document.getElementById('apresentacao').value
+        }
+        await fetch('http://localhost:3000/perfil-mei', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        })
+        alert('Perfil atualizado com sucesso!')
+        carregarTudo()
+    })
+
+    // Evento Cadastrar Serviço
+    document.getElementById('formServico').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        if (!meiPerfilId) return alert('Salve os dados do seu perfil de MEI primeiro!')
+
+        const item = {
+            mei_id: meiPerfilId,
+            titulo: document.getElementById('servico_titulo').value,
+            preco: document.getElementById('servico_preco').value,
+            descricao: document.getElementById('servico_desc').value
+        }
+        await fetch('http://localhost:3000/servicos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        document.getElementById('formServico').reset()
+        carregarServicosEPortfolio(meiPerfilId)
+    })
+
+    // Evento Adicionar Portfólio
+    document.getElementById('formPort').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        if (!meiPerfilId) return alert('Salve os dados do seu perfil de MEI primeiro!')
+
+        const item = {
+            mei_id: meiPerfilId,
+            titulo: document.getElementById('port_titulo').value,
+            imagem_url: document.getElementById('port_url').value
+        }
+        await fetch('http://localhost:3000/portfolio', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        document.getElementById('formPort').reset()
+        carregarServicosEPortfolio(meiPerfilId)
+    })
+
+    carregarTudo()
+</script>
