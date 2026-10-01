@@ -2,11 +2,67 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="stylesheet" href="stylebasic.css">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylepainel_empresa.css">
+    <link rel="shortcut icon" href="/icon/IconPJ.png">
+    
+    <title>PJ Helper - Empresa</title>
 </head>
 <body>
-    
+    <div class="header">
+  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+   <input type="checkbox" id="menu-toggle" style="display: none;">
+ 
+      <label for="menu-toggle" class="menu-icon-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+  <nav>
+    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
+    <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
+    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
+    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
+            <span class="shiny-cta-content1">
+                 Login
+            </span>
+        </button>   <!--BUTTON FUNCIONANDO!-->
+  </nav>
+</div>
+
+    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+    </main>
+
+    <footer class="footer">
+        <section class="bloco1footer">
+        <h3 class="spanfooter">COMEÇE HOJE  </h3>
+        <h2 class="subspanfooter">Pronto para <span style="color: #3faf6e;">crescer?</span></h2> 
+        <p>Cadastre-se agora e conecte seu negócio a grandes oportunidades.</p>
+        </section>
+        <section>
+           <div class="fundo">
+            <div class="buttonsfinais">
+                <button  onclick="window.location.href='cadastro.html'" class="shiny-cta2" href="cadastro.html">Criar conta grátis</button>  <!--BUTTON FUNCIONANDO!-->
+                <button  onclick="window.location.href='catalogo.html'" class="button1footer" href="catalogo.html">Ver clientes</button>  <!--BUTTON FUNCIONANDO!-->
+            </div>
+        </div>  
+        </section>
+        <section class="bloco2footer">
+        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+        </section>
+       <section class="linhafooter">
+    <div class="linha"></div>
+    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+</section>
+
+    </footer>
+
 </body>
 </html>
