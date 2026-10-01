@@ -7,10 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="stylepagsobre.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
-    <title>PJ Helper - Login</title>
+    <title>PJ Helper - Sobre</title>
 </head>
 <body>
     <div class="header">
@@ -33,9 +33,35 @@
         </button>   <!--BUTTON FUNCIONANDO!-->
   </nav>
 </div>
-
-    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
-    </main>
+ <section>
+        <div class="textpasso escondido">
+            <h3 class="span2">QUEM SOMOS?</h3>
+            <h2 class="subspan2">Sobre a PJ HELPER</h2>
+            <p class="textspan2">Nascemos para ser a ponte de confiança entre microempreendedores e grandes empresas.</p>
+        </div>
+        <div class="cards escondido">
+            <div class="card">
+            <div class="imgcard"><img class="imgcardsub1" src="/icon/verificacao-da-lista-da-area-de-transferencia.png" alt=""></div>
+            <div class="nomecard">Nossa missão</div>
+            <div class="textcard1">Conectar MEIs e microempresas a oportunidades reais no mercado corporativo, garantindo segurança contratual,
+            valores justos e prazos cumpridos. Acreditamos que todo pequeno empreendedor merece acesso ao grande mercado.</div>
+        </div>
+        <div class="card escondido">
+            <div class="imgcard"><img class="imgcardsub2" src="/icon/aperto-de-maos.png" alt=""></div>
+            <div class="nomecard">Como atuamos</div>
+            <div class="textcard1">A PJ Helper intermedia o contato entre MEIs e grandes empresas. Verificamos cadastros via CNPJ, 
+            elaboramos contratos formais e fiscalizamos cada cláusula, valor e prazo de entrega. Nossa taxa varia de 5% a 10% do valor contratado.
+        </div>
+        </div>
+        <div class="card escondido">
+            <div class="imgcard"><img class="imgcardsub3" src="/icon/documento.png" alt=""></div>
+            <div class="nomecard">Para quem é</div>
+            <div class="textcard1">Para qualquer pessoa jurídica: MEI, microempresa ou empresa de pequeno porte que deseja expandir sua clientela;
+            e para grandes empresas que buscam fornecedores especializados com a segurança de um contrato fiscalizado.</div>
+        </div>
+        </div>
+    
+    </section>
 
     <footer class="footer">
         <section class="bloco1footer">
@@ -63,6 +89,20 @@
 </section>
 
     </footer>
+     <script>
+const observador = new IntersectionObserver((entradas) => {
+  entradas.forEach((entrada) => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('animar-ao-rolar');
+      observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+    }
+  });
+}, { 
+  rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+});
+
+document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+</script>
 
 </body>
 </html>
