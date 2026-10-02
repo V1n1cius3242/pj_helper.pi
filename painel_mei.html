@@ -9,6 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_mei.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
+
+    <script>
+        (function() {
+            try {
+                const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+                if (!rawUser) throw new Error();
+                const user = JSON.parse(rawUser);
+                if (!user || !user.tipo || user.tipo.toString().toLowerCase() !== 'mei') {
+                    throw new Error();
+                }
+            } catch (err) {
+                window.location.replace('login.html');
+            }
+        })();
+    </script>
     
     <title>PJ Helper - MEI</title>
 </head>
@@ -37,6 +52,84 @@
 </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+        
+        <div id="bannerAviso"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2> Painel do Profissional MEI</h2>
+            <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
+        </div>
+
+        <!-- 1. NOTIFICAÇÕES -->
+        <div class="secao">
+            <h3> Minhas Notificações</h3>
+            <ul id="listaNotifs" style="padding-left: 20px; color:#444;"></ul>
+        </div>
+
+        <!-- 2. PERFIL COMPLETO -->
+        <div class="secao">
+            <h3> Dados Profissionais e de Contato</h3>
+            <form id="formPerfilMei">
+                <div class="grid-2">
+                    <div><label><strong>Razão Social:</strong></label><input type="text" id="razao_social" required style="width:100%; padding:8px; margin-top:4px;"></div>
+                    <div><label><strong>Nome Fantasia / Usuário:</strong></label><input type="text" id="nome_fantasia" required style="width:100%; padding:8px; margin-top:4px;"></div>
+                </div>
+                <div class="grid-2" style="margin-top:10px;">
+                    <div><label><strong>CNPJ:</strong></label><input type="text" id="cnpj" required style="width:100%; padding:8px; margin-top:4px;"></div>
+                    <div><label><strong>Telefone / WhatsApp:</strong></label><input type="text" id="telefone" required style="width:100%; padding:8px; margin-top:4px;"></div>
+                </div>
+                <div class="grid-2" style="margin-top:10px;">
+                    <div><label><strong>Categoria:</strong></label><input type="text" id="categoria" placeholder="Ex: Manutenção, TI" style="width:100%; padding:8px; margin-top:4px;"></div>
+                    <div><label><strong>Anos de Experiência:</strong></label><input type="number" id="anos_experiencia" style="width:100%; padding:8px; margin-top:4px;"></div>
+                </div>
+                <div class="grid-2" style="margin-top:10px;">
+                    <div><label><strong>Cidade / Estado:</strong></label><input type="text" id="cidade" style="width:100%; padding:8px; margin-top:4px;"></div>
+                    <div><label><strong>Site Oficial:</strong></label><input type="url" id="site" placeholder="https://..." style="width:100%; padding:8px; margin-top:4px;"></div>
+                </div>
+                <div style="margin-top:10px;">
+                    <label><strong>Instagram:</strong></label>
+                    <input type="text" id="instagram" placeholder="@seuusuario" style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+                <div style="margin-top:10px;">
+                    <label><strong>Resumo Rápido do Serviço:</strong></label>
+                    <input type="text" id="resumo_servico" placeholder="Ex: Manutenção elétrica predial e residencial" style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+                <div style="margin-top:10px;">
+                    <label><strong>Apresentação / Biografia:</strong></label>
+                    <textarea id="apresentacao" rows="3" style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
+                </div>
+                <button type="submit" style="margin-top:15px; background:#28a745; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Salvar Perfil</button>
+            </form>
+        </div>
+
+        <!-- 3. TABELA DE SERVIÇOS -->
+        <div class="secao">
+            <h3>🛠️ Serviços e Tabela de Valores</h3>
+            <form id="formServico" class="grid-2">
+                <input type="text" id="servico_titulo" placeholder="Nome do Serviço" required style="padding:8px;">
+                <input type="number" step="0.01" id="servico_preco" placeholder="Preço Estimado (R$)" required style="padding:8px;">
+                <input type="text" id="servico_desc" placeholder="Descrição curta" style="grid-column: span 2; padding:8px;">
+                <button type="submit" style="grid-column: span 2; background:#007bff; color:#fff; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Cadastrar Serviço</button>
+            </form>
+            <ul id="listaServicos" style="margin-top:15px; padding-left:20px;"></ul>
+        </div>
+
+        <!-- 4. PORTFÓLIO VIA LINK -->
+        <div class="secao">
+            <h3> Portfólio (Fotos dos Trabalhos)</h3>
+            <form id="formPort" class="grid-2">
+                <input type="text" id="port_titulo" placeholder="Título do Projeto" required style="padding:8px;">
+                <input type="url" id="port_url" placeholder="URL da Imagem (https://...)" required style="padding:8px;">
+                <button type="submit" style="grid-column: span 2; background:#6f42c1; color:#fff; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Adicionar ao Portfólio</button>
+            </form>
+            <div id="galeriaPort" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- 5. PROPOSTAS E CONTRATOS -->
+        <div class="secao">
+            <h3> Interesses Recebidos & Reuniões Agendadas</h3>
+            <div id="listaContratos"></div>
+        </div>
     </main>
 
      <footer class="footer">
