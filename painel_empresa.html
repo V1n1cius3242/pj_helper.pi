@@ -11,6 +11,22 @@
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
     <title>PJ Helper - Empresa</title>
+    <script>
+        (function() {
+            try {
+                const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+                if (!rawUser) throw new Error();
+
+                const user = JSON.parse(rawUser);
+                if (!user || !user.tipo || user.tipo.toString().toLowerCase() !== 'admin') {
+                    throw new Error();
+                }
+            } catch (err) {
+                // Redireciona na hora sem abrir a página
+                window.location.replace('login.html');
+            }
+        })();
+    </script>
 </head>
 <body>
     
@@ -37,6 +53,86 @@
 </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+        <main class="container" style="max-width: 900px; margin: 20px auto;">
+        
+        <div id="bannerAviso"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2> Painel do Contratante (Empresa)</h2>
+            <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
+        </div>
+
+        <!-- 1. NOTIFICAÇÕES -->
+        <div class="secao">
+            <h3> Notificações da Empresa</h3>
+            <ul id="listaNotifs" style="padding-left: 20px; color:#444;"></ul>
+        </div>
+
+        <!-- 2. PERFIL EMPRESA -->
+        <div class="secao">
+            <h3> Dados da Empresa</h3>
+            <form id="formPerfilEmpresa">
+                <div style="margin-bottom:10px;">
+                    <label><strong>Razão Social:</strong></label>
+                    <input type="text" id="razao_social" required style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label><strong>CNPJ:</strong></label>
+                    <input type="text" id="cnpj" required style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label><strong>Telefone / WhatsApp:</strong></label>
+                    <input type="text" id="telefone" required style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+                <button type="submit" style="background:#007bff; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Salvar Perfil da Empresa</button>
+            </form>
+        </div>
+
+        <!-- 3. CATÁLOGO DE MEIS -->
+<div class="secao" style="text-align: center; padding: 25px 20px;">
+    <h3 style="margin-top: 0;"> Catálogo de Prestadores MEI</h3>
+    <p style="color: #666; margin-bottom: 20px;">Explore a lista completa de profissionais e prestadores de serviço MEI disponíveis.</p>
+    
+    <a href="catalogo.html" style="display: inline-block; background: #007bff; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 1em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+         Acessar Catálogo Completo
+    </a>
+</div>
+
+        <!-- 4. MEUS CONTRATOS E PROPOSTAS -->
+        <div class="secao">
+            <h3> Minhas Solicitações & Reuniões</h3>
+            <div id="listaContratos">
+                <p style="color:#888;">Carregando solicitações...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE PROPOSTA -->
+    <div id="modalProposta" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="margin-top:0;">Enviar Proposta / Demonstrar Interesse</h3>
+            <form id="formModalProposta">
+                <input type="hidden" id="modal_mei_usuario_id">
+                <div style="margin-bottom:12px;">
+                    <label><strong>Serviço / Projeto Desejado:</strong></label>
+                    <input type="text" id="modal_titulo_servico" placeholder="Ex: Manutenção Elétrica ou Desenvolvimento Web" required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label><strong>Valor Oferecido/Estimado (R$):</strong></label>
+                    <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 250.00" required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label><strong>Descrição do Projeto / Necessidade:</strong></label>
+                    <textarea id="modal_descricao" rows="4" placeholder="Explique brevemente o que sua empresa precisa..." required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                    <button type="button" onclick="fecharModal()" style="background:#6c757d; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
+                    <button type="submit" style="background:#28a745; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">Enviar Proposta</button>
+                </div>
+            </form>
+        </div>
+    </div>
     </main>
 
     <footer class="footer">

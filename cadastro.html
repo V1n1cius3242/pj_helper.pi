@@ -36,6 +36,42 @@
 </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+        <h2>Cadastro no PJ Helper</h2>
+
+        <form id="formCadastro">
+            <div class="campo">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required placeholder="seu@email.com">
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" required placeholder="Digite sua senha">
+            </div>
+
+            <div class="campo">
+                <label for="tipo">Tipo de Conta:</label>
+                <select id="tipo" required>
+                    <option value="mei">MEI (Prestador de Serviço)</option>
+                    <option value="empresa">Empresa Grande (Contratante)</option>
+                    <option value="admin">Administrador (ADM)</option>
+                </select>
+            </div>
+
+            <!-- CAMPO SECRETO DE ADM (Exibido apenas para Administrador) -->
+            <div class="campo" id="boxChaveAdmin" style="display: none;">
+                <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
+                <input type="password" id="chaveAdmin" placeholder="Digite a chave secreta de ADM">
+            </div>
+
+            <button type="submit" id="btnCadastrar">Cadastrar</button>
+        </form>
+
+        <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
+
+        <div style="margin-top: 15px; text-align: center;">
+            <a href="login.html" style="color: #007bff; text-decoration: none;">Já possui uma conta? Faça login</a>
+        </div>
     </main>
 
     <footer class="footer">

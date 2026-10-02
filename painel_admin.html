@@ -11,6 +11,22 @@
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
     <title>PJ Helper - Administrador</title>
+    <script>
+        (function() {
+            try {
+                const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+                if (!rawUser) throw new Error();
+
+                const user = JSON.parse(rawUser);
+                if (!user || !user.tipo || user.tipo.toString().toLowerCase() !== 'admin') {
+                    throw new Error();
+                }
+            } catch (err) {
+                // Redireciona na hora sem abrir a página
+                window.location.replace('login.html');
+            }
+        })();
+    </script>
 </head>
 <body>
     
@@ -37,6 +53,82 @@
 </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+        <div id="bannerAviso"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+            <h2> Painel de Controle PJ Helper (ADM)</h2>
+            <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
+        </div>
+
+        <!-- 1. USUÁRIOS REGISTRADOS -->
+        <div class="secao">
+            <h3> Usuários Registrados</h3>
+            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
+                <thead>
+                    <tr style="background:#f2f2f2;">
+                        <th>ID</th>
+                        <th>E-mail</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaUsers"></tbody>
+            </table>
+        </div>
+
+        <!-- 2. GESTÃO DE CONTRATOS E REUNIÕES -->
+        <div class="secao">
+            <h3> Monitoramento de Contratos & Reuniões</h3>
+            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
+                <thead>
+                    <tr style="background:#f2f2f2;">
+                        <th>ID</th>
+                        <th>Serviço / Valor / Detalhes</th>
+                        <th>Envolvidos (Empresa x MEI)</th>
+                        <th>Reunião no Meet</th>
+                        <th>Status</th>
+                        <th>Contrato PDF</th>
+                        <th>Ações do ADM</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaContratos"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL 1: AGENDAR / ALTERAR MEET -->
+    <div id="modalMeet" class="modal-overlay">
+        <div class="modal-card">
+            <h3> Agendar Reunião Google Meet</h3>
+            <input type="hidden" id="meetContratoId">
+            
+            <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
+            <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
+            
+            <label for="inputMeetData">Data e Horário:</label>
+            <input type="datetime-local" id="inputMeetData">
+
+            <div class="modal-acoes">
+                <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+                <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ANEXAR PDF DO CONTRATO -->
+    <div id="modalPdf" class="modal-overlay">
+        <div class="modal-card">
+            <h3> Anexar Contrato Digitalizado (PDF)</h3>
+            <input type="hidden" id="pdfContratoId">
+            
+            <label for="inputPdfUrl">URL do Documento PDF:</label>
+            <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
+
+            <div class="modal-acoes">
+                <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+                <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
+            </div>
+        </div>
+    </div>
     </main>
 
     <footer class="footer">
