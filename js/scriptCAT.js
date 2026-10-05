@@ -45,34 +45,73 @@
         }
 
         function exibirCatalogo(lista) {
-            const container = document.getElementById('gridCatalogo');
+    const container = document.getElementById('gridCatalogo');
 
-            if (!Array.isArray(lista) || lista.length === 0) {
-                container.innerHTML = '<p style="color:#888; grid-column: 1 / -1;">Nenhum prestador MEI encontrado.</p>';
-                return;
-            }
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<p style="color:#888; grid-column: 1 / -1;">Nenhum prestador MEI encontrado.</p>';
+        return;
+    }
 
-            container.innerHTML = lista.map(m => {
-                const idMei = m.usuario_id || m.id;
-                const nomeExibicao = m.nome_fantasia || m.razao_social || 'Profissional MEI';
-                
-                return `
-                    <div class="card-mei">
-                        <div>
-                            <span class="badge-cat">${m.categoria || 'Geral'}</span>
-                            <h4>${nomeExibicao}</h4>
-                            <p><strong>Cidade:</strong> ${m.cidade || 'Não informada'}</p>
-                            <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
-                            <p style="font-size:0.85em; color:#666; margin-top:8px; line-height:1.4;">
-                                ${m.resumo_servico || m.apresentacao || 'Sem descrição cadastrada.'}
-                            </p>
-                        </div>
-                        <button onclick="abrirModal(${idMei}, '${nomeExibicao}')" class="btn-acao">🤝 Solicitar / Propor Serviço</button>
+    container.innerHTML = lista.map(m => {
+        const idMei = m.usuario_id || m.id;
+        const nomeExibicao = m.nome_fantasia || m.razao_social || 'Profissional MEI';
+        
+        const linkSite = m.site ? (m.site.startsWith('http') ? m.site : `https://${m.site}`) : null;
+        const userInsta = m.instagram ? m.instagram.replace('@', '').trim() : null;
+
+        // Monta a lista de serviços cadastrados pelo MEI
+        const servicosHTML = (m.servicos && m.servicos.length > 0) 
+            ? `
+                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #eee;">
+                    <strong>🛠️ Serviços e Tabela de Preços:</strong>
+                    <ul style="padding-left: 18px; margin: 6px 0 0 0; font-size: 0.85em; color: #333;">
+                        ${m.servicos.map(s => `
+                            <li style="margin-bottom: 4px;">
+                                <strong>${s.titulo}</strong>: 
+                                <span style="color:#28a745; font-weight:bold;">
+                                    ${s.preco ? `R$ ${parseFloat(s.preco).toFixed(2)}` : 'A combinar'}
+                                </span>
+                                ${s.descricao ? `<br><small style="color:#666;">${s.descricao}</small>` : ''}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            ` 
+            : '<p style="font-size:0.8em; color:#888; margin-top:8px;"><em>Nenhum serviço individual tabela cadastrado.</em></p>';
+
+        return `
+            <div class="card-mei">
+                <div>
+                    <span class="badge-cat">${m.categoria || 'Geral'}</span>
+                    <h4 style="margin-bottom: 5px;">${nomeExibicao}</h4>
+                    
+                    ${m.razao_social && m.razao_social !== nomeExibicao ? `<p style="font-size:0.85em; color:#666;"><strong>Razão Social:</strong> ${m.razao_social}</p>` : ''}
+                    <p><strong>CNPJ:</strong> ${m.cnpj || 'Não informado'}</p>
+                    <p><strong>Cidade:</strong> ${m.cidade || 'Não informada'}</p>
+                    <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
+                    
+                    <div style="margin-top: 8px; font-size:0.88em; color:#444;">
+                        <p><strong>📱 Telefone:</strong> ${m.telefone || 'Não informado'}</p>
+                        <p><strong>✉️ E-mail:</strong> ${m.email || 'Não informado'}</p>
                     </div>
-                `;
-            }).join('');
-        }
 
+                    ${linkSite ? `<p style="font-size:0.85em; margin-top:4px;"><strong>🌐 Site:</strong> <a href="${linkSite}" target="_blank" style="color:#3faf6e; text-decoration:underline;">${m.site}</a></p>` : ''}
+                    ${userInsta ? `<p style="font-size:0.85em; margin-top:4px;"><strong>📸 Instagram:</strong> <a href="https://instagram.com/${userInsta}" target="_blank" style="color:#3faf6e; text-decoration:underline;">@${userInsta}</a></p>` : ''}
+
+                    <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd;">
+                        <p style="font-size:0.85em; color:#333; line-height:1.4;">
+                            <strong>Resumo:</strong> ${m.resumo_servico || 'Sem resumo cadastrado.'}
+                        </p>
+                        ${m.apresentacao ? `<p style="font-size:0.8em; color:#666; margin-top:6px; line-height:1.3;"><strong>Sobre:</strong> ${m.apresentacao}</p>` : ''}
+                    </div>
+
+                    ${servicosHTML}
+                </div>
+                <button onclick="abrirModal(${idMei}, '${nomeExibicao}')" class="btn-acao" style="margin-top:15px;">🤝 Solicitar / Propor Serviço</button>
+            </div>
+        `;
+    }).join('');
+}
         function filtrarCatalogo() {
             const termo = document.getElementById('inputBusca').value.toLowerCase();
             const cat = document.getElementById('selectCategoria').value.toLowerCase();

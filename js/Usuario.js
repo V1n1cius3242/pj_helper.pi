@@ -111,23 +111,24 @@ class PjHelperBD {
     static getCatalogoCompleto(callback) {
         const sql = `
             SELECT 
-                u.id AS usuario_id, 
-                u.email, 
-                pm.id AS mei_id, 
-                COALESCE(NULLIF(pm.nome_fantasia, ''), 'Perfil em Preenchimento') AS nome_fantasia,
-                COALESCE(NULLIF(pm.razao_social, ''), 'Não informada') AS razao_social,
-                COALESCE(NULLIF(pm.categoria, ''), 'Geral') AS categoria,
-                COALESCE(NULLIF(pm.resumo_servico, ''), 'Sem resumo no momento') AS resumo_servico,
-                COALESCE(NULLIF(pm.apresentacao, ''), 'Sem apresentação') AS apresentacao,
-                COALESCE(NULLIF(pm.cidade, ''), 'Não informada') AS cidade,
-                COALESCE(NULLIF(pm.telefone, ''), 'Sem telefone') AS telefone,
-                COALESCE(NULLIF(pm.cnpj, ''), 'Sem CNPJ') AS cnpj,
-                pm.site, 
-                pm.instagram
-            FROM usuarios u
-            LEFT JOIN perfis_mei pm ON u.id = pm.usuario_id
-            WHERE u.tipo = 'mei'
-            ORDER BY u.id DESC
+            u.id AS usuario_id, 
+            u.email, 
+            pm.id AS mei_id, 
+            COALESCE(NULLIF(pm.nome_fantasia, ''), 'Perfil em Preenchimento') AS nome_fantasia,
+            COALESCE(NULLIF(pm.razao_social, ''), 'Não informada') AS razao_social,
+            COALESCE(NULLIF(pm.categoria, ''), 'Geral') AS categoria,
+            COALESCE(NULLIF(pm.resumo_servico, ''), 'Sem resumo no momento') AS resumo_servico,
+            COALESCE(NULLIF(pm.apresentacao, ''), 'Sem apresentação') AS apresentacao,
+            COALESCE(NULLIF(pm.cidade, ''), 'Não informada') AS cidade,
+            COALESCE(NULLIF(pm.telefone, ''), 'Sem telefone') AS telefone,
+            COALESCE(NULLIF(pm.cnpj, ''), 'Sem CNPJ') AS cnpj,
+            COALESCE(pm.anos_experiencia, 0) AS anos_experiencia,
+            pm.site, 
+            pm.instagram
+        FROM usuarios u
+        LEFT JOIN perfis_mei pm ON u.id = pm.usuario_id
+        WHERE u.tipo = 'mei'
+        ORDER BY u.id DESC
         `
         pool.query(sql, (err, res) => {
             if (err) {

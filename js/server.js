@@ -137,9 +137,8 @@ app.post('/perfil-mei', (req, res) => {
     });
 });
 
-// ACEITA QUALQUER UMA DESSAS ROTAS: /perfis-mei, /catalogo-completo ou /meis
 app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
-    const sql = `
+    const sqlMeis = `
         SELECT 
             u.id AS usuario_id, 
             u.email, 
@@ -152,6 +151,7 @@ app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
             COALESCE(NULLIF(pm.cidade, ''), 'Não informada') AS cidade,
             COALESCE(NULLIF(pm.telefone, ''), 'Sem telefone') AS telefone,
             COALESCE(NULLIF(pm.cnpj, ''), 'Sem CNPJ') AS cnpj,
+            COALESCE(pm.anos_experiencia, 0) AS anos_experiencia,
             pm.site, 
             pm.instagram
         FROM usuarios u
@@ -159,9 +159,26 @@ app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
         WHERE u.tipo = 'mei'
         ORDER BY u.id DESC
     `;
-    db.query(sql, (err, results) => {
+
+    db.query(sqlMeis, (err, meis) => {
         if (err) return res.status(500).json({ erro: 'Erro ao carregar catálogo de prestadores.' });
-        res.json(results);
+
+        // Busca todos os itens/serviços cadastrados no catálogo
+        const sqlServicos = 'SELECT * FROM catalogo_itens';
+        db.query(sqlServicos, (err2, servicos) => {
+            if (err2) {
+                // Se der erro ao procurar serviços, retorna apenas a lista de MEIs
+                return res.json(meis.map(m => ({ ...m, servicos: [] })));
+            }
+
+            // Mapeia os serviços pertencentes a cada MEI
+            const resultadoFinal = meis.map(m => {
+                m.servicos = servicos.filter(s => s.mei_id === m.mei_id);
+                return m;
+            });
+
+            res.json(resultadoFinal);
+        });
     });
 });
 
