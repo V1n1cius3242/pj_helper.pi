@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylecadastro.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
@@ -14,26 +14,23 @@
 </head>
 <body>
     <div class="header">
-  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-   <input type="checkbox" id="menu-toggle" style="display: none;">
- 
-    
-      <label for="menu-toggle" class="menu-icon-hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-  <nav>
-    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="catalogo.html" >Clientes</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
-    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
-            <span class="shiny-cta-content1">
-                 Login
-            </span>
-        </button>   <!--BUTTON FUNCIONANDO!-->
-  </nav>
-</div>
+        <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
+
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+            <button onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">Login</span>
+            </button>
+        </nav>
+    </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
         <h2>Cadastro no PJ Helper</h2>
@@ -52,8 +49,9 @@
             <div class="campo">
                 <label for="tipo">Tipo de Conta:</label>
                 <select id="tipo" required>
+                    <option value="" disabled selected>Selecione o tipo de conta</option>
                     <option value="mei">MEI (Prestador de Serviço)</option>
-                    <option value="empresa">Empresa Grande (Contratante)</option>
+                    <option value="empresa">Empresa / Contratante</option>
                     <option value="admin">Administrador (ADM)</option>
                 </select>
             </div>
@@ -75,19 +73,21 @@
     </main>
 
     <footer class="footer">
-        </section>
         <section class="bloco2footer">
-        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
-        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
-        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
-         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt="Icone PJ Helper"></div>
+            <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+            <div class="footer-text2">
+                <p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+                O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p>
+            </div>
         </section>
-       <section class="linhafooter">
-    <div class="linha"></div>
-    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
-</section>
 
+        <section class="linhafooter">
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
     </footer>
+
     <script src="./js/scriptCAD.js"></script>
 </body>
 </html>

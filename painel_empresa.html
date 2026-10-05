@@ -12,21 +12,23 @@
     
     <title>PJ Helper - Empresa</title>
     <script>
-        (function() {
-            try {
-                const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
-                if (!rawUser) throw new Error();
+    (function() {
+        try {
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+            if (!rawUser) throw new Error();
 
-                const user = JSON.parse(rawUser);
-                if (!user || !user.tipo || user.tipo.toString().toLowerCase() !== 'admin') {
-                    throw new Error();
-                }
-            } catch (err) {
-                // Redireciona na hora sem abrir a página
-                window.location.replace('login.html');
+            const user = JSON.parse(rawUser);
+            const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
+            
+            // Aceita tanto 'empresa' quanto 'empresa_grande'
+            if (tipo !== 'empresa' && tipo !== 'empresa_grande') {
+                throw new Error();
             }
-        })();
-    </script>
+        } catch (err) {
+            window.location.replace('login.html');
+        }
+    })();
+</script>
 </head>
 <body>
     

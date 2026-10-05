@@ -15,7 +15,7 @@ const db = mysql.createPool({
     database: 'pj_helper'
 });
 
-// 1. REGISTO DE UTILIZADOR (Aceita tanto /cadastro quanto /usuarios)
+// 1. REGISTRO DE USUÁRIO (Aceita tanto /cadastro quanto /usuarios)
 app.post(['/cadastro', '/usuarios'], async (req, res) => {
     let { email, senha, tipo, chaveAdmin } = req.body;
     
@@ -23,12 +23,12 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
         return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.', erro: 'Preencha todos os campos obrigatórios.' });
     }
 
-    // Normaliza tipo de empresa grande para 'empresa' (padrão das consultas do banco)
+    // Normaliza tipo para aceitar tanto 'empresa' quanto 'empresa_grande'
     if (tipo === 'empresa_grande') tipo = 'empresa';
 
     // Validação da Chave ADM
     if (tipo === 'admin') {
-        const CHAVE_MESTRE_ADM = 'admin123'; // Altere a chave secreta de ADM se desejar
+        const CHAVE_MESTRE_ADM = 'admin123';
         if (chaveAdmin !== CHAVE_MESTRE_ADM) {
             return res.status(401).json({ error: 'Chave de Acesso ADM incorreta!', erro: 'Chave de Acesso ADM incorreta!' });
         }
@@ -45,7 +45,17 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
             
             db.query(sqlInsert, [email, senhaHash, tipo], (err2, resInsert) => {
                 if (err2) return res.status(500).json({ error: 'Erro ao criar conta.', erro: 'Erro ao criar conta.' });
-                res.json({ sucesso: true, message: 'Usuário cadastrado com sucesso!', mensagem: 'Usuário cadastrado com sucesso!', id: resInsert.insertId });
+                
+                const novoId = resInsert.insertId;
+
+                // Cria a estrutura inicial nas tabelas de perfil correspondentes
+                if (tipo === 'mei') {
+                    db.query('INSERT INTO perfis_mei (usuario_id, nome_fantasia) VALUES (?, ?) ON DUPLICATE KEY UPDATE usuario_id = usuario_id', [novoId, 'Perfil em Preenchimento']);
+                } else if (tipo === 'empresa' || tipo === 'empresa_grande') {
+                    db.query('INSERT INTO perfis_empresa (usuario_id, razao_social) VALUES (?, ?) ON DUPLICATE KEY UPDATE usuario_id = usuario_id', [novoId, 'Nova Empresa']);
+                }
+
+                res.json({ sucesso: true, message: 'Usuário cadastrado com sucesso!', mensagem: 'Usuário cadastrado com sucesso!', id: novoId });
             });
         } catch (error) {
             res.status(500).json({ error: 'Erro ao processar encriptação da password.', erro: 'Erro ao processar encriptação da password.' });
@@ -73,8 +83,8 @@ app.post('/login', (req, res) => {
     });
 });
 
-// 3. CATÁLOGO DE ITENS DO MEI
-app.get('/catalogo-itens', (req, res) => {
+// 3. CATÁLOGO DE ITENS / SERVIÇOS DO MEI (Aceita /catalogo-itens e /servicos)
+app.get(['/catalogo-itens', '/servicos'], (req, res) => {
     const { mei_id } = req.query;
     const sql = mei_id ? 'SELECT * FROM catalogo_itens WHERE mei_id = ?' : 'SELECT * FROM catalogo_itens';
     
@@ -84,7 +94,7 @@ app.get('/catalogo-itens', (req, res) => {
     });
 });
 
-app.post('/catalogo-itens', (req, res) => {
+app.post(['/catalogo-itens', '/servicos'], (req, res) => {
     const { mei_id, titulo, descricao, preco } = req.body;
     
     if (!mei_id || !titulo) {
@@ -98,13 +108,32 @@ app.post('/catalogo-itens', (req, res) => {
     });
 });
 
-// 4. PERFIL MEI
+// ROTA GET: Busca o perfil do MEI para preencher a tela (linha 101)
 app.get('/perfil-mei', (req, res) => {
     const { usuario_id } = req.query;
     const sql = 'SELECT * FROM perfis_mei WHERE usuario_id = ?';
     db.query(sql, [usuario_id], (err, results) => {
         if (err) return res.status(500).json({ erro: 'Erro ao procurar perfil.' });
         res.json(results[0] || null);
+    });
+});
+
+// ROTA POST: Adicione esta rota para SALVAR as alterações do formulário
+app.post('/perfil-mei', (req, res) => {
+    const dados = req.body;
+
+    // Exemplo de query para inserir ou atualizar (Ajuste os nomes das colunas conforme sua tabela)
+    const sql = `
+        INSERT INTO perfis_mei SET ? 
+        ON DUPLICATE KEY UPDATE ?
+    `;
+
+    db.query(sql, [dados, dados], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao salvar perfil no banco.' });
+        }
+        res.json({ sucesso: true, mensagem: 'Perfil salvo com sucesso!' });
     });
 });
 
