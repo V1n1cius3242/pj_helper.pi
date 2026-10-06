@@ -1,0 +1,545 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f5f5f5;
+}
+.header {
+  height: 9vh;
+  background-color: rgba(255, 255, 255, 0.514);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;  /*garante que fiquem alinhados*/
+  margin-top: 0;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  z-index: 999;  /*z-index garante que o header passe por cima de tudo*/
+  width: 100%; 
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%; 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.iconimg {
+  width: 75px;
+}
+nav {
+  display: flex;
+  align-items: center; 
+  gap: 30px; 
+}
+.navitens {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* HOUVER LUZ VERDE - BOTÃO PRETO */
+.shiny-cta1:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta1:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+
+/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES) */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.shiny-cta1 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 10px 20px; 
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+
+/* CAMADA DAS BOLINHAS VERDES */
+.shiny-cta1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta1::after { 
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta-content1 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.designloginnav{
+  font-weight: bold;
+  text-decoration: none;  
+}
+
+/*final do botao login*/
+
+.text-card {
+  flex: 1;
+}
+
+.span {
+  color: #3faf6e;
+  font-weight: bold;
+}
+
+.titulospan {
+  margin-top: 2%;
+  font-size: 35px;
+  color: #171717;
+  line-height: 1.2;
+}
+
+.textspan {
+  margin-top: 3%;
+  font-size: 19px;
+  color: #414141;
+  line-height: 1.6;
+}
+.span2 {
+  color: #3faf6e;
+  text-align: center;
+  margin-top: 8%;
+  font-size: medium;
+}
+
+.subspan2 {
+  font-size: 35px;
+  text-align: center;
+  margin-top: 10px;
+  color: #171717;
+}
+
+.textspan2 {
+  text-align: center;
+  margin-top: 10px;
+  color: #333;
+}
+.cards {
+  height: auto; /* Permite que a altura cresça com os cards empilhados */
+  width: 35%; 
+  margin: 4% auto 0 auto; /* O 'auto' nas laterais centraliza o container na página */
+  display: flex;
+  flex-direction: column; /* Empilha os cards um embaixo do outro */
+  gap: 25px; 
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+/* Card Individual */
+.card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(65, 65, 65, 0.151);
+  box-sizing: border-box;
+  padding: 50px;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+}
+/* Círculo do Ícone do Card */
+.imgcard {
+  background-color: #c9ffdf;
+  height: 50px;
+  width: 50px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border-radius: 100px;
+}
+/* Título do Card */
+.nomecard {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Descrição do Card */
+.textcard1 {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #0a0a0a;
+}
+
+/* Ajustes Específicos das Imagens dos Ícones */
+.imgcardsub1, .imgcardsub2, .imgcardsub3 {
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+}
+
+.imgcardsub1 {
+  width: 35px;
+  margin-top: 6px;
+}
+
+.imgcardsub2 {
+  width: 40px;
+  margin-top: 6px;
+}
+
+.imgcardsub3 {
+  width: 30px;
+  margin-top: 10px;
+}
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.fundo{
+  margin-top: 20px;
+  width: 100%;
+
+}/* Adicione este bloco ao seu CSS */
+.buttonsfinais {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
+}
+.shiny-cta2:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta2:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.shiny-cta2 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 15px 30px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
+  background:
+  linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box,
+  conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,
+  #047857 5%,
+  var(--gradient-shine) 15%,
+  #047857 30%,
+  transparent 40%,
+  transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta2::after { /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta2-content {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
+/* Classes de animação ao rolar */
+.escondido {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.animar-ao-rolar {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Menu Hambúrguer */
+.menu-icon-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.menu-icon-hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+/* FOOTER */
+.footer {
+  background-color: #171717;
+  height: auto;
+  margin-top: 10vh;
+  padding: 40px 20px 30px 20px;
+}
+
+.bloco2footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-icon img {
+  width: 60px;
+  margin-top: 20px;
+}
+
+.footer-text1 {
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+.footer-text2 {
+  margin-top: 10px;
+  color: #919191;
+  font-weight: 400;
+  text-align: center;
+}
+
+.linhafooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px; 
+}
+
+.linha {
+  width: 70%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.15); 
+  margin-bottom: 20px; 
+}
+
+.direitosautorais {
+  color: #8c8c8c;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif; 
+  font-weight: 400;
+}
+/* ==========================================================================
+   MEDIA QUERY PARA DISPOSITIVOS MÓVEIS (Telas até 768px)
+   ========================================================================== */
+@media (max-width: 768px) { 
+  .header { 
+    padding: 0 5%; 
+    height: 8vh; 
+    position: fixed; 
+    background-color: rgba(255, 255, 255, 0.514);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  } 
+  .header:has(#menu-toggle:checked) {
+    background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: none;
+  }
+
+  .iconimg { 
+    width: 60px; 
+    z-index: 91;
+  } 
+  .menu-icon-hamburger { 
+    display: flex; 
+  } 
+    nav { 
+    display: flex; 
+    flex-direction: column; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    padding-top: calc(8vh + 25px);
+    padding-bottom: 25px;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 0.94); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    gap: 25px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
+    align-items: center; 
+    z-index: 90; 
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px); 
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
+  }
+  #menu-toggle:checked ~ nav { 
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); 
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.2s;
+  }
+  .navitens { 
+    font-size: 18px; 
+    width: 100%; 
+    text-align: center; 
+    display: block; 
+  } 
+
+  .shiny-cta1 { 
+    padding: 12px 25px; 
+    font-size: 14px; 
+    width: 90%; 
+    text-align: center; 
+    margin-top: 10px;
+  } 
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
+    transform: rotate(45deg) translate(5px, 6px); 
+  } 
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
+    opacity: 0; 
+  } 
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
+    transform: rotate(-45deg) translate(5px, -6px); 
+  } 
+
+  /* Footer */ 
+  .footer { 
+    height: auto; 
+    padding: 40px 20px; 
+  } 
+
+  .subspanfooter { 
+    font-size: 26px; 
+    font-weight: 600; 
+  } 
+
+  .footer-icon img { 
+    margin-top: 40px; 
+  } 
+
+  .linha { 
+    width: 90%; 
+  } 
+}
