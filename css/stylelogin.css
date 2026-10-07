@@ -152,10 +152,9 @@ nav {
     padding: 20px;
     width: 100%;
 }
-
 /* Centralização da sessão de login/cadastro */
 .login-section {
-  margin-top: 10vh;
+  margin-top: 4%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,22 +164,23 @@ nav {
 .login-card {
     background: #ffffff;
     padding: 40px;
-    border-radius: 12px;
+    height: 65vh;
+    border-radius: 30px;
     box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
     width: 100%;
-    border-radius: 8px;
     border: 0.10px solid  #81818141;
     max-width: 420px;
     text-align: center;
 }
 
 .login-card .logo-login {
-    width: 90px;
-    margin-bottom: 15px;
+    width: 70px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .login-card h2 {
-    margin-bottom: 25px;
+    margin-bottom: 50px;
     color: #000000;
     font-size: 1.5rem;
 }
@@ -195,7 +195,7 @@ nav {
 .login-card .campo label {
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     color: #444;
 }
 
@@ -212,24 +212,113 @@ nav {
 .login-card .campo input:focus {
     border-color: #3faf6e;
 }
-
-.login-card button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background-color: #3faf6e;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 10px;
+/*HOUVER LUZ VERDE - BOTÃO PRETO (BUTTON ENTRAR)*/
+.shiny-cta2:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+.shiny-cta2:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+} 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
-
-.login-card button[type="submit"]:hover {
-    background-color: #33915a;
+.shiny-cta2 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+ 
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  width: 220px;
+  height: 45px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  position: relative;
+  padding: 10px 20px; 
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
 }
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+ -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(
+  120deg,
+  transparent 30%,
+  rgba(0, 0, 0, 1) 48%,
+  rgba(0, 0, 0, 1) 52%,
+  transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.shiny-cta2::after { /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(255, 255, 255, 0.25),
+  transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+.shiny-cta-content2 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES (BUTTON ENTRAR)*/
 
 /* FOOTER */
 .footer {
