@@ -154,7 +154,7 @@ nav {
 }
 /* Centralização da sessão de login/cadastro */
 .login-section {
-  margin-top: 4%;
+  margin-top: 2%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -164,7 +164,7 @@ nav {
 .login-card {
     background: #ffffff;
     padding: 40px;
-    height: 65vh;
+    height: auto;
     border-radius: 30px;
     box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
     width: 100%;
@@ -199,18 +199,74 @@ nav {
     color: #444;
 }
 
+/* Container para alinhar o ícone dentro do input */
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Posicionamento do container da imagem */
+.input-com-icone .icone-input {
+    position: absolute;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Clicar na imagem foca direto no input */
+    z-index: 2;
+}
+.input-com-icone .icone-input img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    /* Deixa a imagem acinzentada por padrão */
+    filter: grayscale(100%) opacity(0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.input-com-icone input {
+    width: 100%;
+    padding: 12px 14px 12px 40px !important;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+.input-com-icone input:hover,
+.input-com-icone input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* 2. Força a IMAGEM a ficar VERDE NEON com brilho */
+.input-com-icone input:hover ~ .icone-input img,
+.input-com-icone input:focus ~ .icone-input img {
+    /* Filtro CSS para converter a imagem para a tonalidade #10b981 */
+    filter: invert(52%) sepia(85%) saturate(1432%) hue-rotate(125deg) brightness(97%) contrast(89%) drop-shadow(0 0 5px rgba(16, 185, 129, 0.8));
+}
+
+
 .login-card .campo input {
     padding: 12px 14px;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-radius: 20px;
+    font-size: 0.88rem;
     font-family: 'Montserrat', sans-serif;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.3s ease-in-out; /* Transição suave para o efeito neon */
+}
+.login-card .campo input:hover {
+    border-color:  #3faf80;
+    box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3);
 }
 
 .login-card .campo input:focus {
-    border-color: #3faf6e;
+    border-color:  #3faf80;
+    box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3);
 }
 /*HOUVER LUZ VERDE - BOTÃO PRETO (BUTTON ENTRAR)*/
 .shiny-cta2:hover { 
@@ -324,7 +380,7 @@ nav {
 .footer {
   background-color: #171717;
   height: auto;
-  margin-top: 10vh;
+  margin-top: 2vh;
   padding: 40px 20px 30px 20px;
 }
 
@@ -396,110 +452,121 @@ nav {
 @media (max-width: 768px) { 
   .header { 
     padding: 0 5%; 
-    height: 8vh; 
+    height: 60px; 
     position: fixed; 
-    background-color: rgba(255, 255, 255, 0.514);
+    background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
   } 
-  .header:has(#menu-toggle:checked) {
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: none;
-  }
 
   .iconimg { 
-    width: 60px; 
+    width: 50px; 
     z-index: 91;
   } 
+
   .menu-icon-hamburger { 
     display: flex; 
   } 
-    nav { 
+
+  nav { 
     display: flex; 
     flex-direction: column; 
     position: absolute; 
-    top: 0; 
+    top: 60px; 
     left: 0; 
     width: 100%; 
-    padding-top: calc(8vh + 25px);
-    padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
-    background-color: rgba(255, 255, 255, 0.94); 
+    padding: 20px 0;
+    background-color: rgba(255, 255, 255, 0.98); 
     backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px); 
-    gap: 25px; 
+    gap: 20px; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
     align-items: center; 
     z-index: 90; 
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-6px); 
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
+    transform: translateY(-10px); 
+    transition: all 0.3s ease;
   }
+
   #menu-toggle:checked ~ nav { 
     opacity: 1;
     visibility: visible;
     transform: translateY(0); 
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.2s;
   }
+
   .navitens { 
-    font-size: 18px; 
+    font-size: 16px; 
     width: 100%; 
     text-align: center; 
     display: block; 
   } 
 
   .shiny-cta1 { 
-    padding: 12px 25px; 
+    padding: 10px 20px; 
     font-size: 14px; 
-    width: 90%; 
+    width: 80%; 
     text-align: center; 
-    margin-top: 10px;
   } 
 
+  /* Animação do ícone Hambúrguer */
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
-    transform: rotate(45deg) translate(5px, 6px); 
+    transform: rotate(45deg) translate(5px, 5px); 
   } 
-
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
     opacity: 0; 
   } 
-
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
-    transform: rotate(-45deg) translate(5px, -6px); 
+    transform: rotate(-45deg) translate(6px, -6px); 
   } 
 
-  /* Footer */ 
-  .footer { 
-    height: auto; 
-    padding: 40px 20px; 
-  } 
+  /* Ajustes do Corpo/Card no Telemóvel */
+  .container {
+    padding: 15px;
+    margin-top: 70px !important;
+    min-height: auto !important;
+  }
 
-  .subspanfooter { 
-    font-size: 26px; 
-    font-weight: 600; 
-  } 
+  .login-section {
+    padding: 10px 0;
+    margin-top: 0;
+  }
 
-  .buttonsfinais { 
-    flex-direction: column; 
-    gap: 15px; 
-    margin-top: 30px; 
-  } 
+  .login-card {
+    padding: 25px 18px;
+    height: auto !important; /* impede o card de estourar a ecrã */
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
 
-  .button1footer { 
-    margin: 0; 
-    width: 80%; 
-  } 
+  .login-card .logo-login {
+    width: 55px;
+    margin-top: 0;
+  }
 
+  .login-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+  }
+
+  /* Ajuste do Botão Entrar para caber certinho */
   .shiny-cta2 { 
-    width: 80%; 
-    text-align: center; 
+    width: 100%; 
+    max-width: 260px;
+    margin: 15px auto 15px auto; 
+    display: block;
   } 
 
-  .footer-icon img { 
-    margin-top: 40px; 
+  /* Footer no Telemóvel */ 
+  .footer { 
+    margin-top: 40px;
+    padding: 30px 15px; 
   } 
+
+  .footer-text2 p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
 
   .linha { 
     width: 90%; 
