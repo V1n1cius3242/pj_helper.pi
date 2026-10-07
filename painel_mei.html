@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_mei.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
@@ -26,31 +26,29 @@
     </script>
     
     <title>PJ Helper - MEI</title>
-    
 </head>
 <body>
 
-    
     <div class="header">
-  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-   <input type="checkbox" id="menu-toggle" style="display: none;">
- 
-      <label for="menu-toggle" class="menu-icon-hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-  <nav>
-    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
-    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
-            <span class="shiny-cta-content1">
-                 Login
-            </span>
-        </button>   <!--BUTTON FUNCIONANDO!-->
-  </nav>
-</div>
+        <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
+        
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+            <button onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">
+                    Login
+                </span>
+            </button>
+        </nav>
+    </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
         
@@ -112,40 +110,29 @@
                 <input type="text" id="servico_desc" placeholder="Descrição curta" style="grid-column: span 2; padding:8px;">
                 <button type="submit" style="grid-column: span 2; background:#007bff; color:#fff; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Cadastrar Serviço</button>
             </form>
-            <ul id="listaServicos" style="margin-top:15px; padding-left:20px;"></ul>
+            <ul id="listaServicos" style="margin-top:15px; padding-left:0; list-style:none;"></ul>
         </div>
 
-        <!-- 4. PORTFÓLIO VIA LINK -->
-        <div class="secao">
-            <h3> Portfólio (Fotos dos Trabalhos)</h3>
-            <form id="formPort" class="grid-2">
-                <input type="text" id="port_titulo" placeholder="Título do Projeto" required style="padding:8px;">
-                <input type="url" id="port_url" placeholder="URL da Imagem (https://...)" required style="padding:8px;">
-                <button type="submit" style="grid-column: span 2; background:#6f42c1; color:#fff; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Adicionar ao Portfólio</button>
-            </form>
-            <div id="galeriaPort" style="margin-top: 15px;"></div>
-        </div>
-
-        <!-- 5. PROPOSTAS E CONTRATOS -->
+        <!-- 4. PROPOSTAS E CONTRATOS -->
         <div class="secao">
             <h3> Interesses Recebidos & Reuniões Agendadas</h3>
             <div id="listaContratos"></div>
         </div>
     </main>
 
-     <footer class="footer">
-        </section>
+    <footer class="footer">
         <section class="bloco2footer">
-        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
-        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
-        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
-         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+            <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+            <div class="footer-text2">
+                <p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+                O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p>
+            </div>
         </section>
-       <section class="linhafooter">
-    <div class="linha"></div>
-    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
-</section>
-
+        <section class="linhafooter">
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
     </footer>
     <script src="./js/scriptMEI.js"></script>
 </body>
