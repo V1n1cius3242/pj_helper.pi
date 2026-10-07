@@ -112,24 +112,78 @@
         `;
     }).join('');
 }
-        function filtrarCatalogo() {
-            const termo = document.getElementById('inputBusca').value.toLowerCase();
-            const cat = document.getElementById('selectCategoria').value.toLowerCase();
+        // Variável pra guardar a categoria atualmente selecionada
+let categoriaSelecionada = '';
 
-            const filtrados = listaMeisGeral.filter(m => {
-                const nome = (m.nome_fantasia || m.razao_social || '').toLowerCase();
-                const resumo = (m.resumo_servico || m.apresentacao || '').toLowerCase();
-                const categoria = (m.categoria || '').toLowerCase();
+// Função chamada ao clicar em qualquer pill de categoria
+function selecionarCategoria(botaoClicado, categoria) {
+    // Remove a classe 'active' de todos os botões
+    const botoes = document.querySelectorAll('.pill-btn');
+    botoes.forEach(btn => btn.classList.remove('active'));
 
-                const bateTexto = nome.includes(termo) || resumo.includes(termo);
-                const bateCategoria = cat === '' || categoria.includes(cat);
+    // Adiciona a classe 'active' só no botão que o usuário clicou
+    botaoClicado.classList.add('active');
 
-                return bateTexto && bateCategoria;
-            });
+    // Atualiza a categoria global e roda o filtro de novo
+    categoriaSelecionada = categoria;
+    filtrarCatalogo();
+}
 
-            exibirCatalogo(filtrados);
-        }
+function filtrarCatalogo() {
+    const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
+    const cat = categoriaSelecionada.toLowerCase();
+    
+    // Remove caracteres especiais caso pesquise por CNPJ ou Telefone só com números
+    const termoApenasNumeros = termo.replace(/\D/g, '');
 
+    const filtrados = listaMeisGeral.filter(m => {
+        const nomeFantasia = (m.nome_fantasia || '').toLowerCase();
+        const razaoSocial = (m.razao_social || '').toLowerCase();
+        const email = (m.email || '').toLowerCase();
+        const cnpj = (m.cnpj || '').toLowerCase();
+        const cnpjNumeros = (m.cnpj || '').replace(/\D/g, '');
+        const cidade = (m.cidade || '').toLowerCase();
+        const telefone = (m.telefone || '').toLowerCase();
+        const telefoneNumeros = (m.telefone || '').replace(/\D/g, '');
+        const instagram = (m.instagram || '').toLowerCase();
+        const resumo = (m.resumo_servico || '').toLowerCase();
+        const apresentacao = (m.apresentacao || '').toLowerCase();
+        const categoria = (m.categoria || '').toLowerCase();
+        const site = (m.site || '').toLowerCase();
+
+        // Pesquisa nos serviços da tabela do MEI
+        const bateuServico = Array.isArray(m.servicos) && m.servicos.some(s => {
+            const tituloServico = (s.titulo || '').toLowerCase();
+            const descServico = (s.descricao || '').toLowerCase();
+            return tituloServico.includes(termo) || descServico.includes(termo);
+        });
+
+        const bateTexto = termo === '' || 
+            nomeFantasia.includes(termo) ||
+            razaoSocial.includes(termo) ||
+            email.includes(termo) ||
+            cnpj.includes(termo) ||
+            (termoApenasNumeros !== '' && cnpjNumeros.includes(termoApenasNumeros)) ||
+            cidade.includes(termo) ||
+            telefone.includes(termo) ||
+            (termoApenasNumeros !== '' && telefoneNumeros.includes(termoApenasNumeros)) ||
+            instagram.includes(termo) ||
+            resumo.includes(termo) ||
+            apresentacao.includes(termo) ||
+            site.includes(termo) ||
+            bateuServico;
+
+        // Normaliza para ignorar acentos na comparação da categoria
+        const categoriaNormalizada = categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const catNormalizada = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const bateCategoria = cat === '' || categoriaNormalizada.includes(catNormalizada);
+
+        return bateTexto && bateCategoria;
+    });
+
+    exibirCatalogo(filtrados);
+}
         // MODAL PROPOSTA
         function abrirModal(meiUsuarioId, nomeMei) {
             if (!user) {

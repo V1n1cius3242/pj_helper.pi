@@ -33,31 +33,40 @@
         </button>   <!--BUTTON FUNCIONANDO!-->
   </nav>
 </div>
-
-        <main class="container" style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+   
+       <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
         
         <!-- HEADER -->
         <div class="header-topo">
             <div>
-                <h2 style="margin: 0; color: #333;"> Catálogo de Prestadores MEI</h2>
-                <small style="color: #666;">Encontre os melhores profissionais para a sua empresa</small>
+                <h2 style="margin: 0; color: #000000;">Catálogo de Prestadores MEI</h2>
+                <small style="color: #414141; font-size: 15px;">Encontre os melhores profissionais para a sua empresa</small>
             </div>
             <a id="btnVoltarPainel" href="login.html" class="btn-voltar">⬅ Voltar ao Painel</a>
         </div>
 
         <div id="bannerAviso"></div>
 
-        <!-- FILTROS DE BUSCA -->
-        <div class="filtros-container">
-            <input type="text" id="inputBusca" placeholder="Buscar por nome, serviço ou palavra-chave..." oninput="filtrarCatalogo()">
-            <select id="selectCategoria" onchange="filtrarCatalogo()">
-                <option value="">Todas as Categorias</option>
-                <option value="Tecnologia">Tecnologia / TI</option>
-                <option value="Manutenção">Manutenção / Serviços Gerais</option>
-                <option value="Design">Design / Marketing</option>
-                <option value="Geral">Geral</option>
-            </select>
-        </div>
+<!-- FILTROS DE BUSCA -->
+<div class="filtros-container" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <!-- Input de busca -->
+    <input type="text" id="inputBusca" placeholder="Buscar por nome, razão social, e-mail, CNPJ, serviço..." oninput="filtrarCatalogo()">
+
+    <!-- Botoes de Categoria (Pills) -->
+    <div class="categorias-pills" id="containerCategorias">
+        <button class="pill-btn active" onclick="selecionarCategoria(this, '')">Todos</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Agricultura')">Agricultura</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Alimentacao')">Alimentação</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Confeitaria')">Confeitaria</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Construcao')">Construção</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Logistica')">Logística</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Tecnologia')">Tecnologia</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Textil')">Têxtil</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Outros')">Outros</button>
+    </div>
+
+</div>
 
         <!-- GRID DE CARDS -->
         <div id="gridCatalogo" class="grid-3">
