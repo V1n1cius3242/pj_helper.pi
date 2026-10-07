@@ -15,7 +15,7 @@ const db = mysql.createPool({
     database: 'pj_helper'
 });
 
-// 1. REGISTRO DE USUÁRIO (Aceita tanto /cadastro quanto /usuarios)
+// 1. REGISTRO DE USUÁRIO
 app.post(['/cadastro', '/usuarios'], async (req, res) => {
     let { email, senha, tipo, chaveAdmin } = req.body;
     
@@ -23,10 +23,8 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
         return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.', erro: 'Preencha todos os campos obrigatórios.' });
     }
 
-    // Normaliza tipo para aceitar tanto 'empresa' quanto 'empresa_grande'
     if (tipo === 'empresa_grande') tipo = 'empresa';
 
-    // Validação da Chave ADM
     if (tipo === 'admin') {
         const CHAVE_MESTRE_ADM = 'admin123';
         if (chaveAdmin !== CHAVE_MESTRE_ADM) {
@@ -48,7 +46,6 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
                 
                 const novoId = resInsert.insertId;
 
-                // Cria a estrutura inicial nas tabelas de perfil correspondentes
                 if (tipo === 'mei') {
                     db.query('INSERT INTO perfis_mei (usuario_id, nome_fantasia) VALUES (?, ?) ON DUPLICATE KEY UPDATE usuario_id = usuario_id', [novoId, 'Perfil em Preenchimento']);
                 } else if (tipo === 'empresa' || tipo === 'empresa_grande') {
@@ -63,27 +60,27 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
     });
 });
 
-// 2. LOGIN (Validação com bcrypt)
+// 2. LOGIN
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
     const sql = 'SELECT id, email, senha, tipo FROM usuarios WHERE email = ?';
     
     db.query(sql, [email], async (err, results) => {
         if (err) return res.status(500).json({ erro: 'Erro interno na base de dados.' });
-        if (results.length === 0) return res.status(401).json({ erro: 'E-mail ou password incorretos.' });
+        if (results.length === 0) return res.status(401).json({ erro: 'E-mail ou senha incorretos.' });
 
         const usuario = results[0];
         const senhaValida = await bcrypt.compare(senha, usuario.senha);
         
         if (!senhaValida) {
-            return res.status(401).json({ erro: 'E-mail ou password incorretos.' });
+            return res.status(401).json({ erro: 'E-mail ou senha incorretos.' });
         }
         
         res.json({ usuario: { id: usuario.id, email: usuario.email, tipo: usuario.tipo } });
     });
 });
 
-// 3. CATÁLOGO DE ITENS / SERVIÇOS DO MEI (Aceita /catalogo-itens e /servicos)
+// 3. CATÁLOGO DE ITENS / SERVIÇOS DO MEI
 app.get(['/catalogo-itens', '/servicos'], (req, res) => {
     const { mei_id } = req.query;
     const sql = mei_id ? 'SELECT * FROM catalogo_itens WHERE mei_id = ?' : 'SELECT * FROM catalogo_itens';
@@ -108,7 +105,17 @@ app.post(['/catalogo-itens', '/servicos'], (req, res) => {
     });
 });
 
-// ROTA GET: Busca o perfil do MEI para preencher a tela (linha 101)
+// NOVO: ROTA PARA DELETAR SERVIÇO
+app.delete(['/catalogo-itens/:id', '/servicos/:id'], (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM catalogo_itens WHERE id = ?';
+    db.query(sql, [id], (err, result) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao apagar serviço do catálogo.' });
+        res.json({ sucesso: true, mensagem: 'Serviço removido com sucesso!' });
+    });
+});
+
+// 4. PERFIL MEI
 app.get('/perfil-mei', (req, res) => {
     const { usuario_id } = req.query;
     const sql = 'SELECT * FROM perfis_mei WHERE usuario_id = ?';
@@ -118,11 +125,8 @@ app.get('/perfil-mei', (req, res) => {
     });
 });
 
-// ROTA POST: Adicione esta rota para SALVAR as alterações do formulário
 app.post('/perfil-mei', (req, res) => {
     const dados = req.body;
-
-    // Exemplo de query para inserir ou atualizar (Ajuste os nomes das colunas conforme sua tabela)
     const sql = `
         INSERT INTO perfis_mei SET ? 
         ON DUPLICATE KEY UPDATE ?
@@ -163,15 +167,12 @@ app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
     db.query(sqlMeis, (err, meis) => {
         if (err) return res.status(500).json({ erro: 'Erro ao carregar catálogo de prestadores.' });
 
-        // Busca todos os itens/serviços cadastrados no catálogo
         const sqlServicos = 'SELECT * FROM catalogo_itens';
         db.query(sqlServicos, (err2, servicos) => {
             if (err2) {
-                // Se der erro ao procurar serviços, retorna apenas a lista de MEIs
                 return res.json(meis.map(m => ({ ...m, servicos: [] })));
             }
 
-            // Mapeia os serviços pertencentes a cada MEI
             const resultadoFinal = meis.map(m => {
                 m.servicos = servicos.filter(s => s.mei_id === m.mei_id);
                 return m;
@@ -218,8 +219,6 @@ app.post('/perfil-empresa', (req, res) => {
 app.post('/proposta', (req, res) => {
     const { empresa_usuario_id, mei_usuario_id, titulo_servico, descricao, valor, link_reuniao, data_reuniao } = req.body;
 
-    console.log('📌 Nova proposta recebida:', req.body);
-
     const sql = `
         INSERT INTO contratos (empresa_usuario_id, mei_usuario_id, titulo_servico, descricao, valor, status, link_reuniao, data_reuniao)
         VALUES (?, ?, ?, ?, ?, 'pendente', ?, ?)
@@ -227,7 +226,6 @@ app.post('/proposta', (req, res) => {
     
     db.query(sql, [empresa_usuario_id, mei_usuario_id, titulo_servico, descricao, valor, link_reuniao || null, data_reuniao || null], (err, result) => {
         if (err) {
-            console.error('❌ Erro no SQL da proposta:', err);
             return res.status(500).json({ erro: 'Erro ao registar proposta.' });
         }
 
@@ -263,24 +261,7 @@ app.post('/atualizar-contrato', (req, res) => {
     });
 });
 
-// 7. PORTFÓLIO DO MEI
-app.get('/portfolio', (req, res) => {
-    const { mei_id } = req.query;
-    db.query('SELECT * FROM portfolio WHERE mei_id = ? ORDER BY id DESC', [mei_id], (err, results) => {
-        if (err) return res.status(500).json({ erro: 'Erro ao procurar portfólio.' });
-        res.json(results);
-    });
-});
-
-app.post('/portfolio', (req, res) => {
-    const { mei_id, titulo, imagem_url, descricao } = req.body;
-    db.query('INSERT INTO portfolio (mei_id, titulo, imagem_url, descricao) VALUES (?, ?, ?, ?)', [mei_id, titulo, imagem_url, descricao], (err) => {
-        if (err) return res.status(500).json({ erro: 'Erro ao adicionar item ao portfólio.' });
-        res.json({ sucesso: true });
-    });
-});
-
-// 8. NOTIFICAÇÕES
+// 7. NOTIFICAÇÕES
 app.get('/notificacoes', (req, res) => {
     const { usuario_id } = req.query;
     db.query('SELECT * FROM notificacoes WHERE usuario_id = ? ORDER BY id DESC', [usuario_id], (err, results) => {
@@ -289,7 +270,7 @@ app.get('/notificacoes', (req, res) => {
     });
 });
 
-// 9. PAINEL ADMIN - DADOS E FUNÇÕES EXCLUSIVAS
+// 8. PAINEL ADMIN
 app.get('/admin/dados', (req, res) => {
     const sqlUsers = 'SELECT id, email, tipo FROM usuarios';
     const sqlContratos = 'SELECT * FROM contratos ORDER BY id DESC';
@@ -303,7 +284,6 @@ app.get('/admin/dados', (req, res) => {
     });
 });
 
-// [EXCLUSIVO ADM] 9.1. Listar todas as reuniões e propostas
 app.get('/admin/reunioes', (req, res) => {
     const sql = `
         SELECT 
@@ -325,25 +305,18 @@ app.get('/admin/reunioes', (req, res) => {
         ORDER BY c.id DESC
     `;
     db.query(sql, (err, results) => {
-        if (err) {
-            console.error('❌ Erro na busca de reuniões do Admin:', err);
-            return res.status(500).json({ erro: 'Erro ao carregar reuniões para o Admin.' });
-        }
+        if (err) return res.status(500).json({ erro: 'Erro ao carregar reuniões para o Admin.' });
         res.json(results);
     });
 });
 
-// [EXCLUSIVO ADM] 9.2. Confirmar se o contrato foi firmado
 app.post('/admin/confirmar-contrato', (req, res) => {
     const { contrato_id, status } = req.body;
     const novoStatus = status || 'concluido';
 
     const sql = 'UPDATE contratos SET status = ? WHERE id = ?';
     db.query(sql, [novoStatus, contrato_id], (err) => {
-        if (err) {
-            console.error('❌ Erro ao confirmar contrato:', err);
-            return res.status(500).json({ erro: 'Erro ao confirmar contrato. Verifique o status enviado.' });
-        }
+        if (err) return res.status(500).json({ erro: 'Erro ao confirmar contrato.' });
 
         db.query('SELECT empresa_usuario_id, mei_usuario_id FROM contratos WHERE id = ?', [contrato_id], (err2, result) => {
             if (!err2 && result.length > 0) {
@@ -358,12 +331,11 @@ app.post('/admin/confirmar-contrato', (req, res) => {
     });
 });
 
-// [EXCLUSIVO ADM] 9.3. Enviar/Anexar versão digitalizada do contrato
 app.post('/admin/anexar-contrato', (req, res) => {
     const { contrato_id, contrato_digitalizado_url } = req.body;
 
     if (!contrato_id || !contrato_digitalizado_url) {
-        return res.status(400).json({ erro: 'ID do contrato e URL do documento digitalizado são obrigatórios.' });
+        return res.status(400).json({ erro: 'ID do contrato e URL são obrigatórios.' });
     }
 
     const sql = 'UPDATE contratos SET contrato_digitalizado_url = ? WHERE id = ?';
@@ -379,10 +351,10 @@ app.post('/admin/anexar-contrato', (req, res) => {
             }
         });
 
-        res.json({ sucesso: true, mensagem: 'Versão digitalizada enviada e partes notificadas!' });
+        res.json({ sucesso: true, mensagem: 'Versão digitalizada enviada!' });
     });
 });
 
 app.listen(3000, () => {
-    console.log('🚀 Servidor a rodar na porta 3000!');
+    console.log('🚀 Servidor rodando na porta 3000!');
 });
