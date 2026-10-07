@@ -146,6 +146,30 @@ nav {
   text-decoration: none;  
 }
 
+
+.contbox{
+  width:32% ;
+  margin-left: auto;
+  margin-top: 25px;
+  margin-right: auto;
+  padding: 20px;
+  box-shadow: #b8b8b8 0px 30px 40px 1px;
+  border-radius: 20px;
+
+}
+.iconcad{
+  align-items: center;
+  text-align: center;
+}
+.iconcad img{
+  width: 20%;
+}
+.iconcad h2{
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+
 /* FOOTER */
 .footer {
   background-color: #171717;
@@ -219,107 +243,6 @@ nav {
     
 
 /*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
-@media (max-width: 768px) { 
-  .header { 
-    padding: 0 5%; 
-    height: 8vh; 
-    position: fixed; 
-    background-color: rgba(255, 255, 255, 0.514);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  } 
-  .header:has(#menu-toggle:checked) {
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: none;
-  }
-
-  .iconimg { 
-    width: 60px; 
-    z-index: 91;
-  } 
-  .menu-icon-hamburger { 
-    display: flex; 
-  } 
-    nav { 
-    display: flex; 
-    flex-direction: column; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    padding-top: calc(8vh + 25px);
-    padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
-    background-color: rgba(255, 255, 255, 0.94); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    gap: 25px; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
-    align-items: center; 
-    z-index: 90; 
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-6px); 
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
-  }
-  #menu-toggle:checked ~ nav { 
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0); 
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.2s;
-  }
-  .navitens { 
-    font-size: 18px; 
-    width: 100%; 
-    text-align: center; 
-    display: block; 
-  } 
-
-  .shiny-cta1 { 
-    padding: 12px 25px; 
-    font-size: 14px; 
-    width: 90%; 
-    text-align: center; 
-    margin-top: 10px;
-  } 
-
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
-    transform: rotate(45deg) translate(5px, 6px); 
-  } 
-
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
-    opacity: 0; 
-  } 
-
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
-    transform: rotate(-45deg) translate(5px, -6px); 
-  } 
-
-  /* Footer */ 
-  .footer { 
-    height: auto; 
-    padding: 40px 20px; 
-  } 
-
-  .subspanfooter { 
-    font-size: 26px; 
-    font-weight: 600; 
-  } 
-
-  .footer-icon img { 
-    margin-top: 40px; 
-  } 
-
-  .linha { 
-    width: 90%; 
-  } 
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    padding: 20px;
-}
 
 .container {
     max-width: 400px;
@@ -330,18 +253,19 @@ body {
 }
 
 .campo {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .campo label {
-    display: block;
     margin-bottom: 5px;
 }
 
 .campo input, .campo select {
     width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #e4e4e4;
 }
 
 @property --gradient-angle {
@@ -466,5 +390,214 @@ body {
   }
   100% {
     left: 200%;
+  }
+}
+
+/* =========================================================
+   RESPONSIVIDADE DO CONTEÚDO
+   Header e footer não são alterados aqui.
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Espaço para o header fixo */
+  .contbox {
+    width: min(92%, 500px);
+    margin: calc(8vh + 30px) auto 30px;
+    padding: 18px;
+  }
+
+  .iconcad img {
+    width: 28%;
+    max-width: 100px;
+  }
+
+  .iconcad h2 {
+    font-size: 22px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
+
+  .container {
+    width: min(92%, 500px);
+    max-width: 100%;
+    margin: calc(8vh + 30px) auto 30px;
+    padding: 18px;
+  }
+
+  .campo {
+    margin-bottom: 20px;
+  }
+
+  .campo input,
+  .campo select {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .shiny-cta {
+    width: 100%;
+    max-width: 100%;
+    padding: 11px 20px;
+    font-size: 14px;
+  }
+
+  .shiny-cta-content {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .contbox,
+  .container {
+    width: calc(100% - 24px);
+    padding: 15px;
+    border-radius: 14px;
+  }
+
+  .iconcad img {
+    width: 32%;
+  }
+
+  .iconcad h2 {
+    font-size: 20px;
+  }
+
+  .campo label {
+    font-size: 14px;
+  }
+
+  .campo input,
+  .campo select {
+    padding: 9px;
+  }
+
+  .shiny-cta {
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .contbox,
+  .container {
+    width: calc(100% - 16px);
+    padding: 12px;
+  }
+
+  .iconcad h2 {
+    font-size: 18px;
+  }
+
+  .campo {
+    margin-bottom: 16px;
+  }
+}
+
+/* =========================================================
+   MENU HAMBÚRGUER - APENAS COMPORTAMENTO RESPONSIVO
+   O visual/base do header permanece inalterado.
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .iconimg {
+    width: 60px;
+    z-index: 91;
+  }
+
+  .menu-icon-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .menu-icon-hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: calc(8vh + 25px);
+    padding-bottom: 25px;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    gap: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      visibility 0.3s;
+  }
+
+  #menu-toggle:checked ~ nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+      visibility 0.2s;
+  }
+
+  .navitens {
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  .shiny-cta1 {
+    padding: 12px 25px;
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+  }
+
+  .header:has(#menu-toggle:checked) {
+    background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-icon-hamburger {
+    display: none;
   }
 }
