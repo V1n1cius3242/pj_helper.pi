@@ -37,47 +37,88 @@
         <div class="contbox">
 
             <div class="iconcad">
-                <img src="./icon/IconPJ.png" alt="">
-                <h2>Cadastro no PJ Helper</h2>
+                <img src="./icon/IconPJ.png" alt="Icone PJ Helper">
+                <h2>Criar conta</h2>
+                <p>Cadastre-se na PJ Helper</p>
             </div>
 
-        <form id="formCadastro">
-            <div class="campo">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" required placeholder="seu@email.com">
+            <form id="formCadastro">
+                
+                <div class="campo">
+                    <label for="tipo">Tipo de Conta:</label>
+                    <select id="tipo" required>
+                        <option value="" disabled selected>Selecione o tipo de conta</option>
+                        <option value="mei">MEI (Prestador de Serviço)</option>
+                        <option value="empresa">Empresa / Contratante</option>
+                        <option value="admin">Administrador (ADM)</option>
+                    </select>
+                </div>
+
+                <!-- CAMPO SECRETO DE ADM -->
+                <div class="campo" id="boxChaveAdmin" style="display: none;">
+                    <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
+                    <input type="password" id="chaveAdmin" placeholder="Digite a chave secreta de ADM">
+                </div>
+
+                <div class="campo">
+                    <label for="razao_social">Razão Social:</label>
+                    <input type="text" id="razao_social" placeholder="Nome da empresa" required>
+                </div>
+
+                <div class="campo">
+                    <label for="cnpj">CNPJ:</label>
+                    <input type="text" id="cnpj" placeholder="00.000.000/0001-00" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nome_responsavel">Nome do Responsável:</label>
+                    <input type="text" id="nome_responsavel" placeholder="Nome completo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" required placeholder="teste@mei.com">
+                </div>
+
+                <div class="campo">
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Tecnologia">Tecnologia / TI</option>
+                        <option value="Manutenção">Manutenção e Serviços</option>
+                        <option value="Design">Design e Marketing</option>
+                        <option value="Consultoria">Consultoria</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao_servico">Descrição do Serviço:</label>
+                    <textarea id="descricao_servico" rows="3" placeholder="Descreva brevemente o que você oferece..."></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" required placeholder="******">
+                </div>
+
+                <div class="campo">
+                    <label for="confirmar_senha">Confirmar Senha:</label>
+                    <input type="password" id="confirmar_senha" required placeholder="Repita a senha">
+                </div>
+
+                <button type="submit" id="btnCadastrar">Criar conta</button>
+            </form>
+
+            <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
+
+            <div style="margin-top: 15px; text-align: center;">
+                <a href="login.html" style="color: #007bff; text-decoration: none;">Já possui uma conta? Faça login</a>
             </div>
 
-            <div class="campo">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" required placeholder="Digite sua senha">
-            </div>
-
-            <div class="campo">
-                <label for="tipo">Tipo de Conta:</label>
-                <select id="tipo" required>
-                    <option value="" disabled selected>Selecione o tipo de conta</option>
-                    <option value="mei">MEI (Prestador de Serviço)</option>
-                    <option value="empresa">Empresa / Contratante</option>
-                    <option value="admin">Administrador (ADM)</option>
-                </select>
-            </div>
-
-            <!-- CAMPO SECRETO DE ADM (Exibido apenas para Administrador) -->
-            <div class="campo" id="boxChaveAdmin" style="display: none;">
-                <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
-                <input type="password" id="chaveAdmin" placeholder="Digite a chave secreta de ADM">
-            </div>
-
-            <button type="submit" id="btnCadastrar">Cadastrar</button>
-        </form>
-
-        <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
-
-        <div style="margin-top: 15px; text-align: center;">
-            <a href="login.html" style="color: #007bff; text-decoration: none;">Já possui uma conta? Faça login</a>
         </div>
+
     </main>
-        </div>
 
     <footer class="footer">
         <section class="bloco2footer">

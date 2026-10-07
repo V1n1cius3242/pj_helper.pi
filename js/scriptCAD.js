@@ -1,68 +1,85 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const selectTipo = document.getElementById('tipo');
+    const boxChaveAdmin = document.getElementById('boxChaveAdmin');
+    const formCadastro = document.getElementById('formCadastro');
+    const mensagemEl = document.getElementById('mensagem');
 
-        const selectTipo = document.getElementById('tipo');
-        const boxChaveAdmin = document.getElementById('boxChaveAdmin');
-        const inputChaveAdmin = document.getElementById('chaveAdmin');
-        const btnCadastrar = document.getElementById('btnCadastrar');
-        const mensagem = document.getElementById('mensagem');
+    selectTipo.addEventListener('change', () => {
+    const camposEmpresaMei = [
+        document.getElementById('razao_social'),
+        document.getElementById('cnpj'),
+        document.getElementById('nome_responsavel'),
+        document.getElementById('categoria')
+    ];
 
-        selectTipo.addEventListener('change', () => {
-            if (selectTipo.value === 'admin') {
-                boxChaveAdmin.style.display = 'block';
-                inputChaveAdmin.required = true;
+    if (selectTipo.value === 'admin') {
+        boxChaveAdmin.style.display = 'block';
+        // Remove obrigatoriedade dos campos de empresa/MEI para o Admin
+        camposEmpresaMei.forEach(campo => campo.removeAttribute('required'));
+    } else {
+        boxChaveAdmin.style.display = 'none';
+        // Reativa a obrigatoriedade para MEI e Empresa
+        camposEmpresaMei.forEach(campo => campo.setAttribute('required', 'true'));
+    }
+});
+
+    // Processamento do formulário de cadastro
+    formCadastro.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar_senha').value;
+        const tipo = selectTipo.value;
+        const chaveAdmin = document.getElementById('chaveAdmin').value.trim();
+        const razaoSocial = document.getElementById('razao_social').value.trim();
+        const cnpj = document.getElementById('cnpj').value.trim();
+        const nomeResponsavel = document.getElementById('nome_responsavel').value.trim();
+        const categoria = document.getElementById('categoria').value;
+        const descricaoServico = document.getElementById('descricao_servico').value.trim();
+
+        // Validação de confirmação de senha
+        if (senha !== confirmarSenha) {
+            mensagemEl.style.color = '#d9534f';
+            mensagemEl.innerText = 'As senhas não coincidem!';
+            return;
+        }
+
+        const payload = {
+            email,
+            senha,
+            tipo,
+            chaveAdmin,
+            razao_social: razaoSocial,
+            cnpj,
+            nome_responsavel: nomeResponsavel,
+            categoria,
+            descricao_servico: descricaoServico
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/cadastro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && (data.sucesso || data.message)) {
+                mensagemEl.style.color = '#28a745';
+                mensagemEl.innerText = 'Conta cadastrada com sucesso! Redirecionando...';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
             } else {
-                boxChaveAdmin.style.display = 'none';
-                inputChaveAdmin.required = false;
-                inputChaveAdmin.value = '';
+                mensagemEl.style.color = '#d9534f';
+                mensagemEl.innerText = data.error || data.erro || 'Erro ao realizar cadastro.';
             }
-        });
-
-        document.getElementById('formCadastro').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const email = document.getElementById('email').value.trim();
-            const senha = document.getElementById('senha').value;
-            const tipo = selectTipo.value;
-            const chaveAdmin = inputChaveAdmin.value.trim();
-
-            if (tipo === 'admin' && !chaveAdmin) {
-                mensagem.style.color = 'red';
-                mensagem.innerText = 'Informe a chave secreta de administrador.';
-                return;
-            }
-
-            btnCadastrar.disabled = true;
-            btnCadastrar.innerText = 'Cadastrando...';
-            mensagem.innerText = '';
-
-            try {
-                const resposta = await fetch('http://localhost:3000/usuarios', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, senha, tipo, chaveAdmin })
-                });
-
-                const resultado = await resposta.json();
-
-                if (resposta.ok) {
-                    mensagem.style.color = 'green';
-                    mensagem.innerText = resultado.message || resultado.mensagem || 'Usuário cadastrado com sucesso!';
-                    document.getElementById('formCadastro').reset();
-                    boxChaveAdmin.style.display = 'none';
-                    inputChaveAdmin.required = false;
-                    
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 1500);
-                } else {
-                    mensagem.style.color = 'red';
-                    mensagem.innerText = resultado.error || resultado.erro || 'Erro ao cadastrar usuário.';
-                }
-            } catch (erro) {
-                console.error('Erro na requisição:', erro);
-                mensagem.style.color = 'red';
-                mensagem.innerText = 'Erro ao conectar com o servidor Node.js.';
-            } finally {
-                btnCadastrar.disabled = false;
-                btnCadastrar.innerText = 'Cadastrar';
-            }
-        });
+        } catch (err) {
+            console.error(err);
+            mensagemEl.style.color = '#d9534f';
+            mensagemEl.innerText = 'Erro ao conectar com o servidor.';
+        }
+    });
+});

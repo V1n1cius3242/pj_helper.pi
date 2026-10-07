@@ -17,45 +17,62 @@ const db = mysql.createPool({
 
 // 1. REGISTRO DE USUÁRIO
 app.post(['/cadastro', '/usuarios'], async (req, res) => {
-    let { email, senha, tipo, chaveAdmin } = req.body;
+    let { email, senha, tipo, chaveAdmin, razao_social, cnpj, nome_responsavel, categoria, descricao_servico } = req.body;
     
     if (!email || !senha || !tipo) {
-        return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.', erro: 'Preencha todos os campos obrigatórios.' });
+        return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
     }
 
-    if (tipo === 'empresa_grande') tipo = 'empresa';
-
+    // VALIDAÇÃO DA CHAVE SECRETA DE ADM
     if (tipo === 'admin') {
-        const CHAVE_MESTRE_ADM = 'admin123';
+        const CHAVE_MESTRE_ADM = 'SUA_CHAVE_SECRETA_AQUI'; // Defina sua chave secreta aqui
         if (chaveAdmin !== CHAVE_MESTRE_ADM) {
-            return res.status(401).json({ error: 'Chave de Acesso ADM incorreta!', erro: 'Chave de Acesso ADM incorreta!' });
+            return res.status(403).json({ error: 'Chave de acesso ADM inválida!' });
         }
     }
 
     const sqlCheck = 'SELECT id FROM usuarios WHERE email = ?';
     db.query(sqlCheck, [email], async (err, result) => {
-        if (err) return res.status(500).json({ error: 'Erro de ligação à base de dados.', erro: 'Erro de ligação à base de dados.' });
-        if (result.length > 0) return res.status(400).json({ error: 'E-mail já registado.', erro: 'E-mail já registado.' });
+        if (err) return res.status(500).json({ error: 'Erro no banco de dados.' });
+        if (result.length > 0) return res.status(400).json({ error: 'E-mail já cadastrado.' });
 
         try {
             const senhaHash = await bcrypt.hash(senha, 10);
             const sqlInsert = 'INSERT INTO usuarios (email, senha, tipo) VALUES (?, ?, ?)';
             
             db.query(sqlInsert, [email, senhaHash, tipo], (err2, resInsert) => {
-                if (err2) return res.status(500).json({ error: 'Erro ao criar conta.', erro: 'Erro ao criar conta.' });
+                if (err2) return res.status(500).json({ error: 'Erro ao criar usuário.' });
                 
                 const novoId = resInsert.insertId;
 
+                // Insere os dados detalhados do cadastro de acordo com o tipo
                 if (tipo === 'mei') {
-                    db.query('INSERT INTO perfis_mei (usuario_id, nome_fantasia) VALUES (?, ?) ON DUPLICATE KEY UPDATE usuario_id = usuario_id', [novoId, 'Perfil em Preenchimento']);
-                } else if (tipo === 'empresa' || tipo === 'empresa_grande') {
-                    db.query('INSERT INTO perfis_empresa (usuario_id, razao_social) VALUES (?, ?) ON DUPLICATE KEY UPDATE usuario_id = usuario_id', [novoId, 'Nova Empresa']);
+                    const sqlMei = `
+                        INSERT INTO perfis_mei (usuario_id, nome_fantasia, razao_social, cnpj, categoria, resumo_servico) 
+                        VALUES (?, ?, ?, ?, ?, ?)
+                        ON DUPLICATE KEY UPDATE 
+                            nome_fantasia = VALUES(nome_fantasia),
+                            razao_social = VALUES(razao_social),
+                            cnpj = VALUES(cnpj),
+                            categoria = VALUES(categoria),
+                            resumo_servico = VALUES(resumo_servico)
+                    `;
+                    db.query(sqlMei, [novoId, nome_responsavel, razao_social, cnpj, categoria, descricao_servico]);
+                } else if (tipo === 'empresa') {
+                    const sqlEmpresa = `
+                        INSERT INTO perfis_empresa (usuario_id, razao_social, cnpj) 
+                        VALUES (?, ?, ?)
+                        ON DUPLICATE KEY UPDATE 
+                            razao_social = VALUES(razao_social),
+                            cnpj = VALUES(cnpj)
+                    `;
+                    db.query(sqlEmpresa, [novoId, razao_social, cnpj]);
                 }
 
-                res.json({ sucesso: true, message: 'Usuário cadastrado com sucesso!', mensagem: 'Usuário cadastrado com sucesso!', id: novoId });
+                res.json({ sucesso: true, mensagem: 'Usuário cadastrado com sucesso!', id: novoId });
             });
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao processar encriptação da password.', erro: 'Erro ao processar encriptação da password.' });
+            res.status(500).json({ error: 'Erro no processamento da senha.' });
         }
     });
 });
