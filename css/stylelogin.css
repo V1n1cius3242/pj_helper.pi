@@ -145,7 +145,91 @@ nav {
   font-weight: bold ;
   text-decoration: none;  
 }
+/* Container de centralização */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+}
 
+/* Centralização da sessão de login/cadastro */
+.login-section {
+  margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.login-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
+    width: 100%;
+    border-radius: 8px;
+    border: 0.10px solid  #81818141;
+    max-width: 420px;
+    text-align: center;
+}
+
+.login-card .logo-login {
+    width: 90px;
+    margin-bottom: 15px;
+}
+
+.login-card h2 {
+    margin-bottom: 25px;
+    color: #000000;
+    font-size: 1.5rem;
+}
+
+.login-card .campo {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.login-card .campo label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.login-card .campo input {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.login-card .campo input:focus {
+    border-color: #3faf6e;
+}
+
+.login-card button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #3faf6e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.login-card button[type="submit"]:hover {
+    background-color: #33915a;
+}
 
 /* FOOTER */
 .footer {

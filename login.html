@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylelogin.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
@@ -14,66 +14,69 @@
 </head>
 <body>
     
-    
     <div class="header">
-  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-   <input type="checkbox" id="menu-toggle" style="display: none;">
+        <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
  
-      <label for="menu-toggle" class="menu-icon-hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-  <nav>
-    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
-    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
-            <span class="shiny-cta-content1">
-                 Login
-            </span>
-        </button>   <!--BUTTON FUNCIONANDO!-->
-  </nav>
-</div>
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+            <button onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">
+                    Login
+                </span>
+            </button>
+        </nav>
+    </div>
 
-    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;"><h2>Entrar no PJ Helper</h2>
+    <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
+        <section class="login-section">
+            <div class="login-card">
+                <img class="logo-login" src="/icon/IconPJ.png" alt="Logo PJ Helper">
+                <h2>Entrar no PJ Helper</h2>
 
-        <form id="formLogin">
-            <div class="campo">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" required placeholder="seu@email.com">
+                <form id="formLogin">
+                    <div class="campo">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" required placeholder="seu@email.com">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" required placeholder="Digite sua senha">
+                    </div>
+
+                    <button type="submit" id="btnLogin">Entrar</button>
+                </form>
+
+                <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="cadastro.html" style="color: #007bff; text-decoration: none;">Ainda não tem conta? Cadastre-se aqui</a>
+                </div>
             </div>
-
-            <div class="campo">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" required placeholder="Digite sua senha">
-            </div>
-
-            <button type="submit" id="btnLogin">Entrar</button>
-        </form>
-
-        <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
-
-        <div style="margin-top: 20px; text-align: center;">
-            <a href="cadastro.html" style="color: #007bff; text-decoration: none;">Ainda não tem conta? Cadastre-se aqui</a>
-        </div>
-
+        </section>
     </main>
 
     <footer class="footer">
-        </section>
         <section class="bloco2footer">
-        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
-        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
-        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
-         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+            <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+            <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+            O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
         </section>
-       <section class="linhafooter">
-    <div class="linha"></div>
-    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
-</section>
-
+        <section class="linhafooter">
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
     </footer>
+
     <script src="./js/scriptLOG.js"></script>
 </body>
 </html>
