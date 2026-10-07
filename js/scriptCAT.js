@@ -112,15 +112,31 @@
         `;
     }).join('');
 }
-        function filtrarCatalogo() {
+        // Variável pra guardar a categoria atualmente selecionada
+let categoriaSelecionada = '';
+
+// Função chamada ao clicar em qualquer pill de categoria
+function selecionarCategoria(botaoClicado, categoria) {
+    // Remove a classe 'active' de todos os botões
+    const botoes = document.querySelectorAll('.pill-btn');
+    botoes.forEach(btn => btn.classList.remove('active'));
+
+    // Adiciona a classe 'active' só no botão que o usuário clicou
+    botaoClicado.classList.add('active');
+
+    // Atualiza a categoria global e roda o filtro de novo
+    categoriaSelecionada = categoria;
+    filtrarCatalogo();
+}
+
+function filtrarCatalogo() {
     const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
-    const cat = document.getElementById('selectCategoria').value.toLowerCase();
+    const cat = categoriaSelecionada.toLowerCase();
     
-    // Remove carateres especiais caso o utilizador pesquise por CNPJ ou Telefone só com números
+    // Remove caracteres especiais caso pesquise por CNPJ ou Telefone só com números
     const termoApenasNumeros = termo.replace(/\D/g, '');
 
     const filtrados = listaMeisGeral.filter(m => {
-        // Mapeamento e normalização de todos os campos disponíveis
         const nomeFantasia = (m.nome_fantasia || '').toLowerCase();
         const razaoSocial = (m.razao_social || '').toLowerCase();
         const email = (m.email || '').toLowerCase();
@@ -135,14 +151,13 @@
         const categoria = (m.categoria || '').toLowerCase();
         const site = (m.site || '').toLowerCase();
 
-        // Pesquisa dentro da lista de serviços individuais do MEI (se existirem)
+        // Pesquisa nos serviços da tabela do MEI
         const bateuServico = Array.isArray(m.servicos) && m.servicos.some(s => {
             const tituloServico = (s.titulo || '').toLowerCase();
             const descServico = (s.descricao || '').toLowerCase();
             return tituloServico.includes(termo) || descServico.includes(termo);
         });
 
-        // Verificação abrangente em múltiplos campos
         const bateTexto = termo === '' || 
             nomeFantasia.includes(termo) ||
             razaoSocial.includes(termo) ||
@@ -158,15 +173,17 @@
             site.includes(termo) ||
             bateuServico;
 
-        // Filtro por Categoria
-        const bateCategoria = cat === '' || categoria.includes(cat);
+        // Normaliza para ignorar acentos na comparação da categoria
+        const categoriaNormalizada = categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const catNormalizada = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const bateCategoria = cat === '' || categoriaNormalizada.includes(catNormalizada);
 
         return bateTexto && bateCategoria;
     });
 
-    exhibirCatalogo(filtrados);
+    exibirCatalogo(filtrados);
 }
-
         // MODAL PROPOSTA
         function abrirModal(meiUsuarioId, nomeMei) {
             if (!user) {

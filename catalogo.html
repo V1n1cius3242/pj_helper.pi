@@ -47,16 +47,25 @@
 
         <div id="bannerAviso"></div>
 
-        <!-- FILTROS DE BUSCA -->
-<div class="filtros-container">
-    <input type="text" id="inputBusca" placeholder="Pesquisar por nome, razão social, e-mail, CNPJ, cidade, serviço..." oninput="filtrarCatalogo()">
-    <select id="selectCategoria" onchange="filtrarCatalogo()">
-        <option value="">Todas as Categorias</option>
-        <option value="Tecnologia">Tecnologia / TI</option>
-        <option value="Manutenção">Manutenção / Serviços Gerais</option>
-        <option value="Design">Design / Marketing</option>
-        <option value="Geral">Geral</option>
-    </select>
+<!-- FILTROS DE BUSCA -->
+<div class="filtros-container" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <!-- Input de busca -->
+    <input type="text" id="inputBusca" placeholder="Buscar por nome, razão social, e-mail, CNPJ, serviço..." oninput="filtrarCatalogo()">
+
+    <!-- Botoes de Categoria (Pills) -->
+    <div class="categorias-pills" id="containerCategorias">
+        <button class="pill-btn active" onclick="selecionarCategoria(this, '')">Todos</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Agricultura')">Agricultura</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Alimentacao')">Alimentação</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Confeitaria')">Confeitaria</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Construcao')">Construção</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Logistica')">Logística</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Tecnologia')">Tecnologia</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Textil')">Têxtil</button>
+        <button class="pill-btn" onclick="selecionarCategoria(this, 'Outros')">Outros</button>
+    </div>
+
 </div>
 
         <!-- GRID DE CARDS -->
