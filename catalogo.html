@@ -48,16 +48,16 @@
         <div id="bannerAviso"></div>
 
         <!-- FILTROS DE BUSCA -->
-        <div class="filtros-container">
-            <input type="text" id="inputBusca" placeholder="Buscar por nome, serviço ou palavra-chave..." oninput="filtrarCatalogo()">
-            <select id="selectCategoria" onchange="filtrarCatalogo()">
-                <option value="">Todas as Categorias</option>
-                <option value="Tecnologia">Tecnologia / TI</option>
-                <option value="Manutenção">Manutenção / Serviços Gerais</option>
-                <option value="Design">Design / Marketing</option>
-                <option value="Geral">Geral</option>
-            </select>
-        </div>
+<div class="filtros-container">
+    <input type="text" id="inputBusca" placeholder="Pesquisar por nome, razão social, e-mail, CNPJ, cidade, serviço..." oninput="filtrarCatalogo()">
+    <select id="selectCategoria" onchange="filtrarCatalogo()">
+        <option value="">Todas as Categorias</option>
+        <option value="Tecnologia">Tecnologia / TI</option>
+        <option value="Manutenção">Manutenção / Serviços Gerais</option>
+        <option value="Design">Design / Marketing</option>
+        <option value="Geral">Geral</option>
+    </select>
+</div>
 
         <!-- GRID DE CARDS -->
         <div id="gridCatalogo" class="grid-3">

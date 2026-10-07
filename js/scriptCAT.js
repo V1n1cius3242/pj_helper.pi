@@ -113,22 +113,59 @@
     }).join('');
 }
         function filtrarCatalogo() {
-            const termo = document.getElementById('inputBusca').value.toLowerCase();
-            const cat = document.getElementById('selectCategoria').value.toLowerCase();
+    const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
+    const cat = document.getElementById('selectCategoria').value.toLowerCase();
+    
+    // Remove carateres especiais caso o utilizador pesquise por CNPJ ou Telefone só com números
+    const termoApenasNumeros = termo.replace(/\D/g, '');
 
-            const filtrados = listaMeisGeral.filter(m => {
-                const nome = (m.nome_fantasia || m.razao_social || '').toLowerCase();
-                const resumo = (m.resumo_servico || m.apresentacao || '').toLowerCase();
-                const categoria = (m.categoria || '').toLowerCase();
+    const filtrados = listaMeisGeral.filter(m => {
+        // Mapeamento e normalização de todos os campos disponíveis
+        const nomeFantasia = (m.nome_fantasia || '').toLowerCase();
+        const razaoSocial = (m.razao_social || '').toLowerCase();
+        const email = (m.email || '').toLowerCase();
+        const cnpj = (m.cnpj || '').toLowerCase();
+        const cnpjNumeros = (m.cnpj || '').replace(/\D/g, '');
+        const cidade = (m.cidade || '').toLowerCase();
+        const telefone = (m.telefone || '').toLowerCase();
+        const telefoneNumeros = (m.telefone || '').replace(/\D/g, '');
+        const instagram = (m.instagram || '').toLowerCase();
+        const resumo = (m.resumo_servico || '').toLowerCase();
+        const apresentacao = (m.apresentacao || '').toLowerCase();
+        const categoria = (m.categoria || '').toLowerCase();
+        const site = (m.site || '').toLowerCase();
 
-                const bateTexto = nome.includes(termo) || resumo.includes(termo);
-                const bateCategoria = cat === '' || categoria.includes(cat);
+        // Pesquisa dentro da lista de serviços individuais do MEI (se existirem)
+        const bateuServico = Array.isArray(m.servicos) && m.servicos.some(s => {
+            const tituloServico = (s.titulo || '').toLowerCase();
+            const descServico = (s.descricao || '').toLowerCase();
+            return tituloServico.includes(termo) || descServico.includes(termo);
+        });
 
-                return bateTexto && bateCategoria;
-            });
+        // Verificação abrangente em múltiplos campos
+        const bateTexto = termo === '' || 
+            nomeFantasia.includes(termo) ||
+            razaoSocial.includes(termo) ||
+            email.includes(termo) ||
+            cnpj.includes(termo) ||
+            (termoApenasNumeros !== '' && cnpjNumeros.includes(termoApenasNumeros)) ||
+            cidade.includes(termo) ||
+            telefone.includes(termo) ||
+            (termoApenasNumeros !== '' && telefoneNumeros.includes(termoApenasNumeros)) ||
+            instagram.includes(termo) ||
+            resumo.includes(termo) ||
+            apresentacao.includes(termo) ||
+            site.includes(termo) ||
+            bateuServico;
 
-            exibirCatalogo(filtrados);
-        }
+        // Filtro por Categoria
+        const bateCategoria = cat === '' || categoria.includes(cat);
+
+        return bateTexto && bateCategoria;
+    });
+
+    exhibirCatalogo(filtrados);
+}
 
         // MODAL PROPOSTA
         function abrirModal(meiUsuarioId, nomeMei) {
