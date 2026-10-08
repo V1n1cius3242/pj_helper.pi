@@ -154,7 +154,7 @@ nav {
 }
 /* Centralização da sessão de login/cadastro */
 .login-section {
-  margin-top: 2%;
+  margin-top: 5.5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -380,7 +380,6 @@ nav {
 .footer {
   background-color: #171717;
   height: auto;
-  margin-top: 2vh;
   padding: 40px 20px 30px 20px;
 }
 
@@ -458,71 +457,98 @@ nav {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   } 
 
-  .iconimg { 
-    width: 50px; 
+  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
+  .iconimg {
+    width: 60px;
     z-index: 91;
-  } 
+  }
 
-  .menu-icon-hamburger { 
-    display: flex; 
-  } 
+  /* Exibe o ícone de hambúrguer */
+  .menu-icon-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
 
-  nav { 
-    display: flex; 
-    flex-direction: column; 
-    position: absolute; 
-    top: 60px; 
-    left: 0; 
-    width: 100%; 
-    padding: 20px 0;
-    background-color: rgba(255, 255, 255, 0.98); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    gap: 20px; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
-    align-items: center; 
-    z-index: 90; 
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px); 
+  .menu-icon-hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
     transition: all 0.3s ease;
   }
 
-  #menu-toggle:checked ~ nav { 
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0); 
+  /* Iguala o menu suspenso ao cadastro */
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: calc(8vh + 25px);
+    padding-bottom: 25px;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    gap: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
   }
 
-  .navitens { 
-    font-size: 16px; 
-    width: 100%; 
-    text-align: center; 
-    display: block; 
-  } 
+  #menu-toggle:checked ~ nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 
-  .shiny-cta1 { 
-    padding: 10px 20px; 
-    font-size: 14px; 
-    width: 80%; 
-    text-align: center; 
-  } 
+  .navitens {
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
 
-  /* Animação do ícone Hambúrguer */
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
-    transform: rotate(45deg) translate(5px, 5px); 
-  } 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
-    opacity: 0; 
-  } 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
-    transform: rotate(-45deg) translate(6px, -6px); 
-  } 
+  .shiny-cta1 {
+    padding: 12px 25px;
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
+    margin-top: 10px;
+  }
 
-  /* Ajustes do Corpo/Card no Telemóvel */
+  /* Animação do ícone Hambúrguer igualada */
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+  }
+
+  .header:has(#menu-toggle:checked) {
+    background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: none;
+  }
+
+  /* Ajustes específicos do Card de Login */
   .container {
     padding: 15px;
-    margin-top: 70px !important;
+    margin-top:15vh !important;
     min-height: auto !important;
   }
 
@@ -533,14 +559,14 @@ nav {
 
   .login-card {
     padding: 25px 18px;
-    height: auto !important; /* impede o card de estourar a ecrã */
-    max-width: 100%;
+    height: auto !important;
+    max-width: 90%;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
 
   .login-card .logo-login {
-    width: 55px;
+    width: 60px;
     margin-top: 0;
   }
 
@@ -549,26 +575,24 @@ nav {
     margin-bottom: 25px;
   }
 
-  /* Ajuste do Botão Entrar para caber certinho */
-  .shiny-cta2 { 
-    width: 100%; 
+  .shiny-cta2 {
+    width: 100%;
     max-width: 260px;
-    margin: 15px auto 15px auto; 
+    margin: 15px auto 15px auto;
     display: block;
-  } 
+  }
 
-  /* Footer no Telemóvel */ 
-  .footer { 
-    margin-top: 40px;
-    padding: 30px 15px; 
-  } 
+  .footer {
+    margin-top: 15vh;
+    padding: 30px 15px;
+  }
 
   .footer-text2 p {
     font-size: 13px;
     line-height: 1.4;
   }
 
-  .linha { 
-    width: 90%; 
-  } 
+  .linha {
+    width: 90%;
+  }
 }

@@ -83,3 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+//pontuação automática do cnpj (SOFIA)//
+function mascaraCNPJ(input) {
+    let v = input.value.replace(/\D/g, '');
+
+    // 2. Aplica a máscara gradualmente conforme o utilizador digita
+    v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    v = v.replace(/(\d{4})(\d)/, '$1-$2');
+
+    // 3. Atualiza o valor no campo
+    input.value = v;
+}

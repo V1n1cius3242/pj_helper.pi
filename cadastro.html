@@ -35,7 +35,7 @@
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
 
         <div class="contbox">
-
+            
             <div class="iconcad">
                 <img src="./icon/IconPJ.png" alt="Icone PJ Helper">
                 <h2>Criar conta</h2>
@@ -54,30 +54,36 @@
                     </select>
                 </div>
 
-                <!-- CAMPO SECRETO DE ADM -->
+                <!-- CAMPO ESCONDIDO DE ADM -->
                 <div class="campo" id="boxChaveAdmin" style="display: none;">
                     <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
-                    <input type="password" id="chaveAdmin" placeholder="Digite a chave secreta de ADM">
+                    <input type="password"  maxlength="150" id="chaveAdmin" placeholder="Digite a chave de segurança">
                 </div>
 
                 <div class="campo">
                     <label for="razao_social">Razão Social:</label>
-                    <input type="text" id="razao_social" placeholder="Nome da empresa" required>
+                    <input type="text" id="razao_social" placeholder="Nome da empresa" maxlength="150" required>
                 </div>
 
-                <div class="campo">
-                    <label for="cnpj">CNPJ:</label>
-                    <input type="text" id="cnpj" placeholder="00.000.000/0001-00" required>
-                </div>
+               <div class="campo">
+                <label for="cnpj">CNPJ:</label>
+                   <input 
+                   type="text" 
+                   id="cnpj" 
+                   placeholder="00.000.000/0001-00" 
+                   maxlength="18" 
+                   required 
+                   oninput="mascaraCNPJ(this)">
+               </div>
 
                 <div class="campo">
                     <label for="nome_responsavel">Nome do Responsável:</label>
-                    <input type="text" id="nome_responsavel" placeholder="Nome completo" required>
+                    <input type="text" id="nome_responsavel" placeholder="Nome completo" maxlength="150" required>
                 </div>
 
                 <div class="campo">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" required placeholder="teste@mei.com">
+                    <input type="email" id="email"  maxlength="150" required placeholder="exemplo@mei.com">
                 </div>
 
                 <div class="campo">
@@ -92,14 +98,19 @@
                     </select>
                 </div>
 
-                <div class="campo">
-                    <label for="descricao_servico">Descrição do Serviço:</label>
-                    <textarea id="descricao_servico" rows="3" placeholder="Descreva brevemente o que você oferece..."></textarea>
-                </div>
+               <div class="campo">
+    <label for="descricao_servico">Descrição do Serviço:</label>
+    <textarea 
+        id="descricao_servico" 
+        rows="3" 
+        maxlength="500" 
+        placeholder="Descreva brevemente o que você oferece..."
+        oninput="this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 150) + 'px';"></textarea>
+</div>
 
                 <div class="campo">
                     <label for="senha">Senha:</label>
-                    <input type="password" id="senha" required placeholder="******">
+                    <input type="password" id="senha"  maxlength="150" required placeholder="No mínimo 6 caracteres.">
                 </div>
 
                 <div class="campo">
@@ -113,7 +124,7 @@
             <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
 
             <div style="margin-top: 15px; text-align: center;">
-                <a href="login.html" style="color: #007bff; text-decoration: none;">Já possui uma conta? Faça login</a>
+                <a href="login.html" style="color: #3faf6e;">Já possui uma conta? Faça login</a>
             </div>
 
         </div>

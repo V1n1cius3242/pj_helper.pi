@@ -146,29 +146,138 @@ nav {
   text-decoration: none;  
 }
 
-
-.contbox{
-  width:32% ;
-  margin-left: auto;
-  margin-top: 25px;
-  margin-right: auto;
-  padding: 20px;
-  box-shadow: #b8b8b8 0px 30px 40px 1px;
-  border-radius: 20px;
-
+/* CONTAINER DE CADASTRO (ESTILO LOGIN-CARD) */
+.contbox {
+  background: #ffffff;
+  padding: 40px;
+  height: auto;
+  border-radius: 30px;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
+  width: 35%;  
+  border: 0.10px solid #81818141;
+  margin: 25px auto 40px auto;
+  text-align: center;
 }
-.iconcad{
+
+.iconcad {
   align-items: center;
   text-align: center;
 }
-.iconcad img{
-  width: 20%;
-}
-.iconcad h2{
-  margin-top: 15px;
-  margin-bottom: 25px;
+
+.iconcad img {
+  width: 70px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
+.iconcad h2 {
+  margin-bottom: 8px;
+  color: #000000;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.iconcad p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+/* CAMPOS DO FORMULÁRIO */
+#descricao_servico {
+  min-height: 90px;
+  max-height: 500px;
+  resize: none; /* Desativa o redimensionamento manual do usuário */
+  overflow-y: hidden; /* Oculta a barra de rolagem até atingir a altura máxima */
+  transition: height 0.2s ease; /* Transição suave no crescimento */
+}
+.campo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.campo input, 
+.campo select, 
+.campo textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+/* EFEITO GLOW / HOVER / FOCUS NOS INPUTS */
+.campo input:hover,
+.campo select:hover,
+.campo textarea:hover,
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: #3faf80;
+  box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3);
+}
+
+/* BOTÃO CADASTRAR (SEGUINDO A ANIMAÇÃO DO BOTÃO ENTRAR .shiny-cta2) */
+.contbox button[type="submit"] {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+
+  color: rgb(255, 255, 255);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  isolation: isolate;
+  z-index: 1;
+  width: 220px;
+  height: 45px;
+  margin: 20px auto 15px auto;
+  display: block;
+  position: relative;
+  padding: 10px 20px; 
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+
+.contbox button[type="submit"]:hover { 
+  transform: translateY(-4px); 
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
+} 
+
+.contbox button[type="submit"]:active { 
+  transform: translateY(-1px); 
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+}
+
+/* LINK INFERIOR (AJUSTE DE COR) */
+.contbox a {
+  color: #3faf80 !important;
+  font-weight: bold !important;
+}
 
 /* FOOTER */
 .footer {
@@ -224,6 +333,7 @@ nav {
   font-family: 'Montserrat', sans-serif; 
   font-weight: 400;
 }
+
 /* Esconde o ícone das 3 linhas no computador */
 .menu-icon-hamburger {
   display: none;
@@ -240,269 +350,32 @@ nav {
   border-radius: 2px;
   transition: all 0.3s ease;
 }
-    
 
-/*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
-
-.container {
-    max-width: 400px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.campo {
-    margin-bottom: 25px;
-}
-
-.campo label {
-    margin-bottom: 5px;
-}
-
-.campo input, .campo select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: #e4e4e4;
-}
-
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.shiny-cta {
-  --gradient-angle: 0deg;
-  --gradient-angle-offset: 0deg;
-  --gradient-shine: #10b981;
-  --bg-color-top: #1c2421;
-  --bg-color-bottom: #0a0a0a;
-  
-  color: rgb(255, 255, 255);
-  isolation: isolate;
-  z-index: 1;
-  position: relative;
-  padding: 12px 28px;
-  cursor: pointer;
-  
-  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, 
-              rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
-              rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
-              
-  /* Fundo escuro limpo + borda giratória verde */
-  background: 
-    linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, 
-    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), 
-      transparent 0%, 
-      #047857 5%, 
-      var(--gradient-shine) 15%, 
-      #047857 30%, 
-      transparent 40%, 
-      transparent 100%) border-box;
-                
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0);
-  border-radius: 9999px;
-  
-  transition: box-shadow 0.3s, transform 0.3s;
-  animation: border-spin 2.5s linear infinite;
-  overflow: hidden;
-}
-
-/* CAMADA DAS BOLINHAS VERDES: Fica presa apenas na faixa diagonal */
-.shiny-cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  
- /* Padrão de bolinhas micro e densas: 0.5px de raio e grade 4x4 */
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
-            
-            /* Máscara que limita as bolinhas apenas para os 25% da direita */
-            -webkit-mask-image: linear-gradient(
-                to right,
-                transparent 60%,
-                rgba(0, 0, 0, 1) 75%
-            );
-  mask-image: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(0, 0, 0, 1) 48%,
-    rgba(0, 0, 0, 1) 52%,
-    transparent 70%
-  );
-  
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* O feixe de luz passando (Shimmer) */
-.shiny-cta::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.25),
-    transparent
-  );
-  transform: skewX(-25deg);
-  animation: shimmer 9s infinite;
-  z-index: 2;
-}
-
-.shiny-cta-content {
-  z-index: 3;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  position: relative;
-  border-radius: 9999px;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-@keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 200%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-
-/* =========================================================
-   RESPONSIVIDADE DO CONTEÚDO
-   Header e footer não são alterados aqui.
-   ========================================================= */
 
 @media (max-width: 768px) {
 
-  /* Espaço para o header fixo */
+  main {
+    padding: 20px 10px !important;
+  }
+
   .contbox {
-    width: min(92%, 500px);
-    margin: calc(8vh + 30px) auto 30px;
-    padding: 18px;
+    width: 86%;
+    padding: 25px 18px;
+    border-radius: 20px;
   }
 
-  .iconcad img {
-    width: 28%;
-    max-width: 100px;
-  }
-
-  .iconcad h2 {
-    font-size: 22px;
-    margin-top: 12px;
-    margin-bottom: 20px;
-  }
-
-  .container {
-    width: min(92%, 500px);
-    max-width: 100%;
-    margin: calc(8vh + 30px) auto 30px;
-    padding: 18px;
-  }
-
-  .campo {
-    margin-bottom: 20px;
-  }
-
-  .campo input,
-  .campo select {
+  .contbox button[type="submit"] {
     width: 100%;
-    min-height: 44px;
-    font-size: 16px;
+    max-width: 250px;
+  }
+  #descricao_servico {
+  min-height: 90px;
+  max-height: 500px;
+  transition: height 0.2s ease; /* Transição suave no crescimento */
+  overflow-y: auto !important;
   }
 
-  .shiny-cta {
-    width: 100%;
-    max-width: 100%;
-    padding: 11px 20px;
-    font-size: 14px;
-  }
 
-  .shiny-cta-content {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .contbox,
-  .container {
-    width: calc(100% - 24px);
-    padding: 15px;
-    border-radius: 14px;
-  }
-
-  .iconcad img {
-    width: 32%;
-  }
-
-  .iconcad h2 {
-    font-size: 20px;
-  }
-
-  .campo label {
-    font-size: 14px;
-  }
-
-  .campo input,
-  .campo select {
-    padding: 9px;
-  }
-
-  .shiny-cta {
-    padding: 10px 16px;
-  }
-}
-
-@media (max-width: 360px) {
-
-  .contbox,
-  .container {
-    width: calc(100% - 16px);
-    padding: 12px;
-  }
-
-  .iconcad h2 {
-    font-size: 18px;
-  }
-
-  .campo {
-    margin-bottom: 16px;
-  }
-}
-
-/* =========================================================
-   MENU HAMBÚRGUER - APENAS COMPORTAMENTO RESPONSIVO
-   O visual/base do header permanece inalterado.
-   ========================================================= */
-
-@media (max-width: 768px) {
 
   .iconimg {
     width: 60px;
@@ -594,10 +467,6 @@ nav {
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: none;
   }
-}
 
-@media (min-width: 769px) {
-  .menu-icon-hamburger {
-    display: none;
-  }
+
 }
