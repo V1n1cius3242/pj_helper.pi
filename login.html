@@ -35,35 +35,45 @@
         </nav>
     </div>
 
-    <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
+    <!-- CARROSSEL DE FUNDO (FIXO) -->
+    <div class="itenscarrossel">
+        <div class="carrossel">
+            <img src="icon/padrao1.jpg" alt="">
+            <img src="icon/padrao2.jpg" alt="">
+            <img src="icon/padrao3.jpg" alt="">
+        </div>
+    </div>
+
+    <main class="container" style="margin-top: 9vh; min-height: 91vh;">
         <section class="login-section">
-            <div class="login-card">
+            <!-- ADICIONADA A CLASSE 'escondido' PARA DISPARAR A ANIMAÇÃO -->
+            <div class="login-card escondido">
                 <img class="logo-login" src="/icon/IconPJ.png" alt="Logo PJ Helper">
                 <h2>Entrar no PJ Helper</h2>
 
-        <form id="formLogin">
-                  <div class="campo">
-                    <label for="email">E-mail:</label>
-                    <div class="input-com-icone">
-                        <span class="icone-input"><img src="/icon/envelope.png" alt=""></span>
-                        <input type="email"  maxlength="150" id="email" required placeholder="seu@email.com">
+                <form id="formLogin">
+                    <div class="campo">
+                        <label for="email">E-mail:</label>
+                        <div class="input-com-icone">
+                            <span class="icone-input"><img src="/icon/envelope.png" alt=""></span>
+                            <input type="email" maxlength="150" id="email" required placeholder="seu@email.com">
+                        </div>
                     </div>
-                 </div>
 
-                  <div class="campo">
-                    <label for="senha">Senha:</label>
-                    <div class="input-com-icone">
-                      <span class="icone-input"><img src="/icon/key.png" alt=""></span>
-                      <input type="password"  maxlength="150" id="senha" required placeholder="Digite sua senha">
+                    <div class="campo">
+                        <label for="senha">Senha:</label>
+                        <div class="input-com-icone">
+                            <span class="icone-input"><img src="/icon/key.png" alt=""></span>
+                            <input type="password" maxlength="150" id="senha" required placeholder="Digite sua senha">
+                        </div>
                     </div>
-                 </div>
 
                     <button type="submit" id="btnLogin" class="shiny-cta2">
-                    <span class="shiny-cta-content2">
-                     Entrar
-                    </span>
+                        <span class="shiny-cta-content2">
+                            Entrar
+                        </span>
                     </button>
-        </form>
+                </form>
 
                 <p id="mensagem" style="margin-top:15px; font-weight:bold;"></p>
 

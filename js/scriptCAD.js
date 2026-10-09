@@ -95,4 +95,16 @@ function mascaraCNPJ(input) {
 
     // 3. Atualiza o valor no campo
     input.value = v;
-}
+};
+const observador = new IntersectionObserver((entradas) => {
+  entradas.forEach((entrada) => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('animar-ao-rolar');
+      observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+    }
+  });
+}, { 
+  rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+});
+
+document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));

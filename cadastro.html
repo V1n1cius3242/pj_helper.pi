@@ -32,15 +32,27 @@
         </nav>
     </div>
 
-    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+    <!-- CARROSSEL DE FUNDO (FIXO) -->
+    <div class="itenscarrossel">
+        <div class="carrossel">
+            <img src="icon/padrao1.jpg" alt="">
+            <img src="icon/padrao2.jpg" alt="">
+            <img src="icon/padrao3.jpg" alt="">
+        </div>
+    </div>
 
-        <div class="contbox">
+ 
+        <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+        <div class="contbox escondido">
             
             <div class="iconcad">
                 <img src="./icon/IconPJ.png" alt="Icone PJ Helper">
                 <h2>Criar conta</h2>
                 <p>Cadastre-se na PJ Helper</p>
             </div>
+            
+            <!-- Restante do formulário permanece igual -->
 
             <form id="formCadastro">
                 
@@ -57,7 +69,7 @@
                 <!-- CAMPO ESCONDIDO DE ADM -->
                 <div class="campo" id="boxChaveAdmin" style="display: none;">
                     <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
-                    <input type="password"  maxlength="150" id="chaveAdmin" placeholder="Digite a chave de segurança">
+                    <input type="password" maxlength="150" id="chaveAdmin" placeholder="Digite a chave de segurança">
                 </div>
 
                 <div class="campo">
@@ -66,7 +78,7 @@
                 </div>
 
                <div class="campo">
-                <label for="cnpj">CNPJ:</label>
+                   <label for="cnpj">CNPJ:</label>
                    <input 
                    type="text" 
                    id="cnpj" 
@@ -83,7 +95,7 @@
 
                 <div class="campo">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email"  maxlength="150" required placeholder="exemplo@mei.com">
+                    <input type="email" id="email" maxlength="150" required placeholder="exemplo@mei.com">
                 </div>
 
                 <div class="campo">
@@ -98,19 +110,19 @@
                     </select>
                 </div>
 
-               <div class="campo">
-    <label for="descricao_servico">Descrição do Serviço:</label>
-    <textarea 
-        id="descricao_servico" 
-        rows="3" 
-        maxlength="500" 
-        placeholder="Descreva brevemente o que você oferece..."
-        oninput="this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 150) + 'px';"></textarea>
-</div>
+                <div class="campo">
+                    <label for="descricao_servico">Descrição do Serviço:</label>
+                    <textarea 
+                        id="descricao_servico" 
+                        rows="3" 
+                        maxlength="500" 
+                        placeholder="Descreva brevemente o que você oferece..."
+                        oninput="this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 150) + 'px';"></textarea>
+                </div>
 
                 <div class="campo">
                     <label for="senha">Senha:</label>
-                    <input type="password" id="senha"  maxlength="150" required placeholder="No mínimo 6 caracteres.">
+                    <input type="password" id="senha" maxlength="150" required placeholder="No mínimo 6 caracteres.">
                 </div>
 
                 <div class="campo">
@@ -128,7 +140,6 @@
             </div>
 
         </div>
-
     </main>
 
     <footer class="footer">

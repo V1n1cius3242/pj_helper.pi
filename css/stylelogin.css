@@ -4,8 +4,10 @@
     box-sizing: border-box;
 }
 body{
-font-family: 'Montserrat', sans-serif;
-background-color: #f5f5f5;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    position: relative;
+    min-height: 100vh;
 }
 .header {
   height: 9vh;
@@ -145,16 +147,73 @@ nav {
   font-weight: bold ;
   text-decoration: none;  
 }
+
+/* INÍCIO DO CARROSSEL DE IMAGENS DE FUNDO */
+.itenscarrossel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.carrossel {
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  overflow: hidden;
+}
+
+.carrossel:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; 
+  background: linear-gradient(to top, #f5f5f5 0%, rgba(255, 255, 255, 0.3) 50%), rgba(245, 245, 245, 0.75);
+}
+
+.carrossel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  animation: carrosselFade 12s infinite;
+}
+
+.carrossel img:nth-child(1) { animation-delay: 0s; }
+.carrossel img:nth-child(2) { animation-delay: 4s; }
+.carrossel img:nth-child(3) { animation-delay: 8s; }
+
+@keyframes carrosselFade {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  33% { opacity: 1; }
+  43% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
 /* Container de centralização */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     width: 100%;
+    position: relative;
+    z-index: 10;
 }
+
 /* Centralização da sessão de login/cadastro */
 .login-section {
-  margin-top: 5.5%;
+    margin-top: 5.5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,9 +227,11 @@ nav {
     border-radius: 30px;
     box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
     width: 100%;
-    border: 0.10px solid  #81818141;
+    border: 0.10px solid #81818141;
     max-width: 420px;
     text-align: center;
+    position: relative;
+    z-index: 10;
 }
 
 .login-card .logo-login {
@@ -378,6 +439,8 @@ nav {
 
 /* FOOTER */
 .footer {
+  position: relative;
+  z-index: 10;
   background-color: #171717;
   height: auto;
   padding: 40px 20px 30px 20px;
@@ -544,7 +607,19 @@ nav {
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: none;
   }
+/* ANIMAÇÃO AO ROLAR / CARREGAR DA CAIXA DE LOGIN */
+.escondido, 
+.login-card:not(.animar-ao-rolar) {
+  opacity: 0;
+  transform: translateY(40px);
+}
 
+.animar-ao-rolar {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, opacity;
+}
   /* Ajustes específicos do Card de Login */
   .container {
     padding: 15px;

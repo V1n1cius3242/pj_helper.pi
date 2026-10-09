@@ -41,4 +41,4 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
         mensagem.style.color = 'red'
         mensagem.innerText = 'Erro ao conectar com o servidor Node.js.'
     }
-})
+});
