@@ -459,12 +459,21 @@ main {
     transition: height 0.2s ease;
     overflow-y: auto !important;
   }
+.header { 
+    padding: 0 5%; 
+    height: 60px; 
+    position: fixed; 
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  } 
 
+  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
   .iconimg {
     width: 60px;
     z-index: 91;
   }
 
+  /* Exibe o ícone de hambúrguer */
   .menu-icon-hamburger {
     display: flex;
     flex-direction: column;
@@ -482,6 +491,7 @@ main {
     transition: all 0.3s ease;
   }
 
+  /* Iguala o menu suspenso ao cadastro */
   nav {
     display: flex;
     flex-direction: column;
@@ -503,20 +513,13 @@ main {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-6px);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-      visibility 0.3s;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
   }
 
   #menu-toggle:checked ~ nav {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
-      visibility 0.2s;
   }
 
   .navitens {
@@ -534,6 +537,7 @@ main {
     margin-top: 10px;
   }
 
+  /* Animação do ícone Hambúrguer igualada */
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }

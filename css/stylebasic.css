@@ -955,82 +955,101 @@ color: #ffffff;
    MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px) 
    ========================================================================== */ 
 @media (max-width: 768px) { 
-  .header { 
+   .header { 
     padding: 0 5%; 
-    height: 8vh; 
+    height: 60px; 
     position: fixed; 
-    background-color: rgba(255, 255, 255, 0.514);
+    background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
   } 
-  .header:has(#menu-toggle:checked) {
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: none;
+
+  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
+  .iconimg {
+    width: 60px;
+    z-index: 91;
   }
 
-  .iconimg { 
-    width: 60px; 
-    z-index: 91;
-  } 
-  .menu-icon-hamburger { 
-    display: flex; 
-  } 
-    nav { 
-    display: flex; 
-    flex-direction: column; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
+  /* Exibe o ícone de hambúrguer */
+  .menu-icon-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .menu-icon-hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Iguala o menu suspenso ao cadastro */
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding-top: calc(8vh + 25px);
     padding-bottom: 25px;
     padding-right: 0;
     padding-left: 0;
-    background-color: rgba(255, 255, 255, 0.94); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    gap: 25px; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08); 
-    align-items: center; 
-    z-index: 90; 
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    gap: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    z-index: 90;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-6px); 
+    transform: translateY(-6px);
     transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
   }
-  #menu-toggle:checked ~ nav { 
+
+  #menu-toggle:checked ~ nav {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); 
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.2s;
+    transform: translateY(0);
   }
-  .navitens { 
-    font-size: 18px; 
-    width: 100%; 
-    text-align: center; 
-    display: block; 
-  } 
 
-  .shiny-cta1 { 
-    padding: 12px 25px; 
-    font-size: 14px; 
-    width: 90%; 
-    text-align: center; 
+  .navitens {
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  .shiny-cta1 {
+    padding: 12px 25px;
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
     margin-top: 10px;
-  } 
+  }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) { 
-    transform: rotate(45deg) translate(5px, 6px); 
-  } 
+  /* Animação do ícone Hambúrguer igualada */
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) { 
-    opacity: 0; 
-  } 
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) { 
-    transform: rotate(-45deg) translate(5px, -6px); 
-  } 
+  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+  }
 
+  .header:has(#menu-toggle:checked) {
+    background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: none;
+  }
   /* CORREÇÃO DO CARROSSEL: Garante que as imagens preencham a tela sem vazamentos */
   .carrossel { 
     position: relative; 

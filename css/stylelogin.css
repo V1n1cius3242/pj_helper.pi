@@ -200,7 +200,19 @@ nav {
   43% { opacity: 0; }
   100% { opacity: 0; }
 }
+/* ANIMAÇÃO AO ROLAR / CARREGAR DA CAIXA DE LOGIN */
+.escondido, 
+.login-card:not(.animar-ao-rolar) {
+  opacity: 0;
+  transform: translateY(40px);
+}
 
+.animar-ao-rolar {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, opacity;
+}
 /* Container de centralização */
 .container {
     max-width: 1200px;
@@ -607,19 +619,6 @@ nav {
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: none;
   }
-/* ANIMAÇÃO AO ROLAR / CARREGAR DA CAIXA DE LOGIN */
-.escondido, 
-.login-card:not(.animar-ao-rolar) {
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.animar-ao-rolar {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: transform, opacity;
-}
   /* Ajustes específicos do Card de Login */
   .container {
     padding: 15px;
