@@ -2,18 +2,47 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexão à base de dados MySQL (XAMPP)
+// Conexão ao MySQL (XAMPP)
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'pj_helper'
 });
+
+// CONFIGURAÇÃO DO TRANSPORTE DE E-MAIL (Nodemailer)
+// Substitua pelas credenciais reais de e-mail (ex: Gmail SMTP / App Password)
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'pjhelperofc@gmail.com',
+        pass: 'ruiw phlm eqgb wmfc'
+    }
+});
+
+
+async function enviarEmail(para, assunto, texto) {
+    try {
+        // Cria um assunto único com a hora atual para o Gmail não bloquear/agrupar
+        const assuntoDinamico = `${assunto} (${new Date().toLocaleTimeString('pt-BR')})`;
+
+        await transporter.sendMail({
+            from: '"PJ Helper" <pjhelperofc@gmail.com>',
+            to: para,
+            subject: assuntoDinamico,
+            text: texto
+        });
+        console.log(`📧 E-mail enviado para: ${para}`);
+    } catch (err) {
+        console.error(`❌ Erro ao enviar e-mail para ${para}:`, err.message);
+    }
+}
 
 // 1. REGISTRO DE USUÁRIO
 app.post(['/cadastro', '/usuarios'], async (req, res) => {
@@ -23,9 +52,8 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
         return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
     }
 
-    // VALIDAÇÃO DA CHAVE SECRETA DE ADM
     if (tipo === 'admin') {
-        const CHAVE_MESTRE_ADM = 'SUA_CHAVE_SECRETA_AQUI'; // Defina sua chave secreta aqui
+        const CHAVE_MESTRE_ADM = 'admin123';
         if (chaveAdmin !== CHAVE_MESTRE_ADM) {
             return res.status(403).json({ error: 'Chave de acesso ADM inválida!' });
         }
@@ -38,14 +66,16 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
 
         try {
             const senhaHash = await bcrypt.hash(senha, 10);
-            const sqlInsert = 'INSERT INTO usuarios (email, senha, tipo) VALUES (?, ?, ?)';
+            // Administradores já entram APROVADOS; MEI e Empresa entram PENDENTES
+            const statusInicial = (tipo === 'admin') ? 'aprovado' : 'pendente';
+
+            const sqlInsert = 'INSERT INTO usuarios (email, senha, tipo, status) VALUES (?, ?, ?, ?)';
             
-            db.query(sqlInsert, [email, senhaHash, tipo], (err2, resInsert) => {
+            db.query(sqlInsert, [email, senhaHash, tipo, statusInicial], (err2, resInsert) => {
                 if (err2) return res.status(500).json({ error: 'Erro ao criar usuário.' });
                 
                 const novoId = resInsert.insertId;
 
-                // Insere os dados detalhados do cadastro de acordo com o tipo
                 if (tipo === 'mei') {
                     const sqlMei = `
                         INSERT INTO perfis_mei (usuario_id, nome_fantasia, razao_social, cnpj, categoria, resumo_servico) 
@@ -69,7 +99,22 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
                     db.query(sqlEmpresa, [novoId, razao_social, cnpj]);
                 }
 
-                res.json({ sucesso: true, mensagem: 'Usuário cadastrado com sucesso!', id: novoId });
+                // E-mail de Boas-vindas para o usuário cadastrado
+                if (tipo !== 'admin') {
+                    enviarEmail(
+                        email,
+                        'Cadastro em Análise - PJ Helper',
+                        'Obrigado por se cadastrar! Seu perfil passará por uma avaliação de um dos nossos funcionários e em breve você receberá a confirmação de sua conta.'
+                    );
+
+                    // Notifica os ADMs no banco de dados
+                    db.query(
+                        'INSERT INTO notificacoes (usuario_id, mensagem) SELECT id, ? FROM usuarios WHERE tipo = "admin"',
+                        [`Novo cadastro pendente de aprovação: ${email} (${tipo.toUpperCase()})`]
+                    );
+                }
+
+                res.json({ sucesso: true, mensagem: 'Usuário cadastrado com sucesso!', id: novoId, status: statusInicial });
             });
         } catch (error) {
             res.status(500).json({ error: 'Erro no processamento da senha.' });
@@ -77,10 +122,10 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
     });
 });
 
-// 2. LOGIN
+// 2. LOGIN (com trava de status pendente/recusado)
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
-    const sql = 'SELECT id, email, senha, tipo FROM usuarios WHERE email = ?';
+    const sql = 'SELECT id, email, senha, tipo, status FROM usuarios WHERE email = ?';
     
     db.query(sql, [email], async (err, results) => {
         if (err) return res.status(500).json({ erro: 'Erro interno na base de dados.' });
@@ -92,8 +137,16 @@ app.post('/login', (req, res) => {
         if (!senhaValida) {
             return res.status(401).json({ erro: 'E-mail ou senha incorretos.' });
         }
+
+        // TRAVA DE SEGURANÇA POR STATUS
+        if (usuario.status === 'pendente') {
+            return res.status(403).json({ erro: 'Sua conta ainda está em análise pela nossa equipe. Aguarde a aprovação!' });
+        }
+        if (usuario.status === 'recusado') {
+            return res.status(403).json({ erro: 'Sua solicitação de cadastro não foi aprovada.' });
+        }
         
-        res.json({ usuario: { id: usuario.id, email: usuario.email, tipo: usuario.tipo } });
+        res.json({ usuario: { id: usuario.id, email: usuario.email, tipo: usuario.tipo, status: usuario.status } });
     });
 });
 
@@ -122,7 +175,6 @@ app.post(['/catalogo-itens', '/servicos'], (req, res) => {
     });
 });
 
-// NOVO: ROTA PARA DELETAR SERVIÇO
 app.delete(['/catalogo-itens/:id', '/servicos/:id'], (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM catalogo_itens WHERE id = ?';
@@ -177,7 +229,7 @@ app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
             pm.instagram
         FROM usuarios u
         LEFT JOIN perfis_mei pm ON u.id = pm.usuario_id
-        WHERE u.tipo = 'mei'
+        WHERE u.tipo = 'mei' AND u.status = 'aprovado'
         ORDER BY u.id DESC
     `;
 
@@ -249,6 +301,17 @@ app.post('/proposta', (req, res) => {
         const msgNotif = `Você recebeu uma nova proposta de serviço: ${titulo_servico} (R$ ${valor})`;
         db.query('INSERT INTO notificacoes (usuario_id, mensagem) VALUES (?, ?)', [mei_usuario_id, msgNotif]);
 
+        // Dispara e-mail de aviso de nova proposta para o MEI
+        db.query('SELECT email FROM usuarios WHERE id = ?', [mei_usuario_id], (err2, resMei) => {
+            if (!err2 && resMei.length > 0) {
+                enviarEmail(
+                    resMei[0].email,
+                    'Nova Proposta Recebida - PJ Helper',
+                    `Você recebeu uma nova proposta de serviço no PJ Helper!\n\nServiço: ${titulo_servico}\nValor: R$ ${valor}\n\nAcesse seu painel para responder.`
+                );
+            }
+        });
+
         res.json({ sucesso: true, contrato_id: result.insertId });
     });
 });
@@ -289,7 +352,7 @@ app.get('/notificacoes', (req, res) => {
 
 // 8. PAINEL ADMIN
 app.get('/admin/dados', (req, res) => {
-    const sqlUsers = 'SELECT id, email, tipo FROM usuarios';
+    const sqlUsers = 'SELECT id, email, tipo, status FROM usuarios ORDER BY id DESC';
     const sqlContratos = 'SELECT * FROM contratos ORDER BY id DESC';
     
     db.query(sqlUsers, (err, usuarios) => {
@@ -298,6 +361,87 @@ app.get('/admin/dados', (req, res) => {
             if (err2) return res.status(500).json({ erro: 'Erro ao procurar contratos.' });
             res.json({ usuarios, contratos });
         });
+    });
+});
+
+app.post('/esqueci-senha', (req, res) => {
+    const { email } = req.body;
+
+    db.query('SELECT id FROM usuarios WHERE email = ?', [email], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(404).json({ erro: 'E-mail não encontrado na plataforma.' });
+        }
+
+        // Gera um código simples de 6 dígitos
+        const codigoRecuperacao = Math.floor(100000 + Math.random() * 900000).toString();
+
+        // Opcional: Salvar o codigoRecuperacao na tabela de usuários para validar depois
+        db.query('UPDATE usuarios SET token_recuperacao = ? WHERE email = ?', [codigoRecuperacao, email], (err2) => {
+            if (err2) return res.status(500).json({ erro: 'Erro ao gerar token.' });
+
+            // Dispara o e-mail usando nossa função
+            enviarEmail(
+                email,
+                'Recuperação de Senha - PJ Helper',
+                `Você solicitou a recuperação de senha no PJ Helper.\n\nSeu código de verificação é: ${codigoRecuperacao}\n\nSe você não solicitou, ignore este e-mail.`
+            );
+
+            res.json({ sucesso: true, mensagem: 'E-mail de recuperação enviado com sucesso!' });
+        });
+    });
+});
+
+app.post('/redefinir-senha', async (req, res) => {
+    const { email, codigo, novaSenha } = req.body;
+
+    db.query('SELECT id FROM usuarios WHERE email = ? AND token_recuperacao = ?', [email, codigo], async (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(400).json({ erro: 'Código de verificação inválido ou expirado.' });
+        }
+
+        const novaSenhaHash = await bcrypt.hash(novaSenha, 10);
+
+        // Atualiza a senha e limpa o token usado
+        db.query('UPDATE usuarios SET senha = ?, token_recuperacao = NULL WHERE email = ?', [novaSenhaHash, email], (err2) => {
+            if (err2) return res.status(500).json({ erro: 'Erro ao atualizar a senha.' });
+            res.json({ sucesso: true, mensagem: 'Senha redefinida com sucesso! Faça login novamente.' });
+        });
+    });
+});
+
+// PAINEL ADM: Aprovar ou Recusar Conta de Usuário
+app.post('/admin/aprovar-usuario', (req, res) => {
+    const { usuario_id, status } = req.body; // status: 'aprovado' ou 'recusado'
+
+    if (!usuario_id || !['aprovado', 'recusado'].includes(status)) {
+        return res.status(400).json({ erro: 'Parâmetros inválidos.' });
+    }
+
+    const sql = 'UPDATE usuarios SET status = ? WHERE id = ?';
+    db.query(sql, [status, usuario_id], (err) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao atualizar status do usuário.' });
+
+        // Notifica por e-mail
+        db.query('SELECT email FROM usuarios WHERE id = ?', [usuario_id], (err2, result) => {
+            if (!err2 && result.length > 0) {
+                const userEmail = result[0].email;
+                if (status === 'aprovado') {
+                    enviarEmail(
+                        userEmail,
+                        'Conta Aprovada! - PJ Helper',
+                        'Sua conta no PJ Helper foi avaliada e APROVADA com sucesso! Você já pode realizar login e utilizar a plataforma.'
+                    );
+                } else {
+                    enviarEmail(
+                        userEmail,
+                        'Status do Cadastro - PJ Helper',
+                        'Infelizmente seu cadastro no PJ Helper foi recusado após análise.'
+                    );
+                }
+            }
+        });
+
+        res.json({ sucesso: true, mensagem: `Usuário alterado para ${status}.` });
     });
 });
 
