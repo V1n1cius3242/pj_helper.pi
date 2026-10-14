@@ -236,5 +236,15 @@ function filtrarCatalogo() {
                 mostrarAviso('Erro de conexão ao enviar a proposta!', true);
             }
         });
+        document.addEventListener('mousemove', (e) => {
+    const cards = document.querySelectorAll('.card-mei');
+    cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+    });
+});
 
         carregarCatalogo();

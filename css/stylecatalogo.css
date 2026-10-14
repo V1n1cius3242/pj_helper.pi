@@ -2,8 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
-
 }
 
 body {
@@ -14,18 +12,18 @@ body {
 
 .header {
   height: 9vh;
-  background-color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.514);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-
+  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
-
   width: 100%;
   justify-content: space-between;
+  /*auto-explicativo*/
   align-items: center;
   padding: 0 10%;
   backdrop-filter: blur(10px);
@@ -48,8 +46,9 @@ nav {
   font-weight: bold;
 }
 
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
 .shiny-cta1:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
 }
 
@@ -58,8 +57,9 @@ nav {
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
 }
 
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
 @property --gradient-angle {
-  syntax: '';
+  syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
@@ -80,7 +80,6 @@ nav {
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
       transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
-
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -108,6 +107,7 @@ nav {
 }
 
 .shiny-cta1::after {
+  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
@@ -159,10 +159,11 @@ nav {
   }
 }
 
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
+
 .designloginnav {
   font-weight: bold;
   text-decoration: none;
-
 }
 
 /* CORPO CENTRALIZADO*/
@@ -181,20 +182,21 @@ nav {
   margin-bottom: 25px;
   background: transparent;
   padding: 0;
+  margin-top: 12px;
   border: none;
   box-shadow: none;
 }
 
 .header-topo h2 {
   font-size: 2.2em;
-  font-weight: 700;
+  font-weight: 600;
   color: #111827;
-  letter-spacing: -0.5px;
   margin-bottom: 4px;
 }
 
 .header-topo small {
-  color: #4b5563;
+  color: #414141;
+  margin-top: 6px;
   font-size: 1em;
 }
 
@@ -290,23 +292,48 @@ nav {
   gap: 24px;
 }
 
-/* CARDS DO CATÁLOGO (Estilo Limpo e Arredondado da Imagem 1) */
+/* EFEITO SPOTLIGHT / GLASS COM BORDER-RADIUS DE 20PX E LUZ REATIVA AO MOUSE */
 .card-mei {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
+  overflow: hidden;
+  padding: 30px !important;
+  border-radius: 20px;
+  border: 1px solid rgba(65, 65, 65, 0.12);
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* O brilho verde segue exatamente o cursor dentro do card */
+.card-mei::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(63, 175, 110, 0.22),
+      transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-mei:hover::before {
+  opacity: 1;
+}
+
+.card-mei>* {
+  position: relative;
+  z-index: 2;
 }
 
 .card-mei:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-5px) !important;
+  box-shadow: 0 16px 32px rgba(63, 175, 110, 0.12) !important;
 }
 
 .card-mei h4 {
