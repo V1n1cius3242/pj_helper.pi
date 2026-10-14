@@ -1,72 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/stylecatalogo.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
-    
+
     <title>PJ Helper - Catálogo</title>
 </head>
+
 <body>
     <div class="header">
-  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-   <input type="checkbox" id="menu-toggle" style="display: none;">
- 
-      <label for="menu-toggle" class="menu-icon-hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-  <nav>
-    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="catalogo.html"  style="color:#3faf6e;">Clientes</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
-    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
-            <span class="shiny-cta-content1">
-                 Login
-            </span>
-        </button>   <!--BUTTON FUNCIONANDO!-->
-  </nav>
-</div>
-   
-       <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
-        
+        <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
+
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
+            <a class="navitens" href="catalogo.html" style="color:#3faf6e;">Clientes</a> <!--FUNCIONANDO!-->
+            <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
+            <button onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">
+                    Login
+                </span>
+            </button> <!--BUTTON FUNCIONANDO!-->
+        </nav>
+    </div>
+
+    <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
+
         <!-- HEADER -->
         <div class="header-topo">
             <div>
-                <h2 style="margin: 0; color: #000000;">Catálogo de Prestadores MEI</h2>
-                <small style="color: #414141; font-size: 15px;">Encontre os melhores profissionais para a sua empresa</small>
+                <p style="color: #3faf6e; font-weight:530">Catálogo</p>
+                <h2 style="margin: 0; color: #000000;">Nossos clientes</h2>
+                <small style="color: #414141; font-size: 15px;">Encontre os melhores profissionais para a sua
+                    empresa</small>
             </div>
+            <span></span>
             <a id="btnVoltarPainel" href="login.html" class="btn-voltar">⬅ Voltar ao Painel</a>
         </div>
 
         <div id="bannerAviso"></div>
 
-<!-- FILTROS DE BUSCA -->
-<div class="filtros-container" style="display: flex; flex-direction: column; gap: 15px;">
-    
-    <!-- Input de busca -->
-    <input type="text" id="inputBusca" placeholder="Buscar por nome, razão social, e-mail, CNPJ, serviço..." oninput="filtrarCatalogo()">
+        <!-- FILTROS DE BUSCA -->
+        <div class="filtros-container" style="display: flex; flex-direction: column; gap: 15px;">
 
-    <!-- Botoes de Categoria (Pills) -->
-    <div class="categorias-pills" id="containerCategorias">
-        <button class="pill-btn active" onclick="selecionarCategoria(this, '')">Todos</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Agricultura')">Agricultura</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Alimentacao')">Alimentação</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Confeitaria')">Confeitaria</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Construcao')">Construção</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Logistica')">Logística</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Tecnologia')">Tecnologia</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Textil')">Têxtil</button>
-        <button class="pill-btn" onclick="selecionarCategoria(this, 'Outros')">Outros</button>
-    </div>
+            <!-- Input de busca -->
+            <input type="text" id="inputBusca" placeholder="Buscar por nome, razão social, e-mail, CNPJ, serviço..."
+                oninput="filtrarCatalogo()">
 
-</div>
+            <!-- Botoes de Categoria (Pills) -->
+            <div class="categorias-pills" id="containerCategorias">
+                <button class="pill-btn active" onclick="selecionarCategoria(this, '')">Todos</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Agricultura')">Agricultura</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Alimentacao')">Alimentação</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Confeitaria')">Confeitaria</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Construcao')">Construção</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Logistica')">Logística</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Tecnologia')">Tecnologia</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Textil')">Têxtil</button>
+                <button class="pill-btn" onclick="selecionarCategoria(this, 'Outros')">Outros</button>
+            </div>
+
+        </div>
 
         <!-- GRID DE CARDS -->
         <div id="gridCatalogo" class="grid-3">
@@ -80,28 +87,36 @@
         <div class="modal-content">
             <h3 style="margin-top:0; color:#007bff;"> Solicitar / Propor Serviço</h3>
             <p id="modalNomeMei" style="color:#555; font-weight:bold; margin-bottom:15px;"></p>
-            
+
             <form id="formModalProposta">
                 <input type="hidden" id="modal_mei_usuario_id">
-                
+
                 <div style="margin-bottom:12px;">
                     <label><strong>Serviço / Projeto Desejado:</strong></label>
-                    <input type="text" id="modal_titulo_servico" placeholder="Ex: Manutenção Elétrica ou Site Institucional" required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                    <input type="text" id="modal_titulo_servico"
+                        placeholder="Ex: Manutenção Elétrica ou Site Institucional" required
+                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
                 </div>
-                
+
                 <div style="margin-bottom:12px;">
                     <label><strong>Valor Oferecido/Estimado (R$):</strong></label>
-                    <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                    <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required
+                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
                 </div>
-                
+
                 <div style="margin-bottom:12px;">
                     <label><strong>Descrição do Projeto:</strong></label>
-                    <textarea id="modal_descricao" rows="4" placeholder="Explique brevemente o que sua empresa precisa..." required style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
+                    <textarea id="modal_descricao" rows="4"
+                        placeholder="Explique brevemente o que sua empresa precisa..." required
+                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
                 </div>
-                
+
                 <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
-                    <button type="button" onclick="fecharModal()" style="background:#6c757d; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
-                    <button type="submit" style="background:#28a745; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">Enviar Proposta</button>
+                    <button type="button" onclick="fecharModal()"
+                        style="background:#6c757d; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
+                    <button type="submit"
+                        style="background:#28a745; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">Enviar
+                        Proposta</button>
                 </div>
             </form>
         </div>
@@ -110,31 +125,36 @@
     <footer class="footer">
         </section>
         <section class="bloco2footer">
-        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
-        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
-        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
-         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+            <div class="footer-text1">
+                <h3>PJ <span style="color: #3faf6e;">HELPER</span></h3>
+            </div>
+            <div class="footer-text2">
+                <p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+                    O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p>
+            </div>
         </section>
-       <section class="linhafooter">
-    <div class="linha"></div>
-    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
-</section>
+        <section class="linhafooter">
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
 
     </footer>
 
     <script src="./js/scriptCAT.js">
-const observador = new IntersectionObserver((entradas) => {
-  entradas.forEach((entrada) => {
-    if (entrada.isIntersecting) {
-      entrada.target.classList.add('animar-ao-rolar');
-      observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
-    }
-  });
-}, { 
-  rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
-});
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('animar-ao-rolar');
+                    observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+        });
 
-document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
-</script>
+        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+    </script>
 </body>
+
 </html>
