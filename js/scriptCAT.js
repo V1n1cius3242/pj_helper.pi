@@ -91,8 +91,8 @@
                     <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
                     
                     <div style="margin-top: 8px; font-size:0.88em; color:#444;">
-                        <p><strong>📱 Telefone:</strong> ${m.telefone || 'Não informado'}</p>
-                        <p><strong>✉️ E-mail:</strong> ${m.email || 'Não informado'}</p>
+                        <p><strong>Telefone:</strong> ${m.telefone || 'Não informado'}</p>
+                        <p><strong>E-mail:</strong> ${m.email || 'Não informado'}</p>
                     </div>
 
                     ${linkSite ? `<p style="font-size:0.85em; margin-top:4px;"><strong>🌐 Site:</strong> <a href="${linkSite}" target="_blank" style="color:#3faf6e; text-decoration:underline;">${m.site}</a></p>` : ''}
@@ -107,7 +107,7 @@
 
                     ${servicosHTML}
                 </div>
-                <button onclick="abrirModal(${idMei}, '${nomeExibicao}')" class="btn-acao" style="margin-top:15px;">🤝 Solicitar / Propor Serviço</button>
+                <button onclick="abrirModal(${idMei}, '${nomeExibicao}')" class="btn-acao" style="margin-top:15px;">Solicitar / Propor Serviço</button>
             </div>
         `;
     }).join('');
