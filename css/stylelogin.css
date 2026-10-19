@@ -22,10 +22,8 @@ body {
   top: 0;
   left: 0;
   z-index: 999;
-  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
   width: 100%;
   justify-content: space-between;
-  /*auto-explicativo*/
   align-items: center;
   padding: 0 10%;
   backdrop-filter: blur(10px);
@@ -189,7 +187,7 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 2;
-  background: rgba(245, 245, 245, 0.829); /* A mesma intensidade branca do carrossel */
+  background: rgba(245, 245, 245, 0.897);
 }
 
 /* A imagem inteira preenchendo a tela */
@@ -272,7 +270,7 @@ nav {
 .login-card .campo label {
   font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #444;
 }
 
@@ -308,7 +306,7 @@ nav {
 .input-com-icone input {
   width: 100%;
   padding: 12px 14px 12px 40px !important;
-  border: 1px solid #ccc;
+  border: 1px solid #414141;
   border-radius: 20px;
   font-size: 0.88rem;
   font-family: 'Montserrat', sans-serif;
@@ -332,7 +330,7 @@ nav {
 
 .login-card .campo input {
   padding: 12px 14px;
-  border: 1px solid #ccc;
+  border: 1px solid #414141;
   border-radius: 20px;
   font-size: 0.88rem;
   font-family: 'Montserrat', sans-serif;

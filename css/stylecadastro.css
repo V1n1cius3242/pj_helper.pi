@@ -1,14 +1,14 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f5f5f5;
-    position: relative;
-    min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f5f5f5;
+  position: relative;
+  min-height: 100vh;
 }
 
 .header {
@@ -18,13 +18,13 @@ body {
   display: flex;
   margin-top: 0;
   position: fixed;
-  top: 0; 
-  left: 0; 
+  top: 0;
+  left: 0;
   z-index: 999;
-  width: 100%; 
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10%; 
+  padding: 0 10%;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -35,8 +35,8 @@ body {
 
 nav {
   display: flex;
-  align-items: center; 
-  gap: 30px; 
+  align-items: center;
+  gap: 30px;
 }
 
 .navitens {
@@ -46,15 +46,15 @@ nav {
 }
 
 /* BOTÃO DE LOGIN / CTA */
-.shiny-cta1:hover { 
-  transform: translateY(-4px); 
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
-} 
+.shiny-cta1:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
+}
 
-.shiny-cta1:active { 
-  transform: translateY(-1px); 
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
-} 
+.shiny-cta1:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
+}
 
 @property --gradient-angle {
   syntax: '<angle>';
@@ -68,16 +68,16 @@ nav {
   --gradient-shine: #10b981;
   --bg-color-top: #1c2421;
   --bg-color-bottom: #0a0a0a;
- 
+
   color: rgb(255, 255, 255);
   isolation: isolate;
   z-index: 1;
   position: relative;
-  padding: 10px 20px; 
+  padding: 10px 20px;
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -125,14 +125,27 @@ nav {
 }
 
 @keyframes border-spin {
-  0% { --gradient-angle: 0deg; }
-  100% { --gradient-angle: 360deg; }
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  20% {
+    left: 200%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
 
 /* FUNDO FIXO ESTÁTICO COM PELÍCULA BRANCA */
@@ -146,7 +159,6 @@ nav {
   pointer-events: none;
   overflow: hidden;
 }
-
 .fundo-catalogo::after {
   content: '';
   position: absolute;
@@ -155,7 +167,8 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 2;
-  background: rgba(245, 245, 245, 0.829); 
+  background: rgba(245, 245, 245, 0.897);
+
 }
 
 .fundo-catalogo img {
@@ -180,21 +193,38 @@ main {
   align-items: center;
   padding: 80px 20px 40px 20px;
 }
+
 /* Tamanho, paddings e espaçamentos originais da contbox restaurados com transição fluida */
 .contbox {
   background: #ffffff;
-  padding: 30px;
+  padding: 38px;
   border-radius: 50px;
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
-  width: 100%;         
-  max-width: 840px;  
+  width: 100%;
+  max-width: 840px;
   border: 0.10px solid #81818141;
-  margin-top: 20px; 
-  margin-bottom: 60px; 
+  margin-top: 20px;
+  margin-bottom: 60px;
   text-align: center;
   position: relative;
   z-index: 10;
   transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Remove a aparência nativa padrão do select em alguns navegadores */
+.campo select {
+  appearance: none;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  
+  /* Adiciona uma seta personalizada via SVG ou garante o espaço correto à direita */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center; /* Controla a distância exata da lateral direita (mude 15px para mais ou menos) */
+  background-size: 16px; /* Tamanho da seta */
+  
+  /* Aumenta o padding direito para o texto não ficar por cima da seta */
+  padding-right: 40px; 
 }
 
 /* Campos PJ - Transição suave e calma de ida e volta */
@@ -204,10 +234,10 @@ main {
   overflow: hidden;
   margin-bottom: 18px;
   visibility: visible;
-  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              opacity 0.5s ease-in-out, 
-              margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.5s ease-in-out,
+    margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+    padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Campo ADM - Oculto de forma fluida */
@@ -218,9 +248,9 @@ main {
   visibility: hidden;
   display: flex !important;
   margin-bottom: 0;
-  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              opacity 0.5s ease-in-out, 
-              margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.5s ease-in-out,
+    margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* QUANDO O ADM FOR SELECIONADO (FECHA OS PJ E ABRE O ADM COM A MESMA CALMA) */
@@ -260,12 +290,12 @@ main {
 .linha-dupla {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 30px;
   width: 100%;
 }
 
 /* ANIMAÇÃO AO ROLAR / CARREGAR */
-.escondido, 
+.escondido,
 .contbox:not(.animar-ao-rolar) {
   opacity: 0;
   transform: translateY(40px);
@@ -325,8 +355,8 @@ main {
   color: #444;
 }
 
-.campo input, 
-.campo select, 
+.campo input,
+.campo select,
 .campo textarea {
   width: 100%;
   padding: 13px 15px;
@@ -368,11 +398,11 @@ main {
   margin: 8px auto 12px auto;
   display: block;
   position: relative;
-  padding: 10px 20px; 
+  padding: 10px 20px;
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -382,14 +412,14 @@ main {
   overflow: hidden;
 }
 
-.contbox button[type="submit"]:hover { 
-  transform: translateY(-4px); 
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
-} 
+.contbox button[type="submit"]:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
+}
 
-.contbox button[type="submit"]:active { 
-  transform: translateY(-1px); 
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
+.contbox button[type="submit"]:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
 }
 
 .contbox a {
@@ -435,21 +465,21 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 40px; 
+  margin-top: 40px;
 }
 
 .linha {
   width: 70%;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.15); 
-  margin-bottom: 20px; 
+  background-color: rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
 }
 
 .direitosautorais {
   color: #8c8c8c;
   font-size: 14px;
   text-align: center;
-  font-family: 'Montserrat', sans-serif; 
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
 }
 
@@ -474,11 +504,13 @@ main {
   main {
     padding: 0 10px !important;
   }
+
   .linha-dupla {
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
   }
+
   .contbox {
     width: 86%;
     padding: 25px 18px;
@@ -492,13 +524,13 @@ main {
     max-width: 250px;
   }
 
-  .header { 
-    padding: 0 5%; 
-    height: 60px; 
-    position: fixed; 
+  .header {
+    padding: 0 5%;
+    height: 60px;
+    position: fixed;
     background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  } 
+  }
 
   .iconimg {
     width: 60px;
@@ -535,7 +567,7 @@ main {
     transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s;
   }
 
-  #menu-toggle:checked ~ nav {
+  #menu-toggle:checked~nav {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -556,15 +588,15 @@ main {
     margin-top: 10px;
   }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
+  #menu-toggle:checked~.menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(2) {
+  #menu-toggle:checked~.menu-icon-hamburger span:nth-child(2) {
     opacity: 0;
   }
 
-  #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(3) {
+  #menu-toggle:checked~.menu-icon-hamburger span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -6px);
   }
 
@@ -572,6 +604,7 @@ main {
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: none;
   }
+
   #descricao_servico {
     min-height: 80px;
     max-height: 150px;
