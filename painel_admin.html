@@ -60,20 +60,22 @@
             <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
         </div>
 
-        <!-- 1. USUÁRIOS REGISTRADOS -->
-        <div class="secao">
-            <h3> Usuários Registrados</h3>
-            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
-                <thead>
-                    <tr style="background:#f2f2f2;">
-                        <th>ID</th>
-                        <th>E-mail</th>
-                        <th>Tipo</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaUsers"></tbody>
-            </table>
-        </div>
+        <!-- 1. USUÁRIOS REGISTRADOS & APROVAÇÃO -->
+<div class="secao">
+    <h3> Gestão e Aprovação de Usuários</h3>
+    <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
+        <thead>
+            <tr style="background:#f2f2f2;">
+                <th>ID</th>
+                <th>E-mail</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>Ações de Aprovação</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaUsers"></tbody>
+    </table>
+</div>
 
         <!-- 2. GESTÃO DE CONTRATOS E REUNIÕES -->
         <div class="secao">
