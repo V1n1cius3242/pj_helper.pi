@@ -1,59 +1,67 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f5f5f5;
     position: relative;
     min-height: 100vh;
 }
+
 .header {
   height: 9vh;
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;  /*garante que fiquem alinhad*/
+  display: flex;
   margin-top: 0;
   position: fixed;
   top: 0; 
   left: 0; 
-  z-index: 999;  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
+  z-index: 999;
   width: 100%; 
-  justify-content: space-between; /*auto-explicativo*/
+  justify-content: space-between;
   align-items: center;
   padding: 0 10%; 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
 .iconimg {
   width: 75px;
 }
+
 nav {
   display: flex;
   align-items: center; 
   gap: 30px; 
 }
+
 .navitens {
   text-decoration: none;
   color: #333;
-  font-weight: bold ;
+  font-weight: bold;
 }
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+
+/* BOTÃO DE LOGIN / CTA */
 .shiny-cta1:hover { 
   transform: translateY(-4px); 
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
 } 
+
 .shiny-cta1:active { 
   transform: translateY(-1px); 
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
 } 
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
+
 .shiny-cta1 {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
@@ -78,39 +86,32 @@ nav {
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
 }
-/* CAMADA DAS BOLINHAS VERDES*/
+
 .shiny-cta1::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
- -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(
-  120deg,
-  transparent 30%,
-  rgba(0, 0, 0, 1) 48%,
-  rgba(0, 0, 0, 1) 52%,
-  transparent 70%);
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg, transparent 30%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 52%, transparent 70%);
   pointer-events: none;
   z-index: 1;
 }
-.shiny-cta1::after { /* O feixe de luz passando (Shimmer) */
+
+.shiny-cta1::after {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-  90deg,
-  transparent,
-  rgba(255, 255, 255, 0.25),
-  transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
 }
+
 .shiny-cta-content1 {
   z-index: 3;
   justify-content: center;
@@ -122,34 +123,20 @@ nav {
   font-weight: 600;
   font-size: 15px;
 }
+
 @keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
 }
+
 @keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 200%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-
-.designloginnav{
-  font-weight: bold ;
-  text-decoration: none;  
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
 
-/* INÍCIO DO CARROSSEL DE IMAGENS */
-.itenscarrossel {
+/* FUNDO FIXO ESTÁTICO COM PELÍCULA BRANCA */
+.fundo-catalogo {
   position: fixed;
   top: 0;
   left: 0;
@@ -157,78 +144,126 @@ nav {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-}
-
-.carrossel {
-  position: relative;
-  width: 100%;
-  height: 100%; 
   overflow: hidden;
 }
-.carrossel:after {
+
+.fundo-catalogo::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2; 
-  background: rgba(245, 245, 245, 0.75); /* Mantém apenas a camada esbranquiçada uniforme, sem degradê */
+  z-index: 2;
+  background: rgba(245, 245, 245, 0.829); 
 }
-.carrossel img {
+
+.fundo-catalogo img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover; /* Garante preenchimento total de canto a canto sem bordas pretas/vazias */
+  object-fit: cover;
   object-position: center;
-  opacity: 0;
-  animation: carrosselFade 12s infinite;
+  z-index: 1;
 }
 
-.carrossel img:nth-child(1) { animation-delay: 0s; }
-.carrossel img:nth-child(2) { animation-delay: 4s; }
-.carrossel img:nth-child(3) { animation-delay: 8s; }
-
-@keyframes carrosselFade {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  33% { opacity: 1; }
-  43% { opacity: 0; }
-  100% { opacity: 0; }
-}
-/* ESTRUTURA PRINCIPAL E CONTAINER DE CADASTRO */
+/* ESTRUTURA PRINCIPAL (CARD CENTRALIZADO NA PRIMEIRA DOBRA) */
 main {
   position: relative;
   z-index: 10;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  padding: 80px 20px 40px 20px;
 }
+/* Tamanho, paddings e espaçamentos originais da contbox restaurados com transição fluida */
 .contbox {
   background: #ffffff;
-  padding: 40px;
-  height: auto;
+  padding: 30px;
   border-radius: 50px;
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
   width: 100%;         
-  max-width: 800px;  
+  max-width: 840px;  
   border: 0.10px solid #81818141;
-  margin-top: 99px; 
+  margin-top: 20px; 
   margin-bottom: 60px; 
   text-align: center;
   position: relative;
   z-index: 10;
+  transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
+/* Campos PJ - Transição suave e calma de ida e volta */
+.campo-pj {
+  max-height: 150px;
+  opacity: 1;
+  overflow: hidden;
+  margin-bottom: 18px;
+  visibility: visible;
+  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              opacity 0.5s ease-in-out, 
+              margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Campo ADM - Oculto de forma fluida */
+.campo-admin {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  display: flex !important;
+  margin-bottom: 0;
+  transition: max-height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              opacity 0.5s ease-in-out, 
+              margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* QUANDO O ADM FOR SELECIONADO (FECHA OS PJ E ABRE O ADM COM A MESMA CALMA) */
+#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-pj {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  visibility: hidden !important;
+}
+
+#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-admin {
+  max-height: 100px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  margin-bottom: 18px !important;
+}
+
+/* CENTRALIZAÇÃO ESPECÍFICA DO INPUT DE ADM */
+.centralizado-adm {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 18px auto;
+  text-align: center;
+}
+
+.centralizado-adm label {
+  text-align: center;
+  display: block;
+}
+
+.centralizado-adm input {
+  text-align: center;
+}
+
 .linha-dupla {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   width: 100%;
 }
+
 /* ANIMAÇÃO AO ROLAR / CARREGAR */
 .escondido, 
 .contbox:not(.animar-ao-rolar) {
@@ -242,50 +277,51 @@ main {
   transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform, opacity;
 }
+
 .iconcad {
   align-items: center;
   text-align: center;
 }
 
 .iconcad img {
-  width: 70px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: 65px;
+  margin-top: 5px;
+  margin-bottom: 8px;
 }
 
 .iconcad h2 {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   color: #000000;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
 .iconcad p {
   color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 30px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
 }
 
 /* CAMPOS DO FORMULÁRIO */
 #descricao_servico {
-  min-height: 90px;
-  max-height: 500px;
-  resize: none; /* Desativa o redimensionamento manual do usuário */
-  overflow-y: hidden; /* Oculta a barra de rolagem até atingir a altura máxima */
-  transition: height 0.2s ease; /* Transição suave no crescimento */
+  min-height: 85px;
+  max-height: 220px;
+  resize: none;
+  overflow-y: hidden;
+  transition: height 0.2s ease;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .campo label {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   color: #444;
 }
 
@@ -293,17 +329,16 @@ main {
 .campo select, 
 .campo textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 15px;
   border: 1px solid #ccc;
   border-radius: 20px;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-family: 'Montserrat', sans-serif;
   outline: none;
   background-color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
-/* EFEITO GLOW / HOVER / FOCUS NOS INPUTS */
 .campo input:hover,
 .campo select:hover,
 .campo textarea:hover,
@@ -329,8 +364,8 @@ main {
   isolation: isolate;
   z-index: 1;
   width: 220px;
-  height: 45px;
-  margin: 7px auto 15px auto;
+  height: 46px;
+  margin: 8px auto 12px auto;
   display: block;
   position: relative;
   padding: 10px 20px; 
@@ -357,19 +392,17 @@ main {
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
 }
 
-/* LINK INFERIOR */
 .contbox a {
   color: #3faf80 !important;
   font-weight: bold !important;
 }
 
-/* FOOTER */
+/* FOOTER (ABAIXO DA PRIMEIRA DOBRA) */
 .footer {
   position: relative;
   z-index: 10;
   background-color: #171717;
   height: auto;
-  margin-top: 0;
   padding: 40px 20px 30px 20px;
 }
 
@@ -420,7 +453,6 @@ main {
   font-weight: 400;
 }
 
-/* Esconde o ícone das 3 linhas no computador */
 .menu-icon-hamburger {
   display: none;
   flex-direction: column;
@@ -439,11 +471,10 @@ main {
 }
 
 @media (max-width: 768px) {
-
   main {
     padding: 0 10px !important;
   }
-.linha-dupla {
+  .linha-dupla {
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
@@ -461,13 +492,7 @@ main {
     max-width: 250px;
   }
 
-  #descricao_servico {
-    min-height: 90px;
-    max-height: 500px;
-    transition: height 0.2s ease;
-    overflow-y: auto !important;
-  }
-.header { 
+  .header { 
     padding: 0 5%; 
     height: 60px; 
     position: fixed; 
@@ -475,13 +500,11 @@ main {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   } 
 
-  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
   .iconimg {
     width: 60px;
     z-index: 91;
   }
 
-  /* Exibe o ícone de hambúrguer */
   .menu-icon-hamburger {
     display: flex;
     flex-direction: column;
@@ -490,16 +513,6 @@ main {
     z-index: 1000;
   }
 
-  .menu-icon-hamburger span {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  /* Iguala o menu suspenso ao cadastro */
   nav {
     display: flex;
     flex-direction: column;
@@ -509,8 +522,6 @@ main {
     width: 100%;
     padding-top: calc(8vh + 25px);
     padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
     background-color: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -545,7 +556,6 @@ main {
     margin-top: 10px;
   }
 
-  /* Animação do ícone Hambúrguer igualada */
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
@@ -562,5 +572,9 @@ main {
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: none;
   }
-
+  #descricao_servico {
+    min-height: 80px;
+    max-height: 150px;
+    overflow-y: auto !important;
+  }
 }

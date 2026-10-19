@@ -168,8 +168,8 @@ nav {
   text-decoration: none;
 }
 
-/* INÍCIO DO CARROSSEL DE IMAGENS DE FUNDO */
-.itenscarrossel {
+/* FUNDO FIXO ESTÁTICO COM PELÍCULA BRANCA */
+.fundo-catalogo {
   position: fixed;
   top: 0;
   left: 0;
@@ -177,16 +177,11 @@ nav {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-}
-
-.carrossel {
-  position: relative;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 
-.carrossel:after {
+/* A pelúcia/película branca por cima da imagem */
+.fundo-catalogo::after {
   content: '';
   position: absolute;
   top: 0;
@@ -194,11 +189,11 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 2;
-  background: rgba(245, 245, 245, 0.75);
-  /* Mantém apenas a camada esbranquiçada uniforme, sem degradê */
+  background: rgba(245, 245, 245, 0.829); /* A mesma intensidade branca do carrossel */
 }
 
-.carrossel img {
+/* A imagem inteira preenchendo a tela */
+.fundo-catalogo img {
   position: absolute;
   top: 0;
   left: 0;
@@ -206,44 +201,8 @@ nav {
   height: 100vh;
   object-fit: cover;
   object-position: center;
-  opacity: 0;
-  animation: carrosselFade 12s infinite;
+  z-index: 1;
 }
-
-.carrossel img:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.carrossel img:nth-child(2) {
-  animation-delay: 4s;
-}
-
-.carrossel img:nth-child(3) {
-  animation-delay: 8s;
-}
-
-@keyframes carrosselFade {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  33% {
-    opacity: 1;
-  }
-
-  43% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
 /* ANIMAÇÃO AO ROLAR / CARREGAR DA CAIXA DE LOGIN */
 .escondido,
 .login-card:not(.animar-ao-rolar) {
