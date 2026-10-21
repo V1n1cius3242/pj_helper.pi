@@ -6,9 +6,29 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f5f5f5;
-  position: relative;
+  margin: 0;
   min-height: 100vh;
+  /* Fundo off-white elegante, um pouco mais escuro que o painel branco (#ffffff) */
+  background-color: #f4f7f5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Canvas fixo no fundo para os pontos interativos */
+#bg-dots {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Permite cliques livres nos botões e inputs */
+}
+
+/* Garante que o conteúdo e o cabeçalho fiquem acima do canvas */
+.header, main, .footer {
+  position: relative;
+  z-index: 10;
 }
 
 .header {
@@ -146,40 +166,6 @@ nav {
   100% {
     left: 200%;
   }
-}
-
-/* FUNDO FIXO ESTÁTICO COM PELÍCULA BRANCA */
-.fundo-catalogo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.fundo-catalogo::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background: rgba(245, 245, 245, 0.897);
-
-}
-
-.fundo-catalogo img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  object-position: center;
-  z-index: 1;
 }
 
 /* ESTRUTURA PRINCIPAL (CARD CENTRALIZADO NA PRIMEIRA DOBRA) */
@@ -501,6 +487,15 @@ main {
 }
 
 @media (max-width: 768px) {
+  #bg-dots {
+    display: none !important;
+  }
+  
+  body {
+    background-color: #f4f7f5;
+    background-image: radial-gradient(circle, #b8bec5 1.0px, transparent 1.0px);
+    background-size: 18px 18px;
+  }
   main {
     padding: 0 10px !important;
   }

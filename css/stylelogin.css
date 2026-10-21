@@ -6,9 +6,29 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f5f5f5;
-  position: relative;
+  margin: 0;
   min-height: 100vh;
+  /* Fundo off-white elegante, um pouco mais escuro que o painel branco (#ffffff) */
+  background-color: #f4f7f5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Canvas fixo no fundo para os pontos interativos */
+#bg-dots {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Permite cliques livres nos botões e inputs */
+}
+
+/* Garante que o conteúdo e o cabeçalho fiquem acima do canvas */
+.header, main, .footer {
+  position: relative;
+  z-index: 10;
 }
 
 .header {
@@ -224,10 +244,9 @@ nav {
   position: relative;
   z-index: 10;
 }
-
 /* Centralização da sessão de login/cadastro */
 .login-section {
-  margin-top: 5.5%;
+  margin-top: 4%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,9 +274,12 @@ nav {
 }
 
 .login-card h2 {
-  margin-bottom: 50px;
   color: #000000;
   font-size: 1.5rem;
+}
+.login-card p{
+  margin-bottom: 35px;
+  color: #414141;
 }
 
 .login-card .campo {
@@ -545,6 +567,15 @@ nav {
 
 /*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
 @media (max-width: 768px) {
+   #bg-dots {
+    display: none !important;
+  }
+  
+  body {
+    background-color: #f4f7f5;
+    background-image: radial-gradient(circle, #b8bec5 1.0px, transparent 1.0px);
+    background-size: 18px 18px;
+  }
   .header {
     padding: 0 5%;
     height: 60px;
