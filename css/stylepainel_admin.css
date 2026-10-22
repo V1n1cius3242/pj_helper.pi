@@ -146,7 +146,14 @@ nav {
 }
 .bemvindotopo h2{
   float: left;
-  spa
+}
+.buttonsair{
+background:#dc3545; 
+color:#fff; border:none; 
+padding:8px 15px; 
+border-radius:5px; 
+cursor:pointer; 
+font-weight:bold;
 }
 
 .designloginnav{
