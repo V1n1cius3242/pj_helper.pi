@@ -92,10 +92,13 @@
                         <label for="categoria">Categoria:</label>
                         <select id="categoria" required>
                             <option value="" disabled selected>Selecione...</option>
-                            <option value="Tecnologia">Tecnologia / TI</option>
-                            <option value="Manutenção">Manutenção e Serviços</option>
-                            <option value="Design">Design e Marketing</option>
-                            <option value="Consultoria">Consultoria</option>
+                            <option value="Agricultura">Agricultura</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Confeitaria">Confeitaria</option>
+                            <option value="Construção">Construção</option>
+                            <option value="Logística">Logística</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Têxtil">Têxtil</option>
                             <option value="Outros">Outros</option>
                         </select>
                     </div>
@@ -141,6 +144,28 @@
         </div>
     </main>
 
+    <!-- MODAL DE AVISO DE CADASTRO PENDENTE / EMAIL / SPAM -->
+    <div id="modalAvisoSucesso" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background: #ffffff; width: 100%; max-width: 450px; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-family: 'Montserrat', sans-serif;">
+            <div style="font-size: 50px; margin-bottom: 10px;"></div>
+            <h3 style="color: #333; margin-bottom: 10px; font-weight: 700;">Cadastro Realizado!</h3>
+            
+            <p style="color: #555; font-size: 0.95em; line-height: 1.5; margin-bottom: 15px;">
+                Sua conta foi criada e enviada para a **análise da nossa equipe**.
+            </p>
+
+            <div style="background: #f8f9fa; border-left: 4px solid #3faf6e; padding: 12px; text-align: left; border-radius: 6px; font-size: 0.88em; color: #444; margin-bottom: 20px; line-height: 1.4;">
+                <p style="margin-bottom: 6px;"><strong>✉️ Importante:</strong></p>
+                <p>• Assim que sua conta for aprovada, enviaremos um e-mail de confirmação para você.</p>
+                <p style="margin-top: 6px;">• Lembre-se de verificar também a sua pasta de <strong>Spam / Lixo Eletrônico</strong>!</p>
+            </div>
+
+            <button onclick="window.location.href='login.html'" class="shiny-cta1" style="width: 100%; padding: 12px; border: none; cursor: pointer;">
+                <span class="shiny-cta-content1">Entendido! Ir para o Login</span>
+            </button>
+        </div>
+    </div>
+
     <footer class="footer">
         <section class="bloco2footer">
             <div class="footer-icon"><img src="/icon/IconPJ.png" alt="Icone PJ Helper"></div>
@@ -158,8 +183,7 @@
             <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
         </section>
     </footer>
-
-    <script src="./js/scriptCAD.js"></script>
+<script src="./js/scriptCAD.js"></script>
 </body>
 
 </html>

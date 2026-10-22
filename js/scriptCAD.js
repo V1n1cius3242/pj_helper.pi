@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Validação de confirmação de senha
         if (senha !== confirmarSenha) {
             mensagemEl.style.color = '#d9534f';
+            mensagemEl.innerHTML = '';
             mensagemEl.innerText = 'As senhas não coincidem!';
             return;
         }
@@ -67,47 +68,62 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (response.ok && (data.sucesso || data.message)) {
-                mensagemEl.style.color = '#28a745';
-                mensagemEl.innerText = 'Conta cadastrada com sucesso! Redirecionando...';
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1500);
+                if (tipo === 'admin') {
+                    mensagemEl.style.color = '#3faf6e';
+                    mensagemEl.innerHTML = '';
+                    mensagemEl.innerText = 'Conta de Administrador cadastrada com sucesso! Redirecionando...';
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                } else {
+                    // Limpa mensagens de erro anteriores
+                    mensagemEl.innerHTML = '';
+                    
+                    // Exibe a Modal de Aviso em HTML que já está pronta no cadastro_2.html
+                    const modalAviso = document.getElementById('modalAvisoSucesso');
+                    if (modalAviso) {
+                        modalAviso.style.display = 'flex';
+                    }
+                }
             } else {
                 mensagemEl.style.color = '#d9534f';
+                mensagemEl.innerHTML = '';
                 mensagemEl.innerText = data.error || data.erro || 'Erro ao realizar cadastro.';
             }
         } catch (err) {
             console.error(err);
             mensagemEl.style.color = '#d9534f';
+            mensagemEl.innerHTML = '';
             mensagemEl.innerText = 'Erro ao conectar com o servidor.';
         }
     });
 });
+
 //pontuação automática do cnpj (SOFIA)//
 function mascaraCNPJ(input) {
     let v = input.value.replace(/\D/g, '');
 
-    // 2. Aplica a máscara gradualmente conforme o utilizador digita
     v = v.replace(/^(\d{2})(\d)/, '$1.$2');
     v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
     v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
     v = v.replace(/(\d{4})(\d)/, '$1-$2');
 
-    // 3. Atualiza o valor no campo
     input.value = v;
 };
+
 const observador = new IntersectionObserver((entradas) => {
   entradas.forEach((entrada) => {
     if (entrada.isIntersecting) {
       entrada.target.classList.add('animar-ao-rolar');
-      observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+      observador.unobserve(entrada.target);
     }
   });
 }, { 
-  rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+  rootMargin: '0px 0px -10% 0px' 
 });
 
 document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+
 // --- ANIMAÇÃO DE GRID COM FLUIDEZ SUAVE E MÍNIMO DESLOCAMENTO ---
 const canvas = document.getElementById('bg-dots');
 if (canvas) {
@@ -133,10 +149,10 @@ if (canvas) {
         for (let x = 10; x < width; x += spacing) {
             for (let y = 10; y < height; y += spacing) {
                 particles.push({
-                    baseX: x,             
-                    baseY: y,             
-                    x: x,                 
-                    y: y,                 
+                    baseX: x,            
+                    baseY: y,            
+                    x: x,                
+                    y: y,                
                     baseSize: 1.0,
                     currentSize: 1.0,
                     maxSize: 2.7,
@@ -175,17 +191,15 @@ if (canvas) {
             let targetY = p.baseY;
 
             if (distance < activeMouse.radius) {
-                // Curva ainda mais suave para a área de alcance
                 let force = Math.pow((activeMouse.radius - distance) / activeMouse.radius, 1.4);
                 targetActivation = force;
 
                 let angle = Math.atan2(dy, dx);
-                let pushDist = force * 1.5; // Deslocamento quase imperceptível, apenas um respiro na malha
+                let pushDist = force * 1.5; 
                 targetX = p.baseX - Math.cos(angle) * pushDist;
                 targetY = p.baseY - Math.sin(angle) * pushDist;
             }
 
-            // Inércia ultra suave: sobe macio e desce bem devagar deixando um rastro aveludado
             if (targetActivation > p.activation) {
                 p.activation += (targetActivation - p.activation) * 0.18;
             } else {
