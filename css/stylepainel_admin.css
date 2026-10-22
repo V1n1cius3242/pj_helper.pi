@@ -1,52 +1,176 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
-font-family: 'Montserrat', sans-serif;
-background-color: #f5f5f5;
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
 }
+
+/* HEADER FIXO DE PONTA A PONTA */
 .header {
   height: 9vh;
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;  /*garante que fiquem alinhad*/
+  display: flex;
   margin-top: 0;
   position: fixed;
   top: 0; 
   left: 0; 
-  z-index: 999;  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
+  z-index: 999;
   width: 100%; 
-  justify-content: space-between; /*auto-explicativo*/
+  justify-content: space-between;
   align-items: center;
   padding: 0 10%; 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
 .iconimg {
   width: 75px;
 }
+
 nav {
   display: flex;
   align-items: center; 
   gap: 30px; 
 }
+
 .navitens {
   text-decoration: none;
   color: #333;
-  font-weight: bold ;
+  font-weight: bold;
 }
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
-.shiny-cta1:hover { 
-  transform: translateY(-4px); 
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
-} 
-.shiny-cta1:active { 
-  transform: translateY(-1px); 
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
-} 
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+
+/* CONTEÚDO PRINCIPAL CENTRALIZADO */
+main {
+    margin-top: 9vh;
+    min-height: 91vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bemvindotopo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    border: rgba(0, 0, 0, 0.11) solid 1px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.014);
+    width: 100%;
+}
+
+.bemvindo-textos {
+    display: flex;
+    flex-direction: column; 
+    gap: 4px;
+    text-align: left;
+}
+
+.bemvindotopo h3 {
+    color: #3faf6e;
+    font-weight: 550;
+    font-size: 1.0rem;
+    order: 1;
+}
+
+.bemvindotopo h2 {
+    font-size: 30px;
+    color: #111;
+    font-weight: 700;
+    order: 2;
+}
+
+.bemvindo-acoes {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.badge-equipe {
+    background-color: #e6f4ea;
+    color: #3faf6e; 
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; 
+}
+.escudo {
+    width: 14px;
+    height: auto;
+    object-fit: contain;
+    filter: invert(62%) sepia(29%) saturate(674%) hue-rotate(95deg) brightness(94%) contrast(89%)
+            drop-shadow(0.3px 0.3px 0.3px #3faf6e);
+}
+.saida {
+    width: 14px;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px; 
+    filter: invert(24%) sepia(87%) saturate(4787%) hue-rotate(345deg) brightness(93%) contrast(92%)
+    drop-shadow(0.3px 0.3px 0.3px #c5221f);;
+}
+.buttonsair {
+    background: transparent; 
+    color: #c5221f; 
+    border: none; 
+    padding: 6px 12px; 
+    cursor: pointer; 
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.buttonsair:hover {
+    text-decoration: underline;
+}
+.perfil-icon {
+    width: 15px;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    filter: brightness(0) invert(1);
+}
+.secao {
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.secao h3 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px;
+}
+
+/* BOTÕES E TABELAS */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES) */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -63,7 +187,12 @@ nav {
   isolation: isolate;
   z-index: 1;
   position: relative;
-  padding: 10px 20px; 
+  width: 115px; 
+  height: 42px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
@@ -76,39 +205,6 @@ nav {
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
 }
-/* CAMADA DAS BOLINHAS VERDES*/
-.shiny-cta1::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
- -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(
-  120deg,
-  transparent 30%,
-  rgba(0, 0, 0, 1) 48%,
-  rgba(0, 0, 0, 1) 52%,
-  transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-}
-.shiny-cta1::after { /* O feixe de luz passando (Shimmer) */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-  90deg,
-  transparent,
-  rgba(255, 255, 255, 0.25),
-  transparent);
-  transform: skewX(-25deg);
-  animation: shimmer 9s infinite;
-  z-index: 2;
-}
 .shiny-cta-content1 {
   z-index: 3;
   justify-content: center;
@@ -120,54 +216,31 @@ nav {
   font-weight: 600;
   font-size: 15px;
 }
+
 @keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 200%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-.bemvindotopo h3{
-  color:  #3faf6e;
-  font-weight: 500;
-}
-.bemvindotopo h2{
-  float: left;
-}
-.buttonsair{
-background:#dc3545; 
-color:#fff; border:none; 
-padding:8px 15px; 
-border-radius:5px; 
-cursor:pointer; 
-font-weight:bold;
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
 }
 
-.designloginnav{
-  font-weight: bold ;
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.designloginnav {
+  font-weight: bold;
   text-decoration: none;  
 }
 
-/* FOOTER (ABAIXO DA PRIMEIRA DOBRA) */
+/* FOOTER DE PONTA A PONTA */
 .footer {
   position: relative;
   z-index: 10;
   background-color: #171717;
   height: auto;
   padding: 40px 20px 30px 20px;
+  width: 100%;
 }
 
 .bloco2footer {
@@ -234,9 +307,9 @@ font-weight:bold;
   transition: all 0.3s ease;
 }
 
-/*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
+/* RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 768px) { 
-.header { 
+  .header { 
     padding: 0 5%; 
     height: 60px; 
     position: fixed; 
@@ -244,13 +317,11 @@ font-weight:bold;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   } 
 
-  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
   .iconimg {
     width: 60px;
     z-index: 91;
   }
 
-  /* Exibe o ícone de hambúrguer */
   .menu-icon-hamburger {
     display: flex;
     flex-direction: column;
@@ -259,16 +330,6 @@ font-weight:bold;
     z-index: 1000;
   }
 
-  .menu-icon-hamburger span {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  /* Iguala o menu suspenso ao cadastro */
   nav {
     display: flex;
     flex-direction: column;
@@ -278,8 +339,6 @@ font-weight:bold;
     width: 100%;
     padding-top: calc(8vh + 25px);
     padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
     background-color: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -314,7 +373,6 @@ font-weight:bold;
     margin-top: 10px;
   }
 
-  /* Animação do ícone Hambúrguer igualada */
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
@@ -327,40 +385,19 @@ font-weight:bold;
     transform: rotate(-45deg) translate(5px, -6px);
   }
 
-  .header:has(#menu-toggle:checked) {
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: none;
+  main {
+      padding: 20px 10px; /* Reduz espaçamento lateral em telas menores */
   }
 
-  /* Footer */ 
+  .bemvindotopo {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+  }
+
   .footer { 
     height: auto; 
     padding: 40px 20px; 
-  } 
-
-  .subspanfooter { 
-    font-size: 26px; 
-    font-weight: 600; 
-  } 
-
-  .buttonsfinais { 
-    flex-direction: column; 
-    gap: 15px; 
-    margin-top: 30px; 
-  } 
-
-  .button1footer { 
-    margin: 0; 
-    width: 80%; 
-  } 
-
-  .shiny-cta2 { 
-    width: 80%; 
-    text-align: center; 
-  } 
-
-  .footer-icon img { 
-    margin-top: 40px; 
   } 
 
   .linha { 
