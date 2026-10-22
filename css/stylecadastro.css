@@ -196,24 +196,6 @@ main {
   z-index: 10;
   transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-/* Remove a aparência nativa padrão do select em alguns navegadores */
-.campo select {
-  appearance: none;
-  -webkit-appearance: none; 
-  -moz-appearance: none;
-  
-  /* Adiciona uma seta personalizada via SVG ou garante o espaço correto à direita */
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 15px center; /* Controla a distância exata da lateral direita (mude 15px para mais ou menos) */
-  background-size: 16px; /* Tamanho da seta */
-  
-  /* Aumenta o padding direito para o texto não ficar por cima da seta */
-  padding-right: 40px; 
-}
-
-/* Campos PJ - Transição suave e calma de ida e volta */
 .campo-pj {
   max-height: 150px;
   opacity: 1;
@@ -225,8 +207,6 @@ main {
     margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
     padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-/* Campo ADM - Oculto de forma fluida */
 .campo-admin {
   max-height: 0;
   opacity: 0;
@@ -238,8 +218,6 @@ main {
     opacity 0.5s ease-in-out,
     margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-/* QUANDO O ADM FOR SELECIONADO (FECHA OS PJ E ABRE O ADM COM A MESMA CALMA) */
 #formCadastro:has(select#tipo option[value="admin"]:checked) .campo-pj {
   max-height: 0 !important;
   opacity: 0 !important;
@@ -248,14 +226,12 @@ main {
   padding-bottom: 0 !important;
   visibility: hidden !important;
 }
-
 #formCadastro:has(select#tipo option[value="admin"]:checked) .campo-admin {
   max-height: 100px !important;
   opacity: 1 !important;
   visibility: visible !important;
   margin-bottom: 18px !important;
 }
-
 /* CENTRALIZAÇÃO ESPECÍFICA DO INPUT DE ADM */
 .centralizado-adm {
   width: 100%;
@@ -317,7 +293,6 @@ main {
   font-size: 0.85rem;
   margin-bottom: 20px;
 }
-
 /* CAMPOS DO FORMULÁRIO */
 #descricao_servico {
   min-height: 85px;
@@ -325,8 +300,8 @@ main {
   resize: none;
   overflow-y: hidden;
   transition: height 0.2s ease;
+  transition: all 0.3s ease-in-out !important;
 }
-
 .campo {
   display: flex;
   flex-direction: column;
@@ -354,17 +329,17 @@ main {
   background-color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
-
+/* CORREÇÃO DO HOVER E FOCO PARA TODOS OS CAMPOS E TEXTAREA */
 .campo input:hover,
 .campo select:hover,
 .campo textarea:hover,
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
-  border-color: #3faf80;
-  box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3);
+  border-color: #3faf80 !important;
+  box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3) !important;
+  outline: none;
 }
-
 /* BOTÃO CADASTRAR */
 .contbox button[type="submit"] {
   --gradient-angle: 0deg;

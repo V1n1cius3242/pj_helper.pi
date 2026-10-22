@@ -14,13 +14,11 @@ body {
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  /*garante que fiquem alinhados*/
   margin-top: 0;
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
-  z-index: 999;
-  /*z-index garante que o header passe por cima de tudo*/
+  z-index: 999 !important;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -137,9 +135,19 @@ nav {
   font-weight: bold;
   text-decoration: none;
 }
-
-/*final do botao login*/
-
+#bg-dots {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+.header, section, .footer {
+  position: relative;
+  z-index: 10;
+} 
 .text-card {
   flex: 1;
 }
@@ -195,11 +203,13 @@ nav {
   gap: 25px;
   padding: 20px 0;
   box-sizing: border-box;
+  
 }
 
 /* Card Individual */
 .card {
   width: 100%;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.068);
   background-color: #ffffff;
   border-radius: 20px;
   border: 1px solid rgba(65, 65, 65, 0.151);

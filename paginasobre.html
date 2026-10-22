@@ -16,6 +16,9 @@
 </head>
 
 <body>
+    <!-- Canvas colocado de forma limpa -->
+    <canvas id="bg-dots"></canvas>
+
     <div class="header">
         <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
         <input type="checkbox" id="menu-toggle" style="display: none;">
@@ -119,6 +122,73 @@
         });
 
         document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+
+        // --- ANIMAÇÃO DE PONTOS ---
+        const canvas = document.getElementById('bg-dots');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let dots = [];
+            const spacing = 55;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                initDots();
+            }
+
+            function initDots() {
+                dots = [];
+                for (let x = 25; x < width; x += spacing) {
+                    for (let y = 25; y < height; y += spacing) {
+                        dots.push({
+                            x: x,
+                            y: y,
+                            isGlowing: Math.random() < 0.25,
+                            glowSpeed: (0.001 + Math.random() * 0.0025) * 0.5,
+                            glowOffset: Math.random() * Math.PI * 2
+                        });
+                    }
+                }
+            }
+
+            window.addEventListener('resize', resize);
+
+            function animate(timestamp) {
+                ctx.clearRect(0, 0, width, height);
+
+                dots.forEach(dot => {
+                    ctx.beginPath();
+                    ctx.arc(dot.x, dot.y, 1.1, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(160, 170, 180, 0.4)';
+                    ctx.fill();
+
+                    if (dot.isGlowing) {
+                        let wave = Math.sin(timestamp * dot.glowSpeed + dot.glowOffset);
+                        let opacity = (wave + 1) / 2;
+
+                        if (opacity > 0.65) {
+                            let intensity = (opacity - 0.65) / 0.35;
+
+                            ctx.beginPath();
+                            ctx.arc(dot.x, dot.y, 3.2, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(82, 183, 136, ${intensity * 0.15})`;
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(82, 183, 136, ${intensity * 0.85})`;
+                            ctx.fill();
+                        }
+                    }
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            requestAnimationFrame(animate);
+        }
     </script>
 </body>
 

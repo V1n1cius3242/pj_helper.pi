@@ -63,7 +63,7 @@ main {
     padding: 25px 30px;
     border-radius: 16px;
     border: rgba(0, 0, 0, 0.11) solid 1px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.014);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.096);
     width: 100%;
 }
 
@@ -102,6 +102,7 @@ main {
     font-weight: 600;
     display: inline-flex;
     align-items: center;
+    cursor:context-menu;
     gap: 6px; 
 }
 .escudo {
@@ -121,17 +122,14 @@ main {
     drop-shadow(0.3px 0.3px 0.3px #c5221f);;
 }
 .buttonsair {
-    background: transparent; 
+  background-color: #c5221f28;
+  border-radius: 20px;
     color: #c5221f; 
     border: none; 
     padding: 6px 12px; 
     cursor: pointer; 
     font-weight: 600;
     font-size: 14px;
-}
-
-.buttonsair:hover {
-    text-decoration: underline;
 }
 .perfil-icon {
     width: 15px;
@@ -182,13 +180,15 @@ tr:hover {
   --gradient-shine: #10b981;
   --bg-color-top: #1c2421;
   --bg-color-bottom: #0a0a0a;
- 
+    
+  cursor:context-menu;
+
   color: rgb(255, 255, 255);
   isolation: isolate;
   z-index: 1;
   position: relative;
-  width: 115px; 
-  height: 42px;
+  width: 85px; 
+  height: 38px;
   padding: 0 15px;
   display: inline-flex;
   align-items: center;
@@ -205,7 +205,43 @@ tr:hover {
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
 }
+
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  z-index: 1;
+  cursor:context-menu;
+}
+.shiny-cta1::after {
+  /* O feixe de luz passando (Shimmer) */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+    cursor:context-menu;
+}
+
 .shiny-cta-content1 {
+  cursor:context-menu;
   z-index: 3;
   justify-content: center;
   align-items: center;
@@ -215,17 +251,31 @@ tr:hover {
   gap: 0.5rem;
   font-weight: 600;
   font-size: 15px;
+    cursor:context-menu;
 }
 
 @keyframes border-spin {
-  0% { --gradient-angle: 0deg; }
-  100% { --gradient-angle: 360deg; }
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  20% {
+    left: 200%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
 
 .designloginnav {

@@ -16,6 +16,9 @@
 </head>
 
 <body>
+    <!-- Canvas de fundo -->
+    <canvas id="bg-dots"></canvas>
+
     <div class="header">
         <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
         <input type="checkbox" id="menu-toggle" style="display: none;">
@@ -26,18 +29,18 @@
             <span></span>
         </label>
         <nav>
-            <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-            <a class="navitens" href="catalogo.html" style="color:#3faf6e;">Clientes</a> <!--FUNCIONANDO!-->
-            <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html" style="color:#3faf6e;">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
             <button onclick="window.location.href='login.html'" class="shiny-cta1">
                 <span class="shiny-cta-content1">
                     Login
                 </span>
-            </button> <!--BUTTON FUNCIONANDO!-->
+            </button>
         </nav>
     </div>
 
-    <main class="container" style="margin-top: 9vh; min-height: 91vh;"> <!--Corpo-->
+    <main class="container" style="margin-top: 9vh; min-height: 91vh;">
 
         <!-- HEADER -->
         <div class="header-topo">
@@ -123,7 +126,6 @@
     </div>
 
     <footer class="footer">
-        </section>
         <section class="bloco2footer">
             <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
             <div class="footer-text1">
@@ -138,19 +140,22 @@
             <div class="linha"></div>
             <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
         </section>
-
     </footer>
 
-    <script src="./js/scriptCAT.js">
+    <!-- Script externo do catálogo -->
+    <script src="./js/scriptCAT.js"></script>
+
+    <!-- Script inline mantido no HTML -->
+    <script>
         const observador = new IntersectionObserver((entradas) => {
             entradas.forEach((entrada) => {
                 if (entrada.isIntersecting) {
                     entrada.target.classList.add('animar-ao-rolar');
-                    observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+                    observador.unobserve(entrada.target);
                 }
             });
         }, {
-            rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+            rootMargin: '0px 0px -10% 0px'
         });
 
         document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
