@@ -24,7 +24,6 @@
                     throw new Error();
                 }
             } catch (err) {
-                // Redireciona na hora sem abrir a página
                 window.location.replace('login.html');
             }
         })();
@@ -32,7 +31,6 @@
 </head>
 
 <body>
-
 
     <div class="header">
         <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
@@ -44,14 +42,14 @@
             <span></span>
         </label>
         <nav>
-            <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-            <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
-            <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
             <button class="shiny-cta1">
                 <span class="shiny-cta-content1">
                   <img src="/icon/perfil.png" class="perfil-icon" alt="">
                 </span>
-            </button> <!--BUTTON FUNCIONANDO!-->
+            </button>
         </nav>
     </div>
 
@@ -71,26 +69,26 @@
             </div>
         </div>
         
-        <div class="secao">
-            <h3> Gestão e Aprovação de Usuários</h3>
-            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
-                <thead>
-                    <tr style="background:#f2f2f2;">
-                        <th>ID</th>
-                        <th>E-mail</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>Ações de Aprovação</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaUsers"></tbody>
-            </table>
+        <!-- ABAS DE NAVEGAÇÃO -->
+        <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <button onclick="mudarAba('solicitacoes')"><span>Solicitações</span></button>
+            <button onclick="mudarAba('contratos')"><span>Contratos</span></button>
+            <button onclick="mudarAba('cadastros')"><span>Cadastros</span></button>
+            <button onclick="mudarAba('notificacoes')"><span>Notificações</span></button>
         </div>
 
-        <!-- 2. GESTÃO DE CONTRATOS E REUNIÕES -->
-        <div class="secao">
+        <!-- SEÇÃO: SOLICITAÇÕES -->
+        <div id="secao-solicitacoes" class="secao-aba" style="display: block;">
+            <h3> Gestão de Solicitações de Serviços</h3>
+            <div style="background: #fff; padding: 20px; border-radius: 8px; margin-top: 10px;">
+                <p>Nenhuma solicitação nova no momento.</p>
+            </div>
+        </div>
+
+        <!-- SEÇÃO: CONTRATOS & REUNIÕES -->
+        <div id="secao-contratos" class="secao-aba" style="display: none;">
             <h3> Monitoramento de Contratos & Reuniões</h3>
-            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left;">
+            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left; margin-top: 10px; background: #fff;">
                 <thead>
                     <tr style="background:#f2f2f2;">
                         <th>ID</th>
@@ -106,6 +104,30 @@
             </table>
         </div>
 
+        <!-- SEÇÃO: CADASTROS (GESTÃO DE USUÁRIOS) -->
+        <div id="secao-cadastros" class="secao-aba" style="display: none;">
+            <h3> Gestão e Aprovação de Usuários</h3>
+            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left; margin-top: 10px; background: #fff;">
+                <thead>
+                    <tr style="background:#f2f2f2;">
+                        <th>ID</th>
+                        <th>E-mail</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                        <th>Ações de Aprovação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaUsers"></tbody>
+            </table>
+        </div>
+
+        <!-- SEÇÃO: NOTIFICAÇÕES -->
+        <div id="secao-notificacoes" class="secao-aba" style="display: none;">
+            <h3> Central de Notificações</h3>
+            <div style="background: #fff; padding: 20px; border-radius: 8px; margin-top: 10px;">
+                <p>Nenhuma notificação registrada.</p>
+            </div>
+        </div>
 
         <!-- MODAL 1: AGENDAR / ALTERAR MEET -->
         <div id="modalMeet" class="modal-overlay">
@@ -144,7 +166,6 @@
     </main>
 
     <footer class="footer">
-        </section>
         <section class="bloco2footer">
             <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
             <div class="footer-text1">
@@ -159,8 +180,19 @@
             <div class="linha"></div>
             <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
         </section>
-
     </footer>
+
+    <script>
+        function mudarAba(nomeAba) {
+            const secoes = document.querySelectorAll('.secao-aba');
+            secoes.forEach(s => s.style.display = 'none');
+            
+            const ativa = document.getElementById('secao-' + nomeAba);
+            if (ativa) {
+                ativa.style.display = 'block';
+            }
+        }
+    </script>
     <script src="./js/scriptADM.js"></script>
 </body>
 
