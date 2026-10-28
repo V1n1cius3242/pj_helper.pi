@@ -40,7 +40,7 @@
         </nav>
     </div>
 
-    <main class="container" style="margin-top: 9vh; min-height: 91vh;">
+    <main class="container" style="margin-top: 20px; min-height: 91vh;">
 
         <!-- HEADER -->
         <div class="header-topo">
@@ -125,6 +125,21 @@
         </div>
     </div>
 
+    <!-- MODAL DE SABER MAIS COM FUNDO BORRADO E ANIMAÇÃO -->
+    <div id="modalSaberMais" class="modal-overlay-custom">
+        <div class="modal-content-custom">
+            <h3 id="modalTituloSaberMais" style="margin-top:0; color:#111827; margin-bottom:15px; font-size: 1.3em;">Detalhes do Prestador</h3>
+            
+            <div id="modalCorpoSaberMais" style="color:#4b5563; font-size:0.95em; line-height:1.5;"></div>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:25px; border-top: 1px solid #eee; padding-top: 15px;">
+                <button type="button" onclick="fecharModalSaberMais()" class="btn-voltar-modal">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <section class="bloco2footer">
             <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
@@ -145,20 +160,73 @@
     <!-- Script externo do catálogo -->
     <script src="./js/scriptCAT.js"></script>
 
-    <!-- Script inline mantido no HTML -->
+    <!-- Script inline para gerir o modal e o botão Saber Mais -->
     <script>
-        const observador = new IntersectionObserver((entradas) => {
-            entradas.forEach((entrada) => {
-                if (entrada.isIntersecting) {
-                    entrada.target.classList.add('animar-ao-rolar');
-                    observador.unobserve(entrada.target);
-                }
-            });
-        }, {
-            rootMargin: '0px 0px -10% 0px'
-        });
+        function abrirModalSaberMais(nome, elementoId) {
+            document.getElementById('modalTituloSaberMais').innerText = 'Prestador: ' + nome;
+            const conteudoOriginal = document.getElementById(elementoId).innerHTML;
+            document.getElementById('modalCorpoSaberMais').innerHTML = conteudoOriginal;
+            
+            const modal = document.getElementById('modalSaberMais');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('ativo');
+            }, 10);
+        }
 
-        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+        function fecharModalSaberMais() {
+            const modal = document.getElementById('modalSaberMais');
+            modal.classList.remove('ativo');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new MutationObserver(() => {
+                const cards = document.querySelectorAll('.card-mei');
+                
+                cards.forEach((card, index) => {
+                    if (card.querySelector('.btn-saber-mais')) return;
+
+                    // Procura diretamente a div de resumo/sobre e a lista de serviços dentro do card
+                    const blocoResumo = card.querySelector('div[style*="border-top: 1px dashed"]');
+                    const blocoServicos = card.querySelector('div[style*="border-top: 1px solid"]');
+
+                    if (!blocoResumo && !blocoServicos) return;
+
+                    const idCardBloco = `bloco-completo-${index}`;
+                    const containerOculto = document.createElement('div');
+                    containerOculto.id = idCardBloco;
+                    containerOculto.style.display = 'none';
+
+                    if (blocoResumo) containerOculto.appendChild(blocoResumo);
+                    if (blocoServicos) containerOculto.appendChild(blocoServicos);
+
+                    card.appendChild(containerOculto);
+
+                    const nomePrestador = card.querySelector('h4') ? card.querySelector('h4').innerText : 'Prestador';
+
+                    const btnSaberMais = document.createElement('button');
+                    btnSaberMais.type = 'button';
+                    btnSaberMais.className = 'btn-saber-mais';
+                    btnSaberMais.innerText = 'Saber mais';
+                    btnSaberMais.onclick = () => abrirModalSaberMais(nomePrestador, idCardBloco);
+
+                    const btnProposta = card.querySelector('.btn-acao');
+                    if (btnProposta) {
+                        card.insertBefore(btnSaberMais, btnProposta);
+                    } else {
+                        card.appendChild(btnSaberMais);
+                    }
+                });
+            });
+
+            const grid = document.getElementById('gridCatalogo');
+            if (grid) {
+                observer.observe(grid, { childList: true, subtree: true });
+            }
+        });
     </script>
 </body>
 
