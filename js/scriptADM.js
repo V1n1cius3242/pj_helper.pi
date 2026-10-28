@@ -60,9 +60,9 @@ async function carregarAdmin() {
         if (dadosUsers.usuarios && dadosUsers.usuarios.length > 0) {
             tbodyUsers.innerHTML = dadosUsers.usuarios.map(u => {
                 const st = (u.status || 'pendente').toLowerCase();
-                let statusBadge = '<span style="color:#ffc107; font-weight:bold;">⏳ PENDENTE</span>';
-                if (st === 'aprovado') statusBadge = '<span style="color:#28a745; font-weight:bold;">✅ APROVADO</span>';
-                if (st === 'recusado') statusBadge = '<span style="color:#dc3545; font-weight:bold;">❌ RECUSADO</span>';
+                let statusBadge = '<span style="color:#ffc107; font-weight:bold;"> PENDENTE</span>';
+                if (st === 'aprovado') statusBadge = '<span style="color:#28a745; font-weight:bold;"> APROVADO</span>';
+                if (st === 'recusado') statusBadge = '<span style="color:#dc3545; font-weight:bold;"> RECUSADO</span>';
 
                 return `
                     <tr>
@@ -111,20 +111,20 @@ async function carregarAdmin() {
                         </td>
                         <td>
                             ${linkMeet ? `
-                                <a href="${linkMeet}" target="_blank" class="btn-meet">🎥 Entrar no Meet</a><br>
-                                <small style="font-size:0.8em; color:#333;">📅 ${dataFormatada}</small>
+                                <a href="${linkMeet}" target="_blank" class="btn-meet"> Entrar no Meet</a><br>
+                                <small style="font-size:0.8em; color:#333;"> ${dataFormatada}</small>
                             ` : '<em style="color:#888;">Sem reunião agendada</em>'}
                         </td>
                         <td><strong>${(c.status || 'PENDENTE').toUpperCase()}</strong></td>
                         <td>
                             ${linkPdf ? `
-                                <a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;">📄 Ver PDF</a>
+                                <a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;"> Ver PDF</a>
                             ` : '<em style="color:#888;">Pendente</em>'}
                         </td>
                         <td>
-                            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao btn-add-meet">📅 Agendar Meet</button>
-                            <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao btn-confirmar">✅ Confirmar</button>
-                            <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao btn-anexo">📎 Anexar PDF</button>
+                            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao btn-add-meet"> Agendar Meet</button>
+                            <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao btn-confirmar"> Confirmar</button>
+                            <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao btn-anexo"> Anexar PDF</button>
                         </td>
                     </tr>
                 `;
