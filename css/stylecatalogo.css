@@ -15,7 +15,6 @@ body {
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
   top: 0;
@@ -23,7 +22,6 @@ body {
   z-index: 999;
   width: 100%;
   justify-content: space-between;
-  /*auto-explicativo*/
   align-items: center;
   padding: 0 10%;
   backdrop-filter: blur(10px);
@@ -160,12 +158,10 @@ nav {
 }
 
 /*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-
 .designloginnav {
   font-weight: bold;
   text-decoration: none;
 }
-
 /* CORPO CENTRALIZADO*/
 .container {
   max-width: 1200px;
@@ -173,7 +169,6 @@ nav {
   padding: 30px 20px;
   width: 100%;
 }
-
 /* CABEÇALHO DO CATÁLOGO (Inspirado na Imagem 1) */
 .header-topo {
   display: flex;
