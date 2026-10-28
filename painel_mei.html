@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/stylepainel_mei.css">
+    <link rel="stylesheet" href="./css/stylepainel_admin.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <script>
@@ -42,9 +42,9 @@
             <a class="navitens" href="homepage.html">Home</a>
             <a class="navitens" href="catalogo.html">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
-            <button onclick="window.location.href='login.html'" class="shiny-cta1">
+            <button id="linkLoginPainel" onclick="window.location.href='painel_mei.html'" class="shiny-cta1">
                 <span class="shiny-cta-content1">
-                    Login
+                  <img src="/icon/perfil.png" class="perfil-icon" alt="">
                 </span>
             </button>
         </nav>
@@ -54,68 +54,81 @@
         
         <div id="bannerAviso"></div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2> Painel do Profissional MEI</h2>
-            <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
+        <div class="bemvindotopo">
+            <div class="bemvindo-textos">
+                <h3>Bem-vindo de volta!</h3>
+                <h2>Painel do Profissional MEI</h2>
+            </div>
+            <div class="bemvindo-acoes">
+                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida" alt="">Sair</button>
+            </div>
+        </div>
+
+        <!-- ABAS DE NAVEGAÇÃO -->
+        <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <button onclick="mudarAba('notificacoes')"><span>Notificações</span></button>
+            <button onclick="mudarAba('perfil')"><span>Perfil</span></button>
+            <button onclick="mudarAba('servicos')"><span>Serviços</span></button>
+            <button onclick="mudarAba('contratos')"><span>Propostas e Contratos</span></button>
         </div>
 
         <!-- 1. NOTIFICAÇÕES -->
-        <div class="secao">
-            <h3> Minhas Notificações</h3>
+        <div id="secao-notificacoes" class="secao">
+            <h3>Minhas Notificações</h3>
             <ul id="listaNotifs" style="padding-left: 20px; color:#444;"></ul>
         </div>
 
         <!-- 2. PERFIL COMPLETO -->
-        <div class="secao">
-            <h3> Dados Profissionais e de Contato</h3>
+        <div id="secao-perfil" class="secao" style="display: none;">
+            <h3>Dados Profissionais e de Contato</h3>
             <form id="formPerfilMei">
-                <div class="grid-2">
+                <div style="margin-bottom: 15px;">
                     <div><label><strong>Razão Social:</strong></label><input type="text" id="razao_social" required style="width:100%; padding:8px; margin-top:4px;"></div>
                     <div><label><strong>Nome Fantasia / Usuário:</strong></label><input type="text" id="nome_fantasia" required style="width:100%; padding:8px; margin-top:4px;"></div>
                 </div>
-                <div class="grid-2" style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <div><label><strong>CNPJ:</strong></label><input type="text" id="cnpj" required style="width:100%; padding:8px; margin-top:4px;"></div>
                     <div><label><strong>Telefone / WhatsApp:</strong></label><input type="text" id="telefone" required style="width:100%; padding:8px; margin-top:4px;"></div>
                 </div>
-                <div class="grid-2" style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <div><label><strong>Categoria:</strong></label><input type="text" id="categoria" placeholder="Ex: Manutenção, TI" style="width:100%; padding:8px; margin-top:4px;"></div>
                     <div><label><strong>Anos de Experiência:</strong></label><input type="number" id="anos_experiencia" style="width:100%; padding:8px; margin-top:4px;"></div>
                 </div>
-                <div class="grid-2" style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <div><label><strong>Cidade / Estado:</strong></label><input type="text" id="cidade" style="width:100%; padding:8px; margin-top:4px;"></div>
                     <div><label><strong>Site Oficial:</strong></label><input type="url" id="site" placeholder="https://..." style="width:100%; padding:8px; margin-top:4px;"></div>
                 </div>
-                <div style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <label><strong>Instagram:</strong></label>
                     <input type="text" id="instagram" placeholder="@seuusuario" style="width:100%; padding:8px; margin-top:4px;">
                 </div>
-                <div style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <label><strong>Resumo Rápido do Serviço:</strong></label>
                     <input type="text" id="resumo_servico" placeholder="Ex: Manutenção elétrica predial e residencial" style="width:100%; padding:8px; margin-top:4px;">
                 </div>
-                <div style="margin-top:10px;">
+                <div style="margin-bottom: 15px;">
                     <label><strong>Apresentação / Biografia:</strong></label>
                     <textarea id="apresentacao" rows="3" style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
                 </div>
-                <button type="submit" style="margin-top:15px; background:#28a745; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Salvar Perfil</button>
+                <button type="submit" style="background:#28a745; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Salvar Perfil</button>
             </form>
         </div>
 
         <!-- 3. TABELA DE SERVIÇOS -->
-        <div class="secao">
-            <h3>🛠️ Serviços e Tabela de Valores</h3>
-            <form id="formServico" class="grid-2">
-                <input type="text" id="servico_titulo" placeholder="Nome do Serviço" required style="padding:8px;">
-                <input type="number" step="0.01" id="servico_preco" placeholder="Preço Estimado (R$)" required style="padding:8px;">
-                <input type="text" id="servico_desc" placeholder="Descrição curta" style="grid-column: span 2; padding:8px;">
-                <button type="submit" style="grid-column: span 2; background:#007bff; color:#fff; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Cadastrar Serviço</button>
+        <div id="secao-servicos" class="secao" style="display: none;">
+            <h3>Serviços e Tabela de Valores</h3>
+            <form id="formServico" style="margin-bottom: 15px;">
+                <input type="text" id="servico_titulo" placeholder="Nome do Serviço" required style="padding:8px; width:48%; margin-right:2%;">
+                <input type="number" step="0.01" id="servico_preco" placeholder="Preço Estimado (R$)" required style="padding:8px; width:48%;">
+                <input type="text" id="servico_desc" placeholder="Descrição curta" style="padding:8px; width:100%; margin-top:10px;">
+                <button type="submit" style="margin-top:10px; background:#007bff; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Cadastrar Serviço</button>
             </form>
             <ul id="listaServicos" style="margin-top:15px; padding-left:0; list-style:none;"></ul>
         </div>
 
         <!-- 4. PROPOSTAS E CONTRATOS -->
-        <div class="secao">
-            <h3> Interesses Recebidos & Reuniões Agendadas</h3>
+        <div id="secao-contratos" class="secao" style="display: none;">
+            <h3>Interesses Recebidos & Reuniões Agendadas</h3>
             <div id="listaContratos"></div>
         </div>
     </main>
@@ -134,6 +147,26 @@
             <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
         </section>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+            const btnPerfil = document.getElementById('linkLoginPainel');
+            if (!rawUser && btnPerfil) {
+                btnPerfil.style.display = 'none';
+            }
+        });
+
+        function mudarAba(nomeAba) {
+            const secoes = document.querySelectorAll('[id^="secao-"]');
+            secoes.forEach(s => s.style.display = 'none');
+            
+            const ativa = document.getElementById('secao-' + nomeAba);
+            if (ativa) {
+                ativa.style.display = 'block';
+            }
+        }
+    </script>
     <script src="./js/scriptMEI.js"></script>
 </body>
 </html>

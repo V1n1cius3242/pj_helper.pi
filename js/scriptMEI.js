@@ -80,7 +80,7 @@ async function carregarServicos(meiId) {
                         <strong>${s.titulo}</strong> - <span style="color:#28a745; font-weight:bold;">R$ ${s.preco}</span>
                         ${s.descricao ? `<br><small style="color:#666;">${s.descricao}</small>` : ''}
                     </div>
-                    <button onclick="deletarServico(${s.id}, ${meiId})" style="background:#dc3545; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">🗑️ Apagar</button>
+                    <button onclick="deletarServico(${s.id}, ${meiId})" style="background:#dc3545; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;"> Apagar</button>
                 </li>
             `).join('');
         } else {
@@ -129,16 +129,16 @@ async function carregarContratos() {
                     <p style="margin:5px 0;"><strong>Detalhes da Empresa:</strong> ${extra.detalhes}</p>
                     
                     <div style="margin:10px 0; padding:10px; background:#eef7ff; border-radius:5px; border-left:4px solid #007bff;">
-                        <strong>📹 Reunião do Google Meet (Definida pelo ADM):</strong><br>
+                        <strong> Reunião do Google Meet (Definida pelo ADM):</strong><br>
                         ${linkMeet ? `
-                            <a href="${linkMeet}" target="_blank" class="btn-meet" style="margin-top:5px;">🎥 Entrar no Google Meet</a><br>
-                            <small style="color:#333; font-weight:bold;">📅 Data/Hora: ${dataFormatada}</small>
+                            <a href="${linkMeet}" target="_blank" class="btn-meet" style="margin-top:5px;"> Entrar no Google Meet</a><br>
+                            <small style="color:#333; font-weight:bold;"> Data/Hora: ${dataFormatada}</small>
                         ` : '<em style="color:#666; font-size:0.9em;">O ADM ainda não disponibilizou o link do Meet.</em>'}
                     </div>
 
                     ${linkPdf ? `
                         <p style="margin:8px 0;">
-                            <a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;">📄 Ver Contrato PDF</a>
+                            <a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;"> Ver Contrato PDF</a>
                         </p>
                     ` : ''}
 
@@ -146,8 +146,8 @@ async function carregarContratos() {
                     
                     ${c.status === 'pendente' ? `
                         <div style="margin-top:10px;">
-                            <button onclick="responderContrato(${c.id}, 'aceito',${c.empresa_usuario_id})" class="btn-acao btn-aceitar">✅ Aceitar Proposta</button>
-                            <button onclick="responderContrato(${c.id}, 'recusado',${c.empresa_usuario_id})" class="btn-acao btn-recusar">❌ Recusar Proposta</button>
+                            <button onclick="responderContrato(${c.id}, 'aceito',${c.empresa_usuario_id})" class="btn-acao btn-aceitar"> Aceitar Proposta</button>
+                            <button onclick="responderContrato(${c.id}, 'recusado',${c.empresa_usuario_id})" class="btn-acao btn-recusar"> Recusar Proposta</button>
                         </div>
                     ` : ''}
                 </div>

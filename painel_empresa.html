@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/stylepainel_empresa.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/stylepainel_admin.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
     
     <title>PJ Helper - Empresa</title>
@@ -20,7 +20,6 @@
             const user = JSON.parse(rawUser);
             const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
             
-            // Aceita tanto 'empresa' quanto 'empresa_grande'
             if (tipo !== 'empresa' && tipo !== 'empresa_grande') {
                 throw new Error();
             }
@@ -32,47 +31,58 @@
 </head>
 <body>
     
-    
     <div class="header">
-  <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-   <input type="checkbox" id="menu-toggle" style="display: none;">
+        <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
  
-      <label for="menu-toggle" class="menu-icon-hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-  <nav>
-    <a class="navitens" href="homepage.html">Home</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="catalogo.html">Clientes</a> <!--FUNCIONANDO!-->
-    <a class="navitens" href="paginasobre.html">Sobre</a> <!--FUNCIONANDO!-->
-    <button  onclick="window.location.href='login.html'" class="shiny-cta1">
-            <span class="shiny-cta-content1">
-                 Login
-            </span>
-        </button>   <!--BUTTON FUNCIONANDO!-->
-  </nav>
-</div>
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+            <button id="linkLoginPainel" onclick="window.location.href='painel_empresa.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">
+                  <img src="/icon/perfil.png" class="perfil-icon" alt="">
+                </span>
+            </button>
+        </nav>
+    </div>
 
     <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
-        <main class="container" style="max-width: 900px; margin: 20px auto;">
         
         <div id="bannerAviso"></div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2> Painel do Contratante (Empresa)</h2>
-            <button onclick="logout()" style="background:#dc3545; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Sair</button>
+        <div class="bemvindotopo">
+            <div class="bemvindo-textos">
+                <h3>Bem-vindo de volta!</h3>
+                <h2>Painel do Contratante (Empresa)</h2>
+            </div>
+            <div class="bemvindo-acoes">
+                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida" alt="">Sair</button>
+            </div>
+        </div>
+
+        <!-- ABAS DE NAVEGAÇÃO -->
+        <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <button onclick="mudarAba('notificacoes')"><span>Notificações</span></button>
+            <button onclick="mudarAba('perfil')"><span>Perfil</span></button>
+            <button onclick="mudarAba('catalogo')"><span>Catálogo MEI</span></button>
+            <button onclick="mudarAba('contratos')"><span>Solicitações & Reuniões</span></button>
         </div>
 
         <!-- 1. NOTIFICAÇÕES -->
-        <div class="secao">
-            <h3> Notificações da Empresa</h3>
+        <div id="secao-notificacoes" class="secao">
+            <h3>Notificações da Empresa</h3>
             <ul id="listaNotifs" style="padding-left: 20px; color:#444;"></ul>
         </div>
 
         <!-- 2. PERFIL EMPRESA -->
-        <div class="secao">
-            <h3> Dados da Empresa</h3>
+        <div id="secao-perfil" class="secao" style="display: none;">
+            <h3>Dados da Empresa</h3>
             <form id="formPerfilEmpresa">
                 <div style="margin-bottom:10px;">
                     <label><strong>Razão Social:</strong></label>
@@ -91,18 +101,18 @@
         </div>
 
         <!-- 3. CATÁLOGO DE MEIS -->
-<div class="secao" style="text-align: center; padding: 25px 20px;">
-    <h3 style="margin-top: 0;"> Catálogo de Prestadores MEI</h3>
-    <p style="color: #666; margin-bottom: 20px;">Explore a lista completa de profissionais e prestadores de serviço MEI disponíveis.</p>
-    
-    <a href="catalogo.html" style="display: inline-block; background: #007bff; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 1em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-         Acessar Catálogo Completo
-    </a>
-</div>
+        <div id="secao-catalogo" class="secao" style="display: none; text-align: center; padding: 25px 20px;">
+            <h3 style="margin-top: 0;">Catálogo de Prestadores MEI</h3>
+            <p style="color: #666; margin-bottom: 20px;">Explore a lista completa de profissionais e prestadores de serviço MEI disponíveis.</p>
+            
+            <a href="catalogo.html" style="display: inline-block; background: #007bff; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 1em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                 Acessar Catálogo Completo
+            </a>
+        </div>
 
         <!-- 4. MEUS CONTRATOS E PROPOSTAS -->
-        <div class="secao">
-            <h3> Minhas Solicitações & Reuniões</h3>
+        <div id="secao-contratos" class="secao" style="display: none;">
+            <h3>Minhas Solicitações & Reuniões</h3>
             <div id="listaContratos">
                 <p style="color:#888;">Carregando solicitações...</p>
             </div>
@@ -135,22 +145,39 @@
             </form>
         </div>
     </div>
-    </main>
 
     <footer class="footer">
-        </section>
         <section class="bloco2footer">
-        <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
-        <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
-        <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
-         O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+            <div class="footer-text1"><h3>PJ <span style="color: #3faf6e;">HELPER</span></h3></div>
+            <div class="footer-text2"><p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+             O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p></div>
         </section>
        <section class="linhafooter">
-    <div class="linha"></div>
-    <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
-</section>
-
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+            const btnPerfil = document.getElementById('linkLoginPainel');
+            if (!rawUser && btnPerfil) {
+                btnPerfil.style.display = 'none';
+            }
+        });
+
+        function mudarAba(nomeAba) {
+            const secoes = document.querySelectorAll('[id^="secao-"]');
+            secoes.forEach(s => s.style.display = 'none');
+            
+            const ativa = document.getElementById('secao-' + nomeAba);
+            if (ativa) {
+                ativa.style.display = 'block';
+            }
+        }
+    </script>
     <script src="./js/scriptEMP.js"></script>
 </body>
 </html>
