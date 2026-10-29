@@ -269,19 +269,16 @@ nav {
   border-color: #111827;
   font-weight: 600;
 }
-
 /* GRID DE CARDS */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
 }
-
 /* BOTÃO SABER MAIS */
 .btn-saber-mais {
   background: transparent;
   color: #3faf6e;
-  border: 1px solid #3faf6e;
   padding: 6px 16px;
   border-radius: 9999px;
   font-weight: 600;
@@ -290,14 +287,14 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  border: none;
   margin-top: 15px;
   margin-right: 10px;
   transition: all 0.2s ease;
 }
 
 .btn-saber-mais:hover {
-  background-color: #3faf6e;
-  color: #fff;
+  color: #04782b;;
   transform: translateY(-1px);
 }
 
@@ -341,7 +338,7 @@ nav {
 .modal-content-custom {
   background: #ffffff;
   padding: 35px;
-  border-radius: 35px;
+  border-radius: 20px;
   border: 1px solid rgba(129, 129, 129, 0.15);
   width: 100%;
   max-width: 560px;
@@ -373,7 +370,7 @@ nav {
 }
 
 .modal-descricao-bloco:hover {
-  border-color: #3faf80;
+  border-color: #3faf61;
   box-shadow: 0 0 6px rgba(62, 206, 93, 0.3);
 }
 
@@ -425,10 +422,11 @@ nav {
 .btn-cancelar-modal:hover {
   background: #e5e7eb;
   color: #111827;
+  transform: translateY(-2px);
 }
 
 .btn-enviar-modal {
-  background: #10b981;
+  background: #3faf61;
   color: #ffffff;
   border: none;
   padding: 10px 22px;
@@ -441,7 +439,7 @@ nav {
 }
 
 .btn-enviar-modal:hover {
-  background: #059669;
+  background: #166534;
   transform: translateY(-2px);
 }
 
@@ -547,7 +545,7 @@ nav {
 }
 
 .btn-acao:hover {
-  color: #047857;
+  color: #04782b;
 }
 
 #bannerAviso {
