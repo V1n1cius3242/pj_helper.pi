@@ -87,52 +87,44 @@
 
     <!-- MODAL DE PROPOSTA -->
     <div id="modalProposta" class="modal-overlay">
-        <div class="modal-content">
-            <h3 style="margin-top:0; color:#007bff;"> Solicitar / Propor Serviço</h3>
-            <p id="modalNomeMei" style="color:#555; font-weight:bold; margin-bottom:15px;"></p>
+        <div class="modal-content no-scrollbar">
+            <h3 style="margin-top:0; color:#000000; font-size: 1.3rem; font-weight: bold;">Solicitar / Propor Serviço</h3>
+            <p id="modalNomeMei" style="color:#3faf80; font-weight:600; margin-bottom:15px; font-size: 0.9rem;"></p>
 
             <form id="formModalProposta">
                 <input type="hidden" id="modal_mei_usuario_id">
 
-                <div style="margin-bottom:12px;">
-                    <label><strong>Serviço / Projeto Desejado:</strong></label>
-                    <input type="text" id="modal_titulo_servico"
-                        placeholder="Ex: Manutenção Elétrica ou Site Institucional" required
-                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                <div class="campo" style="margin-bottom:14px; text-align: left;">
+                    <label style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Serviço / Projeto Desejado:</label>
+                    <input type="text" id="modal_titulo_servico" placeholder="Ex: Manutenção Elétrica ou Site Institucional" required>
                 </div>
 
-                <div style="margin-bottom:12px;">
-                    <label><strong>Valor Oferecido/Estimado (R$):</strong></label>
-                    <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required
-                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;">
+                <div class="campo" style="margin-bottom:14px; text-align: left;">
+                    <label style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Valor Oferecido/Estimado (R$):</label>
+                    <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required>
                 </div>
 
-                <div style="margin-bottom:12px;">
-                    <label><strong>Descrição do Projeto:</strong></label>
-                    <textarea id="modal_descricao" rows="4"
-                        placeholder="Explique brevemente o que sua empresa precisa..." required
-                        style="width:100%; padding:8px; margin-top:4px; box-sizing:border-box;"></textarea>
+                <div class="campo" style="margin-bottom:14px; text-align: left;">
+                    <label style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Descrição do Projeto:</label>
+                    <textarea id="modal_descricao" class="no-scrollbar" rows="4" placeholder="Explique brevemente o que sua empresa precisa..." required></textarea>
                 </div>
 
-                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
-                    <button type="button" onclick="fecharModal()"
-                        style="background:#6c757d; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
-                    <button type="submit"
-                        style="background:#28a745; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">Enviar
-                        Proposta</button>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
+                    <button type="button" onclick="fecharModal()" class="btn-cancelar-modal">Cancelar</button>
+                    <button type="submit" class="btn-enviar-modal">Enviar Proposta</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL DE SABER MAIS COM FUNDO BORRADO E ANIMAÇÃO -->
+    <!-- MODAL DE SABER MAIS -->
     <div id="modalSaberMais" class="modal-overlay-custom">
-        <div class="modal-content-custom">
-            <h3 id="modalTituloSaberMais" style="margin-top:0; color:#111827; margin-bottom:15px; font-size: 1.3em;">Detalhes do Prestador</h3>
+        <div class="modal-content-custom no-scrollbar">
+            <h3 id="modalTituloSaberMais" style="margin-top:0; color:#000000; margin-bottom:15px; font-size: 1.3rem; font-weight: bold;">Detalhes do Prestador</h3>
             
-            <div id="modalCorpoSaberMais" style="color:#4b5563; font-size:0.95em; line-height:1.5;"></div>
+            <div id="modalCorpoSaberMais" class="modal-descricao-bloco no-scrollbar"></div>
 
-            <div style="display:flex; justify-content:flex-end; margin-top:25px; border-top: 1px solid #eee; padding-top: 15px;">
+            <div style="display:flex; justify-content:flex-end; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
                 <button type="button" onclick="fecharModalSaberMais()" class="btn-voltar-modal">
                     Voltar
                 </button>
@@ -160,8 +152,9 @@
     <!-- Script externo do catálogo -->
     <script src="./js/scriptCAT.js"></script>
 
-    <!-- Script inline para gerir o modal e o botão Saber Mais -->
+    <!-- Script inline unificado para gerir os modais, botões e submissões -->
     <script>
+        // MODAL SABER MAIS
         function abrirModalSaberMais(nome, elementoId) {
             document.getElementById('modalTituloSaberMais').innerText = 'Prestador: ' + nome;
             const conteudoOriginal = document.getElementById(elementoId).innerHTML;
@@ -182,6 +175,69 @@
             }, 300);
         }
 
+        // MODAL PROPOSTA (Atualizado com animação suave e classe ativo)
+        function abrirModal(meiUsuarioId, nomeMei) {
+            if (!user) {
+                alert('Você precisa estar logado como Empresa para enviar uma proposta!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (user.tipo !== 'empresa') {
+                alert('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!');
+                return;
+            }
+
+            document.getElementById('modal_mei_usuario_id').value = meiUsuarioId;
+            document.getElementById('modalNomeMei').innerText = 'Para: ' + nomeMei;
+            
+            const modal = document.getElementById('modalProposta');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('ativo');
+            }, 10);
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('modalProposta');
+            modal.classList.remove('ativo');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.getElementById('formModalProposta').reset();
+            }, 300);
+        }
+
+        // Envio do formulário de proposta
+        document.getElementById('formModalProposta').addEventListener('submit', async (e) => {
+            e.preventDefault();
+           
+            const dados = {
+                empresa_usuario_id: user.id,
+                mei_usuario_id: document.getElementById('modal_mei_usuario_id').value,
+                titulo_servico: document.getElementById('modal_titulo_servico').value,
+                valor: document.getElementById('modal_valor').value,
+                descricao: document.getElementById('modal_descricao').value
+            };
+
+            try {
+                let res = await fetch('http://localhost:3000/proposta', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                if (res.ok) {
+                    mostrarAviso('Proposta enviada ao prestador com sucesso!');
+                    fecharModal();
+                } else {
+                    mostrarAviso('Erro ao enviar proposta ao servidor.', true);
+                }
+            } catch (err) {
+                mostrarAviso('Erro de conexão ao enviar a proposta!', true);
+            }
+        });
+
+        // Mutação e criação dinâmica do botão Saber Mais nos cards
         document.addEventListener("DOMContentLoaded", () => {
             const observer = new MutationObserver(() => {
                 const cards = document.querySelectorAll('.card-mei');
@@ -189,7 +245,6 @@
                 cards.forEach((card, index) => {
                     if (card.querySelector('.btn-saber-mais')) return;
 
-                    // Procura diretamente a div de resumo/sobre e a lista de serviços dentro do card
                     const blocoResumo = card.querySelector('div[style*="border-top: 1px dashed"]');
                     const blocoServicos = card.querySelector('div[style*="border-top: 1px solid"]');
 
