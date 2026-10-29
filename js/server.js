@@ -516,6 +516,26 @@ app.post('/admin/anexar-contrato', (req, res) => {
     });
 });
 
+app.post('/admin/agendar-reuniao', (req, res) => {
+    const { contrato_id, link_reuniao, data_reuniao } = req.body;
+
+    const sql = 'UPDATE contratos SET link_reuniao = ?, data_reuniao = ?, status = "reuniao agendada" WHERE id = ?';
+    db.query(sql, [link_reuniao, data_reuniao, contrato_id], (err) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao agendar reunião.' });
+
+        db.query('SELECT empresa_usuario_id, mei_usuario_id FROM contratos WHERE id = ?', [contrato_id], (err2, result) => {
+            if (!err2 && result.length > 0) {
+                const { empresa_usuario_id, mei_usuario_id } = result[0];
+                const msg = `Reunião agendada para o contrato #${contrato_id}. Link: ${link_reuniao}`;
+                db.query('INSERT INTO notificacoes (usuario_id, mensagem) VALUES (?, ?), (?, ?)', 
+                    [empresa_usuario_id, msg, mei_usuario_id, msg]);
+            }
+        });
+
+        res.json({ sucesso: true, mensagem: 'Reunião agendada com sucesso!' });
+    });
+});
+
 // 9. ROTA DE EXCLUSÃO DE CONTA COM VALIDAÇÃO DE SENHA
 app.delete('/excluir-conta/:id', async (req, res) => {
     const userId = req.params.id;
