@@ -269,19 +269,16 @@ nav {
   border-color: #111827;
   font-weight: 600;
 }
-
 /* GRID DE CARDS */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
 }
-
 /* BOTÃO SABER MAIS */
 .btn-saber-mais {
   background: transparent;
   color: #3faf6e;
-  border: 1px solid #3faf6e;
   padding: 6px 16px;
   border-radius: 9999px;
   font-weight: 600;
@@ -290,14 +287,14 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  border: none;
   margin-top: 15px;
   margin-right: 10px;
   transition: all 0.2s ease;
 }
 
 .btn-saber-mais:hover {
-  background-color: #3faf6e;
-  color: #fff;
+  color: #04782b;;
   transform: translateY(-1px);
 }
 
@@ -428,7 +425,7 @@ nav {
 }
 
 .btn-enviar-modal {
-  background: #10b981;
+  background: #3faf6e;
   color: #ffffff;
   border: none;
   padding: 10px 22px;
@@ -547,7 +544,7 @@ nav {
 }
 
 .btn-acao:hover {
-  color: #047857;
+  color: #04782b;
 }
 
 #bannerAviso {
