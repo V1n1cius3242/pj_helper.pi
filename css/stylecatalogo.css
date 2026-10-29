@@ -105,7 +105,6 @@ nav {
 }
 
 .shiny-cta1::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
@@ -137,38 +136,30 @@ nav {
   0% {
     --gradient-angle: 0deg;
   }
-
   100% {
     --gradient-angle: 360deg;
   }
 }
 
 @keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  20% {
-    left: 200%;
-  }
-
-  100% {
-    left: 200%;
-  }
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
 
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
 .designloginnav {
   font-weight: bold;
   text-decoration: none;
 }
+
 /* CORPO CENTRALIZADO */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 20px 30px 20px; /* Reduzimos o padding superior de 30px para 10px */
+  padding: 10px 20px 30px 20px;
   width: 100%;
 }
+
 .header-topo {
   display: flex;
   justify-content: space-between;
@@ -176,10 +167,11 @@ nav {
   margin-bottom: 25px;
   background: transparent;
   padding: 0;
-  margin-top: -10px; /* Puxa o topo do conteúdo para cima, colando na distância correta do menu fixo */
+  margin-top: -10px;
   border: none;
   box-shadow: none;
 }
+
 .header-topo h2 {
   font-size: 2.2em;
   font-weight: 600;
@@ -284,7 +276,8 @@ nav {
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
 }
-/* Botão "Saber mais" pequeno e contornado na cor #3faf6e */
+
+/* BOTÃO SABER MAIS */
 .btn-saber-mais {
   background: transparent;
   color: #3faf6e;
@@ -305,9 +298,21 @@ nav {
 .btn-saber-mais:hover {
   background-color: #3faf6e;
   color: #fff;
+  transform: translateY(-1px);
 }
 
-/* Modal com fundo borrado e animação suave */
+/* ==========================================================================
+   CONFIGURAÇÃO DOS MODALS / POP-UPS UNIFICADOS (SEM BARRAS DE ROLAGEM)
+   ========================================================================== */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari e Opera */
+}
+
+.modal-overlay,
 .modal-overlay-custom {
   display: none;
   opacity: 0;
@@ -316,43 +321,135 @@ nav {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  transition: opacity 0.3s ease;
+  padding: 20px; /* Mantém bordinha de espaçamento ao redor no PC e celular */
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.modal-overlay.ativo,
 .modal-overlay-custom.ativo {
   display: flex;
   opacity: 1;
 }
 
+.modal-content,
 .modal-content-custom {
-  background: #fff;
-  padding: 30px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 520px;
-  max-height: 85vh;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 35px;
+  border: 1px solid rgba(129, 129, 129, 0.15);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 40px); /* Cresce sozinho suave e respeita a bordinha */
   overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-  transform: translateY(15px) scale(0.95);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.18);
+  transform: translateY(25px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
 }
 
+.modal-overlay.ativo .modal-content,
 .modal-overlay-custom.ativo .modal-content-custom {
   transform: translateY(0) scale(1);
 }
 
-/* Botão "Voltar" do modal (estilo idêntico ao botão Sair do painel) */
+/* BLOCO DE DESCRIÇÃO COM LIMITE DE TAMANHO */
+.modal-descricao-bloco {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 14px 16px;
+  background-color: #f9fafb;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #444;
+  line-height: 1.5;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-descricao-bloco:hover {
+  border-color: #3faf80;
+  box-shadow: 0 0 6px rgba(62, 206, 93, 0.3);
+}
+
+/* CAMPOS DE FORMULÁRIO DO MODAL COM HOVER E BORDAS ARREDONDADAS (PADRÃO CADASTRO) */
+#formModalProposta input[type="text"],
+#formModalProposta input[type="number"],
+#formModalProposta textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+  margin-top: 6px;
+}
+
+#formModalProposta input[type="text"]:hover,
+#formModalProposta input[type="number"]:hover,
+#formModalProposta textarea:hover,
+#formModalProposta input[type="text"]:focus,
+#formModalProposta input[type="number"]:focus,
+#formModalProposta textarea:focus {
+  border-color: #3faf80 !important;
+  box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3) !important;
+  outline: none;
+}
+
+#formModalProposta textarea {
+  max-height: 140px;
+  resize: vertical;
+}
+
+/* BOTÕES DOS MODAIS */
+.btn-cancelar-modal {
+  background: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar-modal:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-enviar-modal {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-enviar-modal:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
 .btn-voltar-modal {
   background-color: #fee2e2;
   color: #991b1b;
   border: none;
-  padding: 8px 18px;
+  padding: 9px 20px;
   border-radius: 9999px;
   font-weight: 600;
   font-size: 0.9em;
@@ -363,6 +460,7 @@ nav {
 .btn-voltar-modal:hover {
   background-color: #fecaca;
 }
+
 /* CARD MEI */
 .card-mei {
   position: relative;
@@ -433,7 +531,7 @@ nav {
 
 .btn-acao {
   background: transparent;
-  color: #10b981;
+  color: #3faf6e;
   border: none;
   padding: 0;
   cursor: pointer;
@@ -450,18 +548,6 @@ nav {
 
 .btn-acao:hover {
   color: #047857;
-}
-
-.badge-status {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background: #dcfce7;
-  color: #166534;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-size: 0.75em;
-  font-weight: 600;
 }
 
 #bannerAviso {
@@ -482,30 +568,6 @@ nav {
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
-}
-
-/* MODAL */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* FOOTER */
@@ -650,5 +712,18 @@ nav {
 
   #menu-toggle:checked~.menu-icon-hamburger span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -6px);
+  }
+
+  .modal-overlay,
+  .modal-overlay-custom {
+    padding: 12px;
+  }
+
+  .modal-content,
+  .modal-content-custom {
+    padding: 24px 18px;
+    border-radius: 24px;
+    max-width: 100%;
+    max-height: calc(100vh - 24px);
   }
 }
