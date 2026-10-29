@@ -10,7 +10,7 @@
             } else if (user.tipo === 'mei') {
                 btnVoltar.href = 'painel_mei.html';
             } else if (user.tipo === 'admin') {
-                btnVoltar.href = 'admin.html';
+                btnVoltar.href = 'painel_admin.html';
             }
         }
  
@@ -63,7 +63,7 @@
         const servicosHTML = (m.servicos && m.servicos.length > 0)
             ? `
                 <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #eee;">
-                    <strong>🛠️ Serviços e Tabela de Preços:</strong>
+                    <strong> Serviços e Tabela de Preços:</strong>
                     <ul style="padding-left: 18px; margin: 6px 0 0 0; font-size: 0.85em; color: #333;">
                         ${m.servicos.map(s => `
                             <li style="margin-bottom: 4px;">
@@ -95,8 +95,8 @@
                         <p><strong>E-mail:</strong> ${m.email || 'Não informado'}</p>
                     </div>
  
-                    ${linkSite ? `<p style="font-size:0.85em; margin-top:4px;"><strong>🌐 Site:</strong> <a href="${linkSite}" target="_blank" style="color:#3faf6e; text-decoration:underline;">${m.site}</a></p>` : ''}
-                    ${userInsta ? `<p style="font-size:0.85em; margin-top:4px;"><strong>📸 Instagram:</strong> <a href="https://instagram.com/${userInsta}" target="_blank" style="color:#3faf6e; text-decoration:underline;">@${userInsta}</a></p>` : ''}
+                    ${linkSite ? `<p style="font-size:0.85em; margin-top:4px;"><strong> Site:</strong> <a href="${linkSite}" target="_blank" style="color:#3faf6e; text-decoration:underline;">${m.site}</a></p>` : ''}
+                    ${userInsta ? `<p style="font-size:0.85em; margin-top:4px;"><strong> Instagram:</strong> <a href="https://instagram.com/${userInsta}" target="_blank" style="color:#3faf6e; text-decoration:underline;">@${userInsta}</a></p>` : ''}
  
                     <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd;">
                         <p style="font-size:0.85em; color:#333; line-height:1.4;">
