@@ -338,7 +338,7 @@ nav {
 .modal-content-custom {
   background: #ffffff;
   padding: 35px;
-  border-radius: 35px;
+  border-radius: 20px;
   border: 1px solid rgba(129, 129, 129, 0.15);
   width: 100%;
   max-width: 560px;
@@ -370,7 +370,7 @@ nav {
 }
 
 .modal-descricao-bloco:hover {
-  border-color: #3faf80;
+  border-color: #3faf61;
   box-shadow: 0 0 6px rgba(62, 206, 93, 0.3);
 }
 
@@ -422,10 +422,11 @@ nav {
 .btn-cancelar-modal:hover {
   background: #e5e7eb;
   color: #111827;
+  transform: translateY(-2px);
 }
 
 .btn-enviar-modal {
-  background: #3faf6e;
+  background: #3faf61;
   color: #ffffff;
   border: none;
   padding: 10px 22px;
@@ -438,7 +439,7 @@ nav {
 }
 
 .btn-enviar-modal:hover {
-  background: #059669;
+  background: #166534;
   transform: translateY(-2px);
 }
 
