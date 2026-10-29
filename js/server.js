@@ -516,6 +516,69 @@ app.post('/admin/anexar-contrato', (req, res) => {
     });
 });
 
+app.post('/admin/agendar-reuniao', (req, res) => {
+    const { contrato_id, link_reuniao, data_reuniao } = req.body;
+
+    const sql = 'UPDATE contratos SET link_reuniao = ?, data_reuniao = ?, status = "reuniao agendada" WHERE id = ?';
+    db.query(sql, [link_reuniao, data_reuniao, contrato_id], (err) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao agendar reunião.' });
+
+        db.query('SELECT empresa_usuario_id, mei_usuario_id FROM contratos WHERE id = ?', [contrato_id], (err2, result) => {
+            if (!err2 && result.length > 0) {
+                const { empresa_usuario_id, mei_usuario_id } = result[0];
+                const msg = `Reunião agendada para o contrato #${contrato_id}. Link: ${link_reuniao}`;
+                db.query('INSERT INTO notificacoes (usuario_id, mensagem) VALUES (?, ?), (?, ?)', 
+                    [empresa_usuario_id, msg, mei_usuario_id, msg]);
+            }
+        });
+
+        res.json({ sucesso: true, mensagem: 'Reunião agendada com sucesso!' });
+    });
+});
+
+// 9. ROTA DE EXCLUSÃO DE CONTA COM VALIDAÇÃO DE SENHA
+app.delete('/excluir-conta/:id', async (req, res) => {
+    const userId = req.params.id;
+    const { senha } = req.body;
+
+    if (!senha) {
+        return res.status(400).json({ erro: 'A senha é obrigatória para excluir a conta.' });
+    }
+
+    // 1. Busca o utilizador na base de dados para verificar a senha
+    const queryBusca = 'SELECT * FROM usuarios WHERE id = ?';
+    db.query(queryBusca, [userId], async (err, resultados) => {
+        if (err || resultados.length === 0) {
+            return res.status(404).json({ erro: 'Utilizador não encontrado.' });
+        }
+
+        const usuario = resultados[0];
+
+        try {
+            // 2. Compara a senha digitada com o hash guardado no MySQL
+            const senhaValida = await bcrypt.compare(senha, usuario.senha);
+
+            if (!senhaValida) {
+                return res.status(401).json({ erro: 'Senha incorreta!' });
+            }
+
+            // 3. Se a senha estiver correta, apaga o utilizador da base de dados
+            const queryDelete = 'DELETE FROM usuarios WHERE id = ?';
+            db.query(queryDelete, [userId], (errDelete) => {
+                if (errDelete) {
+                    console.error(errDelete);
+                    return res.status(500).json({ erro: 'Erro ao excluir conta na base de dados.' });
+                }
+
+                return res.status(200).json({ sucesso: true, mensagem: 'Conta excluída com sucesso!' });
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ erro: 'Erro interno ao validar a senha.' });
+        }
+    });
+});
+
 app.listen(3000, () => {
-    console.log('🚀 Servidor rodando na porta 3000!');
+    console.log('Servidor rodando na porta 3000!');
 });

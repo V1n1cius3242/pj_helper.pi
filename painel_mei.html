@@ -112,6 +112,14 @@
                 </div>
                 <button type="submit" style="background:#28a745; color:#fff; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold;">Salvar Perfil</button>
             </form>
+            <!-- ZONA DE PERIGO (EXCLUSÃO DE CONTA) -->
+            <div style="margin-top: 35px; border-top: 2px solid #dc3545; padding-top: 20px;">
+                <h3 style="color: #dc3545; margin-bottom: 8px;">⚠️ Zona de Perigo</h3>
+                <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">Depois de excluir a sua conta, não há volta a dar. Todos os seus dados e serviços serão removidos.</p>
+                <button type="button" onclick="abrirModalExclusao()" style="background: #dc3545; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    Excluir Minha Conta
+                </button>
+            </div>
         </div>
 
         <!-- 3. TABELA DE SERVIÇOS -->
@@ -132,6 +140,31 @@
             <div id="listaContratos"></div>
         </div>
     </main>
+
+    <!-- MODAL DE SEGURANÇA (EXCLUSÃO POR SENHA) -->
+<div id="modalExcluirConta" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+    <div style="background: #ffffff; width: 100%; max-width: 450px; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-family: 'Montserrat', sans-serif;">
+        <h3 style="color: #dc3545; margin-top: 0; font-size: 1.3em;">Tens a certeza absoluta?</h3>
+        <p style="color: #555; font-size: 0.9em; margin-bottom: 20px; line-height: 1.4;">
+            Esta ação é <strong>irreversível</strong>. Todos os seus contratos, serviços e dados do perfil serão apagados permanentemente.
+        </p>
+
+        <div style="background: #fff3f3; border: 1px solid #f5c6cb; padding: 12px; border-radius: 6px; margin-bottom: 15px; text-align: left; font-size: 0.85em; color: #721c24;">
+            Digite a sua <strong>senha atual</strong> para confirmar a exclusão:
+        </div>
+
+        <input type="password" id="inputSenhaExclusao" placeholder="Digite sua senha" oninput="validarSenhaExclusao()" style="width: 100%; padding: 10px; border: 2px solid #ccc; border-radius: 6px; font-weight: bold; text-align: center; font-size: 1em; box-sizing: border-box; outline: none;">
+
+        <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
+            <button type="button" onclick="fecharModalExclusao()" style="background: #6c757d; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 48%;">
+                Cancelar
+            </button>
+            <button type="button" id="btnConfirmarExclusaoFinal" onclick="executarExclusaoConta()" disabled style="background: #dc3545; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: not-allowed; font-weight: bold; width: 48%; opacity: 0.5;">
+                Sim, Excluir
+            </button>
+        </div>
+    </div>
+</div>
 
     <footer class="footer">
         <section class="bloco2footer">
@@ -166,6 +199,78 @@
                 ativa.style.display = 'block';
             }
         }
+
+        // Abre o modal e limpa o campo de senha
+function abrirModalExclusao() {
+    const modal = document.getElementById('modalExcluirConta');
+    const input = document.getElementById('inputSenhaExclusao');
+    const btn = document.getElementById('btnConfirmarExclusaoFinal');
+
+    input.value = '';
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.cursor = 'not-allowed';
+    modal.style.display = 'flex';
+}
+
+// Fecha o modal
+function fecharModalExclusao() {
+    document.getElementById('modalExcluirConta').style.display = 'none';
+}
+
+// Libera o botão apenas se houver texto digitado na senha
+function validarSenhaExclusao() {
+    const senha = document.getElementById('inputSenhaExclusao').value.trim();
+    const btn = document.getElementById('btnConfirmarExclusaoFinal');
+
+    if (senha.length > 0) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+    } else {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    }
+}
+
+// Envia a requisição de exclusão junto com a senha para o servidor
+async function executarExclusaoConta() {
+    const senha = document.getElementById('inputSenhaExclusao').value.trim();
+    if (!senha) return;
+
+    try {
+        const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+        if (!rawUser) {
+            window.location.replace('login.html');
+            return;
+        }
+
+        const user = JSON.parse(rawUser);
+        const userId = user.id || user.usuario_id;
+
+        // Envia o ID e a senha digitada para o back-end validar
+        const response = await fetch(`http://localhost:3000/excluir-conta/${userId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ senha })
+        });
+
+        const dados = await response.json();
+
+        if (response.ok) {
+            localStorage.clear();
+            alert("Sua conta foi excluída com sucesso.");
+            window.location.href = 'homepage.html';
+        } else {
+            alert(dados.erro || "Senha incorreta ou erro ao tentar excluir a conta.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Erro de conexão com o servidor.");
+    }
+}
+
     </script>
     <script src="./js/scriptMEI.js"></script>
 </body>

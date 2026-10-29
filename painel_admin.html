@@ -7,8 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_admin.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
@@ -69,78 +68,88 @@
             </div>
         </div>
         
-        <!-- ABAS DE NAVEGAÇÃO -->
-        <div style="display: flex; gap: 10px; margin: 20px 0;">
-            <button onclick="mudarAba('solicitacoes')"><span>Solicitações</span></button>
-            <button onclick="mudarAba('contratos')"><span>Contratos</span></button>
-            <button onclick="mudarAba('cadastros')"><span>Cadastros</span></button>
-            <button onclick="mudarAba('notificacoes')"><span>Notificações</span></button>
+        <!-- CONTAINER DE ABAS PRINCIPAIS -->
+        <div class="container-abas-navegacao">
+            <button class="btn-aba-nav ativa" id="aba-btn-solicitacoes" onclick="mudarAba('solicitacoes')">Solicitações</button>
+            <button class="btn-aba-nav" id="aba-btn-contratos" onclick="mudarAba('contratos')">Contratos</button>
+            <button class="btn-aba-nav" id="aba-btn-cadastros" onclick="mudarAba('cadastros')">Cadastros</button>
+            <button class="btn-aba-nav" id="aba-btn-notificacoes" onclick="mudarAba('notificacoes')">Notificações</button>
         </div>
 
-        <!-- SEÇÃO: SOLICITAÇÕES -->
+        <!-- 1. SEÇÃO: SOLICITAÇÕES -->
         <div id="secao-solicitacoes" class="secao-aba" style="display: block;">
-            <h3> Gestão de Solicitações de Serviços</h3>
-            <div style="background: #fff; padding: 20px; border-radius: 8px; margin-top: 10px;">
-                <p>Nenhuma solicitação nova no momento.</p>
+            <div class="box-busca-filtros">
+                <div class="input-busca-wrapper">
+                    <span class="icone-busca">🔍</span>
+                    <input type="text" id="buscaSolicitacoes" placeholder="Buscar por empresa, MEI ou demanda...">
+                </div>
+                <div class="linha-filtros-pills">
+                    <span class="label-filtro">STATUS</span>
+                    <button class="pill-filtro ativo">Em aberto</button>
+                    <button class="pill-filtro">Pendentes</button>
+                    <button class="pill-filtro">Reunião agendada</button>
+                    <button class="pill-filtro">Firmados</button>
+                    <button class="pill-filtro">Recusadas</button>
+                    <button class="pill-filtro">Todas</button>
+                </div>
             </div>
+
+            <p class="contador-resultados" id="contadorSolicitacoes"></p>
+
+            <!-- CONTAINER ONDE O JS CRIA OS CARDS DE SOLICITAÇÃO -->
+            <div id="listaSolicitacoesCards"></div>
         </div>
 
-        <!-- SEÇÃO: CONTRATOS & REUNIÕES -->
+        <!-- 2. SEÇÃO: CONTRATOS -->
         <div id="secao-contratos" class="secao-aba" style="display: none;">
-            <h3> Monitoramento de Contratos & Reuniões</h3>
-            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left; margin-top: 10px; background: #fff;">
-                <thead>
-                    <tr style="background:#f2f2f2;">
-                        <th>ID</th>
-                        <th>Serviço / Valor / Detalhes</th>
-                        <th>Envolvidos (Empresa x MEI)</th>
-                        <th>Reunião no Meet</th>
-                        <th>Status</th>
-                        <th>Contrato PDF</th>
-                        <th>Ações do ADM</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaContratos"></tbody>
-            </table>
+            <!-- CONTAINER ONDE O JS CRIA OS CARDS DE CONTRATO -->
+            <div id="listaContratosCards"></div>
         </div>
 
-        <!-- SEÇÃO: CADASTROS (GESTÃO DE USUÁRIOS) -->
+        <!-- 3. SEÇÃO: CADASTROS -->
         <div id="secao-cadastros" class="secao-aba" style="display: none;">
-            <h3> Gestão e Aprovação de Usuários</h3>
-            <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse; text-align:left; margin-top: 10px; background: #fff;">
-                <thead>
-                    <tr style="background:#f2f2f2;">
-                        <th>ID</th>
-                        <th>E-mail</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>Ações de Aprovação</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaUsers"></tbody>
-            </table>
-        </div>
-
-        <!-- SEÇÃO: NOTIFICAÇÕES -->
-        <div id="secao-notificacoes" class="secao-aba" style="display: none;">
-            <h3> Central de Notificações</h3>
-            <div style="background: #fff; padding: 20px; border-radius: 8px; margin-top: 10px;">
-                <p>Nenhuma notificação registrada.</p>
+            <div class="container-subabas">
+                <button class="subaba-btn ativa" id="btnSubMei">MEIs</button>
+                <button class="subaba-btn" id="btnSubEmpresa">Empresas</button>
             </div>
+
+            <div class="box-busca-filtros">
+                <div class="input-busca-wrapper">
+                    <span class="icone-busca">🔍</span>
+                    <input type="text" id="buscaCadastros" placeholder="Buscar por nome, responsável ou e-mail...">
+                </div>
+                <div class="linha-filtros-pills">
+                    <span class="label-filtro">STATUS</span>
+                    <button class="pill-filtro ativo">Todos</button>
+                    <button class="pill-filtro">Pendentes</button>
+                    <button class="pill-filtro">Ativos</button>
+                    <button class="pill-filtro">Recusados</button>
+                    <button class="pill-filtro">Suspensos</button>
+                </div>
+            </div>
+
+            <!-- CONTAINER ONDE O JS CRIA OS CARDS DE USUÁRIOS -->
+            <div id="listaCadastrosCards"></div>
         </div>
 
-        <!-- MODAL 1: AGENDAR / ALTERAR MEET -->
+        <!-- 4. SEÇÃO: NOTIFICAÇÕES -->
+        <div id="secao-notificacoes" class="secao-aba" style="display: none;">
+            <div class="header-notifs" style="margin-bottom: 15px; text-align: right;">
+                <button class="btn-marcar-lidas" style="background: none; border: none; color: #3faf6e; font-weight: 600; cursor: pointer;">✓ Marcar todas como lidas</button>
+            </div>
+            <!-- CONTAINER ONDE O JS CRIA OS CARDS DE NOTIFICAÇÃO -->
+            <div id="listaNotificacoesCards"></div>
+        </div>
+
+        <!-- MODAIS DE AÇÃO DO ADM -->
         <div id="modalMeet" class="modal-overlay">
             <div class="modal-card">
                 <h3> Agendar Reunião Google Meet</h3>
                 <input type="hidden" id="meetContratoId">
-
                 <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
                 <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
-
                 <label for="inputMeetData">Data e Horário:</label>
                 <input type="datetime-local" id="inputMeetData">
-
                 <div class="modal-acoes">
                     <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
                     <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
@@ -148,15 +157,12 @@
             </div>
         </div>
 
-        <!-- MODAL 2: ANEXAR PDF DO CONTRATO -->
         <div id="modalPdf" class="modal-overlay">
             <div class="modal-card">
                 <h3> Anexar Contrato Digitalizado (PDF)</h3>
                 <input type="hidden" id="pdfContratoId">
-
                 <label for="inputPdfUrl">URL do Documento PDF:</label>
                 <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
-
                 <div class="modal-acoes">
                     <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
                     <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
@@ -187,10 +193,14 @@
             const secoes = document.querySelectorAll('.secao-aba');
             secoes.forEach(s => s.style.display = 'none');
             
+            const botoes = document.querySelectorAll('.btn-aba-nav');
+            botoes.forEach(b => b.classList.remove('ativa'));
+
             const ativa = document.getElementById('secao-' + nomeAba);
-            if (ativa) {
-                ativa.style.display = 'block';
-            }
+            const btnAtivo = document.getElementById('aba-btn-' + nomeAba);
+            
+            if (ativa) ativa.style.display = 'block';
+            if (btnAtivo) btnAtivo.classList.add('ativa');
         }
     </script>
     <script src="./js/scriptADM.js"></script>

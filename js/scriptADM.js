@@ -50,94 +50,187 @@ function normalizarUrl(url) {
     return url;
 }
 
+let cacheContratos = [];
+let cacheUsuarios = [];
+let filtroStatusSolicitacoes = 'todas';
+
 async function carregarAdmin() {
     try {
-        // 1. Carregar Usuários
         const resUsers = await fetch('http://localhost:3000/admin/dados');
         const dadosUsers = await resUsers.json();
+        cacheUsuarios = dadosUsers.usuarios || [];
+        renderizarCadastros(cacheUsuarios);
 
-        const tbodyUsers = document.getElementById('tabelaUsers');
-        if (dadosUsers.usuarios && dadosUsers.usuarios.length > 0) {
-            tbodyUsers.innerHTML = dadosUsers.usuarios.map(u => {
-                const st = (u.status || 'pendente').toLowerCase();
-                let statusBadge = '<span style="color:#ffc107; font-weight:bold;"> PENDENTE</span>';
-                if (st === 'aprovado') statusBadge = '<span style="color:#28a745; font-weight:bold;"> APROVADO</span>';
-                if (st === 'recusado') statusBadge = '<span style="color:#dc3545; font-weight:bold;"> RECUSADO</span>';
-
-                return `
-                    <tr>
-                        <td>${u.id}</td>
-                        <td>${u.email}</td>
-                        <td><strong>${u.tipo ? u.tipo.toUpperCase() : 'N/A'}</strong></td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            ${st === 'pendente' ? `
-                                <button onclick="alterarStatusUsuario(${u.id}, 'aprovado')" style="background:#28a745; color:#fff; border:none; padding:5px 10px; border-radius:3px; cursor:pointer; font-weight:bold;">Aprovar</button>
-                                <button onclick="alterarStatusUsuario(${u.id}, 'recusado')" style="background:#dc3545; color:#fff; border:none; padding:5px 10px; border-radius:3px; cursor:pointer; font-weight:bold;">Recusar</button>
-                            ` : '<em>Processado</em>'}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        } else {
-            tbodyUsers.innerHTML = '<tr><td colspan="5">Nenhum usuário cadastrado.</td></tr>';
-        }
-
-        // 2. Carregar Reuniões e Contratos
         const resReunioes = await fetch('http://localhost:3000/admin/reunioes');
-        const contratos = await resReunioes.json();
-
-        const tbodyContratos = document.getElementById('tabelaContratos');
-        if (Array.isArray(contratos) && contratos.length > 0) {
-            tbodyContratos.innerHTML = contratos.map(c => {
-                const extra = extrairDadosDescricao(c.descricao);
-                
-                const linkMeet = normalizarUrl(c.link_reuniao || extra.link);
-                const rawData = c.data_reuniao || extra.data;
-                const dataFormatada = rawData ? new Date(rawData).toLocaleString('pt-BR') : 'Sem data definida';
-                const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
-
-                return `
-                    <tr>
-                        <td>#${c.contrato_id}</td>
-                        <td>
-                            <strong>${c.titulo_servico || 'Proposta / Serviço'}</strong><br>
-                            <small style="color:#28a745; font-weight:bold;">R$ ${c.valor || 'A combinar'}</small><br>
-                            <small style="color:#666;">${extra.detalhes}</small>
-                        </td>
-                        <td>
-                            <small><strong>Empresa ID:</strong> ${c.empresa_usuario_id || c.empresa_email || 'N/I'}</small><br>
-                            <small><strong>MEI ID:</strong> ${c.mei_usuario_id || c.mei_email || 'N/I'}</small>
-                        </td>
-                        <td>
-                            ${linkMeet ? `
-                                <a href="${linkMeet}" target="_blank" class="btn-meet"> Entrar no Meet</a><br>
-                                <small style="font-size:0.8em; color:#333;"> ${dataFormatada}</small>
-                            ` : '<em style="color:#888;">Sem reunião agendada</em>'}
-                        </td>
-                        <td><strong>${(c.status || 'PENDENTE').toUpperCase()}</strong></td>
-                        <td>
-                            ${linkPdf ? `
-                                <a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;"> Ver PDF</a>
-                            ` : '<em style="color:#888;">Pendente</em>'}
-                        </td>
-                        <td>
-                            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao btn-add-meet"> Agendar Meet</button>
-                            <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao btn-confirmar"> Confirmar</button>
-                            <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao btn-anexo"> Anexar PDF</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        } else {
-            tbodyContratos.innerHTML = '<tr><td colspan="7">Nenhum contrato encontrado.</td></tr>';
-        }
+        cacheContratos = await resReunioes.json();
+        aplicarFiltroSolicitacoes('todas');
+        renderizarContratos(cacheContratos);
 
     } catch (err) {
         console.error('Erro ao carregar dados:', err);
         mostrarAviso('Erro de conexão ao carregar os dados do servidor!', true);
     }
 }
+
+// --- FILTRAR E RENDERIZAR SOLICITAÇÕES ---
+function aplicarFiltroSolicitacoes(statusFiltro) {
+    filtroStatusSolicitacoes = statusFiltro.toLowerCase().trim();
+    
+    let listaFiltrada = cacheContratos;
+
+    if (filtroStatusSolicitacoes !== 'todas' && filtroStatusSolicitacoes !== 'em aberto') {
+        listaFiltrada = cacheContratos.filter(c => {
+            const st = (c.status || 'pendente').toLowerCase();
+            if (filtroStatusSolicitacoes.includes('pendente')) return st.includes('pendente');
+            if (filtroStatusSolicitacoes.includes('reunião')) return st.includes('reuniao') || st.includes('agendado');
+            if (filtroStatusSolicitacoes.includes('firmado') || filtroStatusSolicitacoes.includes('concluído')) return st.includes('concluido') || st.includes('firmado');
+            if (filtroStatusSolicitacoes.includes('recusada')) return st.includes('recusado');
+            return true;
+        });
+    }
+
+    renderizarSolicitacoes(listaFiltrada);
+}
+
+function renderizarSolicitacoes(lista) {
+    const container = document.getElementById('listaSolicitacoesCards');
+    const contador = document.getElementById('contadorSolicitacoes');
+    if (!container) return;
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhuma solicitação encontrada para este filtro.</div>';
+        if (contador) contador.innerText = '0 solicitações';
+        return;
+    }
+
+    if (contador) contador.innerText = `${lista.length} ${lista.length === 1 ? 'solicitação' : 'solicitações'}`;
+
+    container.innerHTML = lista.map(c => {
+        const extra = extrairDadosDescricao(c.descricao);
+        const linkMeet = normalizarUrl(c.link_reuniao || extra.link);
+        const rawData = c.data_reuniao || extra.data;
+        const dataFormatada = rawData ? new Date(rawData).toLocaleString('pt-BR') : 'Sem data definida';
+        
+        const statusLower = (c.status || 'pendente').toLowerCase();
+        let badgeClass = 'badge-pendente';
+        let badgeTexto = '• Pendente';
+        
+        if (statusLower.includes('reuniao') || statusLower.includes('agendado')) {
+            badgeClass = 'badge-reuniao';
+            badgeTexto = '• Reunião agendada';
+        } else if (statusLower.includes('concluido') || statusLower.includes('firmado')) {
+            badgeClass = 'badge-ativo';
+            badgeTexto = '• Firmado';
+        } else if (statusLower.includes('recusado')) {
+            badgeClass = 'badge-pendente';
+            badgeTexto = '• Recusada';
+        }
+
+        return `
+            <div class="card-painel-item">
+                <div class="card-item-header">
+                    <span class="card-item-meta">#${c.contrato_id}</span>
+                    <span class="badge-status ${badgeClass}">${badgeTexto}</span>
+                </div>
+                <h3 class="card-item-titulo">Serviço solicitado: <strong>${c.titulo_servico || 'Proposta'}</strong></h3>
+                <p class="card-item-desc">${extra.detalhes || c.descricao || 'Sem descrição informada.'}</p>
+                <div class="card-item-valores">
+                    <span>Orçamento: <strong>R$ ${c.valor || 'A combinar'}</strong></span>
+                    <span>Empresa ID: <strong>${c.empresa_usuario_id || 'N/I'}</strong> | MEI ID: <strong>${c.mei_usuario_id || 'N/I'}</strong></span>
+                </div>
+                ${linkMeet ? `
+                    <div class="box-meet-agendado">
+                        📹 Reunião: <strong>${dataFormatada}</strong> <a href="${linkMeet}" target="_blank" class="link-meet">acessar link ↗</a>
+                    </div>
+                ` : ''}
+                <div class="card-item-acoes">
+                    <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao-preto">📅 Agendar / Reagendar reunião</button>
+                    <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao-sucesso">📑 Firmar contrato</button>
+                    <button onclick="atualizarStatusContrato(${c.contrato_id}, 'recusado')" class="btn-acao-recusar">✕ Recusar</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderizarContratos(lista) {
+    const container = document.getElementById('listaContratosCards');
+    if (!container) return;
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum contrato encontrado.</div>';
+        return;
+    }
+
+    container.innerHTML = lista.map(c => {
+        const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
+
+        return `
+            <div class="card-painel-item">
+                <div class="card-item-header">
+                    <span class="card-item-meta">Contrato #${c.contrato_id}</span>
+                    <span class="badge-status badge-pendente">• ${(c.status || 'Em andamento').toUpperCase()}</span>
+                </div>
+                <h3 class="card-item-titulo">Contrato de ${c.titulo_servico || 'Serviço'}</h3>
+                <div class="card-item-valores">
+                    <span>Valor: <strong>R$ ${c.valor || 'A combinar'}</strong></span>
+                </div>
+                <div class="card-item-acoes" style="margin-top: 15px;">
+                    ${linkPdf ? `<a href="${linkPdf}" target="_blank" class="btn-acao-secundario" style="text-decoration:none; display:inline-block;">📥 Baixar versão PDF</a>` : '<em style="font-size:13px; color:#888;">PDF não anexado</em>'}
+                    <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao-preto">📤 Anexar / Substituir PDF</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderizarCadastros(lista) {
+    const container = document.getElementById('listaCadastrosCards');
+    if (!container) return;
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum usuário cadastrado.</div>';
+        return;
+    }
+
+    container.innerHTML = lista.map(u => {
+        const st = (u.status || 'pendente').toLowerCase();
+        let badgeClass = 'badge-pendente';
+        let badgeTexto = '• pendente';
+        if (st === 'aprovado' || st === 'ativo') { badgeClass = 'badge-ativo'; badgeTexto = '• ativo'; }
+        if (st === 'recusado') { badgeClass = 'badge-pendente'; badgeTexto = '• recusado'; }
+
+        return `
+            <div class="card-painel-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h3 class="card-item-titulo" style="margin-bottom: 4px;">ID #${u.id} - <strong>${u.email}</strong></h3>
+                    <p style="font-size: 13px; color: #666;">Tipo: <strong>${(u.tipo || 'N/A').toUpperCase()}</strong></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="badge-status ${badgeClass}">${badgeTexto}</span>
+                    ${st === 'pendente' ? `
+                        <button onclick="alterarStatusUsuario(${u.id}, 'aprovado')" class="btn-acao-sucesso">Aprovar</button>
+                        <button onclick="alterarStatusUsuario(${u.id}, 'recusado')" class="btn-acao-recusar">Recusar</button>
+                    ` : '<em style="font-size:12px; color:#888;">Processado</em>'}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// --- CLIQUE NAS PÍLULAS DE FILTRO ---
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pill-filtro')) {
+        const grupo = e.target.closest('.linha-filtros-pills');
+        if (grupo) {
+            grupo.querySelectorAll('.pill-filtro').forEach(b => b.classList.remove('ativo'));
+            e.target.classList.add('ativo');
+            
+            const textoFiltro = e.target.innerText;
+            aplicarFiltroSolicitacoes(textoFiltro);
+        }
+    }
+});
 
 // AÇÃO DE APROVAR / RECUSAR USUÁRIO
 async function alterarStatusUsuario(usuarioId, novoStatus) {
@@ -248,7 +341,7 @@ async function salvarPdf() {
     }
 }
 
-// CONFIRMAR CONTRATO
+// CONFIRMAR / ATUALIZAR CONTRATO
 async function confirmarContrato(contratoId) {
     try {
         const res = await fetch('http://localhost:3000/admin/confirmar-contrato', {
@@ -263,6 +356,25 @@ async function confirmarContrato(contratoId) {
             carregarAdmin();
         } else {
             mostrarAviso('Erro ao confirmar contrato: ' + (dados.erro || 'Erro no servidor'), true);
+        }
+    } catch (err) {
+        mostrarAviso('Erro de conexão com o servidor!', true);
+    }
+}
+
+async function atualizarStatusContrato(contratoId, novoStatus) {
+    try {
+        const res = await fetch('http://localhost:3000/admin/confirmar-contrato', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contrato_id: contratoId, status: novoStatus })
+        });
+
+        if (res.ok) {
+            mostrarAviso(`Solicitação atualizada para ${novoStatus}!`);
+            carregarAdmin();
+        } else {
+            mostrarAviso('Erro ao atualizar solicitação.', true);
         }
     } catch (err) {
         mostrarAviso('Erro de conexão com o servidor!', true);
