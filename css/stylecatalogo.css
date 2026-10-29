@@ -244,6 +244,7 @@ nav {
   align-items: center;
 }
 
+/*FILTRO DE SERVIÇO*/
 .pill-btn {
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -295,18 +296,110 @@ nav {
 
 .btn-saber-mais:hover {
   color: #04782b;;
-  transform: translateY(-1px);
 }
 
-/* ==========================================================================
-   CONFIGURAÇÃO DOS MODALS / POP-UPS UNIFICADOS (SEM BARRAS DE ROLAGEM)
-   ========================================================================== */
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE e Edge */
-  scrollbar-width: none;     /* Firefox */
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.shiny-cta3:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
 }
-.no-scrollbar::-webkit-scrollbar {
-  display: none;             /* Chrome, Safari e Opera */
+
+.shiny-cta3:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
+}
+
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.shiny-cta3{
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif; font-weight: 600;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 99px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shiny-cta3::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 180%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+
+.shiny-cta-content3 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+@keyframes border-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
 
 .modal-overlay,
@@ -335,7 +428,7 @@ nav {
 }
 
 .modal-content,
-.modal-content-custom {
+.modal-content-custom {  /*CARD DO SOLICITAR SERVIÇO*/
   background: #ffffff;
   padding: 35px;
   border-radius: 20px;
@@ -351,15 +444,16 @@ nav {
 
 .modal-overlay.ativo .modal-content,
 .modal-overlay-custom.ativo .modal-content-custom {
-  transform: translateY(0) scale(1);
+  transform: translateY(0) scale(1);  /*ANIMAÇÃO DO CARDDDDDDDDDD*/
 }
 
 /* BLOCO DE DESCRIÇÃO COM LIMITE DE TAMANHO */
 .modal-descricao-bloco {
   max-height: 180px;
+  max-width: 100%;
   overflow-y: auto;
   padding: 14px 16px;
-  background-color: #f9fafb;
+  background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 20px;
   margin-top: 8px;
@@ -369,9 +463,9 @@ nav {
   transition: all 0.3s ease-in-out;
 }
 
-.modal-descricao-bloco:hover {
+.modal-descricao-bloco:hover {       /*BORDAAAAAAAAAAAAA VERDEEEEE*/
   border-color: #3faf61;
-  box-shadow: 0 0 6px rgba(62, 206, 93, 0.3);
+  box-shadow: 0 0 6px rgba(65, 230, 101, 0.3);
 }
 
 /* CAMPOS DE FORMULÁRIO DO MODAL COM HOVER E BORDAS ARREDONDADAS (PADRÃO CADASTRO) */
@@ -406,15 +500,14 @@ nav {
   resize: vertical;
 }
 
-/* BOTÕES DOS MODAIS */
 .btn-cancelar-modal {
   background: #f3f4f6;
-  color: #4b5563;
+  color: #414141;
   border: 1px solid #d1d5db;
-  padding: 10px 20px;
+  padding: 12px 18px; /* Diminuído o padding */
   border-radius: 9999px;
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.85em; /* Fonte levemente menor */
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -424,25 +517,6 @@ nav {
   color: #111827;
   transform: translateY(-2px);
 }
-
-.btn-enviar-modal {
-  background: #3faf61;
-  color: #ffffff;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.9em;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-.btn-enviar-modal:hover {
-  background: #166534;
-  transform: translateY(-2px);
-}
-
 .btn-voltar-modal {
   background-color: #fee2e2;
   color: #991b1b;
@@ -517,10 +591,11 @@ nav {
 
 .badge-cat {
   display: inline-block;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #ffffff;
+  color: #2574eb;
+  border: 1px solid #2574eb;
   padding: 4px 12px;
-  border-radius: 9999px;
+  border-radius: 99px;
   font-size: 0.75em;
   font-weight: 600;
   margin-bottom: 12px;

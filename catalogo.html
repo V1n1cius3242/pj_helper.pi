@@ -29,8 +29,8 @@
             <span></span>
         </label>
         <nav>
-            <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
-            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="homepage.html">Home</a>
+            <a class="navitens" href="catalogo.html" style="color:#3faf6e;">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
 
             <!-- Botão de Login normal -->
@@ -98,16 +98,17 @@
     <!-- MODAL DE PROPOSTA -->
     <div id="modalProposta" class="modal-overlay">
         <div class="modal-content no-scrollbar">
-            <h3 style="margin-top:0; color:#000000; font-size: 1.3rem; font-weight: bold;">Solicitar / Propor Serviço
+            <h3 style="margin-top:10px;color:#3faf6e; font-size: 1.3rem; font-weight: bold;">Solicitar ou Propor Serviço
             </h3>
-            <p id="modalNomeMei" style="color:#3faf80; font-weight:600; margin-bottom:15px; font-size: 0.9rem;"></p>
+            <p id="modalNomeMei"
+                style="font-weight:600; color: #414141; margin-bottom:15px; font-size: 1rem; margin-top: 5px;"></p>
 
             <form id="formModalProposta">
                 <input type="hidden" id="modal_mei_usuario_id">
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Serviço
+                        style="font-size: 0.88rem; margin-top: 30px; font-weight: 600; margin-bottom: 7px; color: #414141; display:block;">Serviço
                         / Projeto Desejado:</label>
                     <input type="text" id="modal_titulo_servico"
                         placeholder="Ex: Manutenção Elétrica ou Site Institucional" required>
@@ -115,45 +116,45 @@
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Valor
-                        Oferecido/Estimado (R$):</label>
+                        style="font-size: 0.88rem;margin-top: 20px; font-weight: 600; margin-bottom: 7px; color: #414141; display:block;">Valor
+                        Oferecido / Estimado (R$):</label>
                     <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required>
                 </div>
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem; font-weight: 600; margin-bottom: 7px; color: #444; display:block;">Descrição
+                        style="font-size: 0.88rem; font-weight: 600; margin-top: 20px; color: #444; display:block;">Descrição
                         do Projeto:</label>
-                    <textarea id="modal_descricao" class="no-scrollbar" rows="4"
+                    <textarea id="modal_descricao" class="no-scrollbar" rows="5"
                         placeholder="Explique brevemente o que sua empresa precisa..." required></textarea>
                 </div>
 
                 <div
-                    style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
+                    style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 4px;">
                     <button type="button" onclick="fecharModal()" class="btn-cancelar-modal">Cancelar</button>
-                    <span class="shiny-cta-content1">
-                        <button type="submit" class="shiny-cta1" >Enviar Proposta</button>
+                    <span class="shiny-cta-content3">
+                        <button type="submit" class="shiny-cta3">Enviar Proposta</button>
                     </span>
 
                 </div>
             </form>
         </div>
     </div>
-
     <!-- MODAL DE SABER MAIS -->
-    <div id="modalSaberMais" class="modal-overlay-custom">
-        <div class="modal-content-custom no-scrollbar">
-            <h3 id="modalTituloSaberMais"
-                style="margin-top:0; color:#000000; margin-bottom:15px; font-size: 1.3rem; font-weight: bold;">Detalhes
-                do Prestador</h3>
+    <div id="modalSaberMais" class="modal-overlay">
+        <div class="modal-content no-scrollbar">
+            <h3 id="modalTituloSaberMais" style="margin-top:10px; color:#3faf6e; font-size: 1.3rem; font-weight: bold;">
+                Detalhes do Prestador</h3>
+            <p id="modalSubtituloSaberMais"
+                style="font-weight:600; color: #414141; margin-bottom:15px; font-size: 1rem; margin-top: 5px;"></p>
 
-            <div id="modalCorpoSaberMais" class="modal-descricao-bloco no-scrollbar"></div>
+            <div id="modalCorpoSaberMais" class="no-scrollbar"
+                style="max-height: 280px; overflow-y: auto; text-align: left; color: #444; font-size: 0.9em; line-height: 1.5; margin-top: 10px;">
+            </div>
 
             <div
-                style="display:flex; justify-content:flex-end; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
-                <button type="button" onclick="fecharModalSaberMais()" class="btn-voltar-modal">
-                    Voltar
-                </button>
+                style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
+                <button type="button" onclick="fecharModalSaberMais()" class="btn-cancelar-modal">Voltar</button>
             </div>
         </div>
     </div>
