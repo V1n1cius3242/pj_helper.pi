@@ -143,20 +143,54 @@
     <!-- MODAL DE SABER MAIS -->
     <div id="modalSaberMais" class="modal-overlay">
         <div class="modal-content no-scrollbar">
-            <h3 id="modalTituloSaberMais" style="margin-top:10px; color:#3faf6e; font-size: 1.3rem; font-weight: bold;">
-                Detalhes do Prestador</h3>
+            <!-- NOME DO PRESTADOR (Verde) -->
             <p id="modalSubtituloSaberMais"
-                style="font-weight:600; color: #414141; margin-bottom:15px; font-size: 1rem; margin-top: 5px;"></p>
+                style="font-weight:700; color: #3faf6e; font-size: 1.15rem; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;">
+            </p>
 
-            <div id="modalCorpoSaberMais" class="no-scrollbar"
-                style="max-height: 280px; overflow-y: auto; text-align: left; color: #444; font-size: 0.9em; line-height: 1.5; margin-top: 10px;">
+            <!-- CONTEÚDO EM 2 COLUNAS (Esquerda: Resumo/Sobre | Direita: Serviços com rolagem independente) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+
+                <!-- COLUNA ESQUERDA: Resumo e Sobre (Roxo) -->
+                <div class="no-scrollbar" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
+                    <div style="margin-bottom: 15px;">
+                        <strong
+                            style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 4px;">Resumo:</strong>
+                        <div id="modalResumoCorpo" class="modal-bloco-texto no-scrollbar"></div>
+                    </div>
+
+                    <div id="modalSobreContainer" style="margin-bottom: 10px;">
+                        <strong
+                            style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 4px;">Sobre:</strong>
+                        <div id="modalSobreCorpo" class="modal-bloco-texto no-scrollbar"></div>
+                    </div>
+                </div>
+
+                <!-- COLUNA DIREITA: Serviços Individuais em Quadradinhos (Com rolagem independente se houver muitos) -->
+                <div class="no-scrollbar" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
+                    <strong style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 10px;">Serviços e
+                        Tabela de Preços:</strong>
+                    <div id="modalServicosCorpo">
+                        <!-- Os quadradinhos dos serviços entram aqui dinamicamente -->
+                    </div>
+                </div>
+
             </div>
 
+            <!-- BOTÃO VOLTAR -->
             <div
-                style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 15px;">
+                style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px; border-top: 1px solid #eee; padding-top: 15px;">
                 <button type="button" onclick="fecharModalSaberMais()" class="btn-cancelar-modal">Voltar</button>
             </div>
         </div>
+    </div>
+
+    <!-- BOTÃO VOLTAR -->
+    <div
+        style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px; border-top: 1px solid #eee; padding-top: 15px;">
+        <button type="button" onclick="fecharModalSaberMais()" class="btn-cancelar-modal">Voltar</button>
+    </div>
+    </div>
     </div>
 
     <footer class="footer">
@@ -183,9 +217,40 @@
     <script>
         // MODAL SABER MAIS
         function abrirModalSaberMais(nome, elementoId) {
-            document.getElementById('modalTituloSaberMais').innerText = 'Prestador: ' + nome;
-            const conteudoOriginal = document.getElementById(elementoId).innerHTML;
-            document.getElementById('modalCorpoSaberMais').innerHTML = conteudoOriginal;
+            document.getElementById('modalSubtituloSaberMais').innerText = 'Prestador: ' + nome;
+            const cardOrigem = document.getElementById(elementoId);
+
+            if (cardOrigem) {
+                const htmlResumo = cardOrigem.querySelector('div[style*="dashed"]');
+                if (htmlResumo) {
+                    const divResumo = htmlResumo.children[0] ? htmlResumo.children[0].innerHTML : 'Sem resumo cadastrado.';
+                    const divSobre = htmlResumo.children[1] ? htmlResumo.children[1].innerHTML : '';
+
+                    document.getElementById('modalResumoCorpo').innerHTML = divResumo;
+
+                    const sobreCont = document.getElementById('modalSobreContainer');
+                    if (divSobre && divSobre.trim() !== '') {
+                        document.getElementById('modalSobreCorpo').innerHTML = divSobre;
+                        sobreCont.style.display = 'block';
+                    } else {
+                        sobreCont.style.display = 'none';
+                    }
+                }
+
+                const listaServicosContainer = cardOrigem.querySelector('ul');
+                const servicosDestino = document.getElementById('modalServicosCorpo');
+
+                if (listaServicosContainer) {
+                    const itens = listaServicosContainer.querySelectorAll('li');
+                    let htmlQuadradinhos = '';
+                    itens.forEach(li => {
+                        htmlQuadradinhos += `<div class="modal-servico-card">${li.innerHTML}</div>`;
+                    });
+                    servicosDestino.innerHTML = htmlQuadradinhos;
+                } else {
+                    servicosDestino.innerHTML = '<p style="font-size:0.85em; color:#888; font-style:italic;">Nenhum serviço individual cadastrado.</p>';
+                }
+            }
 
             const modal = document.getElementById('modalSaberMais');
             modal.style.display = 'flex';
@@ -202,7 +267,7 @@
             }, 300);
         }
 
-        // MODAL PROPOSTA (Atualizado com animação suave e classe ativo)
+        // MODAL PROPOSTA
         function abrirModal(meiUsuarioId, nomeMei) {
             if (!user) {
                 alert('Você precisa estar logado como Empresa para enviar uma proposta!');
@@ -234,7 +299,6 @@
             }, 300);
         }
 
-        // Envio do formulário de proposta
         document.getElementById('formModalProposta').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -319,25 +383,21 @@
                     const user = JSON.parse(rawUser);
                     const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
 
-                    // Define para qual painel o usuário vai ao clicar no ícone
                     let destino = 'login.html';
                     if (tipo === 'admin') destino = 'painel_admin.html';
                     else if (tipo === 'mei') destino = 'painel_mei.html';
                     else if (tipo === 'empresa' || tipo === 'empresa_grande') destino = 'painel_empresa.html';
 
-                    // SE ESTIVER LOGADO: Esconde o botão "Login" e mostra o ícone do perfil
                     if (botaoLogin) botaoLogin.style.display = 'none';
                     if (btnPerfil) {
                         btnPerfil.onclick = () => { window.location.href = destino; };
                         btnPerfil.style.display = 'inline-flex';
                     }
                 } catch (e) {
-                    // Se houver erro, mantém o botão de login visível
                     if (botaoLogin) botaoLogin.style.display = 'inline-flex';
                     if (btnPerfil) btnPerfil.style.display = 'none';
                 }
             } else {
-                // SE NÃO ESTIVER LOGADO: Mostra o botão "Login" e esconde o ícone do perfil
                 if (botaoLogin) botaoLogin.style.display = 'inline-flex';
                 if (btnPerfil) btnPerfil.style.display = 'none';
             }
