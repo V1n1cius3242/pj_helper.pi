@@ -99,10 +99,19 @@
                     ${userInsta ? `<p style="font-size:0.85em; margin-top:4px;"><strong> Instagram:</strong> <a href="https://instagram.com/${userInsta}" target="_blank" style="color:#3faf6e; text-decoration:underline;">@${userInsta}</a></p>` : ''}
  
                     <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd;">
-                        <p style="font-size:0.85em; color:#333; line-height:1.4;">
-                            <strong>Resumo:</strong> ${m.resumo_servico || 'Sem resumo cadastrado.'}
-                        </p>
-                        ${m.apresentacao ? `<p style="font-size:0.8em; color:#666; margin-top:6px; line-height:1.3;"><strong>Sobre:</strong> ${m.apresentacao}</p>` : ''}
+                        <div style="margin-bottom: 10px;">
+                            <strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: #414141;">Resumo:</strong>
+                            <div class="modal-descricao-bloco">
+                                ${m.resumo_servico || 'Sem resumo cadastrado.'}
+                            </div>
+                        </div>
+                        ${m.apresentacao ? `
+                        <div style="margin-top: 10px;">
+                            <strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: #414141;">Sobre:</strong>
+                            <div class="modal-descricao-bloco">
+                                ${m.apresentacao}
+                            </div>
+                        </div>` : ''}
                     </div>
  
                     ${servicosHTML}
@@ -112,6 +121,7 @@
         `;
     }).join('');
 }
+
         // Variável pra guardar a categoria atualmente selecionada
 let categoriaSelecionada = '';
  
