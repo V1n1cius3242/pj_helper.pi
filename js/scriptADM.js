@@ -8,6 +8,7 @@ function logout() {
 
 function mostrarAviso(mensagem, ehErro = false) {
     const banner = document.getElementById('bannerAviso');
+    if (!banner) return;
     banner.innerText = mensagem;
     banner.className = ehErro ? 'aviso-erro' : 'aviso-sucesso';
     banner.style.display = 'block';
@@ -52,19 +53,31 @@ function normalizarUrl(url) {
 
 let cacheContratos = [];
 let cacheUsuarios = [];
-let filtroStatusSolicitacoes = 'todas';
 
 async function carregarAdmin() {
     try {
+        const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+        const user = rawUser ? JSON.parse(rawUser) : null;
+        const adminId = user ? (user.id || user.usuario_id) : null;
+
+        // 1. Carregar Usuários
         const resUsers = await fetch('http://localhost:3000/admin/dados');
         const dadosUsers = await resUsers.json();
         cacheUsuarios = dadosUsers.usuarios || [];
         renderizarCadastros(cacheUsuarios);
 
+        // 2. Carregar Reuniões e Contratos
         const resReunioes = await fetch('http://localhost:3000/admin/reunioes');
         cacheContratos = await resReunioes.json();
         aplicarFiltroSolicitacoes('todas');
         renderizarContratos(cacheContratos);
+
+        // 3. Carregar Notificações do Banco
+        if (adminId) {
+            const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${adminId}`);
+            const notificacoes = await resNotifs.json();
+            renderizarNotificacoes(notificacoes);
+        }
 
     } catch (err) {
         console.error('Erro ao carregar dados:', err);
@@ -72,19 +85,31 @@ async function carregarAdmin() {
     }
 }
 
-// --- FILTRAR E RENDERIZAR SOLICITAÇÕES ---
+// --- FILTRAR E RENDERIZAR SOLICITAÇÕES CORRETAMENTE POR CADA TAG ---
 function aplicarFiltroSolicitacoes(statusFiltro) {
-    filtroStatusSolicitacoes = statusFiltro.toLowerCase().trim();
-    
+    const filtro = statusFiltro.toLowerCase().trim();
     let listaFiltrada = cacheContratos;
 
-    if (filtroStatusSolicitacoes !== 'todas' && filtroStatusSolicitacoes !== 'em aberto') {
+    if (filtro !== 'todas') {
         listaFiltrada = cacheContratos.filter(c => {
             const st = (c.status || 'pendente').toLowerCase();
-            if (filtroStatusSolicitacoes.includes('pendente')) return st.includes('pendente');
-            if (filtroStatusSolicitacoes.includes('reunião')) return st.includes('reuniao') || st.includes('agendado');
-            if (filtroStatusSolicitacoes.includes('firmado') || filtroStatusSolicitacoes.includes('concluído')) return st.includes('concluido') || st.includes('firmado');
-            if (filtroStatusSolicitacoes.includes('recusada')) return st.includes('recusado');
+
+            if (filtro === 'em aberto') {
+                // Mostra contratos que ainda estão abertos/pendentes/em andamento
+                return st.includes('pendente') || st.includes('aberto') || st.includes('em andamento');
+            }
+            if (filtro.includes('pendente')) {
+                return st.includes('pendente');
+            }
+            if (filtro.includes('reunião') || filtro.includes('reuniao')) {
+                return st.includes('reuniao') || st.includes('agendado');
+            }
+            if (filtro.includes('firmado') || filtro.includes('concluído') || filtro.includes('concluido')) {
+                return st.includes('concluido') || st.includes('firmado');
+            }
+            if (filtro.includes('recusada') || filtro.includes('recusado')) {
+                return st.includes('recusado');
+            }
             return true;
         });
     }
@@ -126,6 +151,22 @@ function renderizarSolicitacoes(lista) {
             badgeTexto = '• Recusada';
         }
 
+        // Lógica inteligente para os botões de ação baseada no status atual
+        let botoesAcaoHtml = `
+            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao-preto">📅 Agendar / Reagendar reunião</button>
+        `;
+
+        if (statusLower.includes('pendente') || statusLower.includes('agendado') || statusLower.includes('reuniao')) {
+            botoesAcaoHtml += `
+                <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao-sucesso">📑 Firmar contrato</button>
+                <button onclick="atualizarStatusContrato(${c.contrato_id}, 'recusado')" class="btn-acao-recusar">✕ Recusar</button>
+            `;
+        } else if (statusLower.includes('concluido') || statusLower.includes('firmado')) {
+            botoesAcaoHtml += `
+                <span style="font-size: 13px; color: #38a169; font-weight: 600; margin-left: 5px;">✔ Contrato Firmado com Sucesso</span>
+            `;
+        }
+
         return `
             <div class="card-painel-item">
                 <div class="card-item-header">
@@ -144,25 +185,30 @@ function renderizarSolicitacoes(lista) {
                     </div>
                 ` : ''}
                 <div class="card-item-acoes">
-                    <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao-preto">📅 Agendar / Reagendar reunião</button>
-                    <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao-sucesso">📑 Firmar contrato</button>
-                    <button onclick="atualizarStatusContrato(${c.contrato_id}, 'recusado')" class="btn-acao-recusar">✕ Recusar</button>
+                    ${botoesAcaoHtml}
                 </div>
             </div>
         `;
     }).join('');
 }
 
+// --- RENDERIZAR CONTRATOS (OCULTANDO OS RECUSADOS) ---
 function renderizarContratos(lista) {
     const container = document.getElementById('listaContratosCards');
     if (!container) return;
 
-    if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum contrato encontrado.</div>';
+    // Filtra para remover contratos que tenham status 'recusado'
+    const contratosAtivos = lista.filter(c => {
+        const statusContrato = (c.status || '').toLowerCase();
+        return !statusContrato.includes('recusado');
+    });
+
+    if (!Array.isArray(contratosAtivos) || contratosAtivos.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum contrato ativo ou em andamento no momento.</div>';
         return;
     }
 
-    container.innerHTML = lista.map(c => {
+    container.innerHTML = contratosAtivos.map(c => {
         const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
 
         return `
@@ -216,6 +262,30 @@ function renderizarCadastros(lista) {
             </div>
         `;
     }).join('');
+}
+
+// --- RENDERIZAR NOTIFICAÇÕES DO BANCO (SEM O SINO) ---
+function renderizarNotificacoes(lista) {
+    const container = document.getElementById('listaNotificacoesCards');
+    if (!container) return;
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhuma notificação encontrada no momento.</div>';
+        return;
+    }
+
+    container.innerHTML = lista.map(n => `
+        <div class="card-notificacao">
+            <div class="notif-conteudo" style="width: 100%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <h4 style="margin: 0;">Notificação #${n.id}</h4>
+                    <span class="badge-status badge-nova">• nova</span>
+                </div>
+                <p>${n.mensagem}</p>
+                <span class="notif-data">Sistema PJ Helper</span>
+            </div>
+        </div>
+    `).join('');
 }
 
 // --- CLIQUE NAS PÍLULAS DE FILTRO ---

@@ -142,33 +142,33 @@
         </div>
 
         <!-- MODAIS DE AÇÃO DO ADM -->
-        <div id="modalMeet" class="modal-overlay">
-            <div class="modal-card">
-                <h3> Agendar Reunião Google Meet</h3>
-                <input type="hidden" id="meetContratoId">
-                <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
-                <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
-                <label for="inputMeetData">Data e Horário:</label>
-                <input type="datetime-local" id="inputMeetData">
-                <div class="modal-acoes">
-                    <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
-                    <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
-                </div>
-            </div>
+<div id="modalMeet" class="modal-overlay">
+    <div class="modal-card">
+        <h3>Agendar Reunião Google Meet</h3>
+        <input type="hidden" id="meetContratoId">
+        <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
+        <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
+        <label for="inputMeetData">Data e Horário:</label>
+        <input type="datetime-local" id="inputMeetData">
+        <div class="modal-acoes">
+            <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+            <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
         </div>
+    </div>
+</div>
 
-        <div id="modalPdf" class="modal-overlay">
-            <div class="modal-card">
-                <h3> Anexar Contrato Digitalizado (PDF)</h3>
-                <input type="hidden" id="pdfContratoId">
-                <label for="inputPdfUrl">URL do Documento PDF:</label>
-                <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
-                <div class="modal-acoes">
-                    <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
-                    <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
-                </div>
-            </div>
+<div id="modalPdf" class="modal-overlay">
+    <div class="modal-card">
+        <h3>Anexar Contrato Digitalizado (PDF)</h3>
+        <input type="hidden" id="pdfContratoId">
+        <label for="inputPdfUrl">URL do Documento PDF:</label>
+        <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
+        <div class="modal-acoes">
+            <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+            <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
         </div>
+    </div>
+</div>
     </main>
 
     <footer class="footer">
