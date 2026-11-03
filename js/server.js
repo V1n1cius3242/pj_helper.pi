@@ -463,6 +463,7 @@ app.get('/admin/reunioes', (req, res) => {
         FROM contratos c
         LEFT JOIN usuarios u_emp ON c.empresa_usuario_id = u_emp.id
         LEFT JOIN usuarios u_mei ON c.mei_usuario_id = u_mei.id
+        GROUP BY c.id
         ORDER BY c.id DESC
     `;
     db.query(sql, (err, results) => {
@@ -576,6 +577,17 @@ app.delete('/excluir-conta/:id', async (req, res) => {
             console.error(error);
             return res.status(500).json({ erro: 'Erro interno ao validar a senha.' });
         }
+    });
+});
+
+app.post('/admin/marcar-notificacoes-lidas', (req, res) => {
+    const { usuario_id } = req.body;
+    if (!usuario_id) return res.status(400).json({ erro: 'ID do usuário obrigatório.' });
+
+    const sql = 'UPDATE notificacoes SET lida = 1 WHERE usuario_id = ?';
+    db.query(sql, [usuario_id], (err) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao atualizar notificações.' });
+        res.json({ sucesso: true, mensagem: 'Todas as notificações foram marcadas como lidas.' });
     });
 });
 

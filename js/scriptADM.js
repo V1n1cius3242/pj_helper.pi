@@ -53,18 +53,21 @@ function normalizarUrl(url) {
 
 let cacheContratos = [];
 let cacheUsuarios = [];
+let subabaCadastrosAtual = 'mei'; // 'mei' ou 'empresa'
+let filtroStatusCadastrosAtual = 'todos';
+let adminIdGlobal = null;
 
 async function carregarAdmin() {
     try {
         const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
         const user = rawUser ? JSON.parse(rawUser) : null;
-        const adminId = user ? (user.id || user.usuario_id) : null;
+        adminIdGlobal = user ? (user.id || user.usuario_id) : null;
 
         // 1. Carregar Usuários
         const resUsers = await fetch('http://localhost:3000/admin/dados');
         const dadosUsers = await resUsers.json();
         cacheUsuarios = dadosUsers.usuarios || [];
-        renderizarCadastros(cacheUsuarios);
+        aplicarFiltrosCadastros();
 
         // 2. Carregar Reuniões e Contratos
         const resReunioes = await fetch('http://localhost:3000/admin/reunioes');
@@ -73,11 +76,7 @@ async function carregarAdmin() {
         renderizarContratos(cacheContratos);
 
         // 3. Carregar Notificações do Banco
-        if (adminId) {
-            const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${adminId}`);
-            const notificacoes = await resNotifs.json();
-            renderizarNotificacoes(notificacoes);
-        }
+        carregarNotificacoesAdmin();
 
     } catch (err) {
         console.error('Erro ao carregar dados:', err);
@@ -85,7 +84,44 @@ async function carregarAdmin() {
     }
 }
 
-// --- FILTRAR E RENDERIZAR SOLICITAÇÕES CORRETAMENTE POR CADA TAG ---
+async function carregarNotificacoesAdmin() {
+    if (!adminIdGlobal) return;
+    try {
+        const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${adminIdGlobal}`);
+        const notificacoes = await resNotifs.json();
+        renderizarNotificacoes(notificacoes);
+    } catch (err) {
+        console.error('Erro ao carregar notificações', err);
+    }
+}
+
+// --- AÇÃO DE MARCAR TODAS COMO LIDAS ---
+async function marcarTodasComoLidas() {
+    if (!adminIdGlobal) return;
+    try {
+        const res = await fetch('http://localhost:3000/admin/marcar-notificacoes-lidas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario_id: adminIdGlobal })
+        });
+        if (res.ok) {
+            mostrarAviso('Todas as notificações foram marcadas como lidas!');
+            carregarNotificacoesAdmin();
+        }
+    } catch (err) {
+        mostrarAviso('Erro ao atualizar notificações.', true);
+    }
+}
+
+// Vincula o botão de marcar como lidas no HTML dinamicamente
+document.addEventListener('DOMContentLoaded', () => {
+    const btnMarcarLidas = document.querySelector('.btn-marcar-lidas');
+    if (btnMarcarLidas) {
+        btnMarcarLidas.addEventListener('click', marcarTodasComoLidas);
+    }
+});
+
+// --- FILTRAR E RENDERIZAR SOLICITAÇÕES ---
 function aplicarFiltroSolicitacoes(statusFiltro) {
     const filtro = statusFiltro.toLowerCase().trim();
     let listaFiltrada = cacheContratos;
@@ -93,23 +129,13 @@ function aplicarFiltroSolicitacoes(statusFiltro) {
     if (filtro !== 'todas') {
         listaFiltrada = cacheContratos.filter(c => {
             const st = (c.status || 'pendente').toLowerCase();
-
-            if (filtro === 'em aberto') {
-                // Mostra contratos que ainda estão abertos/pendentes/em andamento
-                return st.includes('pendente') || st.includes('aberto') || st.includes('em andamento');
+            if (filtro === 'em aberto') return st.includes('pendente') || st.includes('aberto') || st.includes('em andamento');
+            if (filtro.includes('pendente')) return st.includes('pendente');
+            if (filtro.includes('reunião') || filtro.includes('reuniao')) { 
+                return st.includes('reuniao') || st.includes('reunião') || st.includes('agendado') || (c.link_reuniao && c.link_reuniao.trim() !== ''); 
             }
-            if (filtro.includes('pendente')) {
-                return st.includes('pendente');
-            }
-            if (filtro.includes('reunião') || filtro.includes('reuniao')) {
-                return st.includes('reuniao') || st.includes('agendado');
-            }
-            if (filtro.includes('firmado') || filtro.includes('concluído') || filtro.includes('concluido')) {
-                return st.includes('concluido') || st.includes('firmado');
-            }
-            if (filtro.includes('recusada') || filtro.includes('recusado')) {
-                return st.includes('recusado');
-            }
+            if (filtro.includes('firmado') || filtro.includes('concluído') || filtro.includes('concluido')) return st.includes('concluido') || st.includes('firmado');
+            if (filtro.includes('recusada') || filtro.includes('recusado')) return st.includes('recusado');
             return true;
         });
     }
@@ -128,9 +154,12 @@ function renderizarSolicitacoes(lista) {
         return;
     }
 
-    if (contador) contador.innerText = `${lista.length} ${lista.length === 1 ? 'solicitação' : 'solicitações'}`;
+    // BLINDA CONTRA DUPLICAÇÃO: Garante IDs de contrato únicos
+    const listaUnica = Array.from(new Map(lista.map(item => [item.contrato_id, item])).values());
 
-    container.innerHTML = lista.map(c => {
+    if (contador) contador.innerText = `${listaUnica.length} ${listaUnica.length === 1 ? 'solicitação' : 'solicitações'}`;
+
+    container.innerHTML = listaUnica.map(c => {
         const extra = extrairDadosDescricao(c.descricao);
         const linkMeet = normalizarUrl(c.link_reuniao || extra.link);
         const rawData = c.data_reuniao || extra.data;
@@ -140,10 +169,10 @@ function renderizarSolicitacoes(lista) {
         let badgeClass = 'badge-pendente';
         let badgeTexto = '• Pendente';
         
-        if (statusLower.includes('reuniao') || statusLower.includes('agendado')) {
+        if (statusLower.includes('reuniao') || statusLower.includes('reunião') || statusLower.includes('agendado')) {
             badgeClass = 'badge-reuniao';
             badgeTexto = '• Reunião agendada';
-        } else if (statusLower.includes('concluido') || statusLower.includes('firmado')) {
+        } else if (statusLower.includes('concluido') || statusLower.includes('concluído') || statusLower.includes('firmado')) {
             badgeClass = 'badge-ativo';
             badgeTexto = '• Firmado';
         } else if (statusLower.includes('recusado')) {
@@ -151,19 +180,18 @@ function renderizarSolicitacoes(lista) {
             badgeTexto = '• Recusada';
         }
 
-        // Lógica inteligente para os botões de ação baseada no status atual
         let botoesAcaoHtml = `
-            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao-preto">📅 Agendar / Reagendar reunião</button>
+            <button onclick="abrirModalMeet(${c.contrato_id})" class="btn-acao-preto">Agendar / Reagendar reunião</button>
         `;
 
-        if (statusLower.includes('pendente') || statusLower.includes('agendado') || statusLower.includes('reuniao')) {
+        if (statusLower.includes('pendente') || statusLower.includes('agendado') || statusLower.includes('reuniao') || statusLower.includes('reunião')) {
             botoesAcaoHtml += `
-                <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao-sucesso">📑 Firmar contrato</button>
-                <button onclick="atualizarStatusContrato(${c.contrato_id}, 'recusado')" class="btn-acao-recusar">✕ Recusar</button>
+                <button onclick="confirmarContrato(${c.contrato_id})" class="btn-acao-sucesso">Firmar contrato</button>
+                <button onclick="atualizarStatusContrato(${c.contrato_id}, 'recusado')" class="btn-acao-recusar">Recusar</button>
             `;
-        } else if (statusLower.includes('concluido') || statusLower.includes('firmado')) {
+        } else if (statusLower.includes('concluido') || statusLower.includes('concluído') || statusLower.includes('firmado')) {
             botoesAcaoHtml += `
-                <span style="font-size: 13px; color: #38a169; font-weight: 600; margin-left: 5px;">✔ Contrato Firmado com Sucesso</span>
+                <span style="font-size: 13px; color: #38a169; font-weight: 600; margin-left: 5px;">Contrato Firmado com Sucesso</span>
             `;
         }
 
@@ -181,7 +209,7 @@ function renderizarSolicitacoes(lista) {
                 </div>
                 ${linkMeet ? `
                     <div class="box-meet-agendado">
-                        📹 Reunião: <strong>${dataFormatada}</strong> <a href="${linkMeet}" target="_blank" class="link-meet">acessar link ↗</a>
+                        Reunião: <strong>${dataFormatada}</strong> <a href="${linkMeet}" target="_blank" class="link-meet">acessar link</a>
                     </div>
                 ` : ''}
                 <div class="card-item-acoes">
@@ -192,16 +220,11 @@ function renderizarSolicitacoes(lista) {
     }).join('');
 }
 
-// --- RENDERIZAR CONTRATOS (OCULTANDO OS RECUSADOS) ---
 function renderizarContratos(lista) {
     const container = document.getElementById('listaContratosCards');
     if (!container) return;
 
-    // Filtra para remover contratos que tenham status 'recusado'
-    const contratosAtivos = lista.filter(c => {
-        const statusContrato = (c.status || '').toLowerCase();
-        return !statusContrato.includes('recusado');
-    });
+    const contratosAtivos = lista.filter(c => !((c.status || '').toLowerCase()).includes('recusado'));
 
     if (!Array.isArray(contratosAtivos) || contratosAtivos.length === 0) {
         container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum contrato ativo ou em andamento no momento.</div>';
@@ -210,7 +233,6 @@ function renderizarContratos(lista) {
 
     container.innerHTML = contratosAtivos.map(c => {
         const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
-
         return `
             <div class="card-painel-item">
                 <div class="card-item-header">
@@ -222,12 +244,56 @@ function renderizarContratos(lista) {
                     <span>Valor: <strong>R$ ${c.valor || 'A combinar'}</strong></span>
                 </div>
                 <div class="card-item-acoes" style="margin-top: 15px;">
-                    ${linkPdf ? `<a href="${linkPdf}" target="_blank" class="btn-acao-secundario" style="text-decoration:none; display:inline-block;">📥 Baixar versão PDF</a>` : '<em style="font-size:13px; color:#888;">PDF não anexado</em>'}
-                    <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao-preto">📤 Anexar / Substituir PDF</button>
+                    ${linkPdf ? `<a href="${linkPdf}" target="_blank" class="btn-acao-secundario" style="text-decoration:none; display:inline-block;">Baixar versão PDF</a>` : '<em style="font-size:13px; color:#888;">PDF não anexado</em>'}
+                    <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao-preto">Anexar / Substituir PDF</button>
                 </div>
             </div>
         `;
     }).join('');
+}
+
+// --- CONTROLE DAS SUBABAS E FILTROS DE CADASTROS ---
+function alternarSubabaCadastros(tipo) {
+    subabaCadastrosAtual = tipo; // 'mei' ou 'empresa'
+    
+    const btnMei = document.getElementById('btnSubMei');
+    const btnEmpresa = document.getElementById('btnSubEmpresa');
+
+    if (btnMei && btnEmpresa) {
+        if (tipo === 'mei') {
+            btnMei.classList.add('ativa');
+            btnEmpresa.classList.remove('ativa');
+        } else {
+            btnEmpresa.classList.add('ativa');
+            btnMei.classList.remove('ativa');
+        }
+    }
+    aplicarFiltrosCadastros();
+}
+
+function aplicarFiltrosCadastros() {
+    let lista = cacheUsuarios.filter(u => {
+        const tipoUser = (u.tipo || '').toLowerCase();
+        if (subabaCadastrosAtual === 'mei') return tipoUser === 'mei';
+        if (subabaCadastrosAtual === 'empresa') return tipoUser === 'empresa';
+        return false;
+    });
+
+    if (filtroStatusCadastrosAtual !== 'todos') {
+        lista = lista.filter(u => {
+            const st = (u.status || 'pendente').toLowerCase();
+            const filtroAtual = filtroStatusCadastrosAtual.toLowerCase();
+
+            if (filtroAtual === 'pendentes') return st === 'pendente';
+            if (filtroAtual === 'ativos' || filtroAtual === 'aprovado') return st === 'aprovado' || st === 'ativo';
+            if (filtroAtual === 'recusados' || filtroAtual === 'recusado') return st === 'recusado';
+            if (filtroAtual === 'suspensos' || filtroAtual === 'suspenso') return st === 'suspenso';
+
+            return st.includes(filtroAtual);
+        });
+    }
+
+    renderizarCadastros(lista);
 }
 
 function renderizarCadastros(lista) {
@@ -235,7 +301,7 @@ function renderizarCadastros(lista) {
     if (!container) return;
 
     if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum usuário cadastrado.</div>';
+        container.innerHTML = `<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum registo encontrado para esta categoria.</div>`;
         return;
     }
 
@@ -264,7 +330,33 @@ function renderizarCadastros(lista) {
     }).join('');
 }
 
-// --- RENDERIZAR NOTIFICAÇÕES DO BANCO (SEM O SINO) ---
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'btnSubMei') {
+        alternarSubabaCadastros('mei');
+    } else if (e.target.id === 'btnSubEmpresa') {
+        alternarSubabaCadastros('empresa');
+    }
+
+    if (e.target.classList.contains('pill-filtro')) {
+        const grupo = e.target.closest('.linha-filtros-pills');
+        if (grupo) {
+            grupo.querySelectorAll('.pill-filtro').forEach(b => b.classList.remove('ativo'));
+            e.target.classList.add('ativo');
+            
+            const textoFiltro = e.target.innerText.toLowerCase();
+            const secaoCadastrosAtiva = document.getElementById('secao-cadastros').style.display !== 'none';
+
+            if (secaoCadastrosAtiva) {
+                filtroStatusCadastrosAtual = textoFiltro;
+                if (filtroStatusCadastrosAtual === 'ativos') filtroStatusCadastrosAtual = 'aprovado';
+                aplicarFiltrosCadastros();
+            } else {
+                aplicarFiltroSolicitacoes(e.target.innerText);
+            }
+        }
+    }
+});
+
 function renderizarNotificacoes(lista) {
     const container = document.getElementById('listaNotificacoesCards');
     if (!container) return;
@@ -274,12 +366,14 @@ function renderizarNotificacoes(lista) {
         return;
     }
 
-    container.innerHTML = lista.map(n => `
+    const listaUnica = Array.from(new Map(lista.map(item => [item.id, item])).values());
+
+    container.innerHTML = listaUnica.map(n => `
         <div class="card-notificacao">
             <div class="notif-conteudo" style="width: 100%;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                     <h4 style="margin: 0;">Notificação #${n.id}</h4>
-                    <span class="badge-status badge-nova">• nova</span>
+                    <span class="badge-status badge-nova">• ${n.lida ? 'lida' : 'nova'}</span>
                 </div>
                 <p>${n.mensagem}</p>
                 <span class="notif-data">Sistema PJ Helper</span>
@@ -288,21 +382,6 @@ function renderizarNotificacoes(lista) {
     `).join('');
 }
 
-// --- CLIQUE NAS PÍLULAS DE FILTRO ---
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('pill-filtro')) {
-        const grupo = e.target.closest('.linha-filtros-pills');
-        if (grupo) {
-            grupo.querySelectorAll('.pill-filtro').forEach(b => b.classList.remove('ativo'));
-            e.target.classList.add('ativo');
-            
-            const textoFiltro = e.target.innerText;
-            aplicarFiltroSolicitacoes(textoFiltro);
-        }
-    }
-});
-
-// AÇÃO DE APROVAR / RECUSAR USUÁRIO
 async function alterarStatusUsuario(usuarioId, novoStatus) {
     if (!confirm(`Tem certeza que deseja marcar este usuário como ${novoStatus.toUpperCase()}?`)) return;
 
@@ -325,7 +404,6 @@ async function alterarStatusUsuario(usuarioId, novoStatus) {
     }
 }
 
-// CONTROLE DOS MODAIS
 function abrirModalMeet(contratoId) {
     document.getElementById('meetContratoId').value = contratoId;
     document.getElementById('inputMeetLink').value = '';
@@ -339,7 +417,6 @@ function abrirModalPdf(contratoId) {
     document.getElementById('modalPdf').style.display = 'flex';
 }
 
-// SALVAR REUNIÃO
 async function salvarMeet() {
     const contratoId = document.getElementById('meetContratoId').value;
     const link = document.getElementById('inputMeetLink').value;
@@ -376,7 +453,6 @@ async function salvarMeet() {
     }
 }
 
-// SALVAR PDF
 async function salvarPdf() {
     const contratoId = document.getElementById('pdfContratoId').value;
     const url = document.getElementById('inputPdfUrl').value;
@@ -411,7 +487,6 @@ async function salvarPdf() {
     }
 }
 
-// CONFIRMAR / ATUALIZAR CONTRATO
 async function confirmarContrato(contratoId) {
     try {
         const res = await fetch('http://localhost:3000/admin/confirmar-contrato', {
