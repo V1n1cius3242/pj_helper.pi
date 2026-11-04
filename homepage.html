@@ -13,6 +13,48 @@
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <title>PJ Helper - Home</title>
+
+    <!-- SCRIPT DOS CARROSSEIS (INÍCIO DO HEAD PARA ALTA PERFORMANCE) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === 1. CARROSSEL DE IMAGENS (Fundo) ===
+            const imgs = document.querySelectorAll('.carrossel img');
+            if (imgs.length > 0) {
+                let imgIdx = 0;
+                // Exibe a primeira imagem imediatamente
+                imgs[0].style.opacity = '1';
+
+                setInterval(() => {
+                    const proxIdx = (imgIdx + 1) % imgs.length;
+                    imgs[imgIdx].style.opacity = '0';
+                    imgs[proxIdx].style.opacity = '1';
+                    imgIdx = proxIdx;
+                }, 4000); // Troca a cada 4 segundos
+            }
+
+            // === 2. CARROSSEL DE PALAVRAS (Texto) ===
+            const listaPalavras = document.querySelector('.carrossel-lista');
+            if (listaPalavras) {
+                let palavraIdx = 0;
+                const totalPalavras = 3; // 3 palavras únicas (Confiáveis, Seguros, Garantidos)
+
+                setInterval(() => {
+                    palavraIdx = (palavraIdx + 1) % (totalPalavras + 1);
+                    const isMobile = window.innerWidth <= 768;
+                    const alturaPasso = isMobile ? 55 : 80;
+
+                    // Quando chega ao final da lista duplicada, reseta instantaneamente sem transição visível
+                    if (palavraIdx === 0) {
+                        listaPalavras.style.transition = 'none';
+                        listaPalavras.style.transform = 'translateY(0px)';
+                    } else {
+                        listaPalavras.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1)';
+                        listaPalavras.style.transform = `translateY(-${palavraIdx * alturaPasso}px)`;
+                    }
+                }, 3000); // Troca a cada 3 segundos
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -26,30 +68,29 @@
             <span></span>
         </label>
         <nav>
-    <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
-    <a class="navitens" href="catalogo.html">Clientes</a>
-    <a class="navitens" href="paginasobre.html">Sobre</a>
-    
-    <!-- Botão de Login normal -->
-    <button id="botaoLogin" onclick="window.location.href='login.html'" class="shiny-cta1">
-        <span class="shiny-cta-content1">Login</span>
-    </button>
+            <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+            
+            <button id="botaoLogin" onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">Login</span>
+            </button>
 
-    <!-- Botão do Ícone de Perfil com o tamanho corrigido direto para não estourar -->
-    <button id="linkLoginPainel" class="shiny-cta1" style="display: none; width: 85px; height: 38px; padding: 0 15px; align-items: center; justify-content: center;">
-        <span class="shiny-cta-content1" style="display: inline-flex; align-items: center; justify-content: center;">
-            <img src="/icon/perfil.png" class="perfil-icon" alt="Perfil" style="width: 15px; height: auto; filter: brightness(0) invert(1);">
-        </span>
-    </button>
-</nav>
+            <button id="linkLoginPainel" class="shiny-cta1" style="display: none; width: 85px; height: 38px; padding: 0 15px; align-items: center; justify-content: center;">
+                <span class="shiny-cta-content1" style="display: inline-flex; align-items: center; justify-content: center;">
+                    <img src="/icon/perfil.png" class="perfil-icon" alt="Perfil" style="width: 15px; height: auto; filter: brightness(0) invert(1);">
+                </span>
+            </button>
+        </nav>
     </div>
     <main>
         <div class="supCarrossel">
             <a href="paginasobre.html">
-                <button class="sobrebutton"><img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt="">
+                <button class="sobrebutton">
+                    <img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt="">
                     Plataforma de intermediação segura
-                    <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt=""></button>
-                <!--BUTTON FUNCIONANDO!-->
+                    <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt="">
+                </button>
             </a>
             <div class="text1sup">
                 <h1>Contratos</h1>
@@ -67,31 +108,26 @@
                 A ponte que seu negócio precisa para crescer.</div>
             <div class="grupo-botoes">
                 <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button>
-                <!--BUTTON FUNCIONANDO!-->
-
-                <button onclick="window.location.href='cadastro.html'" class="shiny-cta"> <!--BUTTON FUNCIONANDO!-->
+                <button onclick="window.location.href='cadastro.html'" class="shiny-cta">
                     <span class="shiny-cta-content">
                         Cadastre-se
                     </span>
                 </button>
             </div>
-
         </div>
         <div class="itenscarrossel">
             <div class="carrossel">
-                <img src="icon/img1carrossel.jpg" alt="">
-                <img src="icon/img2carrossel.jpg" alt="">
-                <img src="icon/img3carrossel.jpg" alt="">
+                <img src="icon/img1carrossel.jpg" fetchpriority="high" alt="">
+                <img src="icon/img2carrossel.jpg" loading="lazy" alt="">
+                <img src="icon/img3carrossel.jpg" loading="lazy" alt="">
             </div>
         </div>
 
         <section class="grupotextimg escondido">
             <div class="image-group-1 animar-ao-rolar">
-
                 <img class="img-rounded-large"
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
                     alt="Profissional com tablet" />
-
                 <img class="img-circle-overlay"
                     src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600"
                     alt="Técnico de capacete amarela" />
@@ -106,7 +142,7 @@
                     que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós
                     garantimos que cada contrato seja cumprido.
                 </p>
-                <button onclick="window.location.href='cadastro.html'" class="shiny-cta"> <!--BUTTON FUNCIONANDO!-->
+                <button onclick="window.location.href='cadastro.html'" class="shiny-cta">
                     <span class="shiny-cta-content">
                         Quero me cadastrar
                     </span>
@@ -119,7 +155,7 @@
                 <h2 class="subspan2">Como funciona?</h2>
                 <p class="textspan2">Em três etapas simples, conectamos seu negócio a novas oportunidades.</p>
             </div>
-            <div class="cards  escondido">
+            <div class="cards escondido">
                 <div class="card">
                     <div class="imgcard"><img class="imgcardsub1"
                             src="/icon/verificacao-da-lista-da-area-de-transferencia.png" alt=""></div>
@@ -143,7 +179,6 @@
                         e entregas.</div>
                 </div>
             </div>
-
         </section>
         <section>
             <div class="textimgfoco escondido">
@@ -177,8 +212,7 @@
                     <div class="mintextcard1">MEIs ganham visibilidade para empresas consolidadas.</div>
                 </div>
                 <div class="mincard escondido">
-                    <div class="minimgcard"><img class="minimgcardsub4" src="/icon/verificacao-de-cracha.png" alt="">
-                    </div>
+                    <div class="minimgcard"><img class="minimgcardsub4" src="/icon/verificacao-de-cracha.png" alt=""></div>
                     <div class="minnomecard">Tudo Formalizado</div>
                     <div class="mintextcard1">Transações via CNPJ, rastreáveis e profissionais.</div>
                 </div>
@@ -200,10 +234,8 @@
         <section>
             <div class="fundo">
                 <div class="buttonsfinais">
-                    <button onclick="window.location.href='cadastro.html'" class="shiny-cta2" href="cadastro.html">Criar
-                        conta grátis</button> <!--BUTTON FUNCIONANDO!-->
-                    <button onclick="window.location.href='catalogo.html'" class="button1footer"
-                        href="catalogo.html">Ver clientes</button> <!--BUTTON FUNCIONANDO!-->
+                    <button onclick="window.location.href='cadastro.html'" class="shiny-cta2">Criar conta grátis</button>
+                    <button onclick="window.location.href='catalogo.html'" class="button1footer">Ver clientes</button>
                 </div>
             </div>
         </section>
@@ -221,57 +253,52 @@
             <div class="linha"></div>
             <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
         </section>
-
     </footer>
+
     <script>
         const observador = new IntersectionObserver((entradas) => {
             entradas.forEach((entrada) => {
                 if (entrada.isIntersecting) {
                     entrada.target.classList.add('animar-ao-rolar');
-                    observador.unobserve(entrada.target); // Trava o elemento no lugar original para sempre
+                    observador.unobserve(entrada.target);
                 }
             });
         }, {
-            rootMargin: '0px 0px -10% 0px' // Dispara um pouco antes do item chegar no meio da tela
+            rootMargin: '0px 0px -10% 0px'
         });
 
         document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
 
         document.addEventListener('DOMContentLoaded', () => {
-        const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
-        const botaoLogin = document.getElementById('botaoLogin');
-        const btnPerfil = document.getElementById('linkLoginPainel');
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+            const botaoLogin = document.getElementById('botaoLogin');
+            const btnPerfil = document.getElementById('linkLoginPainel');
 
-        if (rawUser) {
-            try {
-                const user = JSON.parse(rawUser);
-                const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
+            if (rawUser) {
+                try {
+                    const user = JSON.parse(rawUser);
+                    const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
 
-                // Define para qual painel o usuário vai ao clicar no ícone
-                let destino = 'login.html';
-                if (tipo === 'admin') destino = 'painel_admin.html';
-                else if (tipo === 'mei') destino = 'painel_mei.html';
-                else if (tipo === 'empresa' || tipo === 'empresa_grande') destino = 'painel_empresa.html';
+                    let destino = 'login.html';
+                    if (tipo === 'admin') destino = 'painel_admin.html';
+                    else if (tipo === 'mei') destino = 'painel_mei.html';
+                    else if (tipo === 'empresa' || tipo === 'empresa_grande') destino = 'painel_empresa.html';
 
-                // SE ESTIVER LOGADO: Esconde o botão "Login" e mostra o ícone do perfil
-                if (botaoLogin) botaoLogin.style.display = 'none';
-                if (btnPerfil) {
-                    btnPerfil.onclick = () => { window.location.href = destino; };
-                    btnPerfil.style.display = 'inline-flex';
+                    if (botaoLogin) botaoLogin.style.display = 'none';
+                    if (btnPerfil) {
+                        btnPerfil.onclick = () => { window.location.href = destino; };
+                        btnPerfil.style.display = 'inline-flex';
+                    }
+                } catch (e) {
+                    if (botaoLogin) botaoLogin.style.display = 'inline-flex';
+                    if (btnPerfil) btnPerfil.style.display = 'none';
                 }
-            } catch (e) {
-                // Se houver erro, mantém o botão de login visível
+            } else {
                 if (botaoLogin) botaoLogin.style.display = 'inline-flex';
                 if (btnPerfil) btnPerfil.style.display = 'none';
             }
-        } else {
-            // SE NÃO ESTIVER LOGADO: Mostra o botão "Login" e esconde o ícone do perfil
-            if (botaoLogin) botaoLogin.style.display = 'inline-flex';
-            if (btnPerfil) btnPerfil.style.display = 'none';
-        }
-    });
+        });
     </script>
-
 </body>
 
 </html>

@@ -14,16 +14,13 @@ body {
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  /*garante que fiquem alinhad*/
   margin-top: 0;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
-  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
   width: 100%;
   justify-content: space-between;
-  /*auto-explicativo*/
   align-items: center;
   padding: 0 10%;
   backdrop-filter: blur(10px);
@@ -46,7 +43,6 @@ nav {
   font-weight: bold;
 }
 
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
 .shiny-cta1:hover {
   transform: translateY(-4px);
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
@@ -57,7 +53,6 @@ nav {
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
 }
 
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -89,7 +84,6 @@ nav {
   overflow: hidden;
 }
 
-/* CAMADA DAS BOLINHAS VERDES*/
 .shiny-cta1::before {
   content: '';
   position: absolute;
@@ -97,27 +91,19 @@ nav {
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
   -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(120deg,
-      transparent 30%,
-      rgba(0, 0, 0, 1) 48%,
-      rgba(0, 0, 0, 1) 52%,
-      transparent 70%);
+  mask-image: linear-gradient(120deg, transparent 30%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 52%, transparent 70%);
   pointer-events: none;
   z-index: 1;
 }
 
 .shiny-cta1::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.25),
-      transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
@@ -136,50 +122,31 @@ nav {
 }
 
 @keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-
-  100% {
-    --gradient-angle: 360deg;
-  }
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
 }
 
 @keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  20% {
-    left: 200%;
-  }
-
-  100% {
-    left: 200%;
-  }
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
-
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
 
 .designloginnav {
   font-weight: bold;
   text-decoration: none;
 }
 
-/*INICIO DO CARROSSEL DE IMAGENS*/
 .carrossel {
   position: relative;
   width: 100%;
-  /*carrossel com position relative pra eu conseguir colocar texto em cima depois*/
   height: 100vh;
   overflow: hidden;
-  /*faz com que a imagem não estoure lá embaixo do degrade*/
 }
 
 .carrossel:after {
   content: '';
   position: absolute;
-  /*garante com que os efeitos fiquem em cima do carrossel*/
   top: 0;
   left: 0;
   width: 100%;
@@ -194,63 +161,24 @@ nav {
   height: 110vh;
   object-fit: cover;
   opacity: 0;
-  animation: carrosselFade 12s infinite;
-}
-
-.carrossel img:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.carrossel img:nth-child(2) {
-  animation-delay: 4s;
-}
-
-.carrossel img:nth-child(3) {
-  animation-delay: 8s;
-}
-
-@keyframes carrosselFade {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  33% {
-    opacity: 1;
-  }
-
-  43% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
+  transition: opacity 1.2s ease-in-out; /* Transição suave via hardware acceleration */
+  will-change: opacity;
 }
 
 .supCarrossel {
   text-align: center;
-  /*texto geral dentro da div fica alinhado*/
   position: absolute;
-  /*garante que esse bloco fique por cima do carrossel, no html ele fica no topo*/
   z-index: 100;
   margin-top: 22vh;
   margin-left: 25%;
-  /*depois precisamos editar no @media*/
   align-items: center;
   height: 55vh;
   width: 50%;
   animation: entraGrupo 1.2s ease-out forwards;
-  /*animação sendo utilizada em duas partes do site (AQUI E NA ".image-group-1"  ), talvez fazer mudança - NÃO ESQUECE*/
 }
 
-/*FINAL DO CARROSSEL DE IMAGENS*/
 .sobrebutton {
   background-color: #ffffff;
-  /*1° botão que vem antes do primeiro texto e leva a página de sobre*/
   cursor: pointer;
   text-align: center;
   border-radius: 30px;
@@ -269,22 +197,14 @@ nav {
 
 .iconverde {
   transition: filter 0.6s ease;
-  padding: 1, 2px;
+  padding: 1.2px;
 }
 
 .sobrebutton:hover .iconverde {
   filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
-  /*forçar a imagem a ficar verde*/
 }
 
 .text1sup {
-  /*1° texto da div sup do carrossel "contratos"*/
-  font-size: xx-large;
-  margin-top: 10px;
-}
-
-.text1sup {
-  /*1° texto da div sup do carrossel "contratos"*/
   font-size: 64px;
   margin-top: 20px;
 }
@@ -295,11 +215,9 @@ nav {
   line-height: 80px;
 }
 
-/*INICIO CARROSSEL DE LETRAS*/
 .carrosselletra {
   height: 80px;
   overflow: hidden;
-  /*esconde as palavras que estão fora do foco */
   vertical-align: middle;
 }
 
@@ -307,7 +225,7 @@ nav {
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: carrosselSubir 9s infinite cubic-bezier(0.85, 0, 0.15, 1);
+  will-change: transform;
 }
 
 .carrossel-item {
@@ -319,38 +237,9 @@ nav {
   color: #3faf6e;
 }
 
-@keyframes carrosselSubir {
-
-  0%,
-  25% {
-    transform: translateY(0);
-  }
-
-  /* 1° Palavra (Digitais) */
-  33%,
-  58% {
-    transform: translateY(-80px);
-  }
-
-  /* 2° Palavra (Seguros) */
-  66%,
-  91% {
-    transform: translateY(-160px);
-  }
-
-  /* 3° Palavra (Rápidos) */
-  100% {
-    transform: translateY(-240px);
-  }
-
-  /* Reseta para a 1° repetida */
-}
-
-/*FINAL DO CARROSSEL DE LETRAS*/
 .text2sup {
   margin-top: 40px;
   font-size: 20px;
-  /*texto sobre a empresa, logo abaixo dos botões*/
   width: 70%;
   margin-left: 15%;
   color: #414141;
@@ -385,7 +274,6 @@ nav {
   margin-top: 25px;
 }
 
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
 .shiny-cta:hover {
   transform: translateY(-4px);
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
@@ -394,13 +282,6 @@ nav {
 .shiny-cta:active {
   transform: translateY(-1px);
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
-}
-
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
 }
 
 .shiny-cta {
@@ -417,17 +298,8 @@ nav {
   position: relative;
   padding: 15px 30px;
   cursor: pointer;
-
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
-  background:
-    linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box,
-    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-      transparent 0%,
-      #047857 5%,
-      var(--gradient-shine) 15%,
-      #047857 30%,
-      transparent 40%,
-      transparent 100%) border-box;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -437,7 +309,6 @@ nav {
   overflow: hidden;
 }
 
-/* CAMADA DAS BOLINHAS VERDES*/
 .shiny-cta::before {
   content: '';
   position: absolute;
@@ -445,27 +316,19 @@ nav {
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
   -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(120deg,
-      transparent 30%,
-      rgba(0, 0, 0, 1) 48%,
-      rgba(0, 0, 0, 1) 52%,
-      transparent 70%);
+  mask-image: linear-gradient(120deg, transparent 30%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 52%, transparent 70%);
   pointer-events: none;
   z-index: 1;
 }
 
 .shiny-cta::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.25),
-      transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
@@ -483,41 +346,6 @@ nav {
   font-size: 15px;
 }
 
-@keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  20% {
-    left: 200%;
-  }
-
-  100% {
-    left: 200%;
-  }
-}
-
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-
-.image-group-1 {
-  margin-left: 1%;
-  margin-top: 12%;
-  width: 40%;
-  max-width: 480px;
-  height: 380px;
-  opacity: 0;
-}
-
 .grupotextimg {
   display: flex;
   align-items: center;
@@ -533,7 +361,10 @@ nav {
   width: 450px;
   height: 420px;
   flex-shrink: 0;
-  /* Não deixa a área da imagem esmagar em telas menores */
+  margin-left: 1%;
+  margin-top: 12%;
+  max-width: 480px;
+  opacity: 0;
 }
 
 .img-rounded-large {
@@ -556,7 +387,6 @@ nav {
   object-fit: cover;
   border: 4px solid #ffffff;
   z-index: 2;
-  /* Garante que fica em cima da imagem grande */
 }
 
 .text-card {
@@ -601,16 +431,12 @@ nav {
 .cards {
   height: 40vh;
   max-width: 900px;
-  margin: 0 auto;
-  margin-top: 4%;
+  margin: 4% auto 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* Mantém os 3 cards na linha */
   gap: 20px;
   padding: 20px;
   box-sizing: border-box;
-  margin: 4% auto 0 auto;
-  /*DIV PAI PARA OS CARDS*/
 }
 
 .card {
@@ -620,7 +446,6 @@ nav {
   box-sizing: border-box;
   padding: 20px;
   min-height: 230px;
-  /*DIV GERAL PARA OS CARDS*/
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -633,7 +458,6 @@ nav {
   height: 50px;
   width: 50px;
   margin-top: 20px;
-  /*DIV GERAL PARA OS CARDS*/
   margin-bottom: 15px;
   border-radius: 100px;
 }
@@ -641,7 +465,6 @@ nav {
 .numcard {
   font-size: 40px;
   line-height: 1;
-  /*DIV GERAL PARA OS CARDS*/
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -649,7 +472,6 @@ nav {
 .nomecard {
   font-size: 20px;
   font-weight: bold;
-  /*DIV GERAL PARA OS CARDS*/
   margin-top: 10px;
 }
 
@@ -657,32 +479,29 @@ nav {
   margin-top: 15px;
   font-size: 16px;
   color: #0a0a0a;
-  /*DIV GERAL PARA OS CARDS*/
+}
 
+.imgcardsub1,
+.imgcardsub2,
+.imgcardsub3 {
+  display: block;
+  margin: 0 auto;
+  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 
 .imgcardsub1 {
   width: 35px;
-  margin-top: 6px;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  display: fixed;
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+  margin-top: 7px;
 }
 
 .imgcardsub2 {
   width: 40px;
   margin-top: 6px;
-  display: fixed;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 
 .imgcardsub3 {
   width: 30px;
-  margin-top: 10px;
-  display: fixed;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
+  margin-top: 9px;
 }
 
 .textimgfoco {
@@ -690,20 +509,15 @@ nav {
   height: 55vh;
   width: 40%;
   border-radius: 20px;
-  border-color: #414141;
   border: 1px solid rgba(65, 65, 65, 0.137);
-  margin: 0 auto;
-  margin-top: 20vh;
+  margin: 20vh auto 0 auto;
   display: grid;
-  /*DIV PAI PARA OS CARDS*/
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-
   box-sizing: border-box;
 }
 
 .imgfoco {
-  /*DIV GERAL PARA OS CARDS*/
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -716,11 +530,8 @@ nav {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  overflow: hidden;
 }
 
 .subfoco {
@@ -737,15 +548,12 @@ nav {
 .mincards {
   height: 15vh;
   max-width: 980px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* Mantém os 3 cards na linha */
   gap: 35px;
   padding: 10px;
   box-sizing: border-box;
   margin: 4% auto 0 auto;
-  /*DIV PAI PARA OS CARDS*/
 }
 
 .mincard {
@@ -755,7 +563,6 @@ nav {
   box-sizing: border-box;
   padding: 20px;
   min-height: 220px;
-  /*DIV GERAL PARA OS CARDS*/
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -768,7 +575,6 @@ nav {
   height: 45px;
   width: 45px;
   margin-top: 2px;
-  /*DIV GERAL PARA OS CARDS*/
   margin-bottom: 15px;
   border-radius: 100px;
 }
@@ -776,7 +582,6 @@ nav {
 .minnomecard {
   font-size: 15px;
   font-weight: bold;
-  /*DIV GERAL PARA OS CARDS*/
   margin-top: 10px;
 }
 
@@ -784,39 +589,12 @@ nav {
   margin-top: 13px;
   font-size: 14px;
   color: #0a0a0a;
-  /*DIV GERAL PARA OS CARDS*/
-
 }
 
-.minimgcardsub1 {
+.minimgcardsub1, .minimgcardsub2, .minimgcardsub3, .minimgcardsub4 {
   width: 25px;
-  margin-top: 9px;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  display: fixed;
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
-}
-
-.minimgcardsub2 {
-  width: 25px;
-  margin-top: 9px;
-  display: fixed;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
-}
-
-.minimgcardsub3 {
-  width: 25px;
-  margin-top: 9px;
-  display: fixed;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
-  filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
-}
-
-.minimgcardsub4 {
-  width: 25px;
-  margin-top: 9px;
-  display: fixed;
-  /*DIV SEPARADA PARA A NECESSIDADE DE CADA IMAGEMS NESSE DIABO*/
+  display: block;
+  margin: 9px auto 0 auto;
   filter: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%) !important;
 }
 
@@ -825,10 +603,8 @@ nav {
   height: 20vh;
   width: 30%;
   border-radius: 20px;
-  border-color: #414141;
   border: 1px solid rgba(65, 65, 65, 0.137);
-  margin: 0 auto;
-  margin-top: 20vh;
+  margin: 20vh auto 0 auto;
   gap: 20px;
   box-sizing: border-box;
 }
@@ -841,7 +617,6 @@ nav {
   margin-top: 35px;
   padding: 20px;
   font-family: sans-serif;
-
 }
 
 .mtv-card p {
@@ -850,7 +625,6 @@ nav {
   font-weight: 600;
 }
 
-/*FOOTER E ANIMAÇÃO BASE*/
 .footer {
   background-color: #171717;
   height: 70vh;
@@ -882,10 +656,8 @@ nav {
 .fundo {
   margin-top: 20px;
   width: 100%;
-
 }
 
-/* Adicione este bloco ao seu CSS */
 .buttonsfinais {
   display: flex;
   justify-content: center;
@@ -920,7 +692,6 @@ nav {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
 .shiny-cta2:hover {
   transform: translateY(-4px);
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
@@ -929,13 +700,6 @@ nav {
 .shiny-cta2:active {
   transform: translateY(-1px);
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
-}
-
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
 }
 
 .shiny-cta2 {
@@ -954,15 +718,7 @@ nav {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
-  background:
-    linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box,
-    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-      transparent 0%,
-      #047857 5%,
-      var(--gradient-shine) 15%,
-      #047857 30%,
-      transparent 40%,
-      transparent 100%) border-box;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -972,7 +728,6 @@ nav {
   overflow: hidden;
 }
 
-/* CAMADA DAS BOLINHAS VERDES*/
 .shiny-cta2::before {
   content: '';
   position: absolute;
@@ -980,69 +735,24 @@ nav {
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
   -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(120deg,
-      transparent 30%,
-      rgba(0, 0, 0, 1) 48%,
-      rgba(0, 0, 0, 1) 52%,
-      transparent 70%);
+  mask-image: linear-gradient(120deg, transparent 30%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 52%, transparent 70%);
   pointer-events: none;
   z-index: 1;
 }
 
 .shiny-cta2::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.25),
-      transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
 }
 
-.shiny-cta2-content {
-  z-index: 3;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  position: relative;
-  border-radius: 9999px;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-@keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  20% {
-    left: 200%;
-  }
-
-  100% {
-    left: 200%;
-  }
-}
-
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
 .bloco2footer {
   display: flex;
   flex-direction: column;
@@ -1090,25 +800,11 @@ nav {
   font-weight: 400;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Estado inicial: o item fica invisível e um pouco abaixo do lugar original */
 .escondido {
   opacity: 0;
   transform: translateY(50px);
 }
 
-/* Estado ativo: disparado pelo JavaScript ao rolar a página */
 .animar-ao-rolar {
   opacity: 1;
   transform: translateY(0);
@@ -1116,7 +812,6 @@ nav {
   will-change: transform, opacity;
 }
 
-/* Esconde o ícone das 3 linhas no computador */
 .menu-icon-hamburger {
   display: none;
   flex-direction: column;
@@ -1134,9 +829,6 @@ nav {
   transition: all 0.3s ease;
 }
 
-/* ========================================================================== 
-   MEDIA QUERY PARA CELULARES e DISPOSITIVOS MÓVEIS (Telas até 768px) 
-   ========================================================================== */
 @media (max-width: 768px) {
   .header {
     padding: 0 5%;
@@ -1146,13 +838,11 @@ nav {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
   .iconimg {
     width: 60px;
     z-index: 91;
   }
 
-  /* Exibe o ícone de hambúrguer */
   .menu-icon-hamburger {
     display: flex;
     flex-direction: column;
@@ -1170,7 +860,6 @@ nav {
     transition: all 0.3s ease;
   }
 
-  /* Iguala o menu suspenso ao cadastro */
   nav {
     display: flex;
     flex-direction: column;
@@ -1180,8 +869,6 @@ nav {
     width: 100%;
     padding-top: calc(8vh + 25px);
     padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
     background-color: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -1216,7 +903,6 @@ nav {
     margin-top: 10px;
   }
 
-  /* Animação do ícone Hambúrguer igualada */
   #menu-toggle:checked~.menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
@@ -1234,7 +920,6 @@ nav {
     box-shadow: none;
   }
 
-  /* CORREÇÃO DO CARROSSEL: Garante que as imagens preencham a tela sem vazamentos */
   .carrossel {
     position: relative;
     width: 100%;
@@ -1248,7 +933,6 @@ nav {
     object-fit: cover;
   }
 
-  /* CORREÇÃO DO GRADIENTE: Corrigido o erro de sintaxe que gerava a linha visual */
   .carrossel:after {
     content: '';
     position: absolute;
@@ -1282,28 +966,6 @@ nav {
     height: 55px;
   }
 
-  @keyframes carrosselSubir {
-
-    0%,
-    25% {
-      transform: translateY(0);
-    }
-
-    33%,
-    58% {
-      transform: translateY(-55px);
-    }
-
-    66%,
-    91% {
-      transform: translateY(-110px);
-    }
-
-    100% {
-      transform: translateY(-165px);
-    }
-  }
-
   .text2sup {
     width: 100%;
     margin-left: 0;
@@ -1325,7 +987,6 @@ nav {
     margin-bottom: 120px;
   }
 
-  /* Seção Sobre Nós*/
   .grupotextimg {
     margin-top: 40px;
     flex-direction: column;
@@ -1354,7 +1015,6 @@ nav {
     color: #313131;
   }
 
-  /* Passo a Passo (Grid de Cards) */
   .subspan2 {
     font-size: 26px;
     font-weight: 600;
@@ -1377,7 +1037,6 @@ nav {
     color: #313131;
   }
 
-  /* Bloco Dedicação e Foco */
   .textimgfoco {
     grid-template-columns: 1fr;
     width: 90%;
@@ -1407,7 +1066,6 @@ nav {
     color: #313131;
   }
 
-  /* Vantagens (Minicards) */
   .minnomecard {
     font-size: 18px;
     font-weight: 600;
@@ -1423,7 +1081,6 @@ nav {
     min-height: auto;
   }
 
-  /* Card de Frase (Steve Jobs) */
   .mtv-card {
     width: 90%;
     height: auto;
@@ -1436,7 +1093,6 @@ nav {
     margin-top: 20px;
   }
 
-  /* Footer */
   .footer {
     height: auto;
     padding: 40px 20px;
