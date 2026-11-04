@@ -1,184 +1,142 @@
+document.body.style.display = 'block';
 
-        document.body.style.display = 'block';
+const user = JSON.parse(localStorage.getItem('usuarioLogado')) || JSON.parse(localStorage.getItem('usuario'));
 
-        const user = JSON.parse(localStorage.getItem('usuarioLogado')) || JSON.parse(localStorage.getItem('usuario'));
+function logout() { 
+    localStorage.clear(); 
+    window.location.replace('login.html'); 
+}
 
-        function logout() { localStorage.clear(); window.location.replace('login.html'); }
+function mostrarAviso(msg, ehErro = false) {
+    const b = document.getElementById('bannerAviso');
+    if (!b) return;
+    b.innerText = msg;
+    b.className = ehErro ? 'aviso-erro' : 'aviso-sucesso';
+    b.style.display = 'block';
+    setTimeout(() => b.style.display = 'none', 5000);
+}
 
-        function mostrarAviso(msg, ehErro = false) {
-            const b = document.getElementById('bannerAviso');
-            b.innerText = msg;
-            b.className = ehErro ? 'aviso-erro' : 'aviso-sucesso';
-            b.style.display = 'block';
-            setTimeout(() => b.style.display = 'none', 5000);
-        }
+function normalizarUrl(url) {
+    if (!url) return '';
+    url = url.trim();
+    if (!url.startsWith('http://') && !url.startsWith('https://')) return 'https://' + url;
+    return url;
+}
 
-        function normalizarUrl(url) {
-            if (!url) return '';
-            url = url.trim();
-            if (!url.startsWith('http://') && !url.startsWith('https://')) return 'https://' + url;
-            return url;
-        }
-
-        async function carregarTudo() {
+async function carregarTudo() {
+    if (!user) return;
     try {
-        // 1. Perfil da Empresa
-        // ... (mantém igual)
+        // 1. Carregar Perfil da Empresa para preencher os inputs e o topo
+        const resPerfil = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${user.id}`);
+        if (resPerfil.ok) {
+            const perfil = await resPerfil.json();
+            if (perfil) {
+                if (document.getElementById('razao_social')) document.getElementById('razao_social').value = perfil.razao_social || '';
+                if (document.getElementById('cnpj')) document.getElementById('cnpj').value = perfil.cnpj || '';
+                if (document.getElementById('telefone')) document.getElementById('telefone').value = perfil.telefone || '';
+                
+                // ATUALIZA O NOME DA EMPRESA NO TOPO DINAMICAMENTE
+                const tituloTopo = document.getElementById('nomeEmpresaTopo');
+                if (tituloTopo && perfil.razao_social) {
+                    tituloTopo.innerText = perfil.razao_social;
+                }
+            }
+        }
 
-        // 2. Notificações
-        // ... (mantém igual)
+        // 2. Carregar Notificações da Empresa
+        const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${user.id}`);
+        if (resNotifs.ok) {
+            const notifs = await resNotifs.json();
+            const containerNotifs = document.getElementById('listaNotifs');
+            if (containerNotifs) {
+                if (Array.isArray(notifs) && notifs.length > 0) {
+                    containerNotifs.innerHTML = notifs.map(n => `
+                        <li style="background: #fff; padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #e2e8f0; list-style: none;">
+                            <p style="margin: 0; color: #333;">${n.mensagem}</p>
+                            <small style="color: #666; font-size: 0.8em;">Sistema PJ Helper</small>
+                        </li>
+                    `).join('');
+                } else {
+                    containerNotifs.innerHTML = '<li style="list-style: none; color: #666; background: #fff; padding: 15px; border-radius: 8px; text-align: center;">Nenhuma notificação encontrada.</li>';
+                }
+            }
+        }
 
-        // 3. Catálogo de MEIs -> PODE APAGAR ESSA LINHA:
-        // carregarCatalogo(); 
-
-        // 4. Contratos e Propostas enviadas
+        // 3. Carregar Contratos e Solicitações
         carregarContratos();
 
     } catch (err) {
+        console.error(err);
         mostrarAviso('Erro de conexão ao carregar dados do servidor!', true);
     }
 }
 
-        async function carregarCatalogo() {
-            const container = document.getElementById('gridCatalogo');
-            try {
-                let resCat = await fetch('http://localhost:3000/catalogo-completo');
-                
-                // Fallback se a rota /catalogo-completo der 404 no backend
-                if (!resCat.ok) {
-                    resCat = await fetch('http://localhost:3000/meis');
-                }
+async function carregarContratos() {
+    const container = document.getElementById('listaContratos');
+    if (!container) return;
 
-                if (!resCat.ok) {
-                    throw new Error("Rota de catálogo não encontrada no servidor");
-                }
+    try {
+        const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=empresa`);
+        if (!resC.ok) throw new Error();
+        const contratos = await resC.json();
 
-                const meis = await resCat.json();
+        container.innerHTML = (Array.isArray(contratos) && contratos.length > 0)
+            ? contratos.map(c => {
+                const linkMeet = normalizarUrl(c.link_reuniao);
+                const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
+                const dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
 
-                if (!Array.isArray(meis) || meis.length === 0) {
-                    container.innerHTML = '<p style="color:#888; grid-column: span 3;">Nenhum prestador MEI cadastrado no momento.</p>';
-                    return;
-                }
-
-                container.innerHTML = meis.map(m => `
-                    <div class="card-mei">
-                        <div>
-                            <span class="badge-cat">${m.categoria || 'Geral'}</span>
-                            <h4>${m.nome_fantasia || m.razao_social || 'Profissional MEI'}</h4>
-                            <p><strong>Cidade:</strong> ${m.cidade || 'Não informada'}</p>
-                            <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
-                            <p style="font-size:0.85em; color:#666; margin-top:6px;">${m.resumo_servico || m.apresentacao || 'Sem descrição cadastrada.'}</p>
+                return `
+                    <div style="border:1px solid #e2e8f0; padding:20px; margin-bottom:15px; border-radius:12px; background:#ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="margin:0; color:#111; font-size: 1.1rem;">${c.titulo_servico || 'Proposta de Serviço'}</h4>
+                            <span style="font-weight: 600; color:#3faf6e;">R$ ${c.valor || '0,00'}</span>
                         </div>
-                        <button onclick="abrirModal(${m.usuario_id || m.id}, '${m.nome_fantasia || m.razao_social}')" class="btn-acao">🤝 Solicitar / Propor Serviço</button>
+                        <p style="margin:8px 0; color: #555; font-size: 0.95rem;"><strong>Descrição:</strong> ${c.descricao || 'Sem detalhes'}</p>
+                        <p style="margin:8px 0; color: #555; font-size: 0.95rem;"><strong>Status:</strong> <strong style="text-transform:uppercase; color: #2d3748;">${c.status}</strong></p>
+
+                        <div style="margin:12px 0; padding:12px; background:#f8fafc; border-radius:8px; border-left:4px solid #3faf6e;">
+                            <strong>Reunião Virtual (Google Meet):</strong><br>
+                            ${linkMeet ? `
+                                <a href="${linkMeet}" target="_blank" style="display: inline-block; margin-top: 6px; color: #3faf6e; font-weight: 600; text-decoration: underline;">Acessar link da reunião</a><br>
+                                <small style="color:#555; font-weight:600; display: block; margin-top: 4px;">Data/Hora: ${dataFormatada}</small>
+                            ` : '<em style="color:#666; font-size:0.9em;">Reunião ainda não agendada pela equipe.</em>'}
+                        </div>
+
+                        ${linkPdf ? `<p style="margin:10px 0 0 0;"><a href="${linkPdf}" target="_blank" style="color:#3faf6e; font-weight:600; text-decoration:underline;">Visualizar Contrato Assinado (PDF)</a></p>` : ''}
                     </div>
-                `).join('');
+                `;
+            }).join('')
+            : '<p style="color:#666; background: #fff; padding: 20px; border-radius: 8px; text-align: center;">Nenhuma solicitação realizada ainda.</p>';
+    } catch (err) {
+        container.innerHTML = '<p style="color:#666; background: #fff; padding: 20px; border-radius: 8px; text-align: center;">Nenhuma solicitação ou reunião encontrada.</p>';
+    }
+}
 
-            } catch (err) {
-                container.innerHTML = '<p style="color:#dc3545; grid-column: span 3;">Não foi possível carregar o catálogo de prestadores. Verifique se o servidor backend possui a rota `/catalogo-completo` ou `/meis` ativada.</p>';
-            }
-        }
+// SALVAR PERFIL DA EMPRESA
+document.getElementById('formPerfilEmpresa').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const dados = {
+        usuario_id: user.id,
+        razao_social: document.getElementById('razao_social').value,
+        cnpj: document.getElementById('cnpj').value,
+        telefone: document.getElementById('telefone').value
+    };
 
-        async function carregarContratos() {
-            const container = document.getElementById('listaContratos');
-            try {
-                const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=empresa`);
-                if (!resC.ok) throw new Error();
-                const contratos = await resC.json();
-
-                container.innerHTML = (Array.isArray(contratos) && contratos.length > 0)
-                    ? contratos.map(c => {
-                        const linkMeet = normalizarUrl(c.link_reuniao);
-                        const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
-                        const dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
-
-                        return `
-                            <div style="border:1px solid #ccc; padding:15px; margin-bottom:12px; border-radius:6px; background:#fafafa;">
-                                <h4 style="margin-top:0; color:#007bff;">${c.titulo_servico || 'Proposta de Serviço'} - <span style="color:#28a745;">R$ ${c.valor || '0,00'}</span></h4>
-                                <p style="margin:5px 0;"><strong>Descrição enviada:</strong> ${c.descricao || 'Sem detalhes'}</p>
-                                <p style="margin:5px 0;"><strong>Status da Proposta:</strong> <strong style="text-transform:uppercase;">${c.status}</strong></p>
-
-                                <div style="margin:10px 0; padding:10px; background:#eef7ff; border-radius:5px; border-left:4px solid #007bff;">
-                                    <strong>🎥 Reunião Virtual (Google Meet):</strong><br>
-                                    ${linkMeet ? `
-                                        <a href="${linkMeet}" target="_blank" class="btn-meet">Entrar no Google Meet</a><br>
-                                        <small style="color:#333; font-weight:bold;">📅 Data/Hora: ${dataFormatada}</small>
-                                    ` : '<em style="color:#666; font-size:0.9em;">Reunião ainda não agendada pelo ADM.</em>'}
-                                </div>
-
-                                ${linkPdf ? `<p style="margin:5px 0;"><a href="${linkPdf}" target="_blank" style="color:#007bff; font-weight:bold;">📄 Visualizar Contrato Assinado (PDF)</a></p>` : ''}
-                            </div>
-                        `;
-                    }).join('')
-                    : '<p style="color:#888;">Nenhuma solicitação realizada ainda.</p>';
-            } catch (err) {
-                container.innerHTML = '<p style="color:#888;">Nenhuma solicitação ou reunião encontrada.</p>';
-            }
-        }
-
-        // SALVAR PERFIL DA EMPRESA
-        document.getElementById('formPerfilEmpresa').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const dados = {
-                usuario_id: user.id,
-                razao_social: document.getElementById('razao_social').value,
-                cnpj: document.getElementById('cnpj').value,
-                telefone: document.getElementById('telefone').value
-            };
-
-            try {
-                const res = await fetch('http://localhost:3000/perfil-empresa', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(dados)
-                });
-                if (res.ok) {
-                    mostrarAviso('Perfil da empresa atualizado com sucesso!');
-                } else {
-                    mostrarAviso('Erro ao salvar perfil da empresa.', true);
-                }
-            } catch (err) {
-                mostrarAviso('Erro de conexão ao salvar perfil!', true);
-            }
+    try {
+        const res = await fetch('http://localhost:3000/perfil-empresa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
         });
-
-        // MODAL PROPOSTA
-        function abrirModal(meiUsuarioId, nomeMei) {
-            document.getElementById('modal_mei_usuario_id').value = meiUsuarioId;
-            document.getElementById('modalProposta').style.display = 'flex';
+        if (res.ok) {
+            mostrarAviso('Perfil da empresa atualizado com sucesso!');
+        } else {
+            mostrarAviso('Erro ao salvar perfil da empresa.', true);
         }
+    } catch (err) {
+        mostrarAviso('Erro de conexão ao salvar perfil!', true);
+    }
+});
 
-        function fecharModal() {
-            document.getElementById('modalProposta').style.display = 'none';
-            document.getElementById('formModalProposta').reset();
-        }
-
-        document.getElementById('formModalProposta').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const dados = {
-                empresa_usuario_id: user.id,
-                mei_usuario_id: document.getElementById('modal_mei_usuario_id').value,
-                titulo_servico: document.getElementById('modal_titulo_servico').value,
-                valor: document.getElementById('modal_valor').value,
-                descricao: document.getElementById('modal_descricao').value
-            };
-
-            try {
-                const res = await fetch('http://localhost:3000/contratos', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(dados)
-                });
-
-                if (res.ok) {
-                    mostrarAviso('Proposta enviada ao prestador MEI com sucesso!');
-                    fecharModal();
-                    carregarContratos();
-                } else {
-                    mostrarAviso('Erro ao enviar proposta.', true);
-                }
-            } catch (err) {
-                mostrarAviso('Erro de conexão ao enviar proposta!', true);
-            }
-        });
-
-        carregarTudo();
+carregarTudo();
