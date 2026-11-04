@@ -1,69 +1,422 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
-font-family: 'Montserrat', sans-serif;
-background-color: #f5f5f5;
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
 }
+
+/* HEADER FIXO DE PONTA A PONTA */
 .header {
   height: 9vh;
   background-color: rgba(255, 255, 255, 0.514);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;  /*garante que fiquem alinhad*/
+  display: flex;
   margin-top: 0;
   position: fixed;
   top: 0; 
   left: 0; 
-  z-index: 999;  /*z-index garante que o header passe por cima de tudo, além do position fixed*/
+  z-index: 999;
   width: 100%; 
-  justify-content: space-between; /*auto-explicativo*/
+  justify-content: space-between;
   align-items: center;
   padding: 0 10%; 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
 .iconimg {
   width: 75px;
 }
+
 nav {
   display: flex;
   align-items: center; 
   gap: 30px; 
 }
+
 .navitens {
   text-decoration: none;
   color: #333;
-  font-weight: bold ;
+  font-weight: bold;
 }
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
-.shiny-cta1:hover { 
-  transform: translateY(-4px); 
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
-} 
-.shiny-cta1:active { 
-  transform: translateY(-1px); 
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
-} 
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
+
+/* CONTEÚDO PRINCIPAL CENTRALIZADO */
+main {
+    margin-top: 9vh;
+    min-height: 91vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* BEM-VINDO TOPO (PADRÃO ADMIN) */
+.bemvindotopo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    border: rgba(0, 0, 0, 0.11) solid 1px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.096);
+    width: 100%;
+}
+
+.bemvindo-textos {
+    display: flex;
+    flex-direction: column; 
+    gap: 4px;
+    text-align: left;
+}
+
+.bemvindotopo h3 {
+    color: #3faf6e;
+    font-weight: 550;
+    font-size: 1.0rem;
+    order: 1;
+}
+
+.bemvindotopo h2 {
+    font-size: 30px;
+    color: #111;
+    font-weight: 700;
+    order: 2;
+}
+
+.bemvindo-acoes {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.saida {
+    width: 14px;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px; 
+    filter: invert(24%) sepia(87%) saturate(4787%) hue-rotate(345deg) brightness(93%) contrast(92%)
+    drop-shadow(0.3px 0.3px 0.3px #c5221f);
+}
+
+.buttonsair {
+    background-color: #c5221f28;
+    border-radius: 20px;
+    color: #c5221f; 
+    border: none; 
+    padding: 6px 14px; 
+    cursor: pointer; 
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+}
+
+.buttonsair:hover {
+    background-color: #c5221f40;
+}
+
+.perfil-icon {
+    width: 15px;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    filter: brightness(0) invert(1);
+}
+
+/* CONTAINER DE ABAS PRINCIPAIS (PADRÃO ADMIN) */
+.container-abas-navegacao {
+    display: flex;
+    background: #f0f2f5;
+    padding: 6px;
+    border-radius: 30px;
+    gap: 5px;
+    margin: 20px 0 25px 0;
+}
+
+.btn-aba-nav {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-aba-nav.ativa {
+    background: #ffffff;
+    color: #3faf6e;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.06);
+}
+
+/* CARDS DE CONTEÚDO DAS SEÇÕES */
+.secao-card-conteudo {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #edf2f7;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.02);
+}
+
+/* BANNER MODERNO DO CATÁLOGO NO PAINEL DA EMPRESA */
+.banner-catalogo-empresa {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #edf2f7;
+    padding: 24px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.02);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.banner-catalogo-textos h3 {
+    font-size: 1.25rem;
+    color: #111827;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.banner-catalogo-textos p {
+    font-size: 0.9em;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* FORMULÁRIO DO PERFIL EMPRESA */
+.campo-form-empresa {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.campo-form-empresa label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #414141;
+    margin-bottom: 6px;
+}
+
+.campo-form-empresa input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    background-color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+.campo-form-empresa input:hover,
+.campo-form-empresa input:focus {
+    border-color: #3faf80 !important;
+    box-shadow: 0 0 6px rgba(36, 148, 32, 0.4) !important;
+}
+
+/* ZONA DE PERIGO (EXCLUSÃO) */
+.zona-perigo-container {
+    margin-top: 35px;
+    border-top: 1px solid #fee2e2;
+    padding-top: 25px;
+}
+
+.zona-perigo-container h3 {
+    color: #dc3545;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.zona-perigo-container p {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 18px;
+}
+
+/* BOTÕES DE AÇÃO */
+.btn-acao-preto {
+    background: #1a202c;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+}
+
+.btn-acao-preto:hover {
+    background: #2d3748;
+}
+
+.btn-acao-recusar {
+    background: #fff5f5;
+    color: #e53e3e;
+    border: 1px solid #feb2b2;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+}
+
+.btn-acao-recusar:hover {
+    background: #fed7d7;
+}
+
+/* MODAL DE EXCLUSÃO DE CONTA */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-card-exclusao {
+    background: #ffffff;
+    width: 100%;
+    max-width: 460px;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-card-exclusao h3 {
+    color: #e53e3e;
+    margin-top: 0;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+.alerta-senha-exclusao {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    text-align: left;
+    font-size: 0.88em;
+    color: #9b2c2c;
+}
+
+.input-senha-modal {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s;
+}
+
+.input-senha-modal:focus {
+    border-color: #e53e3e;
+    box-shadow: 0 0 6px rgba(229, 62, 62, 0.4);
+}
+
+.btn-cancelar-modal-exclusao {
+    background: #edf2f7;
+    color: #4a5568;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 48%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-confirmar-modal-exclusao {
+    background: #e53e3e;
+    color: #fff;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 10px;
+    cursor: not-allowed;
+    font-weight: 600;
+    width: 48%;
+    opacity: 0.5;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* BANNER DE AVISO DA EMPRESA */
+#bannerAviso {
+    display: none;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.aviso-sucesso {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.aviso-erro {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES DO HEADER) */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
+
 .shiny-cta1 {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
   --gradient-shine: #10b981;
   --bg-color-top: #1c2421;
   --bg-color-bottom: #0a0a0a;
- 
+
   color: rgb(255, 255, 255);
   isolation: isolate;
   z-index: 1;
   position: relative;
-  padding: 10px 20px; 
+  width: 85px; 
+  height: 38px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
@@ -76,39 +429,38 @@ nav {
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
 }
-/* CAMADA DAS BOLINHAS VERDES*/
+
 .shiny-cta1::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 9999px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
- -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(
-  120deg,
-  transparent 30%,
-  rgba(0, 0, 0, 1) 48%,
-  rgba(0, 0, 0, 1) 52%,
-  transparent 70%);
-  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
   z-index: 1;
 }
-.shiny-cta1::after { /* O feixe de luz passando (Shimmer) */
+
+.shiny-cta1::after {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-  90deg,
-  transparent,
-  rgba(255, 255, 255, 0.25),
-  transparent);
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
 }
+
 .shiny-cta-content1 {
   z-index: 3;
   justify-content: center;
@@ -120,248 +472,75 @@ nav {
   font-weight: 600;
   font-size: 15px;
 }
+
 @keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
 }
+
 @keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 200%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-
-.designloginnav{
-  font-weight: bold ;
-  text-decoration: none;  
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
 
-
-/*FOOTER E ANIMAÇÃO BASE*/
-.footer{
-  background-color: #171717 ;
-  height: 70vh;
-  margin-top: 10vh;
-  padding: 50px;
-}
-.spanfooter{
-color: #3faf6e;
-margin-top: 30px;
-text-align: center; 
-font-size:medium  ;
-}
-.subspanfooter{
-font-size: 35px;
-text-align: center;
-margin-top: 10px;
-color: #ffffff;
-}
-.bloco1footer p{
-  color: #919191;
-  font-weight: 600;
-  margin-top: 15px;
-  text-align: center;
-}
-.fundo{
-  margin-top: 20px;
+/* FOOTER FIXO (PADRÃO ADMIN) */
+.footer {
+  position: relative;
+  z-index: 10;
+  background-color: #171717;
+  height: auto;
+  padding: 40px 20px 30px 20px;
   width: 100%;
-
-}/* Adicione este bloco ao seu CSS */
-.buttonsfinais {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 50px;
-}
-.button1footer {
-    height: 48px;
-    border-radius: 30px;
-    padding: 0 30px;
-    margin-right: 20px;
-    margin-left: 10px; 
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    color: #4d4d4d;
-    border: 1px solid #00000025;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
 }
 
-.button1footer:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-.button1footer:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-}
-
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
-.shiny-cta2:hover { 
-  transform: translateY(-4px); 
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px; 
-} 
-.shiny-cta2:active { 
-  transform: translateY(-1px); 
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px; 
-} 
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-.shiny-cta2 {
-  --gradient-angle: 0deg;
-  --gradient-angle-offset: 0deg;
-  --gradient-shine: #10b981;
-  --bg-color-top: #1c2421;
-  --bg-color-bottom: #0a0a0a;
- 
-  color: rgb(255, 255, 255);
-  isolation: isolate;
-  z-index: 1;
-  position: relative;
-  padding: 15px 30px;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
-  background:
-  linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box,
-  conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-  transparent 0%,
-  #047857 5%,
-  var(--gradient-shine) 15%,
-  #047857 30%,
-  transparent 40%,
-  transparent 100%) border-box;          
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0);
-  border-radius: 9999px;
-  transition: box-shadow 0.3s, transform 0.3s;
-  animation: border-spin 2.5s linear infinite;
-  overflow: hidden;
-}
-/* CAMADA DAS BOLINHAS VERDES*/
-.shiny-cta2::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
- -webkit-mask-image: linear-gradient( to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(
-  120deg,
-  transparent 30%,
-  rgba(0, 0, 0, 1) 48%,
-  rgba(0, 0, 0, 1) 52%,
-  transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-}
-.shiny-cta2::after { /* O feixe de luz passando (Shimmer) */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-  90deg,
-  transparent,
-  rgba(255, 255, 255, 0.25),
-  transparent);
-  transform: skewX(-25deg);
-  animation: shimmer 9s infinite;
-  z-index: 2;
-}
-.shiny-cta2-content {
-  z-index: 3;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  position: relative;
-  border-radius: 9999px;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 15px;
-}
-@keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 200%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-.bloco2footer{
+.bloco2footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.footer-icon img{
+
+.footer-icon img {
   width: 60px;
-  margin-top: 80px;
+  margin-top: 20px;
 }
-.footer-text1{
+
+.footer-text1 {
   margin-top: 10px;
   color: #ffffff;
 }
-.footer-text2{
+
+.footer-text2 {
   margin-top: 10px;
   color: #919191;
   font-weight: 400;
   text-align: center;
 }
+
 .linhafooter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 40px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
 }
+
 .linha {
-    width: 70%;
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.15); 
-    margin-bottom: 20px; 
+  width: 70%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
 }
+
 .direitosautorais {
-    color: #8c8c8c;
-    font-size: 14px;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 400;
+  color: #8c8c8c;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
-/* Esconde o ícone das 3 linhas no computador */
+
 .menu-icon-hamburger {
   display: none;
   flex-direction: column;
@@ -369,6 +548,7 @@ color: #ffffff;
   cursor: pointer;
   z-index: 1000;
 }
+
 .menu-icon-hamburger span {
   display: block;
   width: 26px;
@@ -377,11 +557,10 @@ color: #ffffff;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
-    
 
-/*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
+/* RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 768px) { 
- .header { 
+  .header { 
     padding: 0 5%; 
     height: 60px; 
     position: fixed; 
@@ -389,13 +568,11 @@ color: #ffffff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   } 
 
-  /* Iguala o tamanho da logo no topo ao cadastro (60px) */
   .iconimg {
     width: 60px;
     z-index: 91;
   }
 
-  /* Exibe o ícone de hambúrguer */
   .menu-icon-hamburger {
     display: flex;
     flex-direction: column;
@@ -404,16 +581,6 @@ color: #ffffff;
     z-index: 1000;
   }
 
-  .menu-icon-hamburger span {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  /* Iguala o menu suspenso ao cadastro */
   nav {
     display: flex;
     flex-direction: column;
@@ -423,8 +590,6 @@ color: #ffffff;
     width: 100%;
     padding-top: calc(8vh + 25px);
     padding-bottom: 25px;
-    padding-right: 0;
-    padding-left: 0;
     background-color: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -459,7 +624,6 @@ color: #ffffff;
     margin-top: 10px;
   }
 
-  /* Animação do ícone Hambúrguer igualada */
   #menu-toggle:checked ~ .menu-icon-hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
@@ -472,24 +636,36 @@ color: #ffffff;
     transform: rotate(-45deg) translate(5px, -6px);
   }
 
-  .header:has(#menu-toggle:checked) {
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: none;
+  main {
+      padding: 20px 10px;
   }
 
-  /* Footer */ 
+  .bemvindotopo {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+  }
+
+  .container-abas-navegacao {
+      flex-direction: column;
+      border-radius: 16px;
+  }
+
+  /* Ajuste responsivo para o banner do catálogo empilhar o botão no telemóvel */
+  .banner-catalogo-empresa {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+      padding: 20px;
+  }
+
+  .banner-catalogo-empresa .shiny-cta1 {
+      width: 100% !important;
+  }
+
   .footer { 
     height: auto; 
     padding: 40px 20px; 
-  } 
-
-  .subspanfooter { 
-    font-size: 26px; 
-    font-weight: 600; 
-  } 
-
-  .footer-icon img { 
-    margin-top: 40px; 
   } 
 
   .linha { 
