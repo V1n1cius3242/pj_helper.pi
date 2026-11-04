@@ -141,7 +141,7 @@ function selecionarCategoria(botaoClicado, categoria) {
  
 function filtrarCatalogo() {
     const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
-    const cat = categoriaSelecionada.toLowerCase();
+    const cat = categoriaSelecionada.toLowerCase().trim();
    
     // Remove caracteres especiais caso pesquise por CNPJ ou Telefone só com números
     const termoApenasNumeros = termo.replace(/\D/g, '');
@@ -183,11 +183,11 @@ function filtrarCatalogo() {
             site.includes(termo) ||
             bateuServico;
  
-        // Normaliza para ignorar acentos na comparação da categoria
-        const categoriaNormalizada = categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const catNormalizada = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        // Normaliza rigorosamente para ignorar acentos e maiúsculas/minúsculas nas categorias
+        const categoriaNormalizada = categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        const catNormalizada = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
  
-        const bateCategoria = cat === '' || categoriaNormalizada.includes(catNormalizada);
+        const bateCategoria = cat === '' || categoriaNormalizada === catNormalizada;
  
         return bateTexto && bateCategoria;
     });
