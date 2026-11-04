@@ -50,6 +50,15 @@ async function carregarTudo() {
             document.getElementById('resumo_servico').value = perfil.resumo_servico || '';
             document.getElementById('apresentacao').value = perfil.apresentacao || '';
 
+            // ATUALIZA O NOME DO MEI NO TOPO DINAMICAMENTE
+            const tituloTopo = document.getElementById('nomeMeiTopo');
+            if (tituloTopo) {
+                const nomeExibicao = perfil.nome_fantasia || perfil.razao_social;
+                if (nomeExibicao && nomeExibicao.trim() !== '' && nomeExibicao !== 'Perfil em Preenchimento') {
+                    tituloTopo.innerText = nomeExibicao;
+                }
+            }
+
             carregarServicos(perfil.id);
         }
 
