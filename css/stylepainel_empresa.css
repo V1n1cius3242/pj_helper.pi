@@ -6,7 +6,8 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #fafafa;
+    color: #111827;
 }
 
 /* HEADER FIXO DE PONTA A PONTA */
@@ -54,7 +55,6 @@ nav {
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
 }
 
-/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES DO HEADER) */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -145,7 +145,6 @@ nav {
   100% { left: 200%; }
 }
 
-/* CONTEÚDO PRINCIPAL CENTRALIZADO */
 main {
     margin-top: 9vh;
     min-height: 91vh;
@@ -156,18 +155,56 @@ main {
     margin-right: auto;
 }
 
-/* BEM-VINDO TOPO (PADRÃO ADMIN) */
+/* CARDS DE CONTEÚDO DAS SEÇÕES E BANNERS DA PÁGINA (ESTÉTICA DO CATÁLOGO) */
 .bemvindotopo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     padding: 25px 30px;
-    border-radius: 16px;
-    border: rgba(0, 0, 0, 0.11) solid 1px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.096);
+    border-radius: 20px;
+    border: 1px solid rgba(65, 65, 65, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(8px);
     width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.banner-catalogo-empresa {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    border: 1px solid rgba(65, 65, 65, 0.12);
+    padding: 24px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.secao-card-conteudo {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    border: 1px solid rgba(65, 65, 65, 0.12);
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bemvindotopo:hover,
+.banner-catalogo-empresa:hover,
+.secao-card-conteudo:hover {
+    box-shadow: 0 16px 32px rgba(63, 175, 110, 0.08);
+    border-color: rgba(63, 175, 110, 0.25);
 }
 
 .bemvindo-textos {
@@ -232,7 +269,6 @@ main {
     filter: brightness(0) invert(1);
 }
 
-/* CONTAINER DE ABAS PRINCIPAIS (PADRÃO ADMIN) */
 .container-abas-navegacao {
     display: flex;
     background: #f0f2f5;
@@ -260,30 +296,6 @@ main {
     background: #ffffff;
     color: #3faf6e;
     box-shadow: 0px 2px 6px rgba(0,0,0,0.06);
-}
-
-/* CARDS DE CONTEÚDO DAS SEÇÕES */
-.secao-card-conteudo {
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #edf2f7;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.02);
-}
-
-/* BANNER MODERNO DO CATÁLOGO NO PAINEL DA EMPRESA */
-.banner-catalogo-empresa {
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #edf2f7;
-    padding: 24px 30px;
-    margin-bottom: 25px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.02);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
 }
 
 .banner-catalogo-textos h3 {
@@ -317,7 +329,7 @@ main {
     width: 100%;
     padding: 13px 16px;
     border: 1px solid #ccc;
-    border-radius: 16px;
+    border-radius: 20px;
     font-size: 0.95rem;
     font-family: 'Montserrat', sans-serif;
     outline: none;
@@ -331,7 +343,6 @@ main {
     box-shadow: 0 0 6px rgba(36, 148, 32, 0.4) !important;
 }
 
-/* ZONA DE PERIGO (EXCLUSÃO) */
 .zona-perigo-container {
     margin-top: 35px;
     border-top: 1px solid #fee2e2;
@@ -339,7 +350,7 @@ main {
 }
 
 .zona-perigo-container h3 {
-    color: #ce0d21;
+    color: #b41515;
     margin-bottom: 8px;
     font-size: 1.1em;
 }
@@ -353,8 +364,8 @@ main {
 
 .btn-acao-recusar {
     background: #fff5f5;
-    color: #ce0d21;
-    border: 1px solid #ce0d21;
+    color: #b41515;
+    border: 1px solid #b41515;
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 600;
@@ -367,7 +378,7 @@ main {
 .btn-acao-recusar:hover {
     background: #ffd3d3;
 }
-/* BOTÕES DE AÇÃO */
+
 .btn-acao-preto {
     background: #1a202c;
     color: #ffffff;
@@ -384,97 +395,131 @@ main {
 .btn-acao-preto:hover {
     background: #2d3748;
 }
-
-
-/* MODAL DE EXCLUSÃO DE CONTA */
+/* ==========================================================
+   MODAL DE EXCLUSÃO DE CONTA (ESTILO CARD DE LOGIN)
+   ========================================================== */
 .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  display: none;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.modal-overlay.ativo {
+  display: flex;
+  opacity: 1;
 }
 
 .modal-card-exclusao {
-    background: #ffffff;
-    width: 100%;
-    max-width: 460px;
-    padding: 35px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: 500px;
+  padding: 40px;
+  border-radius: 20px;
+  border: 0.10px solid #81818141;
+  text-align: center;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
+  transform: translateY(25px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.modal-overlay.ativo .modal-card-exclusao {
+  transform: translateY(0) scale(1);
+}
+
+.modal-card-exclusao .logo-login {
+  width: 60px;
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .modal-card-exclusao h3 {
-    color: #e53e3e;
-    margin-top: 0;
-    font-size: 1.3em;
-    margin-bottom: 10px;
+  color: #000000;
+  font-size: 1.5rem;
 }
 
-.alerta-senha-exclusao {
-    background: #fff5f5;
-    border: 1px solid #feb2b2;
-    padding: 14px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    text-align: left;
-    font-size: 0.88em;
-    color: #9b2c2c;
+/* INPUT COM ÍCONE (EXATAMENTE IGUAL AO LOGIN) */
+.input-com-icone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.input-senha-modal {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 14px;
-    font-weight: 600;
-    text-align: center;
-    font-size: 1rem;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s;
+.input-com-icone .icone-input {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.input-senha-modal:focus {
-    border-color: #e53e3e;
-    box-shadow: 0 0 6px rgba(229, 62, 62, 0.4);
+.input-com-icone .icone-input img {
+  width: 16px;
+  height: 18px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.5);
+  margin-bottom: 5px;
+}
+
+.input-com-icone input {
+  width: 100%;
+  padding: 12px 14px 12px 40px !important;
+  border: 1px solid #414141;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-com-icone input:hover,
+.input-com-icone input:focus {
+  border-color: #3faf6e;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 6px rgba(22, 185, 16, 0.3);
+}
+
+.input-com-icone input:hover ~ .icone-input img,
+.input-com-icone input:focus ~ .icone-input img {
+  filter: invert(52%) sepia(85%) saturate(1432%) hue-rotate(125deg) brightness(97%) contrast(89%) drop-shadow(0 0 5px rgba(22, 185, 16, 0.3));
 }
 
 .btn-cancelar-modal-exclusao {
-    background: #edf2f7;
-    color: #4a5568;
-    border: none;
-    padding: 11px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    width: 48%;
-    font-family: 'Montserrat', sans-serif;
+  background: #edf2f7;
+  color: #4a5568;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 48%;
+  height: 45px;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.2s;
 }
 
-.btn-confirmar-modal-exclusao {
-    background: #e53e3e;
-    color: #fff;
-    border: none;
-    padding: 11px 20px;
-    border-radius: 10px;
-    cursor: not-allowed;
-    font-weight: 600;
-    width: 48%;
-    opacity: 0.5;
-    font-family: 'Montserrat', sans-serif;
+.btn-cancelar-modal-exclusao:hover {
+  background: #e2e8f0;
 }
 
-/* BANNER DE AVISO DA EMPRESA */
 #bannerAviso {
     display: none;
     padding: 12px 20px;
@@ -495,7 +540,6 @@ main {
     border: 1px solid #fecaca;
 }
 
-/*HOUVER LUZ VERDE - BOTÃO PRETO*/
 .shiny-cta2:hover {
   transform: translateY(-4px);
   box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
@@ -504,13 +548,6 @@ main {
 .shiny-cta2:active {
   transform: translateY(-1px);
   box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
-}
-
-/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
 }
 
 .shiny-cta2 {
@@ -526,7 +563,7 @@ main {
   position: relative;
   padding: 10px 20px;
   cursor: pointer;
-  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
       transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
@@ -538,7 +575,6 @@ main {
   overflow: hidden;
 }
 
-/* CAMADA DAS BOLINHAS VERDES*/
 .shiny-cta2::before {
   content: '';
   position: absolute;
@@ -556,7 +592,6 @@ main {
 }
 
 .shiny-cta2::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
@@ -584,33 +619,6 @@ main {
   font-size: 15px;
 }
 
-@keyframes border-spin {
-  0% {
-    --gradient-angle: 0deg;
-  }
-
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  20% {
-    left: 200%;
-  }
-
-  100% {
-    left: 200%;
-  }
-}
-
-/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
-
-/* FOOTER FIXO (PADRÃO ADMIN) */
 .footer {
   position: relative;
   z-index: 10;
@@ -684,7 +692,6 @@ main {
   transition: all 0.3s ease;
 }
 
-/* RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 768px) { 
   .header { 
     padding: 0 5%; 
@@ -777,7 +784,6 @@ main {
       border-radius: 16px;
   }
 
-  /* Ajuste responsivo para o banner do catálogo empilhar o botão no telemóvel */
   .banner-catalogo-empresa {
       flex-direction: column;
       align-items: stretch;
