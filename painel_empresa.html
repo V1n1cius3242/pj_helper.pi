@@ -62,7 +62,7 @@
         <div class="bemvindotopo">
             <div class="bemvindo-textos">
                 <h3>Bem-vindo de volta!</h3>
-                <h2>Painel do Contratante (Empresa)</h2>
+                <h2>Painel do Contratante (Empresa)</h2> <!--MUDAR PARA QUE O NOME DA EMPRESA (RAZÃO SOCIAL) APAREÇA DE ACORDO COM OQ FOI CADASTRADO-->
             </div>
             <div class="bemvindo-acoes">
                 <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida" alt="">Sair</button>
@@ -75,11 +75,12 @@
                 <h3>Encontre o prestador ideal</h3>
                 <p>Navegue no catálogo de MEIs verificados, veja portfólio e serviços, e solicite um contrato.</p>
             </div>
-            <a href="catalogo.html" class="shiny-cta1" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 170px;">
-                <span class="shiny-cta-content1">
-                    🔍 Explorar catálogo
-                </span>
-            </a>
+           <a href="catalogo.html" class="shiny-cta2" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 170px;">
+            <span class="shiny-cta-content2" style="display: inline-flex; align-items: center; gap: 8px;">
+                <img src="/icon/lupa.png" alt="Lupa" style="width: 16px; height: auto; filter: brightness(0) invert(1);">
+                Explorar catálogo
+            </span>
+        </a>
         </div>
 
         <!-- CONTAINER DE ABAS PRINCIPAIS (Apenas Notificações, Perfil e Contratos) -->
@@ -114,13 +115,14 @@
                         <label>Telefone / WhatsApp:</label>
                         <input type="text" id="telefone" required placeholder="(00) 00000-0000">
                     </div>
-                    <button type="submit" class="btn-acao-preto" style="margin-top: 10px;">Salvar Perfil da Empresa</button>
+                    <button type="submit" class="btn-acao-preto" style="margin-top: 10px;">Salvar perfil da empresa</button>
                 </form>
 
                 <!-- ZONA DE PERIGO (EXCLUSÃO DE CONTA) -->
                 <div class="zona-perigo-container">
-                    <h3>⚠️ Zona de Perigo</h3>
-                    <p>Depois de excluir a sua conta, não há volta a dar. Todos os seus dados e solicitações serão removidos permanentemente.</p>
+                    <h3>Apagar Perfil</h3>
+                    <p>Após a exclusão de sua conta, não será possível desfazer, todos os seus dados e solicitações serão removidos permanentemente. <br>
+                    Certeza sobre a escolha?</p>
                     <button type="button" onclick="abrirModalExclusao()" class="btn-acao-recusar">
                         Excluir Minha Conta
                     </button>
@@ -143,8 +145,8 @@
     <!-- MODAL DE SEGURANÇA (EXCLUSÃO POR SENHA) -->
     <div id="modalExcluirConta" class="modal-overlay">
         <div class="modal-card-exclusao">
-            <h3>Tens a certeza absoluta?</h3>
-            <p style="color: #555; font-size: 0.9em; margin-bottom: 20px; line-height: 1.5;">
+            <h3>Digite sua senha para continuar com a ação.</h3>
+            <p style="color: #414141; font-size: 0.9em; margin-bottom: 20px; line-height: 1.5;">
                 Esta ação é <strong>irreversível</strong>. Todos os seus contratos, solicitações e dados do perfil serão apagados permanentemente.
             </p>
 

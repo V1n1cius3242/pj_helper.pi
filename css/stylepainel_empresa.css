@@ -44,6 +44,107 @@ nav {
   font-weight: bold;
 }
 
+.shiny-cta1:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
+}
+
+.shiny-cta1:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
+}
+
+/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES DO HEADER) */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.shiny-cta1 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b981;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  width: 85px; 
+  height: 38px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 9999px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+
+.shiny-cta1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  z-index: 1;
+}
+
+.shiny-cta1::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+
+.shiny-cta-content1 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+@keyframes border-spin {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
 /* CONTEÚDO PRINCIPAL CENTRALIZADO */
 main {
     margin-top: 9vh;
@@ -238,17 +339,34 @@ main {
 }
 
 .zona-perigo-container h3 {
-    color: #dc3545;
+    color: #ce0d21;
     margin-bottom: 8px;
     font-size: 1.1em;
 }
 
 .zona-perigo-container p {
-    color: #666;
+    color: #414141;
     font-size: 0.9em;
     margin-bottom: 18px;
+    font-weight: 450;
 }
 
+.btn-acao-recusar {
+    background: #fff5f5;
+    color: #ce0d21;
+    border: 1px solid #ce0d21;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.6s;
+}
+
+.btn-acao-recusar:hover {
+    background: #ffd3d3;
+}
 /* BOTÕES DE AÇÃO */
 .btn-acao-preto {
     background: #1a202c;
@@ -267,22 +385,6 @@ main {
     background: #2d3748;
 }
 
-.btn-acao-recusar {
-    background: #fff5f5;
-    color: #e53e3e;
-    border: 1px solid #feb2b2;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    transition: background 0.2s;
-}
-
-.btn-acao-recusar:hover {
-    background: #fed7d7;
-}
 
 /* MODAL DE EXCLUSÃO DE CONTA */
 .modal-overlay {
@@ -393,14 +495,25 @@ main {
     border: 1px solid #fecaca;
 }
 
-/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES DO HEADER) */
+/*HOUVER LUZ VERDE - BOTÃO PRETO*/
+.shiny-cta2:hover {
+  transform: translateY(-4px);
+  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
+}
+
+.shiny-cta2:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
+}
+
+/*ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES)*/
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
 
-.shiny-cta1 {
+.shiny-cta2 {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
   --gradient-shine: #10b981;
@@ -411,16 +524,11 @@ main {
   isolation: isolate;
   z-index: 1;
   position: relative;
-  width: 85px; 
-  height: 38px;
-  padding: 0 15px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 20px;
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 10px 15px -8px;
   background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-  transparent 0%,#047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;          
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
@@ -430,7 +538,8 @@ main {
   overflow: hidden;
 }
 
-.shiny-cta1::before {
+/* CAMADA DAS BOLINHAS VERDES*/
+.shiny-cta2::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -442,10 +551,12 @@ main {
       rgba(0, 0, 0, 1) 48%,
       rgba(0, 0, 0, 1) 52%,
       transparent 70%);
+  pointer-events: none;
   z-index: 1;
 }
 
-.shiny-cta1::after {
+.shiny-cta2::after {
+  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
@@ -461,7 +572,7 @@ main {
   z-index: 2;
 }
 
-.shiny-cta-content1 {
+.shiny-cta-content2 {
   z-index: 3;
   justify-content: center;
   align-items: center;
@@ -474,15 +585,30 @@ main {
 }
 
 @keyframes border-spin {
-  0% { --gradient-angle: 0deg; }
-  100% { --gradient-angle: 360deg; }
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  20% {
+    left: 200%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
+
+/*FINAL DA ANIMAÇÃO DO BOTÃO PRETO COM LUZES*/
 
 /* FOOTER FIXO (PADRÃO ADMIN) */
 .footer {
