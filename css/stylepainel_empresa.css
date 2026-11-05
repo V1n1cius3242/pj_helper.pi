@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
@@ -164,7 +165,7 @@ main {
     background: rgba(255, 255, 255, 0.9);
     padding: 25px 30px;
     border-radius: 20px;
-    border: 1px solid rgba(65, 65, 65, 0.12);
+    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(8px);
@@ -175,7 +176,7 @@ main {
 .banner-catalogo-empresa {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
-    border: 1px solid rgba(65, 65, 65, 0.12);
+    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
     padding: 24px 30px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -191,8 +192,8 @@ main {
 .secao-card-conteudo {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
-    border: 1px solid rgba(65, 65, 65, 0.185);
-    padding: 90px;
+    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
+    padding: 80px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     backdrop-filter: blur(4px);
@@ -204,7 +205,7 @@ main {
 .banner-catalogo-empresa:hover,
 .secao-card-conteudo:hover {
     box-shadow: 0 16px 32px rgba(63, 175, 110, 0.08);
-    border-color: rgba(63, 175, 110, 0.25);
+    border-color: rgba(63, 175, 110, 0.4);
 }
 
 .bemvindo-textos {
@@ -215,7 +216,7 @@ main {
 }
 
 .bemvindotopo h3 {
-    color: #3faf6e;
+    color: #3faf6e; /* Cor #3faf6e */
     font-weight: 550;
     font-size: 1.0rem;
     order: 1;
@@ -294,7 +295,7 @@ main {
 
 .btn-aba-nav.ativa {
     background: #ffffff;
-    color: #3faf6e;
+    color: #3faf6e; /* Cor #3faf6e */
     box-shadow: 0px 2px 6px rgba(0,0,0,0.06);
 }
 
@@ -339,8 +340,8 @@ main {
 
 .campo-form-empresa input:hover,
 .campo-form-empresa input:focus {
-    border-color: #3faf80 !important;
-    box-shadow: 0 0 6px rgba(36, 148, 32, 0.4) !important;
+    border-color: #3faf6e !important; /* Cor #3faf6e */
+    box-shadow: 0 0 6px rgba(63, 175, 110, 0.4) !important; /* Cor #3faf6e */
 }
 
 .zona-perigo-container {
@@ -397,6 +398,7 @@ main {
 .btn-acao-preto:hover {
     background: #2d3748;
 }
+
 /* ==========================================================
    MODAL DE EXCLUSÃO DE CONTA (MAPEAMENTO EXATO)
    ========================================================== */
@@ -423,7 +425,6 @@ main {
   opacity: 1;
 }
 
-/* Lilás: Dimensões do card (alongado e espaçoso) */
 .modal-card-exclusao {
   background: #ffffff;
   width: 100%;
@@ -445,20 +446,19 @@ main {
 .modal-overlay.ativo .modal-card-exclusao {
   transform: translateY(0) scale(1);
 }
-/*icon*/
+
 .modal-card-exclusao .logo-login {
   width: 65px;
   margin: 10px auto 5px auto;
 }
 
-/*Título */
 .modal-card-exclusao h3 {
   color: #000000;
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 15px;
 }
-/*Texto*/
+
 .texto-descritivo-exclusao {
   color: #414141;
   font-size: 0.85rem;
@@ -468,7 +468,6 @@ main {
   margin-top: 5px;
 }
 
-/* Azul escuro: Rótulo "Digite sua senha" */
 .campo-exclusao {
   text-align: left;
   margin-top: 70px;
@@ -483,7 +482,6 @@ main {
   margin-bottom: 8px;
 }
 
-/* Azul claro: Input */
 .input-com-icone {
   position: relative;
   display: flex;
@@ -523,8 +521,8 @@ main {
 
 .input-com-icone input:hover,
 .input-com-icone input:focus {
-  border-color: #3faf6e;
-  box-shadow: 0 0 10px rgba(16, 185, 38, 0.4);
+  border-color: #3faf6e; /* Cor #3faf6e */
+  box-shadow: 0 0 10px rgba(63, 175, 110, 0.4); /* Cor #3faf6e */
 }
 
 .botoes-container-exclusao {
@@ -551,7 +549,7 @@ main {
   transform: translateY(-4px);  
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
-/* Botão rosa: Excluir Conta */
+
 .btn-excluir-modal {
   width: 48%;
   height: auto;
@@ -560,6 +558,7 @@ main {
   border-radius: 99px;
   transition: all 0.5s;
 }
+
 #bannerAviso {
     display: none;
     padding: 12px 20px;
@@ -658,7 +657,63 @@ main {
   font-weight: 600;
   font-size: 15px;
 }
+/* ESTILO DOS CARDS DE SOLICITAÇÕES E REUNIÕES */
+.card-solicitacao-item {
+    border: 1px solid rgba(63, 175, 110, 0.25);
+    padding: 24px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
 
+.card-topo-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.card-titulo-servico {
+    margin: 0;
+    color: #414141; 
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card-valor-servico {
+    font-weight: 600;
+    color: #3faf6e;
+}
+
+.card-texto-padrao {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.card-data-verde {
+    color: #3faf6e;
+    font-weight: 600;
+}
+
+.card-bloco-meet {
+    margin: 15px 0 0 0;
+    padding: 20px 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-link-verde {
+    color: #3faf6e;
+    font-weight: 450;
+    text-decoration: underline;
+}
 .footer {
   position: relative;
   z-index: 10;

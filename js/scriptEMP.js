@@ -139,4 +139,81 @@ document.getElementById('formPerfilEmpresa').addEventListener('submit', async (e
     }
 });
 
+/*------------------------------------------------------------------------------------ */
+/*FEITO POR SOFIA _ ALTERA O STATUS DAS NOTIFICAÇÕES SOBRE A REUNIÃO (SE ACEITA OU NÃO)*/
+async function carregarContratos() {
+    const container = document.getElementById('listaContratos');
+    if (!container) return;
+
+    try {
+        const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=empresa`);
+        if (!resC.ok) throw new Error();
+        const contratos = await resC.json();
+
+        container.innerHTML = (Array.isArray(contratos) && contratos.length > 0)
+            ? contratos.map(c => {
+                const linkMeet = normalizarUrl(c.link_reuniao);
+                const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
+                const dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
+
+                let descricaoTexto = c.descricao || 'Sem detalhes';
+                let linkExtraido = '';
+
+                const regexLink = /(https?:\/\/[^\s]+)/g;
+                const matchLink = descricaoTexto.match(regexLink);
+                if (matchLink) {
+                    linkExtraido = matchLink[0];
+                    descricaoTexto = descricaoTexto.replace(linkExtraido, '').replace('| Link:', '').replace('Link:', '').trim();
+                }
+
+                const statusBruto = (c.status || '').trim();
+                const statusTexto = statusBruto.toLowerCase();
+                
+                let corStatus = '#414141';
+                let textoStatusFinal = 'SEM RESPOSTA';
+
+                if (statusBruto !== '' && statusTexto !== 'null' && statusTexto !== 'undefined') {
+                    textoStatusFinal = statusBruto;
+                    if (statusTexto.includes('concluido') || statusTexto.includes('concluído')) {
+                        corStatus = '#3faf6e';
+                    } else if (statusTexto.includes('negado') || statusTexto.includes('recusado')) {
+                        corStatus = '#e53e3e';
+                    }
+                }
+
+                return `
+                    <div class="card-solicitacao-item">
+                        <div class="card-topo-linha">
+                            <h4 class="card-titulo-servico">${c.titulo_servico || 'Proposta de Serviço'}</h4>
+                            <span class="card-valor-servico">R$ ${c.valor || '0,00'}</span>
+                        </div>
+                        
+                        <p class="card-texto-padrao"><strong>Descrição:</strong> ${descricaoTexto} ${c.data_reuniao ? `| Data: <span class="card-data-verde">${dataFormatada}</span>` : ''}</p>
+
+                        <p class="card-texto-padrao"><strong>Status:</strong> <strong style="text-transform:uppercase; color: ${corStatus};">${textoStatusFinal}</strong></p>
+
+                        <div class="card-bloco-meet">
+                            <strong style="color: #111; font-size: 0.95rem;">Reunião Virtual (Google Meet):</strong>
+                            ${linkMeet ? `
+                                <a href="${linkMeet}" target="_blank" class="card-link-verde">Acessar link da reunião</a>
+                                <small style="color:#555; font-weight:600;">Data/Hora: ${dataFormatada}</small>
+                            ` : '<em style="color:#666; font-size:0.9em;">Reunião ainda não agendada pela equipe.</em>'}
+
+                            ${linkExtraido ? `
+                                <div style="display: flex; gap: 6px; align-items: center; margin-top: 2px;">
+                                    <strong style="color: #555;">Link:</strong> <a href="${linkExtraido}" target="_blank" class="card-link-verde">${linkExtraido}</a>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        ${linkPdf ? `<p style="margin:15px 0 0 0;"><a href="${linkPdf}" target="_blank" class="card-link-verde">Visualizar Contrato Assinado (PDF)</a></p>` : ''}
+                    </div>
+                `;
+            }).join('')
+            : '<p style="color:#666; background: #fff; padding: 20px; border-radius: 8px; text-align: center;">Nenhuma solicitação realizada ainda.</p>';
+    } catch (err) {
+        container.innerHTML = '<p style="color:#666; background: #fff; padding: 20px; border-radius: 8px; text-align: center;">Nenhuma solicitação ou reunião encontrada.</p>';
+    }
+}
+
 carregarTudo();
