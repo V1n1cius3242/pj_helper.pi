@@ -192,7 +192,7 @@ main {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
     border: 1px solid rgba(65, 65, 65, 0.185);
-    padding: 50px;
+    padding: 90px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     backdrop-filter: blur(4px);
@@ -344,15 +344,17 @@ main {
 }
 
 .zona-perigo-container {
-    margin-top: 35px;
-    border-top: 1px solid #fee2e2;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    border-top: 1px solid #41414148;
     padding-top: 25px;
 }
 
 .zona-perigo-container h3 {
+    margin-top: 20px;
     color: #b41515;
-    margin-bottom: 8px;
-    font-size: 1.1em;
+    margin-bottom: 10px;
+    font-size: 1em;
 }
 
 .zona-perigo-container p {
