@@ -32,6 +32,11 @@
     <a class="navitens" href="homepage.html">Home</a>
     <a class="navitens" href="catalogo.html">Clientes</a>
     <a class="navitens" href="paginasobre.html" style="color:#3faf6e;">Sobre</a>
+
+    <!-- Botão de Alternância de Tema Limpo (Claro / Escuro) -->
+            <button id="btnTema" class="btn-tema-toggle">
+                <span id="textoTema">Tema Escuro</span>
+            </button>
     
     <!-- Botão de Login normal -->
     <button id="botaoLogin" onclick="window.location.href='login.html'" class="shiny-cta1">
@@ -228,6 +233,38 @@
             // SE NÃO ESTIVER LOGADO: Mostra o botão "Login" e esconde o ícone do perfil
             if (botaoLogin) botaoLogin.style.display = 'inline-flex';
             if (btnPerfil) btnPerfil.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnTema = document.getElementById('btnTema');
+        const textoTema = document.getElementById('textoTema');
+        const htmlElement = document.documentElement;
+
+        // Aplica o tema salvo anteriormente
+        const temaSalvo = localStorage.getItem('pj_theme');
+        if (temaSalvo === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            if (textoTema) textoTema.innerText = 'Tema Claro';
+        } else {
+            htmlElement.removeAttribute('data-theme');
+            if (textoTema) textoTema.innerText = 'Tema Escuro';
+        }
+
+        // Alterna o tema ao clicar
+        if (btnTema) {
+            btnTema.addEventListener('click', () => {
+                const atual = htmlElement.getAttribute('data-theme');
+                if (atual === 'dark') {
+                    htmlElement.removeAttribute('data-theme');
+                    localStorage.setItem('pj_theme', 'light');
+                    if (textoTema) textoTema.innerText = 'Tema Escuro';
+                } else {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('pj_theme', 'dark');
+                    if (textoTema) textoTema.innerText = 'Tema Claro';
+                }
+            });
         }
     });
     </script>
