@@ -192,7 +192,7 @@ main {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
     border: 1px solid rgba(65, 65, 65, 0.185);
-    padding: 80px;
+    padding: 90px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     backdrop-filter: blur(4px);
