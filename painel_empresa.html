@@ -60,7 +60,7 @@
         <div id="bannerAviso"></div>
 
         <!-- TOPO DE BEM-VINDO DA EMPRESA -->
-        <div class="bemvindotopo">
+        <div  style="margin-bottom: 20px;"  class="bemvindotopo">
             <div class="bemvindo-textos">
                 <h3>Bem-vindo de volta!</h3>
                 <h2 id="nomeEmpresaTopo">Painel do Contratante (Empresa)</h2>
@@ -72,7 +72,7 @@
         </div>
 
         <!-- BANNER DO CATÁLOGO FIXO -->
-        <div class="banner-catalogo-empresa">
+        <div  style="margin-bottom: 60px;" class="banner-catalogo-empresa">
             <div class="banner-catalogo-textos">
                 <h3>Encontre o prestador ideal</h3>
                 <p>Navegue no catálogo de MEIs verificados, veja portfólio e serviços, e solicite um contrato.</p>
@@ -88,7 +88,7 @@
         </div>
 
         <!-- CONTAINER DE ABAS PRINCIPAIS -->
-        <div class="container-abas-navegacao">
+        <div style="margin-bottom: 60px;" class="container-abas-navegacao">
             <button class="btn-aba-nav ativa" id="aba-btn-notificacoes"
                 onclick="mudarAba('notificacoes')">Notificações</button>
             <button class="btn-aba-nav" id="aba-btn-perfil" onclick="mudarAba('perfil')">Perfil</button>
@@ -99,8 +99,8 @@
         <!-- 1. NOTIFICAÇÕES -->
         <div id="secao-notificacoes" class="secao-aba" style="display: block;">
             <div class="secao-card-conteudo">
-                <h3 style="margin-bottom: 15px; color: #414141; font-size: 1.1em;">Notificações da Empresa</h3>
-                <ul id="listaNotifs" style="padding-left: 20px; color:#444; line-height: 1.6;"></ul>
+                <h3 style="margin-bottom: 15px; color: #3faf6e; font-size: 1.1em;">Notificações da Empresa</h3>
+                <ul id="listaNotifs" style="padding-left: 20px; color:#414141; line-height: 1.6;"></ul>
             </div>
         </div>
 
@@ -122,8 +122,8 @@
                         <input type="text" id="telefone" required placeholder="(00) 00000-0000">
                     </div>
                     <button type="submit" class="shiny-cta1"
-                        style="margin-top: 10px; width: auto; height: 42px; padding: 0 25px;">
-                        <span class="shiny-cta-content1">Salvar perfil da empresa</span>
+                        style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
+                        <span style="font-weight: 550;" class="shiny-cta-content1">Salvar perfil da empresa</span>
                     </button>
                 </form>
 
@@ -151,29 +151,28 @@
         </div>
 
     </main>
-
-    <!-- MODAL DE EXCLUSÃO DE CONTA (ESTILO CARD DE LOGIN) -->
+<!-- MODAL DE EXCLUSÃO DE CONTA -->
     <div id="modalExcluirConta" class="modal-overlay">
         <div class="modal-card-exclusao">
             <img class="logo-login" src="/icon/IconPJ.png" alt="Logo PJ Helper">
-            <h3 style="margin-bottom: 5px;">Sentiremos falta!</h3>
-            <p style="color: #414141; font-size: 0.85rem; margin-bottom: 40px; line-height: 1.4;">
+            <h3>Sentiremos falta!</h3>
+            <p class="texto-descritivo-exclusao">
                 Esta ação é <strong>irreversível</strong>. Todos os seus contratos, solicitações e dados do perfil serão apagados permanentemente.
             </p>
 
-            <div class="campo" style="margin-bottom: 10px; text-align: left;">
-                <label for="inputSenhaExclusao" style="font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; color: #444; display: block;">Digite sua senha atual:</label>
+            <div class="campo-exclusao">
+                <label for="inputSenhaExclusao">Digite sua senha atual:</label>
                 <div class="input-com-icone">
                     <span class="icone-input"><img src="/icon/key.png" alt=""></span>
-                    <input style="margin-bottom: 5px;" type="password" maxlength="150" id="inputSenhaExclusao" placeholder="Digite sua senha" oninput="validarSenhaExclusao()">
+                    <input type="password" maxlength="150" id="inputSenhaExclusao" placeholder="Digite sua senha" oninput="validarSenhaExclusao()">
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; gap: 15px; margin-top: 0px;">
+            <div class="botoes-container-exclusao">
                 <button type="button" onclick="fecharModalExclusao()" class="btn-cancelar-modal-exclusao">
                     Cancelar
                 </button>
-                <button type="button" id="btnConfirmarExclusaoFinal" onclick="executarExclusaoConta()" disabled class="shiny-cta2" style="width: 100%; margin-top: 0; opacity: 0.5; cursor: not-allowed; border: none;">
+                <button type="button" id="btnConfirmarExclusaoFinal" onclick="executarExclusaoConta()" disabled class="shiny-cta2 btn-excluir-modal">
                     <span class="shiny-cta-content2">
                         Sim, Excluir
                     </span>
