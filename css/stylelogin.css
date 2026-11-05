@@ -563,6 +563,129 @@ nav {
   transition: all 0.3s ease;
 }
 
+/* =========================================================
+   VARIÁVEIS DE TEMA (CLARO / ESCURO) - LOGIN
+========================================================= */
+:root {
+  --bg-color: #f4f7f5;
+  --text-color: #333333;
+  --text-muted: #414141;
+  --header-bg: rgba(255, 255, 255, 0.514);
+  --card-bg: #ffffff;
+  --card-border: rgba(65, 65, 65, 0.151);
+  --card-text: #0a0a0a;
+  --input-bg: #ffffff;
+  --input-border: #414141;
+  --input-text: #000000;
+  --verde-principal: #3faf6e;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --text-muted: #e0e0e0;
+  --header-bg: rgba(18, 18, 18, 0.85);
+  --card-bg: #1e1e1e;
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-text: #f1f1f1;
+  --input-bg: #161616;
+  --input-border: rgba(255, 255, 255, 0.2);
+  --input-text: #ffffff;
+  --verde-principal: #2e8b57;
+}
+
+/* Transições suaves de tema */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+  background-color: var(--header-bg);
+}
+
+[data-theme="dark"] .navitens {
+  color: #ffffff !important;
+}
+
+/* Película de fundo escura no modo escuro */
+[data-theme="dark"] .fundo-catalogo::after {
+  background: rgba(18, 18, 18, 0.92) !important;
+}
+
+/* Card de Login no modo escuro */
+[data-theme="dark"] .login-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .login-card h2,
+[data-theme="dark"] .login-card p,
+[data-theme="dark"] .login-card .campo label {
+  color: var(--card-text) !important;
+}
+
+/* Inputs do formulário no modo escuro */
+[data-theme="dark"] .input-com-icone input {
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--input-text) !important;
+}
+
+/* Ícones dos inputs visíveis e claros no modo escuro */
+[data-theme="dark"] .input-com-icone .icone-input img {
+  filter: brightness(0) invert(1) opacity(0.6) !important;
+}
+
+/* Botão de alternância de tema no header (Padronizado) */
+.btn-tema-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  width: 125px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--verde-principal) !important;
+}
+
+.btn-tema-toggle:active {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="dark"] .btn-tema-toggle {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .btn-tema-toggle:hover {
+  border-color: var(--verde-principal) !important;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 
 /*MEDIAAAAAAAAAAAAAAAAAAAAAA*/
 @media (max-width: 768px) {
