@@ -849,6 +849,53 @@ nav {
   --icone-filtro-custom: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%);
 }
 
+nav {
+  display: flex;
+  align-items: center;
+  gap: 18px; /* Reduzido ainda mais para eliminar o espaço excessivo */
+}
+
+.btn-tema-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  width: 125px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--verde-principal) !important;
+}
+
+.btn-tema-toggle:active {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Modo escuro perfeitamente integrado e com hover verde correto */
+[data-theme="dark"] .btn-tema-toggle {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .btn-tema-toggle:hover {
+  border-color: var(--verde-principal) !important;
+}
+
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #f1f1f1;
@@ -883,6 +930,27 @@ nav {
   filter: brightness(0) saturate(100%) invert(75%) sepia(30%) saturate(800%) hue-rotate(80deg) brightness(105%) contrast(90%) !important;
 }
 
+[data-theme="dark"] .footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important; /* Linha cinza divisória exclusiva do modo escuro */
+}
+
+/* No tema claro (padrão), os ícones do botão seguem a regra original ou ficam escuros */
+.sobrebutton .iconverde {
+  filter: brightness(0) saturate(100%) !important; /* Deixa os ícones pretos no tema claro */
+}
+
+/* No tema escuro, os ícones ficam totalmente brancos */
+[data-theme="dark"] .sobrebutton .iconverde {
+  filter: brightness(0) invert(1) !important; /* Deixa os ícones brancos no tema escuro */
+}
+
+[data-theme="dark"] .sobrebutton .iconverde {
+  filter: brightness(0) invert(1) !important;
+}
+
+[data-theme="dark"] .sobrebutton .iconverde {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(30%) saturate(800%) hue-rotate(80deg) brightness(105%) contrast(90%) !important;
+}
 
 [data-theme="dark"] .navitens {
   color: #ffffff !important;
