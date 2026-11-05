@@ -74,7 +74,7 @@
         <!-- BANNER DO CATÁLOGO FIXO -->
         <div  style="margin-bottom: 60px;" class="banner-catalogo-empresa">
             <div class="banner-catalogo-textos">
-                <h3>Encontre o prestador ideal</h3>
+                <h3 style="color: #111; font-size: 1.1em; font-weight: 600;">Encontre o prestador ideal</h3>
                 <p>Navegue no catálogo de MEIs verificados, veja portfólio e serviços, e solicite um contrato.</p>
             </div>
             <a href="catalogo.html" class="shiny-cta2"
@@ -99,7 +99,7 @@
         <!-- 1. NOTIFICAÇÕES -->
         <div id="secao-notificacoes" class="secao-aba" style="display: block;">
             <div class="secao-card-conteudo">
-                <h3 style="margin-bottom: 15px; color: #3faf6e; font-size: 1.1em;">Notificações da Empresa</h3>
+                <h3 style="margin-bottom: 15px;color: #3faf6e; font-size: 1.1em; font-weight: 500;">Notificações da Empresa</h3>
                 <ul id="listaNotifs" style="padding-left: 20px; color:#414141; line-height: 1.6;"></ul>
             </div>
         </div>
@@ -107,7 +107,7 @@
         <!-- 2. PERFIL EMPRESA -->
         <div id="secao-perfil" class="secao-aba" style="display: none;">
             <div class="secao-card-conteudo">
-                <h3 style="margin-bottom: 30px; color: #3faf6e; font-size: 1.2em;">Dados da Empresa</h3>
+                <h3 style="margin-bottom: 30px; color: #3faf6e; font-size: 1.1em; font-weight: 500;">Dados da Empresa</h3>
                 <form id="formPerfilEmpresa">
                     <div class="campo-form-empresa">
                         <label>Razão Social:</label>
@@ -122,7 +122,7 @@
                         <input type="text" id="telefone" required placeholder="(00) 00000-0000">
                     </div>
                     <button type="submit" class="shiny-cta1"
-                        style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
+                        style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px; ">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Salvar perfil da empresa</span>
                     </button>
                 </form>
@@ -140,12 +140,32 @@
             </div>
         </div>
 
-        <!-- 3. MEUS CONTRATOS E PROPOSTAS -->
+<!-- 3. MEUS CONTRATOS E PROPOSTAS -->
         <div id="secao-contratos" class="secao-aba" style="display: none;">
             <div class="secao-card-conteudo">
-                <h3 style="margin-bottom: 20px; color: #414141; font-size: 1.1em;">Minhas Solicitações & Reuniões</h3>
+                <h3 style="margin-bottom: 20px; color: #3faf6e; font-size: 1.1em; font-weight: 500;">Minhas Solicitações & Reuniões</h3>
                 <div id="listaContratos">
-                    <p style="color:#888;">Carregando solicitações...</p>
+                    <!-- EXEMPLO DO CARD ESTRUTURADO EM HTML PURO -->
+                    <div class="card-solicitacao-item">
+                        <div class="card-topo-linha">
+                            <h4 class="card-titulo-servico">Solicitação de Reunião / Proposta</h4>
+                            <span class="card-valor-servico">R$ 0,00</span>
+                        </div>
+                        
+                        <p class="card-texto-padrao"><strong>Descrição:</strong> contrato com o mei | Data: <span class="card-data-verde">2026-09-30T08:50</span></p>
+
+                        <p class="card-texto-padrao"><strong>Status:</strong> <strong style="text-transform:uppercase; color: #3faf6e;">CONCLUIDO</strong></p>
+
+                        <div class="card-bloco-meet">
+                            <strong style="color: #111; font-size: 0.95rem;">Reunião Virtual (Google Meet):</strong>
+                            <a href="https://meet.google.com/dmo-zjmr-puw" target="_blank" class="card-link-verde">Acessar link da reunião</a>
+                            <small style="color:#555; font-weight:600;">Data/Hora: 30/09/2026</small>
+                            
+                            <div style="display: flex; gap: 6px; align-items: center; margin-top: 2px;">
+                                <strong style="color: #555;">Link:</strong> <a href="https://meet.google.com/dmo-zjmr-puw" target="_blank" class="card-link-verde">https://meet.google.com/dmo-zjmr-puw</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
