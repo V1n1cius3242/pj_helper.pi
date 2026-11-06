@@ -2,16 +2,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #fafafa;
-    color: #111827;
+    background-color: #f5f5f5;
+    color: #2d3748;
 }
 
-/* HEADER FIXO DE PONTA A PONTA */
+/* HEADER FIXO DE PONTA A PONTA (MANTIDO INTACTO) */
 .header {
   height: 9vh;
   background-color: rgba(255, 255, 255, 0.514);
@@ -46,16 +45,7 @@ nav {
   font-weight: bold;
 }
 
-.shiny-cta1:hover {
-  transform: translateY(-4px);
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
-}
-
-.shiny-cta1:active {
-  transform: translateY(-1px);
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
-}
-
+/* BOTÕES SHINY-CTA (MANTIDOS INTACTOS) */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -135,6 +125,75 @@ nav {
   font-size: 15px;
 }
 
+.shiny-cta2 {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #10b918;
+  --bg-color-top: #1c2421;
+  --bg-color-bottom: #0a0a0a;
+
+  color: rgb(255, 255, 255);
+  isolation: isolate;
+  z-index: 1;
+  position: relative;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
+  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 99px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+}
+
+.shiny-cta2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shiny-cta2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 9s infinite;
+  z-index: 2;
+}
+
+.shiny-cta-content2 {
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  border-radius: 99px;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 15px;
+}
+
 @keyframes border-spin {
   0% { --gradient-angle: 0deg; }
   100% { --gradient-angle: 360deg; }
@@ -146,6 +205,7 @@ nav {
   100% { left: 200%; }
 }
 
+/* ESTRUTURA PRINCIPAL (MAX-WIDTH ADM) */
 main {
     margin-top: 9vh;
     min-height: 91vh;
@@ -156,56 +216,37 @@ main {
     margin-right: auto;
 }
 
-/* CARDS DE CONTEÚDO DAS SEÇÕES E BANNERS DA PÁGINA (ESTÉTICA DO CATÁLOGO) */
+/* BORDAS CINZA CLARO ESTÁTICAS E SEM HOVER DE BORDA */
+.bemvindotopo,
+.banner-catalogo-empresa,
+.secao-card-conteudo,
+.card-painel-item,
+.card-notificacao-adm {
+    background: #ffffff !important;
+    border: 1px solid #edf2f7 !important;
+    border-radius: 16px !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.02) !important;
+    transition: none !important;
+}
+
+.bemvindotopo:hover,
+.banner-catalogo-empresa:hover,
+.secao-card-conteudo:hover,
+.card-painel-item:hover,
+.card-notificacao-adm:hover {
+    border-color: #edf2f7 !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.02) !important;
+    transform: none !important;
+}
+
+/* 1. SEÇÃO BEM-VINDO (ESTÉTICA ADM) */
 .bemvindotopo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.9);
     padding: 25px 30px;
-    border-radius: 20px;
-    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(8px);
     width: 100%;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.banner-catalogo-empresa {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
-    padding: 24px 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.secao-card-conteudo {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    border: 1px solid rgba(63, 175, 110, 0.25); /* Linha levemente esverdeada igual ao editar perfil */
-    padding: 80px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.bemvindotopo:hover,
-.banner-catalogo-empresa:hover,
-.secao-card-conteudo:hover {
-    box-shadow: 0 16px 32px rgba(63, 175, 110, 0.08);
-    border-color: rgba(63, 175, 110, 0.4);
 }
 
 .bemvindo-textos {
@@ -216,7 +257,7 @@ main {
 }
 
 .bemvindotopo h3 {
-    color: #3faf6e; /* Cor #3faf6e */
+    color: #3faf6e !important;
     font-weight: 550;
     font-size: 1.0rem;
     order: 1;
@@ -255,11 +296,6 @@ main {
     font-weight: 500;
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
-    transition: background 0.2s;
-}
-
-.buttonsair:hover {
-    background-color: #c5221f40;
 }
 
 .perfil-icon {
@@ -270,6 +306,29 @@ main {
     filter: brightness(0) invert(1);
 }
 
+/* 2. BANNER DO CATÁLOGO (ESTÉTICA ADM) */
+.banner-catalogo-empresa {
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.banner-catalogo-textos h3 {
+    font-size: 1.1em;
+    color: #111827;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.banner-catalogo-textos p {
+    font-size: 0.9em;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* 3. PÍLULAS DE NAVEGAÇÃO / ABAS (ESTÉTICA ADM) */
 .container-abas-navegacao {
     display: flex;
     background: #f0f2f5;
@@ -295,21 +354,114 @@ main {
 
 .btn-aba-nav.ativa {
     background: #ffffff;
-    color: #3faf6e; /* Cor #3faf6e */
+    color: #3faf6e !important;
     box-shadow: 0px 2px 6px rgba(0,0,0,0.06);
 }
 
-.banner-catalogo-textos h3 {
-    font-size: 1.25rem;
-    color: #111827;
-    font-weight: 700;
-    margin-bottom: 4px;
+/* DESAFOGANDO AS CAIXAS (PADDING PADRONIZADO ADM) */
+.secao-card-conteudo {
+    padding: 25px 30px !important;
+    margin-bottom: 25px;
 }
 
-.banner-catalogo-textos p {
-    font-size: 0.9em;
-    color: #4b5563;
-    line-height: 1.4;
+.titulo-secao-padrao {
+    margin-bottom: 20px;
+    color: #2d3748;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/* COMPONENTES DE NOTIFICAÇÃO (RÉPLICA DO ADM) */
+.header-notifs-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-notifs-linha h3 {
+    color: #2d3748;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.btn-marcar-lidas {
+    background: none;
+    border: none;
+    color: #3faf6e;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+}
+
+.card-notificacao-adm {
+    display: flex;
+    flex-direction: column;
+    padding: 18px 22px !important;
+    margin-bottom: 14px !important;
+}
+
+.notif-header-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.notif-titulo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.notif-mensagem-texto {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.notif-detalhes-empresa {
+    font-size: 0.82rem;
+    color: #718096;
+    background: #f7fafc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.notif-rodape-meta {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin-top: 6px;
+}
+
+.btn-expandir-notifs {
+    background: none;
+    border: none;
+    color: #3faf6e;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 15px auto 0 auto;
+    font-family: 'Montserrat', sans-serif;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.seta-expandir {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.seta-expandir.rotacionada {
+    transform: rotate(180deg);
 }
 
 /* FORMULÁRIO DO PERFIL EMPRESA */
@@ -322,86 +474,101 @@ main {
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #414141;
+    color: #4a5568;
     margin-bottom: 6px;
 }
 
 .campo-form-empresa input {
     width: 100%;
-    padding: 13px 16px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
     font-size: 0.95rem;
     font-family: 'Montserrat', sans-serif;
     outline: none;
     background-color: #ffffff;
-    transition: all 0.3s ease-in-out;
 }
 
-.campo-form-empresa input:hover,
 .campo-form-empresa input:focus {
-    border-color: #3faf6e !important; /* Cor #3faf6e */
-    box-shadow: 0 0 6px rgba(63, 175, 110, 0.4) !important; /* Cor #3faf6e */
+    border-color: #3faf6e !important;
+    box-shadow: 0 0 0 3px rgba(63, 175, 110, 0.12) !important;
 }
 
 .zona-perigo-container {
-    margin-top: 50px;
-    margin-bottom: 25px;
-    border-top: 1px solid #41414148;
+    margin-top: 40px;
+    border-top: 1px solid #edf2f7;
     padding-top: 25px;
 }
 
 .zona-perigo-container h3 {
-    margin-top: 20px;
-    color: #b41515;
-    margin-bottom: 10px;
+    color: #e53e3e;
+    margin-bottom: 8px;
     font-size: 1em;
 }
 
 .zona-perigo-container p {
-    color: #414141;
-    font-size: 0.9em;
-    margin-bottom: 18px;
-    font-weight: 450;
+    color: #4a5568;
+    font-size: 0.88em;
+    margin-bottom: 16px;
+    line-height: 1.5;
 }
 
 .btn-acao-recusar {
     background: #fff5f5;
-    color: #b41515;
-    border: 1px solid #b41515;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    transition: background 0.6s;
-}
-
-.btn-acao-recusar:hover {
-    background: #ffd3d3;
-}
-
-.btn-acao-preto {
-    background: #1a202c;
-    color: #ffffff;
+    color: #e53e3e;
     border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    transition: background 0.2s;
 }
 
-.btn-acao-preto:hover {
-    background: #2d3748;
+/* CARDS E LISTAGEM DE SOLICITAÇÕES DO ADM */
+.card-painel-item {
+    padding: 22px 25px;
+    margin-bottom: 18px;
 }
 
-/* ==========================================================
-   MODAL DE EXCLUSÃO DE CONTA (MAPEAMENTO EXATO)
-   ========================================================== */
+.badge-status-adm {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-pendente-adm { background: #fefcbf; color: #d69e2e; }
+.badge-reuniao-adm { background: #ebf8ff; color: #3182ce; }
+.badge-ativo-adm { background: #c6f6d5; color: #22543d; }
+.badge-recusado-adm { background: #fff5f5; color: #e53e3e; }
+
+.card-item-valores-adm {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: #718096;
+    margin: 12px 0;
+}
+
+.box-meet-agendado-adm {
+    background: #f7fafc;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #4a5568;
+    margin-top: 12px;
+    border-left: 4px solid #3faf6e;
+}
+
+.card-link-verde-adm {
+    color: #3faf6e;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* MODAL DE EXCLUSÃO DE CONTA (MANTIDO INTACTO) */
 .modal-overlay {
   display: none;
   opacity: 0;
@@ -432,7 +599,7 @@ main {
   min-height: 520px;
   padding: 45px 35px;
   border-radius: 25px;
-  border: 0.10px solid #81818141;
+  border: 1px solid #edf2f7;
   text-align: center;
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
   transform: translateY(25px) scale(0.95);
@@ -504,25 +671,22 @@ main {
   height: 18px;
   object-fit: contain;
   filter: grayscale(100%) opacity(0.5);
-  transition: all 0.3s ease-in-out;
 }
 
 .input-com-icone input {
   width: 100%;
   padding: 13px 16px 13px 42px !important;
-  border: 1px solid #41414148;
+  border: 1px solid #edf2f7;
   border-radius: 20px;
   font-size: 0.9rem;
   font-family: 'Montserrat', sans-serif;
   outline: none;
   background-color: #ffffff;
-  transition: all 0.3s ease-in-out;
 }
 
-.input-com-icone input:hover,
 .input-com-icone input:focus {
-  border-color: #3faf6e; /* Cor #3faf6e */
-  box-shadow: 0 0 10px rgba(63, 175, 110, 0.4); /* Cor #3faf6e */
+  border-color: #3faf6e;
+  box-shadow: 0 0 0 3px rgba(63, 175, 110, 0.15);
 }
 
 .botoes-container-exclusao {
@@ -543,11 +707,6 @@ main {
   width: 48%;
   font-size: 0.9rem;
   font-family: 'Montserrat', sans-serif;
-  transition: all 0.3s ease;
-}
-.btn-cancelar-modal-exclusao:hover{
-  transform: translateY(-4px);  
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
 .btn-excluir-modal {
@@ -556,7 +715,6 @@ main {
   margin-top: 0;
   padding: 12px 20px;
   border-radius: 99px;
-  transition: all 0.5s;
 }
 
 #bannerAviso {
@@ -579,141 +737,7 @@ main {
     border: 1px solid #fecaca;
 }
 
-.shiny-cta2:hover {
-  transform: translateY(-4px);
-  box-shadow: rgba(20, 206, 61, 0.4) 0px 1px 1px inset, rgba(20, 206, 61, 0.4) 0px -2px 6px inset, rgba(20, 206, 61, 0.6) 0px 12px 24px -8px;
-}
-
-.shiny-cta2:active {
-  transform: translateY(-1px);
-  box-shadow: rgba(20, 206, 61, 0.3) 0px 1px 1px inset, rgba(20, 206, 61, 0.3) 0px -2px 6px inset, rgba(20, 206, 61, 0.4) 0px 8px 16px -6px;
-}
-
-.shiny-cta2 {
-  --gradient-angle: 0deg;
-  --gradient-angle-offset: 0deg;
-  --gradient-shine: #10b918;
-  --bg-color-top: #1c2421;
-  --bg-color-bottom: #0a0a0a;
-
-  color: rgb(255, 255, 255);
-  isolation: isolate;
-  z-index: 1;
-  position: relative;
-  padding: 10px 20px;
-  cursor: pointer;
-  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -2px 6px inset, rgba(0, 0, 0, 0.5) 0px 12px 24px -8px;
-  background: linear-gradient(var(--bg-color-top), var(--bg-color-bottom)) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0);
-  border-radius: 99px;
-  transition: box-shadow 0.3s, transform 0.3s;
-  animation: border-spin 2.5s linear infinite;
-  overflow: hidden;
-}
-
-.shiny-cta2::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 99px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
-  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
-  mask-image: linear-gradient(120deg,
-      transparent 30%,
-      rgba(0, 0, 0, 1) 48%,
-      rgba(0, 0, 0, 1) 52%,
-      transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.shiny-cta2::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.25),
-      transparent);
-  transform: skewX(-25deg);
-  animation: shimmer 9s infinite;
-  z-index: 2;
-}
-
-.shiny-cta-content2 {
-  z-index: 3;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  position: relative;
-  border-radius: 99px;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 15px;
-}
-/* ESTILO DOS CARDS DE SOLICITAÇÕES E REUNIÕES */
-.card-solicitacao-item {
-    border: 1px solid rgba(63, 175, 110, 0.25);
-    padding: 24px;
-    margin-bottom: 18px;
-    border-radius: 12px;
-    background: #ffffff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-}
-
-.card-topo-linha {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-.card-titulo-servico {
-    margin: 0;
-    color: #414141; 
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.card-valor-servico {
-    font-weight: 600;
-    color: #3faf6e;
-}
-
-.card-texto-padrao {
-    margin: 8px 0;
-    color: #555;
-    font-size: 0.95rem;
-}
-
-.card-data-verde {
-    color: #3faf6e;
-    font-weight: 600;
-}
-
-.card-bloco-meet {
-    margin: 15px 0 0 0;
-    padding: 20px 24px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.card-link-verde {
-    color: #3faf6e;
-    font-weight: 450;
-    text-decoration: underline;
-}
+/* FOOTER INTACTO DE PONTA A PONTA */
 .footer {
   position: relative;
   z-index: 10;
@@ -787,6 +811,9 @@ main {
   transition: all 0.3s ease;
 }
 
+/* ==========================================================
+   MEDIA QUERIES (RESPONSIVIDADE INTACTA)
+   ========================================================== */
 @media (max-width: 768px) { 
   .header { 
     padding: 0 5%; 
@@ -884,10 +911,6 @@ main {
       align-items: stretch;
       text-align: center;
       padding: 20px;
-  }
-
-  .banner-catalogo-empresa .shiny-cta1 {
-      width: 100% !important;
   }
 
   .footer { 
