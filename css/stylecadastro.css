@@ -586,6 +586,56 @@ nav {
 
 /* Atualização no stylecadastro.css */
 
+/* =========================================================
+   CORREÇÃO CIRÚRGICA DO MODAL DE CADASTRO
+========================================================= */
+
+/* Fundo da tela do modal com desfoque */
+#modalAvisoSucesso {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Card principal do modal (Garante zero bordas verdes externas) */
+#modalAvisoSucesso > div {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+  outline: none !important;
+}
+
+[data-theme="dark"] #modalAvisoSucesso > div {
+  background-color: #1e1e1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-theme="dark"] #modalAvisoSucesso h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] #modalAvisoSucesso p {
+  color: #e0e0e0 !important;
+}
+
+/* CAIXA INTERNA "IMPORTANTE:" - Mantém a listra verde apenas aqui */
+#modalAvisoSucesso div[style*="padding: 12px"] {
+  border-radius: 6px !important;
+  border-left: 4px solid #3faf6e !important;
+  background-color: #f8f9fa !important;
+}
+
+[data-theme="dark"] #modalAvisoSucesso div[style*="padding: 12px"] {
+  background-color: #161616 !important;
+  border-left: 4px solid #2e8b57 !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] #modalAvisoSucesso div[style*="padding: 12px"] p,
+[data-theme="dark"] #modalAvisoSucesso div[style*="padding: 12px"] strong {
+  color: #f1f1f1 !important;
+}
+
 .contbox {
   background: var(--card-bg) !important;
   color: var(--card-text);

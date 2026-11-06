@@ -15,12 +15,22 @@
         }
  
         function mostrarAviso(msg, ehErro = false) {
-            const b = document.getElementById('bannerAviso');
-            b.innerText = msg;
-            b.className = ehErro ? 'aviso-erro' : 'aviso-sucesso';
-            b.style.display = 'block';
-            setTimeout(() => b.style.display = 'none', 5000);
-        }
+    const banner = document.getElementById('bannerAviso');
+    if (!banner) return;
+
+    banner.innerText = msg;
+    banner.className = ehErro ? 'erro' : 'sucesso';
+    banner.style.display = 'block';
+    banner.style.opacity = '1';
+
+    // Some sozinho após 4 segundos com transição suave
+    setTimeout(() => {
+        banner.style.opacity = '0';
+        setTimeout(() => {
+            banner.style.display = 'none';
+        }, 300);
+    }, 4000);
+}
  
         async function carregarCatalogo() {
             const container = document.getElementById('gridCatalogo');
@@ -194,22 +204,27 @@ function filtrarCatalogo() {
  
     exibirCatalogo(filtrados);
 }
-        // MODAL PROPOSTA
+       // MODAL PROPOSTA (Com card flutuante moderno)
         function abrirModal(meiUsuarioId, nomeMei) {
             if (!user) {
-                alert('Você precisa estar logado como Empresa para enviar uma proposta!');
-                window.location.href = 'login.html';
+                mostrarAviso('Você precisa estar logado como Empresa para enviar uma proposta!', true);
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
                 return;
             }
- 
+
             if (user.tipo !== 'empresa') {
-                alert('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!');
+                mostrarAviso('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!', true);
                 return;
             }
- 
+
             document.getElementById('modal_mei_usuario_id').value = meiUsuarioId;
             document.getElementById('modalNomeMei').innerText = 'Para: ' + nomeMei;
-            document.getElementById('modalProposta').style.display = 'flex';
+
+            const modal = document.getElementById('modalProposta');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('ativo');
+            }, 10);
         }
  
         function fecharModal() {

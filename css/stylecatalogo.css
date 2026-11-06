@@ -268,7 +268,7 @@ nav {
   background: #111827;
   color: #ffffff;
   border-color: #111827;
-  font-weight: 600;
+  font-weight: 500;
 }
 /* GRID DE CARDS */
 .grid-3 {
@@ -705,6 +705,260 @@ nav {
   background-color: #333;
   border-radius: 2px;
   transition: all 0.3s ease;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Botão de alternância de tema no header (Padronizado) */
+.btn-tema-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  width: 125px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--verde-principal) !important;
+}
+
+.btn-tema-toggle:active {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/*FILTRO DE SERVIÇO - Fixado para não pular */
+.pill-btn {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pill-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.pill-btn.active,
+.pill-btn:active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+  font-weight: 500;
+}
+
+/* =========================================================
+   VARIÁVEIS DE TEMA E MODO ESCURO PADRONIZADO (CATÁLOGO)
+========================================================= */
+:root {
+  --bg-color: #fafafa;
+  --text-color: #111827;
+  --text-muted: #414141;
+  --header-bg: rgba(255, 255, 255, 0.514);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(65, 65, 65, 0.12);
+  --card-text: #111827;
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
+  --input-text: #111827;
+  --verde-principal: #3faf6e;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --text-muted: #e0e0e0;
+  --header-bg: rgba(18, 18, 18, 0.85);
+  --card-bg: rgba(30, 30, 30, 0.85); /* Efeito vidro translúcido elegante */
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-text: #ffffff;
+  --input-bg: #1a1a1a;
+  --input-border: rgba(255, 255, 255, 0.15);
+  --input-text: #ffffff;
+  --verde-principal: #2e8b57;
+}
+
+body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+  background-color: var(--header-bg) !important;
+}
+
+[data-theme="dark"] .navitens {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .header-topo h2 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .header-topo small {
+  color: #a1a1a1 !important;
+}
+
+/* Ajuste das Pills no Dark Mode */
+[data-theme="dark"] .pill-btn {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .pill-btn.active,
+[data-theme="dark"] .pill-btn:active {
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-color: #2e8b57 !important;
+}
+
+/* Input de Busca no Dark Mode */
+[data-theme="dark"] .filtros-container input {
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--input-text) !important;
+}
+
+/* Cards MEI no Dark Mode (Com efeito vidro translúcido) */
+[data-theme="dark"] .card-mei {
+  background: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .card-mei h4 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .card-mei p,
+[data-theme="dark"] .card-mei small,
+[data-theme="dark"] .card-mei strong {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .badge-cat {
+  background: #161616 !important;
+  color: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+}
+
+/* Modais no Dark Mode */
+[data-theme="dark"] .modal-content {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-bloco-texto {
+  background-color: #161616 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .modal-servico-card {
+  background: #161616 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] #formModalProposta input,
+[data-theme="dark"] #formModalProposta textarea {
+  background-color: #161616 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   CARD DE AVISO FLUTUANTE (SUBSTITUTO MODERNO DO ALERT)
+========================================================= */
+#bannerAviso {
+  display: none;
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 99999;
+  min-width: 320px;
+  max-width: 420px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: slideInAviso 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  transition: opacity 0.3s ease;
+}
+
+#bannerAviso.sucesso {
+  background: rgba(220, 252, 231, 0.95);
+  color: #166534;
+  border: 1px solid rgba(187, 247, 208, 0.8);
+  border-left: 5px solid #10b981;
+}
+
+#bannerAviso.erro {
+  background: rgba(254, 226, 226, 0.95);
+  color: #991b1b;
+  border: 1px solid rgba(254, 202, 202, 0.8);
+  border-left: 5px solid #ef4444;
+}
+
+[data-theme="dark"] #bannerAviso.sucesso {
+  background: rgba(20, 83, 45, 0.95);
+  color: #dcfce7;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-left: 5px solid #22c55e;
+}
+
+[data-theme="dark"] #bannerAviso.erro {
+  background: rgba(127, 29, 29, 0.95);
+  color: #fee2e2;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-left: 5px solid #ef4444;
+}
+
+@keyframes slideInAviso {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 768px) {

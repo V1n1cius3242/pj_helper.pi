@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function() {
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,6 +40,10 @@
             <a class="navitens" href="homepage.html">Home</a>
             <a class="navitens" href="catalogo.html" style="color:#3faf6e;">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
+
+             <button id="btnTema" class="btn-tema-toggle">
+                <span id="textoTema">Tema Escuro</span>
+            </button>
 
             <!-- Botão de Login normal -->
             <button id="botaoLogin" onclick="window.location.href='login.html'" class="shiny-cta1">
@@ -205,9 +217,34 @@
 
     <!-- Script externo do catálogo -->
     <script src="./js/scriptCAT.js"></script>
-
     <!-- Script inline unificado para gerir os modais, botões e submissões -->
     <script>
+         document.addEventListener('DOMContentLoaded', () => {
+            const btnTema = document.getElementById('btnTema');
+            const textoTema = document.getElementById('textoTema');
+            const htmlElement = document.documentElement;
+
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                if (textoTema) textoTema.innerText = 'Tema Claro';
+            } else {
+                if (textoTema) textoTema.innerText = 'Tema Escuro';
+            }
+
+            if (btnTema) {
+                btnTema.addEventListener('click', () => {
+                    const atual = htmlElement.getAttribute('data-theme');
+                    if (atual === 'dark') {
+                        htmlElement.removeAttribute('data-theme');
+                        localStorage.setItem('pj_theme', 'light');
+                        if (textoTema) textoTema.innerText = 'Tema Escuro';
+                    } else {
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('pj_theme', 'dark');
+                        if (textoTema) textoTema.innerText = 'Tema Claro';
+                    }
+                });
+            }
+        });
         // MODAL SABER MAIS
         function abrirModalSaberMais(nome, elementoId) {
             document.getElementById('modalSubtituloSaberMais').innerText = 'Prestador: ' + nome;
@@ -260,16 +297,16 @@
             }, 300);
         }
 
-        // MODAL PROPOSTA
+        // MODAL PROPOSTA (Com card flutuante moderno)
         function abrirModal(meiUsuarioId, nomeMei) {
             if (!user) {
-                alert('Você precisa estar logado como Empresa para enviar uma proposta!');
-                window.location.href = 'login.html';
+                mostrarAviso('Você precisa estar logado como Empresa para enviar uma proposta!', true);
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
                 return;
             }
 
             if (user.tipo !== 'empresa') {
-                alert('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!');
+                mostrarAviso('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!', true);
                 return;
             }
 
