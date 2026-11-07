@@ -950,6 +950,46 @@ body {
   border-left: 5px solid #ef4444;
 }
 
+/* =========================================================
+   CORREÇÃO COMPLETA DE TEXTOS E LABELS NOS MODAIS (DARK MODE)
+========================================================= */
+[data-theme="dark"] #modalSaberMais strong,
+[data-theme="dark"] #modalSaberMais span,
+[data-theme="dark"] #modalSaberMais label {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] #modalSaberMais .linha-modal {
+  border-top: #2a2a2a !important;
+}
+ 
+[data-theme="dark"] #modalSaberMais .modal-bloco-texto {
+  background-color: #161616 !important;
+  border-color:rgba(255, 255, 255, 0.15) !important;
+  color: #f1f1f1 !important;
+}
+ 
+[data-theme="dark"] #modalSaberMais .btn-cancelar-modal {
+  background: #2a2a2a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+ 
+[data-theme="dark"] #modalSaberMais .btn-cancelar-modal:hover {
+  background: #3a3a3a !important;
+} 
+ 
+/* Garante o formulário de proposta também caso abra depois */
+[data-theme="dark"] #formModalProposta label {
+  color: #e0e0e0 !important;
+}
+ 
+[data-theme="dark"] #formModalProposta input::placeholder,
+[data-theme="dark"] #formModalProposta textarea::placeholder {
+  color: #888888 !important;
+}
+ 
+
 @keyframes slideInAviso {
   from {
     opacity: 0;
