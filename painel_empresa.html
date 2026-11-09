@@ -54,7 +54,7 @@
             <a class="navitens" href="catalogo.html">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
 
-               <!-- Botão de Alternância de Tema (Sol e Lua) -->
+            <!-- Botão de Alternância de Tema (Sol e Lua) -->
             <button id="btnTema" class="btn-tema-toggle" title="Alternar Tema">
                 <div class="theme-icon-container">
                     <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -72,10 +72,13 @@
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </div>
+            </button>
 
-            <button id="linkLoginPainel" onclick="window.location.href='painel_empresa.html'" class="shiny-cta1"></button>
-                <span class="shiny-cta-content1">
-                    <img src="/icon/perfil.png" class="perfil-icon" alt="">
+            <!-- Botão do Ícone de Perfil -->
+            <button id="linkLoginPainel" onclick="window.location.href='painel_empresa.html'" class="shiny-cta1"
+                style="width: 85px; height: 38px; padding: 0 15px; align-items: center; justify-content: center;">
+                <span class="shiny-cta-content1" style="display: inline-flex; align-items: center; justify-content: center;">
+                    <img src="/icon/perfil.png" class="perfil-icon" alt="" style="width: 15px; height: auto; filter: brightness(0) invert(1);">
                 </span>
             </button>
         </nav>
@@ -170,8 +173,7 @@
             </div>
 
             <!-- Bloco 2: Zona de Perigo / Exclusão de Conta (Embaixo, isolado) -->
-            <div class="secao-card-conteudo"
-                style="border: 1px solid #edf2f7 !important; background-color: #ffff !important;">
+            <div class="secao-card-conteudo">
                 <div class="zona-perigo-container" style="margin-top: 0; border-top: none; padding-top: 0;">
                     <h3>Apagar Perfil</h3>
                     <p>
@@ -246,8 +248,9 @@
         </section>
     </footer>
 
-    <script src="./js/scriptEMP.js">
-       document.addEventListener('DOMContentLoaded', () => {
+    <script src="./js/scriptEMP.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
         const btnTema = document.getElementById('btnTema');
         const textoTema = document.getElementById('textoTema');
         const htmlElement = document.documentElement;

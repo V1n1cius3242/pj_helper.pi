@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/stylepainel_admin.css">
-    <link rel="shortcut icon" href="/icon/IconPJ.png">
-
-    <title>PJ Helper - Administrador</title>
     <script>
+       (function () {
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
         (function () {
             try {
                 const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
@@ -27,6 +25,14 @@
             }
         })();
     </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/stylepainel_admin.css">
+    <link rel="shortcut icon" href="/icon/IconPJ.png">
+
+    <title>PJ Helper - Administrador</title>
 </head>
 
 <body>
@@ -44,6 +50,27 @@
             <a class="navitens" href="homepage.html">Home</a>
             <a class="navitens" href="catalogo.html">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
+
+            <!-- Botão de Alternância de Tema (Sol e Lua) -->
+            <button id="btnTema" class="btn-tema-toggle" title="Alternar Tema">
+                <div class="theme-icon-container">
+                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <line x1="12" y1="2" x2="12" y2="4"></line>
+                        <line x1="12" y1="20" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line>
+                        <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="4" y2="12"></line>
+                        <line x1="20" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
+                        <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
+                    </svg>
+                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </div>
+            </button>
+
             <button id="linkLoginPainel" class="shiny-cta1">
                 <span class="shiny-cta-content1">
                   <img src="/icon/perfil.png" class="perfil-icon" alt="">
@@ -202,6 +229,32 @@
             if (ativa) ativa.style.display = 'block';
             if (btnAtivo) btnAtivo.classList.add('ativa');
         }
+
+        // Lógica de alternância de tema no Administrador
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnTema = document.getElementById('btnTema');
+            const htmlElement = document.documentElement;
+
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                htmlElement.setAttribute('data-theme', 'dark');
+            } else {
+                htmlElement.removeAttribute('data-theme');
+            }
+
+            if (btnTema) {
+                btnTema.addEventListener('click', () => {
+                    const atual = htmlElement.getAttribute('data-theme');
+                    if (atual === 'dark') {
+                        htmlElement.removeAttribute('data-theme');
+                        localStorage.setItem('pj_theme', 'light');
+                    } else {
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('pj_theme', 'dark');
+                    }
+                });
+            }
+        });
     </script>
     <script src="./js/scriptADM.js"></script>
 </body>
