@@ -110,18 +110,28 @@ function mascaraCNPJ(input) {
 
     input.value = v;
 };
-
+// --- ANIMAÇÃO DE ENTRADA DO CARD ---
 const observador = new IntersectionObserver((entradas) => {
   entradas.forEach((entrada) => {
-    if (entrada.isIntersecting) {
+    if (entrada.isIntersecting || entrada.boundingClientRect.top < window.innerHeight) {
       entrada.target.classList.add('animar-ao-rolar');
       observador.unobserve(entrada.target);
     }
   });
 }, { 
-  rootMargin: '0px 0px -10% 0px' 
+  rootMargin: '100px 0px 0px 0px' // Margem expandida para capturar o topo imediatamente
 });
 
+document.querySelectorAll('.escondido').forEach((elemento) => {
+  observador.observe(elemento);
+  
+  // Verificação de segurança: se o elemento já estiver visível no carregamento, anima na hora
+  const rect = elemento.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    elemento.classList.add('animar-ao-rolar');
+    observador.unobserve(elemento);
+  }
+});
 document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
 // --- ANIMAÇÃO DE PONTOS CINZAS ESTÁTICOS + ESTRELAS VERDES LENTAS (IGUAL À PÁGINA SOBRE) ---
 const canvas = document.getElementById('bg-dots');
@@ -194,4 +204,5 @@ if (canvas) {
 
     resize();
     requestAnimationFrame(animate);
+    
 }
