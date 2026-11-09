@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <script>
+        (function() {
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="./css/stylelogin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/styleesqueci-senha.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
-    
+
     <title>PJ Helper - Recuperar Senha</title>
 </head>
+
 <body>
 
     <!-- HEADER / NAVBAR -->
@@ -30,60 +40,73 @@
             <a class="navitens" href="homepage.html">Home</a>
             <a class="navitens" href="catalogo.html">Clientes</a>
             <a class="navitens" href="paginasobre.html">Sobre</a>
+            <button id="btnTema" class="btn-tema-toggle">
+                <span id="textoTema">Tema Escuro</span>
+            </button>
             <button onclick="window.location.href='login.html'" class="shiny-cta1">
                 <span class="shiny-cta-content1">Login</span>
             </button>
         </nav>
     </div>
 
-    <!-- MAIN CONTEÚDO DE RECUPERAÇÃO -->
-    <main style="display: flex; justify-content: center; align-items: center; min-height: 85vh; padding: 20px;">
-        <div style="background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); width: 100%; max-width: 420px; text-align: center;">
-            
-            <img src="/icon/IconPJ.png" alt="PJ Helper" style="width: 60px; margin-bottom: 15px;">
-            <h2 style="color: #333; font-weight: 700; margin-bottom: 8px;">Recuperar Senha</h2>
-            <p id="instrucaoTexto" style="color: #666; font-size: 0.9em; margin-bottom: 25px; line-height: 1.4;">
-                Digita o e-mail associado à tua conta PJ Helper para receberes o código de verificação.
-            </p>
+    <!-- CANVAS DE FUNDO COM PONTOS INTERATIVOS -->
+    <canvas id="bg-dots"></canvas>
 
-            <!-- MENSAGEM DE AVISO -->
-            <div id="mensagemAviso" style="display: none; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.88em; font-weight: 600;"></div>
+    <!-- MAIN CONTEÚDO DE RECUPERAÇÃO CENTRALIZADO -->
+    <main class="container" style="margin-top: 9vh; min-height: 91vh;">
+        <section class="login-section escondido" style="margin-top: 4%; min-height: 75vh;">
+            <div class="login-card escondido">
+                
+                <img class="logo-login" src="/icon/IconPJ.png" alt="PJ Helper">
+                <h2>Recuperar Senha</h2>
+                <p style="margin-bottom: 13vh;" id="instrucaoTexto">
+                    Digite o e-mail associado à sua conta PJ Helper para receber o código de verificação.
+                </p>
 
-            <form id="formRecuperacao" onsubmit="processarFormulario(event)">
-                <!-- CAMPO 1: E-MAIL -->
-                <div style="text-align: left; margin-bottom: 15px;">
-                    <label for="email" style="display: block; font-size: 0.85em; font-weight: 600; color: #444; margin-bottom: 6px;">E-mail Cadastrado:</label>
-                    <input type="email" id="email" placeholder="seuemail@exemplo.com" required 
-                        style="width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-size: 0.95em; outline: none;">
-                </div>
+                <!-- MENSAGEM DE AVISO -->
+                <div id="mensagemAviso" style="display: none; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.88em; font-weight: 600;"></div>
 
-                <!-- CAMPOS DA ETAPA 2 (Iniciam escondidos) -->
-                <div id="etapa2Campos" style="display: none;">
-                    <div style="text-align: left; margin-bottom: 15px;">
-                        <label for="codigo" style="display: block; font-size: 0.85em; font-weight: 600; color: #444; margin-bottom: 6px;">Código de Verificação (6 dígitos):</label>
-                        <input type="text" id="codigo" maxlength="6" placeholder="123456"
-                            style="width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-size: 1em; text-align: center; font-weight: 700; letter-spacing: 4px; outline: none;">
+                <form id="formRecuperacao" onsubmit="processarFormulario(event)">
+                    <!-- CAMPO 1: E-MAIL -->
+                    <div class="campo">
+                        <label for="email">E-mail Cadastrado:</label>
+                        <div class="input-com-icone">
+                            <span class="icone-input"><img src="/icon/envelope.png" alt=""></span>
+                            <input type="email" id="email" placeholder="seu@email.com" required>
+                        </div>
                     </div>
 
-                    <div style="text-align: left; margin-bottom: 20px;">
-                        <label for="novaSenha" style="display: block; font-size: 0.85em; font-weight: 600; color: #444; margin-bottom: 6px;">Nova Senha:</label>
-                        <input type="password" id="novaSenha" placeholder="Digita a tua nova senha"
-                            style="width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: 'Montserrat', sans-serif; font-size: 0.95em; outline: none;">
+                    <!-- CAMPOS DA ETAPA 2 (Iniciam escondidos) -->
+                    <div id="etapa2Campos" style="display: none;">
+                        <div class="campo">
+                            <label for="codigo">Código de Verificação (6 dígitos):</label>
+                            <input type="text" id="codigo" maxlength="6" placeholder="123456"
+                                style="text-align: center; font-weight: 700; letter-spacing: 4px;">
+                        </div>
+
+                        <div class="campo">
+                            <label for="novaSenha">Nova Senha:</label>
+                            <div class="input-com-icone">
+                                <span class="icone-input"><img src="/icon/key.png" alt=""></span>
+                                <input type="password" id="novaSenha" placeholder="Digite sua nova senha">
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- BOTÃO PRINCIPAL (PADRÃO LOGIN SHINY-CTA2) -->
+                    <button type="submit" id="btnAcao" class="shiny-cta2" style="width: 220px; margin: 15px auto 10px auto; display: block;">
+                        <span id="btnTexto" class="shiny-cta-content2">Enviar Código</span>
+                    </button>
+                </form>
+
+                <!-- LINK VOLTAR PARA LOGIN PADRONIZADO -->
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="login.html" style="color: #3faf80; font-weight: bold; text-decoration: none; font-size: 0.88rem;">
+                        ← Voltar para o Login
+                    </a>
                 </div>
-
-                <!-- BOTÃO PRINCIPAL -->
-                <button type="submit" id="btnAcao" class="shiny-cta1" style="width: 100%; padding: 12px; margin-top: 5px; cursor: pointer; border: none;">
-                    <span id="btnTexto" class="shiny-cta-content1">Enviar Código de Recuperação</span>
-                </button>
-            </form>
-
-            <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                <a href="login.html" style="color: #28a745; text-decoration: none; font-size: 0.88em; font-weight: 600;">
-                    ← Voltar para o Login
-                </a>
             </div>
-        </div>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -102,8 +125,115 @@
         </section>
     </footer>
 
-    <!-- SCRIPT DE MANIPULAÇÃO DAS 2 ETAPAS -->
+    <!-- SCRIPT DE TEMA, ANIMAÇÃO E RECUPERAÇÃO -->
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnTema = document.getElementById('btnTema');
+            const textoTema = document.getElementById('textoTema');
+            const htmlElement = document.documentElement;
+
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                if (textoTema) textoTema.innerText = 'Tema Claro';
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                if (textoTema) textoTema.innerText = 'Tema Escuro';
+            }
+
+            if (btnTema) {
+                btnTema.addEventListener('click', () => {
+                    const atual = htmlElement.getAttribute('data-theme');
+                    if (atual === 'dark') {
+                        htmlElement.removeAttribute('data-theme');
+                        localStorage.setItem('pj_theme', 'light');
+                        if (textoTema) textoTema.innerText = 'Tema Escuro';
+                    } else {
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('pj_theme', 'dark');
+                        if (textoTema) textoTema.innerText = 'Tema Claro';
+                    }
+                });
+            }
+        });
+
+        const observador = new IntersectionObserver((entradas) => {
+          entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+              entrada.target.classList.add('animar-ao-rolar');
+              observador.unobserve(entrada.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px' });
+
+        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+
+        const canvas = document.getElementById('bg-dots');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let dots = [];
+            const spacing = 55;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                initDots();
+            }
+
+            function initDots() {
+                dots = [];
+                for (let x = 25; x < width; x += spacing) {
+                    for (let y = 25; y < height; y += spacing) {
+                        dots.push({
+                            x: x,
+                            y: y,
+                            isGlowing: Math.random() < 0.25,
+                            glowSpeed: (0.001 + Math.random() * 0.0025) * 0.5,
+                            glowOffset: Math.random() * Math.PI * 2
+                        });
+                    }
+                }
+            }
+
+            window.addEventListener('resize', resize);
+
+            function animate(timestamp) {
+                ctx.clearRect(0, 0, width, height);
+
+                dots.forEach(dot => {
+                    ctx.beginPath();
+                    ctx.arc(dot.x, dot.y, 1.1, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(160, 170, 180, 0.4)';
+                    ctx.fill();
+
+                    if (dot.isGlowing) {
+                        let wave = Math.sin(timestamp * dot.glowSpeed + dot.glowOffset);
+                        let opacity = (wave + 1) / 2;
+
+                        if (opacity > 0.65) {
+                            let intensity = (opacity - 0.65) / 0.35;
+
+                            ctx.beginPath();
+                            ctx.arc(dot.x, dot.y, 3.2, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(82, 183, 136, ${intensity * 0.15})`;
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(82, 183, 136, ${intensity * 0.85})`;
+                            ctx.fill();
+                        }
+                    }
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            requestAnimationFrame(animate);
+        }
+
         let etapaAtual = 1;
 
         function exibirMensagem(texto, ehErro = false) {
@@ -130,16 +260,15 @@
             const btnTexto = document.getElementById('btnTexto');
 
             if (etapaAtual === 1) {
-                // ETAPA 1: SOLICITAR CÓDIGO
                 const email = emailInput.value.trim();
                 if (!email) {
-                    exibirMensagem('Por favor, digita o teu e-mail!', true);
+                    exibirMensagem('Por favor, digite o seu e-mail!', true);
                     return;
                 }
 
                 btnAcao.disabled = true;
                 btnAcao.style.opacity = '0.7';
-                exibirMensagem('A enviar código para o teu e-mail...');
+                exibirMensagem('Enviando código para o seu e-mail...');
 
                 try {
                     const response = await fetch('http://localhost:3000/esqueci-senha', {
@@ -151,21 +280,19 @@
                     const dados = await response.json();
 
                     if (response.ok) {
-                        exibirMensagem('Código enviado com sucesso! Verifica o teu e-mail.');
+                        exibirMensagem('Código enviado com sucesso! Verifique seu e-mail.');
                         
-                        // Transiciona a tela para a Etapa 2
                         etapaAtual = 2;
                         emailInput.readOnly = true;
-                        emailInput.style.backgroundColor = '#f5f5f5';
+                        emailInput.style.backgroundColor = 'var(--input-bg)';
                         
                         document.getElementById('etapa2Campos').style.display = 'block';
-                        document.getElementById('instrucaoTexto').innerText = 'Insere o código de 6 dígitos que enviámos para o teu e-mail e define a tua nova senha.';
+                        document.getElementById('instrucaoTexto').innerText = 'Insira o código de 6 dígitos enviado para o seu e-mail e defina sua nova senha.';
                         
                         btnTexto.innerText = 'Redefinir Senha';
                         btnAcao.disabled = false;
                         btnAcao.style.opacity = '1';
 
-                        // Ativa obrigatoriedade dos novos campos
                         document.getElementById('codigo').required = true;
                         document.getElementById('novaSenha').required = true;
 
@@ -181,19 +308,18 @@
                 }
 
             } else if (etapaAtual === 2) {
-                // ETAPA 2: REDEFINIR SENHA
                 const email = emailInput.value.trim();
                 const codigo = document.getElementById('codigo').value.trim();
                 const novaSenha = document.getElementById('novaSenha').value;
 
                 if (!codigo || !novaSenha) {
-                    exibirMensagem('Preenche o código e a nova senha!', true);
+                    exibirMensagem('Preencha o código e a nova senha!', true);
                     return;
                 }
 
                 btnAcao.disabled = true;
                 btnAcao.style.opacity = '0.7';
-                exibirMensagem('A redefinir a tua senha...');
+                exibirMensagem('Redefinindo sua senha...');
 
                 try {
                     const response = await fetch('http://localhost:3000/redefinir-senha', {
@@ -205,7 +331,7 @@
                     const dados = await response.json();
 
                     if (response.ok) {
-                        exibirMensagem('Senha redefinida com sucesso! A redirecionar para o login...');
+                        exibirMensagem('Senha redefinida com sucesso! Redirecionando para o login...');
                         setTimeout(() => {
                             window.location.href = 'login.html';
                         }, 2000);
@@ -223,4 +349,5 @@
         }
     </script>
 </body>
+
 </html>
