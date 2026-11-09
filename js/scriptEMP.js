@@ -299,13 +299,20 @@ async function carregarContratos() {
 
             const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
 
-            const dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
-
             const statusBruto = (c.status || 'pendente').trim().toLowerCase();
 
             let badgeClass = 'badge-pendente-adm';
-
             let badgeTexto = '• Pendente';
+            let dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
+            let blocoRodape = linkMeet ? `
+<div class="box-meet-agendado-adm" style="background: #f7fafc; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #4a5568; margin-top: 12px; border-left: 4px solid #3faf6e;">
+<strong style="color: #2d3748; display: block; margin-bottom: 4px;">Reunião Virtual (Google Meet):</strong>
+<a href="${linkMeet}" target="_blank" class="card-link-verde-adm" style="color: #3faf6e; font-weight: 600; text-decoration: underline;">Acessar sala da reunião</a>
+<small style="color: #718096; margin-left: 8px;">(${dataFormatada})</small>
+</div>` : `
+<div style="background: #f7fafc; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #718096; margin-top: 12px; border-left: 4px solid #cbd5e0;">
+<em>Reunião ainda não agendada pelo administrador.</em>
+</div>`;
 
             if (statusBruto.includes('reuniao') || statusBruto.includes('reunião') || statusBruto.includes('agendado')) {
 
@@ -324,6 +331,11 @@ async function carregarContratos() {
                 badgeClass = 'badge-recusado-adm';
 
                 badgeTexto = '• Recusado';
+                dataFormatada = 'Não aplicável';
+                blocoRodape = `
+<div style="background: #fee2e2; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #991b1b; margin-top: 12px; border-left: 4px solid #e53e3e;">
+<em>Esta proposta foi recusada pelo MEI.</em>
+</div>`;
 
             }
 
@@ -334,7 +346,6 @@ async function carregarContratos() {
 <span class="badge-status-adm ${badgeClass}">${badgeTexto}</span>
 </div>
 <h3 style="font-size: 16px; color: #2d3748; margin-bottom: 8px; font-weight: 600;">
-
                         ${c.titulo_servico || 'Proposta de Serviço'}
 </h3>
 <p style="font-size: 14px; color: #4a5568; margin-bottom: 12px; line-height: 1.5;">
@@ -345,31 +356,16 @@ async function carregarContratos() {
 <span>Data da Conversa/Reunião: <strong>${dataFormatada}</strong></span>
 </div>
 
-                    ${linkMeet ? `
-<div class="box-meet-agendado-adm" style="background: #f7fafc; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #4a5568; margin-top: 12px; border-left: 4px solid #3faf6e;">
-<strong style="color: #2d3748; display: block; margin-bottom: 4px;">Reunião Virtual (Google Meet):</strong>
-<a href="${linkMeet}" target="_blank" class="card-link-verde-adm" style="color: #3faf6e; font-weight: 600; text-decoration: underline;">Acessar sala da reunião</a>
-<small style="color: #718096; margin-left: 8px;">(${dataFormatada})</small>
-</div>
+                    ${blocoRodape}
 
-                    ` : `
-<div style="background: #f7fafc; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #718096; margin-top: 12px; border-left: 4px solid #cbd5e0;">
-<em>Reunião ainda não agendada pelo administrador.</em>
-</div>
-
-                    `}
-
-                    ${linkPdf ? `
+                    ${linkPdf && !statusBruto.includes('recusado') ? `
 <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #edf2f7;">
 <a href="${linkPdf}" target="_blank" class="card-link-verde-adm" style="color: #3faf6e; font-weight: 600; text-decoration: underline; font-size: 13px;">
-
                                 Visualizar Contrato Digitalizado (PDF)
 </a>
 </div>
-
                     ` : ''}
 </div>
-
             `;
 
         }).join('');
