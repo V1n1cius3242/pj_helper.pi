@@ -127,38 +127,57 @@ async function carregarNotificacoesDinamicas() {
         let contratosEmpresa = resContratos.ok ? await resContratos.json() : [];
         let notifsDinamicas = [];
 
+        // 1. Tenta carregar a lista de perfis MEI para fazer o cruzamento dos dados sem dar erro 404
+        let mapaMeis = {};
+        try {
+            let resMeis = await fetch('http://localhost:3000/perfis-mei');
+            if (!resMeis.ok) resMeis = await fetch('http://localhost:3000/catalogo-completo');
+            
+            if (resMeis.ok) {
+                const listaMeis = await resMeis.json();
+                if (Array.isArray(listaMeis)) {
+                    listaMeis.forEach(m => {
+                        const idChave = m.usuario_id || m.id;
+                        if (idChave) mapaMeis[idChave] = m;
+                    });
+                }
+            }
+        } catch (eMei) {
+            console.warn('Não foi possível carregar a lista geral de MEIs:', eMei);
+        }
+
         if (Array.isArray(contratosEmpresa)) {
             for (let c of contratosEmpresa) {
                 const status = (c.status || '').trim().toLowerCase();
                 const tituloServico = c.titulo_servico || 'Serviço Proposto';
-                const valorServico = c.valor ? `R$ ${c.valor}` : 'A combinar';
+                const valorServico = c.valor ? `R$ ${parseFloat(c.valor).toFixed(2)}` : 'A combinar';
                 const temMeet = c.link_reuniao && c.link_reuniao.trim() !== '';
                 const dataReuniao = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : '';
 
-                // Tenta achar o ID do MEI em qualquer propriedade possível do objeto de contrato
-                let meiId = c.prestador_id || c.mei_id || c.usuario_mei_id || c.id_prestador || c.id_mei;
+                // Identifica o ID do MEI vindo do contrato
+                let meiId = c.mei_usuario_id || c.prestador_usuario_id || c.prestador_id || c.mei_id || c.id_prestador || c.id_mei;
 
-                let nomeMei = c.nome_mei || c.mei_nome || c.nome_prestador || c.prestador_nome || '';
-                let telefoneMei = c.telefone_mei || c.mei_telefone || c.telefone_prestador || c.prestador_telefone || '';
-                let emailMei = c.email_mei || c.mei_email || c.email_prestador || c.prestador_email || '';
+                // Tenta pegar do próprio objeto do contrato
+                let nomeMei = c.nome_fantasia || c.razao_social || c.nome_mei || c.nome_prestador || '';
+                let telefoneMei = c.telefone_mei || c.telefone_prestador || c.telefone || '';
+                let emailMei = c.email_mei || c.email_prestador || c.email || '';
 
-                // Se faltar os dados mas a gente tiver o ID do MEI, busca direto na rota de usuários do servidor!
-                if ((!nomeMei || nomeMei === '') && meiId) {
-                    try {
-                        const resUser = await fetch(`http://localhost:3000/perfil-usuario?usuario_id=${meiId}`);
-                        if (resUser.ok) {
-                            const dadosUser = await resUser.json();
-                            nomeMei = dadosUser.nome || dadosUser.razao_social || dadosUser.nome_completo || '';
-                            telefoneMei = dadosUser.telefone || dadosUser.whatsapp || '';
-                            emailMei = dadosUser.email || '';
-                        }
-                    } catch (errUser) {
-                        console.error('Erro ao buscar perfil do MEI:', errUser);
+                // Se faltou informação, busca no mapa de MEIs carregado do backend
+                if (meiId && mapaMeis[meiId]) {
+                    const dadosMapa = mapaMeis[meiId];
+                    if (!nomeMei || nomeMei === 'Prestador MEI') {
+                        nomeMei = dadosMapa.nome_fantasia || dadosMapa.razao_social || dadosMapa.nome || '';
+                    }
+                    if (!telefoneMei || telefoneMei === 'Não informado') {
+                        telefoneMei = dadosMapa.telefone || dadosMapa.whatsapp || '';
+                    }
+                    if (!emailMei || emailMei === 'Não informado') {
+                        emailMei = dadosMapa.email || '';
                     }
                 }
 
-                // Se ainda assim estiver vazio, tenta extrair da tabela geral ou usa o ID como identificador temporário
-                nomeMei = nomeMei || (meiId ? `Prestador (ID: ${meiId})` : 'Prestador MEI');
+                // Fallbacks finais caso o MEI não tenha cadastrado algum campo
+                nomeMei = nomeMei || 'Prestador MEI';
                 telefoneMei = telefoneMei || 'Não informado';
                 emailMei = emailMei || 'Não informado';
 
