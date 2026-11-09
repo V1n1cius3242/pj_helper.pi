@@ -138,7 +138,25 @@ main {
     vertical-align: middle;
     filter: brightness(0) invert(1);
 }
+.icone-busca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.icone-busca img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.6); /* Deixa com um tom neutro alinhado ao input */
+  transition: all 0.3s ease;
+}
+
+/* Quando focar no input de busca, a lupa pode destacar um pouco se quiser */
+.input-busca-wrapper input:focus ~ .icone-busca img,
+.input-busca-wrapper:focus-within .icone-busca img {
+  filter: invert(52%) sepia(85%) saturate(1432%) hue-rotate(125deg) brightness(97%) contrast(89%);
+}
 .secao {
     background: #ffffff;
     padding: 25px 30px;

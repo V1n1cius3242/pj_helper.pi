@@ -168,6 +168,24 @@ nav {
   will-change: transform, opacity;
 }
 
+/* ANIMAÇÃO SUAVE DA ETAPA 2 */
+.etapa2-escondida {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: max-height 0.5s ease-in-out, opacity 0.4s ease, transform 0.4s ease, visibility 0.5s;
+}
+
+.etapa2-ativa {
+  max-height: 300px;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: max-height 0.5s ease-in-out, opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -176,19 +194,20 @@ nav {
   position: relative;
   z-index: 10;
 }
-
 .login-section {
-  margin-top: 4%;
+  margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 0;
+  padding: 20px 0 50px 0; /* Dá um respiro seguro na parte inferior para não encostar no footer */
+  min-height: 82vh;       /* Garante altura ideal para centralizar no meio da tela do PC */
 }
 
+/* CARD LEVEMENTE MAIS COMPRIDO (VERTICALMENTE) */
 .login-card {
   background: #ffffff;
-  padding: 40px;
-  height: 60vh;
+  padding: 55px 40px 50px 40px; /* Aumentado ligeiramente em cima e embaixo */
+  height: auto;
   border-radius: 30px;
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185);
   width: 100%;
@@ -197,17 +216,19 @@ nav {
   text-align: center;
   position: relative;
   z-index: 10;
+  transition: all 0.4s ease-in-out;
 }
 
 .login-card .logo-login {
   width: 70px;
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin-bottom: 12px;
+  margin-top: 5px;
 }
 
 .login-card h2 {
   color: #000000;
   font-size: 1.5rem;
+  margin-bottom: 8px;
 }
 
 .login-card p {
@@ -220,7 +241,7 @@ nav {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .login-card .campo label {
@@ -538,7 +559,7 @@ body {
   color: var(--text-color) !important;
 }
 
-/* MEDIA QUERIES (RESPONSIVIDADE) */
+/* MEDIA QUERIES (RESPONSIVIDADE E CENTRALIZAÇÃO MOBILE REFINADA) */
 @media (max-width: 768px) {
   #bg-dots {
     display: none !important;
@@ -635,12 +656,23 @@ body {
 
   .container {
     padding: 15px;
-    margin-top: 15vh !important;
+    margin-top: 12vh !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-section {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: 0;
   }
 
   .login-card {
-    padding: 25px 18px;
-    max-width: 90%;
+    padding: 35px 22px;
+    max-width: 92%;
+    margin: 0 auto;
     border-radius: 20px;
   }
 
