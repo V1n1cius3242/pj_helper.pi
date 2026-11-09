@@ -754,6 +754,288 @@ tr:hover {
     color: #a0aec0;
 }
 
+/* =========================================================
+   BOTÃO DE TEMA (Modo Claro)
+========================================================= */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+/* --- MODO CLARO --- */
+.btn-tema-toggle {
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #3faf6e; /* Mesma cor exata do sol */
+  /* Bordinha cinza sutil nativa + Linha verde translúcida rodando no gradiente */
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: 
+    linear-gradient(#ffffff, #ffffff) padding-box, 
+    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, rgba(63, 175, 110, 0.2) 5%, rgba(63, 175, 110, 0.85) 15%, rgba(63, 175, 110, 0.2) 25%, transparent 35%, transparent 100%) border-box !important;
+  border-radius: 9999px;
+  width: 44px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* Hover Modo Claro */
+.btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: rgba(63, 175, 110, 0.25) 0px 1px 1px inset, 
+              rgba(63, 175, 110, 0.25) 0px -2px 6px inset, 
+              rgba(63, 175, 110, 0.4) 0px 10px 20px -6px !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+.btn-tema-toggle:active {
+  transform: translateY(-1px) !important;
+  box-shadow: rgba(63, 175, 110, 0.15) 0px 1px 1px inset, 
+              rgba(63, 175, 110, 0.15) 0px -2px 6px inset, 
+              rgba(63, 175, 110, 0.25) 0px 6px 12px -6px !important;
+
+}
+/* --- MODO ESCURO (100% Intacto) --- */
+[data-theme="dark"] .btn-tema-toggle {
+  --gradient-shine: #3faf6e;
+  border: 1px solid transparent !important;
+  background: 
+    linear-gradient(#1c2421, #0a0a0a) padding-box, 
+    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box !important;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset,
+              rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
+              rgba(0, 0, 0, 0.5) 0px 10px 15px -8px !important;
+
+}
+[data-theme="dark"] .btn-tema-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+[data-theme="dark"] .btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: rgba(20, 206, 61, 0.25) 0px 1px 1px inset, 
+              rgba(20, 206, 61, 0.25) 0px -2px 6px inset, 
+              rgba(20, 206, 61, 0.4) 0px 12px 24px -8px !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* --- ÍCONES --- */
+.theme-icon-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+.sun-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  color: #3faf6e !important; 
+}
+.moon-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
+  color: #3faf6e;
+}
+[data-theme="dark"] .sun-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+}
+[data-theme="dark"] .moon-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  color: #3faf6e !important;
+}
+
+/* =========================================================
+   MODO ESCURO (DARK MODE) - PAINEL EMPRESA
+========================================================= */
+[data-theme="dark"] body {
+  background-color: #121212 !important;
+  color: #f1f1f1 !important;
+}
+
+[data-theme="dark"] .header {
+  background-color: rgba(18, 18, 18, 0.85) !important;
+}
+
+[data-theme="dark"] .navitens {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .bemvindotopo,
+[data-theme="dark"] .banner-catalogo-empresa,
+[data-theme="dark"] .secao-card-conteudo,
+[data-theme="dark"] .card-painel-item,
+[data-theme="dark"] .card-notificacao-custom {
+  background: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .bemvindotopo h2,
+[data-theme="dark"] .titulo-secao-padrao,
+[data-theme="dark"] .banner-catalogo-textos h3,
+[data-theme="dark"] .card-notificacao-topo strong,
+[data-theme="dark"] .header-notifs-linha h3,
+[data-theme="dark"] .modal-card-exclusao h3,
+[data-theme="dark"] .card-painel-item h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .banner-catalogo-textos p,
+[data-theme="dark"] .card-notificacao-msg,
+[data-theme="dark"] .campo-form-empresa label,
+[data-theme="dark"] .texto-descritivo-exclusao,
+[data-theme="dark"] .card-painel-item p,
+[data-theme="dark"] .card-item-valores-adm,
+[data-theme="dark"] .zona-perigo-container p {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .container-abas-navegacao {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .btn-aba-nav {
+  color: #a0aec0 !important;
+}
+
+[data-theme="dark"] .btn-aba-nav.ativa {
+  background: #2a2a2a !important;
+  color: #3faf6e !important;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] .campo-form-empresa input,
+[data-theme="dark"] .input-com-icone input,
+[data-theme="dark"] #inputSenhaExclusao {
+  background-color: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   AJUSTE DE COR DA CAIXA DE RECUSADO NO MODO ESCURO
+========================================================= */
+[data-theme="dark"] div[style*="background: #fee2e2"],
+[data-theme="dark"] div[style*="background:#fee2e2"] {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #fca5a5 !important;
+  border-left-color: #ef4444 !important;
+}
+
+/* =========================================================
+   REMOVER FUNDO DAS TAGS NO MODO ESCURO (MANTENDO AS CORES DO TEXTO)
+========================================================= */
+[data-theme="dark"] .badge-status-adm,
+[data-theme="dark"] .badge-pendente-adm,
+[data-theme="dark"] .badge-reuniao-adm,
+[data-theme="dark"] .badge-ativo-adm,
+[data-theme="dark"] .badge-recusado-adm {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Caixa de Meet e avisos de reuniões não agendadas */
+[data-theme="dark"] .card-notificacao-rodape,
+[data-theme="dark"] .box-meet-agendado-adm,
+[data-theme="dark"] div[style*="background: #f7fafc"],
+[data-theme="dark"] div[style*="background:#f7fafc"] {
+  background: #1a1a1a !important;
+  color: #a0aec0 !important;
+  border-left-color: #3faf6e !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Bloco de Apagar Perfil / Zona de perigo */
+[data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffff"],
+[data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffffff"],
+[data-theme="dark"] .secao-card-conteudo[style*="background-color:#ffff"] {
+  background-color: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .btn-acao-recusar {
+  background: #1a1a1a !important;
+  border-color: rgba(229, 62, 62, 0.3) !important;
+  color: #e53e3e !important;
+}
+
+[data-theme="dark"] .modal-card-exclusao {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn-cancelar-modal-exclusao {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .menu-icon-hamburger span {
+  background-color: #ffffff !important;
+}
+
+/* =========================================================
+   AJUSTE DE TEXTO E ÍCONE DO MODAL NO MODO ESCURO
+========================================================= */
+[data-theme="dark"] .campo-exclusao label {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .input-com-icone .icone-input img {
+  filter: brightness(0) invert(1) opacity(0.8) !important;
+}
+
+/* =========================================================
+   CORREÇÃO DEFINITIVA DO CARD DE APAGAR PERFIL NO MODO ESCURO
+========================================================= */
+[data-theme="dark"] div.secao-card-conteudo[style*="background-color"] {
+  background-color: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .zona-perigo-container p {
+  color: #e0e0e0 !important;
+}
 /* RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 768px) { 
   .header { 
