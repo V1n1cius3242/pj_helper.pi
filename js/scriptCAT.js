@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
 function mostrarAviso(msg, ehErro = false) {
 
     const banner = document.getElementById('bannerAviso');

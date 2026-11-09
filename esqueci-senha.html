@@ -54,12 +54,12 @@
 
     <!-- MAIN CONTEÚDO DE RECUPERAÇÃO CENTRALIZADO -->
     <main class="container" style="margin-top: 9vh; min-height: 91vh;">
-        <section class="login-section escondido" style="margin-top: 4%; min-height: 75vh;">
+        <section class="login-section escondido">
             <div class="login-card escondido">
                 
                 <img class="logo-login" src="/icon/IconPJ.png" alt="PJ Helper">
                 <h2>Recuperar Senha</h2>
-                <p style="margin-bottom: 13vh;" id="instrucaoTexto">
+                <p id="instrucaoTexto">
                     Digite o e-mail associado à sua conta PJ Helper para receber o código de verificação.
                 </p>
 
@@ -76,8 +76,8 @@
                         </div>
                     </div>
 
-                    <!-- CAMPOS DA ETAPA 2 (Iniciam escondidos) -->
-                    <div id="etapa2Campos" style="display: none;">
+                    <!-- CAMPOS DA ETAPA 2 -->
+                    <div id="etapa2Campos" class="etapa2-escondida">
                         <div class="campo">
                             <label for="codigo">Código de Verificação (6 dígitos):</label>
                             <input type="text" id="codigo" maxlength="6" placeholder="123456"
@@ -93,16 +93,16 @@
                         </div>
                     </div>
 
-                    <!-- BOTÃO PRINCIPAL (PADRÃO LOGIN SHINY-CTA2) -->
-                    <button type="submit" id="btnAcao" class="shiny-cta2" style="width: 220px; margin: 15px auto 10px auto; display: block;">
+                    <!-- BOTÃO PRINCIPAL -->
+                    <button type="submit" id="btnAcao" class="shiny-cta2" style="width: 220px; margin: 22px auto 15px auto; display: block;">
                         <span id="btnTexto" class="shiny-cta-content2">Enviar Código</span>
                     </button>
                 </form>
 
-                <!-- LINK VOLTAR PARA LOGIN PADRONIZADO -->
-                <div style="text-align: center; margin-top: 15px;">
-                    <a href="login.html" style="color: #3faf80; font-weight: bold; text-decoration: none; font-size: 0.88rem;">
-                        ← Voltar para o Login
+                <!-- LINK VOLTAR PARA LOGIN -->
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="login.html" style="color: #3faf80; font-weight: bold; font-size: 1 rem;">
+                        Voltar para o Login
                     </a>
                 </div>
             </div>
@@ -286,7 +286,9 @@
                         emailInput.readOnly = true;
                         emailInput.style.backgroundColor = 'var(--input-bg)';
                         
-                        document.getElementById('etapa2Campos').style.display = 'block';
+                        const etapa2 = document.getElementById('etapa2Campos');
+                        etapa2.classList.add('etapa2-ativa');
+
                         document.getElementById('instrucaoTexto').innerText = 'Insira o código de 6 dígitos enviado para o seu e-mail e defina sua nova senha.';
                         
                         btnTexto.innerText = 'Redefinir Senha';

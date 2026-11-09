@@ -1096,6 +1096,18 @@ body {
   }
 }
 
+.escondido {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.animar-ao-rolar {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: transform, opacity;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 0 5%;
