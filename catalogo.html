@@ -295,29 +295,60 @@
                 modal.style.display = 'none';
             }, 300);
         }
+function abrirModal(meiUsuarioId, nomeMei) {
 
-        // MODAL PROPOSTA (Com card flutuante moderno)
-        function abrirModal(meiUsuarioId, nomeMei) {
-            if (!user) {
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+
+            if (!rawUser) {
+
                 mostrarAviso('Você precisa estar logado como Empresa para enviar uma proposta!', true);
+
                 setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+
                 return;
+
             }
 
-            if (user.tipo !== 'empresa') {
-                mostrarAviso('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!', true);
+            let user;
+
+            try {
+
+                user = JSON.parse(rawUser);
+
+            } catch (e) {
+
+                mostrarAviso('Erro ao carregar dados do usuário. Faça login novamente.', true);
+
                 return;
+
+            }
+
+            const tipo = (user.tipo || '').toString().toLowerCase();
+
+            if (tipo !== 'empresa' && tipo !== 'empresa_grande') {
+
+                mostrarAviso('Apenas contas do tipo Empresa podem enviar propostas para os MEIs!', true);
+
+                return;
+
             }
 
             document.getElementById('modal_mei_usuario_id').value = meiUsuarioId;
+
             document.getElementById('modalNomeMei').innerText = 'Para: ' + nomeMei;
 
             const modal = document.getElementById('modalProposta');
+
             modal.style.display = 'flex';
+
             setTimeout(() => {
+
                 modal.classList.add('ativo');
+
             }, 10);
+
         }
+ 
 
         function fecharModal() {
             const modal = document.getElementById('modalProposta');

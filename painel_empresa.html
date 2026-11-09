@@ -7,7 +7,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_empresa.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
@@ -65,7 +66,8 @@
                 <h2 id="nomeEmpresaTopo">Painel do Contratante (Empresa)</h2>
             </div>
             <div class="bemvindo-acoes">
-                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida" alt="">Sair</button>
+                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida"
+                        alt="">Sair</button>
             </div>
         </div>
 
@@ -75,9 +77,11 @@
                 <h3>Encontre o prestador ideal</h3>
                 <p>Navegue no catálogo de MEIs verificados, veja portfólio e serviços, e solicite um contrato.</p>
             </div>
-            <a href="catalogo.html" class="shiny-cta2" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 170px;">
+            <a href="catalogo.html" class="shiny-cta2"
+                style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 170px;">
                 <span class="shiny-cta-content2" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <img src="/icon/lupa.png" alt="Lupa" style="width: 16px; height: auto; filter: brightness(0) invert(1);">
+                    <img src="/icon/lupa.png" alt="Lupa"
+                        style="width: 16px; height: auto; filter: brightness(0) invert(1);">
                     Explorar catálogo
                 </span>
             </a>
@@ -85,53 +89,68 @@
 
         <!-- CONTAINER DE ABAS PRINCIPAIS -->
         <div style="margin-bottom: 60px;" class="container-abas-navegacao">
-            <button class="btn-aba-nav ativa" id="aba-btn-notificacoes" onclick="mudarAba('notificacoes')">Notificações</button>
+            <button class="btn-aba-nav ativa" id="aba-btn-notificacoes"
+                onclick="mudarAba('notificacoes')">Notificações</button>
             <button class="btn-aba-nav" id="aba-btn-perfil" onclick="mudarAba('perfil')">Perfil</button>
-            <button class="btn-aba-nav" id="aba-btn-contratos" onclick="mudarAba('contratos')">Solicitações & Reuniões</button>
+            <button class="btn-aba-nav" id="aba-btn-contratos" onclick="mudarAba('contratos')">Solicitações &
+                Reuniões</button>
         </div>
 
         <!-- 1. NOTIFICAÇÕES -->
         <div id="secao-notificacoes" class="secao-aba" style="display: block;">
             <div class="header-notifs-linha">
                 <h3>Histórico de Notificações</h3>
-                <button onclick="marcarTodasComoLidasEmpresa()" class="btn-marcar-lidas">✓ Marcar todas como lidas</button>
+                <button onclick="marcarTodasComoLidasEmpresa()" class="btn-marcar-lidas">✓ Marcar todas como
+                    lidas</button>
             </div>
 
             <div id="listaNotificacoesContainer"></div>
 
-            <button id="btnToggleNotifs" class="btn-expandir-notifs" onclick="toggleNotificacoes()" style="display: none;">
+            <button id="btnToggleNotifs" class="btn-expandir-notifs" onclick="toggleNotificacoes()"
+                style="display: none;">
                 <span id="txtToggleNotifs">Mostrar mais notificações</span>
                 <span id="setaNotifs" class="seta-expandir">▼</span>
             </button>
         </div>
-
         <!-- 2. PERFIL EMPRESA -->
         <div id="secao-perfil" class="secao-aba" style="display: none;">
+            <!-- Bloco 1: Informações Cadastrais (Em cima) -->
             <div class="secao-card-conteudo">
                 <h3 class="titulo-secao-padrao">Dados da Empresa</h3>
                 <form id="formPerfilEmpresa">
                     <div class="campo-form-empresa">
-                        <label>Razão Social:</label>
-                        <input type="text" id="razao_social" required placeholder="Nome da Empresa LTDA">
+                        <label for="razao_social">Razão Social:</label>
+                        <input type="text" id="razao_social" maxlength="200" required
+                            placeholder="Nome da Empresa LTDA">
                     </div>
                     <div class="campo-form-empresa">
-                        <label>CNPJ:</label>
-                        <input type="text" id="cnpj" required placeholder="00.000.000/0001-00">
+                        <label for="cnpj">CNPJ:</label>
+                        <input type="text" id="cnpj" maxlength="18" required placeholder="00.000.000/0001-00">
                     </div>
                     <div class="campo-form-empresa">
-                        <label>Telefone / WhatsApp:</label>
-                        <input type="text" id="telefone" required placeholder="(00) 00000-0000">
+                        <label for="telefone">Telefone / WhatsApp:</label>
+                        <input type="text" id="telefone" maxlength="15" required placeholder="(00) 00000-0000">
                     </div>
-                    <button type="submit" class="shiny-cta1" style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
+                    <div class="campo-form-empresa">
+                        <label for="emailEmpresa">E-mail:</label>
+                        <input type="email" id="emailEmpresa" maxlength="300" required
+                            placeholder="contato@empresa.com">
+                    </div>
+                    <button type="submit" class="shiny-cta1"
+                        style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Salvar perfil da empresa</span>
                     </button>
                 </form>
+            </div>
 
-                <!-- ZONA DE PERIGO (EXCLUSÃO DE CONTA) -->
-                <div class="zona-perigo-container">
+            <!-- Bloco 2: Zona de Perigo / Exclusão de Conta (Embaixo, isolado) -->
+            <div class="secao-card-conteudo"
+                style="border: 1px solid #edf2f7 !important; background-color: #ffff !important;">
+                <div class="zona-perigo-container" style="margin-top: 0; border-top: none; padding-top: 0;">
                     <h3>Apagar Perfil</h3>
                     <p>
-                        Após a exclusão de sua conta, não será possível desfazer, todos os seus dados e solicitações serão removidos permanentemente.<br>
+                        Após a exclusão de sua conta, não será possível desfazer, todos os seus dados e solicitações
+                        serão removidos permanentemente.<br>
                         Certeza sobre a escolha?
                     </p>
                     <button type="button" onclick="abrirModalExclusao()" class="btn-acao-recusar">
@@ -157,14 +176,16 @@
             <img class="logo-login" src="/icon/IconPJ.png" alt="Logo PJ Helper">
             <h3>Sentiremos falta!</h3>
             <p class="texto-descritivo-exclusao">
-                Esta ação é <strong>irreversível</strong>. Todos os seus contratos, solicitações e dados do perfil serão apagados permanentemente.
+                Esta ação é <strong>irreversível</strong>. Todos os seus contratos, solicitações e dados do perfil serão
+                apagados permanentemente.
             </p>
 
             <div class="campo-exclusao">
                 <label for="inputSenhaExclusao">Digite sua senha atual:</label>
                 <div class="input-com-icone">
                     <span class="icone-input"><img src="/icon/key.png" alt=""></span>
-                    <input type="password" maxlength="150" id="inputSenhaExclusao" placeholder="Digite sua senha" oninput="validarSenhaExclusao()">
+                    <input type="password" maxlength="150" id="inputSenhaExclusao" placeholder="Digite sua senha"
+                        oninput="validarSenhaExclusao()">
                 </div>
             </div>
 
@@ -172,7 +193,8 @@
                 <button type="button" onclick="fecharModalExclusao()" class="btn-cancelar-modal-exclusao">
                     Cancelar
                 </button>
-                <button type="button" id="btnConfirmarExclusaoFinal" onclick="executarExclusaoConta()" disabled class="shiny-cta2 btn-excluir-modal">
+                <button type="button" id="btnConfirmarExclusaoFinal" onclick="executarExclusaoConta()" disabled
+                    class="shiny-cta2 btn-excluir-modal">
                     <span class="shiny-cta-content2">
                         Sim, Excluir
                     </span>
