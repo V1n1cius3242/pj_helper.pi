@@ -190,6 +190,7 @@ if (canvas) {
 
         requestAnimationFrame(animate);
     }
+    
 
     resize();
     requestAnimationFrame(animate);
