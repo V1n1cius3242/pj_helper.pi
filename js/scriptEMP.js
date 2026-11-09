@@ -135,19 +135,19 @@ async function carregarNotificacoesDinamicas() {
                 const temMeet = c.link_reuniao && c.link_reuniao.trim() !== '';
                 const dataReuniao = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : '';
 
-                // CORREÇÃO: Captura o ID do MEI testando todas as variações possíveis vindas do banco/backend
                 let meiId = c.mei_usuario_id || c.prestador_usuario_id || c.prestador_id || c.mei_id || c.id_prestador || c.id_mei;
 
-                let nomeMei = c.nome_mei || c.mei_nome || c.nome_prestador || c.prestador_nome || '';
+                let nomeMei = c.nome_mei || c.mei_nome || c.nome_prestador || c.prestador_nome || c.razao_social_mei || c.nome_fantasia_mei || '';
                 let telefoneMei = c.telefone_mei || c.mei_telefone || c.telefone_prestador || c.prestador_telefone || '';
                 let emailMei = c.email_mei || c.mei_email || c.email_prestador || c.prestador_email || '';
 
-                // Se faltar os dados mas tivermos o ID, busca diretamente na API de perfil do usuário
-                if ((!nomeMei || nomeMei === 'Prestador MEI' || nomeMei === '') && meiId) {
+                // Se o nome estiver vazio ou vier genérico, busca direto na API de perfil ou de usuários do backend
+                if ((!nomeMei || nomeMei === 'Prestador MEI' || nomeMei.startsWith('Prestador (ID')) && meiId) {
                     try {
                         const resUser = await fetch(`http://localhost:3000/perfil-usuario?usuario_id=${meiId}`);
                         if (resUser.ok) {
                             const dadosUser = await resUser.json();
+                            // Prioriza nome fantasia ou razão social da conta do MEI
                             nomeMei = dadosUser.nome_fantasia || dadosUser.razao_social || dadosUser.nome || dadosUser.nome_completo || '';
                             telefoneMei = dadosUser.telefone || dadosUser.whatsapp || '';
                             emailMei = dadosUser.email || '';
@@ -157,8 +157,8 @@ async function carregarNotificacoesDinamicas() {
                     }
                 }
 
-                // Fallbacks finais caso continue vazio
-                nomeMei = nomeMei || (meiId ? `Prestador (ID: ${meiId})` : 'Prestador MEI');
+                // Fallback limpo: se mesmo assim não achar, usa um nome padrão sem mostrar o ID feio na tela
+                nomeMei = nomeMei || 'Prestador MEI';
                 telefoneMei = telefoneMei || 'Não informado';
                 emailMei = emailMei || 'Não informado';
 
