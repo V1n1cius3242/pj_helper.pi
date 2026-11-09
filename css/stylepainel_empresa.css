@@ -879,6 +879,166 @@ box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease;
 }
 
+/* =========================================================
+   BOTÃO DE TEMA E VARIÁVEIS DE DARK MODE (PAINEL EMPRESA)
+========================================================= */
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #2d3748;
+  --card-bg: #ffffff;
+  --card-border: #edf2f7;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e0;
+  --input-text: #2d3748;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: rgba(30, 30, 30, 0.85);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --input-bg: #1a1a1a;
+  --input-border: rgba(255, 255, 255, 0.15);
+  --input-text: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botão de Tema (Sol / Lua) */
+.btn-tema-toggle {
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: #ffffff !important;
+  border-radius: 9999px;
+  width: 44px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.btn-tema-toggle:hover {
+  transform: translateY(-2px);
+  border-color: #3faf6e !important;
+}
+
+[data-theme="dark"] .btn-tema-toggle {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.theme-icon-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.sun-icon {
+  opacity: 1;
+  color: #3faf6e !important;
+}
+
+.moon-icon {
+  opacity: 0;
+  color: #3faf6e !important;
+}
+
+[data-theme="dark"] .sun-icon {
+  opacity: 0;
+}
+
+[data-theme="dark"] .moon-icon {
+  opacity: 1;
+}
+
+/* Ajustes de Cores dos Cards e Blocos no Dark Mode */
+[data-theme="dark"] .bemvindotopo,
+[data-theme="dark"] .banner-catalogo-empresa,
+[data-theme="dark"] .secao-card-conteudo,
+[data-theme="dark"] .card-painel-item,
+[data-theme="dark"] .card-notificacao-custom {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .bemvindotopo h2,
+[data-theme="dark"] .titulo-secao-padrao,
+[data-theme="dark"] .banner-catalogo-textos h3,
+[data-theme="dark"] .card-notificacao-topo strong,
+[data-theme="dark"] .modal-card-exclusao h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .banner-catalogo-textos p,
+[data-theme="dark"] .card-notificacao-msg,
+[data-theme="dark"] .campo-form-empresa label,
+[data-theme="dark"] .texto-descritivo-exclusao {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .container-abas-navegacao {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .btn-aba-nav {
+  color: #a0aec0 !important;
+}
+
+[data-theme="dark"] .btn-aba-nav.ativa {
+  background: #2a2a2a !important;
+  color: #3faf6e !important;
+}
+
+/* Inputs e Formulários no Dark Mode */
+[data-theme="dark"] .campo-form-empresa input,
+[data-theme="dark"] .input-com-icone input,
+[data-theme="dark"] #inputSenhaExclusao {
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--input-text) !important;
+}
+
+[data-theme="dark"] .card-notificacao-rodape,
+[data-theme="dark"] .box-meet-agendado-adm {
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+  border-left-color: #3faf6e !important;
+}
+
+[data-theme="dark"] .modal-card-exclusao {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn-cancelar-modal-exclusao {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 /* ==========================================================
    MEDIA QUERIES (RESPONSIVIDADE INTACTA)
    ========================================================== */
