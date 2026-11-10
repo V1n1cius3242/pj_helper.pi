@@ -1015,6 +1015,250 @@ tr:hover {
 }
 
 /* =========================================================
+   PADRONIZAÇÃO FINAL DO MODO ESCURO (PAINEL ADM)
+========================================================= */
+
+/* Remover o fundo das tags/badges no modo escuro (mantendo apenas a cor do texto) */
+[data-theme="dark"] .badge-status,
+[data-theme="dark"] .badge-pendente,
+[data-theme="dark"] .badge-reuniao,
+[data-theme="dark"] .badge-ativo,
+[data-theme="dark"] .badge-nova,
+[data-theme="dark"] .badge-recusado-adm,
+[data-theme="dark"] .badge-status-adm {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Botões de Ação do Admin no Modo Escuro */
+[data-theme="dark"] .btn-acao-preto {
+  background: #252830 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .btn-acao-preto:hover {
+  background: #2f3542 !important;
+}
+
+[data-theme="dark"] .btn-acao-recusar {
+  background: rgba(229, 62, 62, 0.15) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(229, 62, 62, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-acao-sucesso {
+  background: rgba(56, 161, 105, 0.15) !important;
+  color: #6ee7b7 !important;
+  border: 1px solid rgba(56, 161, 105, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-acao-secundario {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Caixa de Meet agendado e detalhes no card */
+[data-theme="dark"] .box-meet-agendado {
+  background: #1a1a1a !important;
+  color: #a0aec0 !important;
+  border-left: 4px solid #3faf6e !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* =========================================================
+   CORREÇÃO COMPLETA DO MODO ESCURO - PAINEL ADM
+========================================================= */
+[data-theme="dark"] body {
+  background-color: #121212 !important;
+  color: #f1f1f1 !important;
+}
+
+[data-theme="dark"] .header {
+  background-color: rgba(18, 18, 18, 0.85) !important;
+}
+
+[data-theme="dark"] .navitens {
+  color: #ffffff !important;
+}
+
+/* Containers e Cards Principais */
+[data-theme="dark"] .bemvindotopo,
+[data-theme="dark"] .secao,
+[data-theme="dark"] .card-painel-item,
+[data-theme="dark"] .card-notificacao,
+[data-theme="dark"] div.card-notificacao {
+  background: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Badge "Equipe PJ Helper" */
+[data-theme="dark"] .badge-equipe {
+  background-color: rgba(63, 175, 110, 0.15) !important;
+  color: #3faf6e !important;
+  border: 1px solid rgba(63, 175, 110, 0.3) !important;
+}
+
+/* Títulos e Textos */
+[data-theme="dark"] .bemvindotopo h2,
+[data-theme="dark"] .secao h3,
+[data-theme="dark"] .card-item-titulo,
+[data-theme="dark"] .modal-card h3,
+[data-theme="dark"] .notif-conteudo h4,
+[data-theme="dark"] .card-notificacao strong {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .card-item-desc,
+[data-theme="dark"] .card-item-valores,
+[data-theme="dark"] .notif-conteudo p,
+[data-theme="dark"] .modal-card label,
+[data-theme="dark"] .contador-resultados,
+[data-theme="dark"] .card-notificacao p {
+  color: #e0e0e0 !important;
+}
+
+/* Abas Principais */
+[data-theme="dark"] .container-abas-navegacao {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .btn-aba-nav {
+  color: #a0aec0 !important;
+}
+
+[data-theme="dark"] .btn-aba-nav.ativa {
+  background: #2a2a2a !important;
+  color: #3faf6e !important;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Barra de Pesquisa e Inputs */
+[data-theme="dark"] .input-busca-wrapper,
+[data-theme="dark"] .box-busca-filtros .input-busca-wrapper {
+  background-color: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .input-busca-wrapper input {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+[data-theme="dark"] .input-busca-wrapper input::placeholder {
+  color: #718096 !important;
+}
+
+/* Pills de Filtros e Sub-abas */
+[data-theme="dark"] .pill-filtro {
+  background: #1a1a1a !important;
+  color: #a0aec0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .pill-filtro.ativo {
+  background: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .subaba-btn {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #a0aec0 !important;
+}
+
+[data-theme="dark"] .subaba-btn.ativa {
+  background: rgba(63, 175, 110, 0.2) !important;
+  color: #3faf6e !important;
+  border-color: #3faf6e !important;
+}
+
+/* Limpeza do Fundo das Tags de Status */
+[data-theme="dark"] .badge-status,
+[data-theme="dark"] .badge-pendente,
+[data-theme="dark"] .badge-reuniao,
+[data-theme="dark"] .badge-ativo,
+[data-theme="dark"] .badge-nova,
+[data-theme="dark"] .badge-recusado-adm,
+[data-theme="dark"] .badge-status-adm {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Botões de Ação nos Cards */
+[data-theme="dark"] .btn-acao-preto {
+  background: #252830 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .btn-acao-recusar {
+  background: rgba(229, 62, 62, 0.15) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(229, 62, 62, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-acao-sucesso {
+  background: rgba(56, 161, 105, 0.15) !important;
+  color: #6ee7b7 !important;
+  border: 1px solid rgba(56, 161, 105, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-acao-secundario {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .buttonsair {
+  background-color: rgba(197, 34, 31, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+/* Modais */
+[data-theme="dark"] .modal-card {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-card input[type="url"],
+[data-theme="dark"] .modal-card input[type="datetime-local"] {
+  background-color: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn-cancelar {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .menu-icon-hamburger span {
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] .shiny-cta1 {
+  cursor: pointer !important;
+}
+
+/* =========================================================
+   CORREÇÃO DE CAPITALIZAÇÃO DAS TAGS DE STATUS
+========================================================= */
+[data-theme="dark"] .card-painel-item .badge-status,
+.card-painel-item .badge-status {
+  text-transform: capitalize !important;
+}
+
+/* =========================================================
    AJUSTE DE TEXTO E ÍCONE DO MODAL NO MODO ESCURO
 ========================================================= */
 [data-theme="dark"] .campo-exclusao label {

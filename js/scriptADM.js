@@ -233,11 +233,14 @@ function renderizarContratos(lista) {
 
     container.innerHTML = contratosAtivos.map(c => {
         const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
+        const statusBruto = (c.status || 'Em andamento').toLowerCase();
+        const statusFormatado = '• ' + statusBruto.charAt(0).toUpperCase() + statusBruto.slice(1);
+
         return `
             <div class="card-painel-item">
                 <div class="card-item-header">
                     <span class="card-item-meta">Contrato #${c.contrato_id}</span>
-                    <span class="badge-status badge-pendente">• ${(c.status || 'Em andamento').toUpperCase()}</span>
+                    <span class="badge-status badge-pendente">${statusFormatado}</span>
                 </div>
                 <h3 class="card-item-titulo">Contrato de ${c.titulo_servico || 'Serviço'}</h3>
                 <div class="card-item-valores">
@@ -251,6 +254,7 @@ function renderizarContratos(lista) {
         `;
     }).join('');
 }
+
 
 // --- CONTROLE DAS SUBABAS E FILTROS DE CADASTROS ---
 function alternarSubabaCadastros(tipo) {
@@ -284,10 +288,10 @@ function aplicarFiltrosCadastros() {
             const st = (u.status || 'pendente').toLowerCase();
             const filtroAtual = filtroStatusCadastrosAtual.toLowerCase();
 
-            if (filtroAtual === 'pendentes') return st === 'pendente';
-            if (filtroAtual === 'ativos' || filtroAtual === 'aprovado') return st === 'aprovado' || st === 'ativo';
-            if (filtroAtual === 'recusados' || filtroAtual === 'recusado') return st === 'recusado';
-            if (filtroAtual === 'suspensos' || filtroAtual === 'suspenso') return st === 'suspenso';
+            if (filtroAtual === 'pendentes') return st === 'Pendente';
+            if (filtroAtual === 'ativos' || filtroAtual === 'aprovado') return st === 'Aprovado' || st === 'ativo';
+            if (filtroAtual === 'recusados' || filtroAtual === 'recusado') return st === 'Recusado';
+            if (filtroAtual === 'suspensos' || filtroAtual === 'suspenso') return st === 'Suspenso';
 
             return st.includes(filtroAtual);
         });
@@ -308,9 +312,9 @@ function renderizarCadastros(lista) {
     container.innerHTML = lista.map(u => {
         const st = (u.status || 'pendente').toLowerCase();
         let badgeClass = 'badge-pendente';
-        let badgeTexto = '• pendente';
-        if (st === 'aprovado' || st === 'ativo') { badgeClass = 'badge-ativo'; badgeTexto = '• ativo'; }
-        if (st === 'recusado') { badgeClass = 'badge-pendente'; badgeTexto = '• recusado'; }
+        let badgeTexto = '• Pendente';
+        if (st === 'aprovado' || st === 'ativo') { badgeClass = 'badge-ativo'; badgeTexto = '• Ativo'; }
+        if (st === 'recusado') { badgeClass = 'badge-pendente'; badgeTexto = '• Recusado'; }
 
         return `
             <div class="card-painel-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
