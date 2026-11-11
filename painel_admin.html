@@ -17,7 +17,9 @@
                 if (!rawUser) throw new Error();
 
                 const user = JSON.parse(rawUser);
-                if (!user || !user.tipo || user.tipo.toString().toLowerCase() !== 'admin') {
+                const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
+                // Admin e Colaborador usam o mesmo painel
+                if (tipo !== 'admin' && tipo !== 'colaborador') {
                     throw new Error();
                 }
             } catch (err) {
@@ -30,6 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_admin.css">
+    <link rel="stylesheet" href="./css/select-custom.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <title>PJ Helper - Administrador</title>
@@ -71,11 +74,21 @@
                 </div>
             </button>
 
-            <button id="linkLoginPainel" class="shiny-cta1">
-                <span class="shiny-cta-content1">
-                  <img src="/icon/perfil.png" class="perfil-icon" alt="">
-                </span>
-            </button>
+            <div class="perfil-wrapper">
+                <button id="linkLoginPainel" class="shiny-cta1" aria-haspopup="menu" aria-expanded="false"
+                    aria-controls="menuPerfil" title="Minha conta">
+                    <span class="shiny-cta-content1">
+                      <img src="/icon/perfil.png" class="perfil-icon" alt="Minha conta">
+                    </span>
+                </button>
+
+                <div id="menuPerfil" class="menu-perfil" role="menu">
+                    <p class="menu-perfil-rotulo">Conectado como</p>
+                    <p class="menu-perfil-email" id="perfilEmail">-</p>
+                    <span class="menu-perfil-tipo" id="perfilTipo">-</span>
+                    <button class="menu-perfil-sair" role="menuitem" onclick="logout()">Sair da conta</button>
+                </div>
+            </div>
         </nav>
     </div>
 
@@ -85,7 +98,7 @@
         <div class="bemvindotopo">
             <div class="bemvindo-textos">
                 <h3>Bem-vindo de volta!</h3>
-                <h2>Colaborador</h2>
+                <h2 id="tituloUsuario">Colaborador</h2>
             </div>
             <div class="bemvindo-acoes">
                 <span class="badge-equipe">
@@ -101,6 +114,8 @@
             <button class="btn-aba-nav" id="aba-btn-contratos" onclick="mudarAba('contratos')">Contratos</button>
             <button class="btn-aba-nav" id="aba-btn-cadastros" onclick="mudarAba('cadastros')">Cadastros</button>
             <button class="btn-aba-nav" id="aba-btn-notificacoes" onclick="mudarAba('notificacoes')">Notificações</button>
+            <!-- Só o admin gera convites; o colaborador não vê esta aba -->
+            <button class="btn-aba-nav" id="aba-btn-convites" onclick="mudarAba('convites')" style="display: none;">Convites</button>
         </div>
 
         <!-- 1. SEÇÃO: SOLICITAÇÕES -->
@@ -138,6 +153,7 @@
             <div class="container-subabas">
                 <button class="subaba-btn ativa" id="btnSubMei">MEIs</button>
                 <button class="subaba-btn" id="btnSubEmpresa">Empresas</button>
+                <button class="subaba-btn" id="btnSubEquipe">Equipe</button>
             </div>
 
             <div class="box-busca-filtros">
@@ -160,6 +176,20 @@
         </div>
 
         <!-- 4. SEÇÃO: NOTIFICAÇÕES -->
+        <!-- CONVITES DE ACESSO DA EQUIPE -->
+        <div id="secao-convites" class="secao-aba" style="display: none;">
+            <div class="barra-convites">
+                <select id="tipoConvite" data-select-custom>
+                    <option value="colaborador">Convite para Colaborador</option>
+                    <option value="admin">Convite para Administrador</option>
+                </select>
+                <button class="shiny-cta1 btn-convite" onclick="gerarConvite()">Gerar código</button>
+            </div>
+
+            <p class="contador-resultados" id="contadorConvites"></p>
+            <div id="listaConvitesCards"></div>
+        </div>
+
         <div id="secao-notificacoes" class="secao-aba" style="display: none;">
             <div class="header-notifs" style="margin-bottom: 15px; text-align: right;">
                 <button class="btn-marcar-lidas" style="background: none; border: none; color: #3faf6e; font-weight: 600; cursor: pointer;">✓ Marcar todas como lidas</button>
@@ -256,6 +286,7 @@
             }
         });
     </script>
+    <script src="./js/selectCustom.js"></script>
     <script src="./js/scriptADM.js"></script>
 </body>
 

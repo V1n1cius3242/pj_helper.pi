@@ -53,15 +53,24 @@ function normalizarUrl(url) {
 
 let cacheContratos = [];
 let cacheUsuarios = [];
-let subabaCadastrosAtual = 'mei'; // 'mei' ou 'empresa'
+let subabaCadastrosAtual = 'mei'; // 'mei', 'empresa' ou 'equipe'
 let filtroStatusCadastrosAtual = 'todos';
 let adminIdGlobal = null;
+let tipoUsuarioGlobal = '';
 
 async function carregarAdmin() {
     try {
         const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
         const user = rawUser ? JSON.parse(rawUser) : null;
         adminIdGlobal = user ? (user.id || user.usuario_id) : null;
+        tipoUsuarioGlobal = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
+
+        // Colaborador usa o painel, mas nao gera convites
+        const abaConvites = document.getElementById('aba-btn-convites');
+        if (abaConvites && tipoUsuarioGlobal === 'admin') {
+            abaConvites.style.display = 'inline-block';
+            carregarConvites();
+        }
 
         // 1. Carregar Usuários
         const resUsers = await fetch('http://localhost:3000/admin/dados');
@@ -258,19 +267,16 @@ function renderizarContratos(lista) {
 
 // --- CONTROLE DAS SUBABAS E FILTROS DE CADASTROS ---
 function alternarSubabaCadastros(tipo) {
-    subabaCadastrosAtual = tipo; // 'mei' ou 'empresa'
-    
+    subabaCadastrosAtual = tipo; // 'mei', 'empresa' ou 'equipe'
+
     const btnMei = document.getElementById('btnSubMei');
     const btnEmpresa = document.getElementById('btnSubEmpresa');
+    const btnEquipe = document.getElementById('btnSubEquipe');
 
     if (btnMei && btnEmpresa) {
-        if (tipo === 'mei') {
-            btnMei.classList.add('ativa');
-            btnEmpresa.classList.remove('ativa');
-        } else {
-            btnEmpresa.classList.add('ativa');
-            btnMei.classList.remove('ativa');
-        }
+        btnMei.classList.toggle('ativa', tipo === 'mei');
+        btnEmpresa.classList.toggle('ativa', tipo === 'empresa');
+        if (btnEquipe) btnEquipe.classList.toggle('ativa', tipo === 'equipe');
     }
     aplicarFiltrosCadastros();
 }
@@ -279,7 +285,8 @@ function aplicarFiltrosCadastros() {
     let lista = cacheUsuarios.filter(u => {
         const tipoUser = (u.tipo || '').toLowerCase();
         if (subabaCadastrosAtual === 'mei') return tipoUser === 'mei';
-        if (subabaCadastrosAtual === 'empresa') return tipoUser === 'empresa';
+        if (subabaCadastrosAtual === 'empresa') return tipoUser === 'empresa' || tipoUser === 'empresa_grande';
+        if (subabaCadastrosAtual === 'equipe') return tipoUser === 'admin' || tipoUser === 'colaborador';
         return false;
     });
 
@@ -288,10 +295,11 @@ function aplicarFiltrosCadastros() {
             const st = (u.status || 'pendente').toLowerCase();
             const filtroAtual = filtroStatusCadastrosAtual.toLowerCase();
 
-            if (filtroAtual === 'pendentes') return st === 'Pendente';
-            if (filtroAtual === 'ativos' || filtroAtual === 'aprovado') return st === 'Aprovado' || st === 'ativo';
-            if (filtroAtual === 'recusados' || filtroAtual === 'recusado') return st === 'Recusado';
-            if (filtroAtual === 'suspensos' || filtroAtual === 'suspenso') return st === 'Suspenso';
+            // 'st' já vem em minúsculas, então a comparação também precisa estar
+            if (filtroAtual === 'pendentes' || filtroAtual === 'pendente') return st === 'pendente';
+            if (filtroAtual === 'ativos' || filtroAtual === 'aprovado') return st === 'aprovado' || st === 'ativo';
+            if (filtroAtual === 'recusados' || filtroAtual === 'recusado') return st === 'recusado';
+            if (filtroAtual === 'suspensos' || filtroAtual === 'suspenso') return st === 'suspenso';
 
             return st.includes(filtroAtual);
         });
@@ -339,6 +347,8 @@ document.addEventListener('click', (e) => {
         alternarSubabaCadastros('mei');
     } else if (e.target.id === 'btnSubEmpresa') {
         alternarSubabaCadastros('empresa');
+    } else if (e.target.id === 'btnSubEquipe') {
+        alternarSubabaCadastros('equipe');
     }
 
     if (e.target.classList.contains('pill-filtro')) {
@@ -531,3 +541,182 @@ async function atualizarStatusContrato(contratoId, novoStatus) {
 }
 
 carregarAdmin();
+
+// =========================================================
+// CONVITES DE ACESSO DA EQUIPE (somente administrador)
+// =========================================================
+
+async function carregarConvites() {
+    if (!adminIdGlobal) return;
+    try {
+        const res = await fetch(`http://localhost:3000/admin/convites?usuario_id=${adminIdGlobal}`);
+        const lista = await res.json();
+        if (!res.ok) throw new Error(lista.erro || 'Erro ao carregar convites.');
+        renderizarConvites(lista);
+    } catch (err) {
+        console.error('Erro ao carregar convites:', err);
+        mostrarAviso('Nao foi possivel carregar os convites.', true);
+    }
+}
+
+async function gerarConvite() {
+    if (!adminIdGlobal) return;
+    const tipo = document.getElementById('tipoConvite').value;
+
+    try {
+        const res = await fetch('http://localhost:3000/admin/gerar-convite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario_id: adminIdGlobal, tipo })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.erro || 'Erro ao gerar convite.');
+
+        mostrarAviso(`Codigo ${data.convite.codigo} gerado para ${tipo}.`);
+        carregarConvites();
+    } catch (err) {
+        mostrarAviso(err.message, true);
+    }
+}
+
+async function revogarConvite(conviteId) {
+    if (!confirm('Tem certeza que deseja cancelar este convite?')) return;
+
+    try {
+        const res = await fetch('http://localhost:3000/admin/revogar-convite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario_id: adminIdGlobal, convite_id: conviteId })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.erro || 'Erro ao cancelar convite.');
+
+        mostrarAviso('Convite cancelado.');
+        carregarConvites();
+    } catch (err) {
+        mostrarAviso(err.message, true);
+    }
+}
+
+function copiarCodigo(codigo) {
+    navigator.clipboard.writeText(codigo)
+        .then(() => mostrarAviso(`Codigo ${codigo} copiado!`))
+        .catch(() => mostrarAviso('Nao foi possivel copiar o codigo.', true));
+}
+
+function formatarDataConvite(valor) {
+    if (!valor) return '-';
+    const d = new Date(valor.replace(' ', 'T') + 'Z');
+    return isNaN(d) ? valor : d.toLocaleString('pt-BR');
+}
+
+function renderizarConvites(lista) {
+    const container = document.getElementById('listaConvitesCards');
+    const contador = document.getElementById('contadorConvites');
+    if (!container) return;
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum convite gerado ate o momento.</div>';
+        if (contador) contador.innerText = '';
+        return;
+    }
+
+    const ativos = lista.filter(c => c.situacao === 'ativo').length;
+    if (contador) contador.innerText = `${lista.length} convite(s) - ${ativos} ativo(s)`;
+
+    container.innerHTML = lista.map(c => {
+        const cores = {
+            ativo: '#3faf6e',
+            usado: '#777777',
+            expirado: '#d9534f',
+            revogado: '#d9534f'
+        };
+
+        const detalhe = c.situacao === 'usado'
+            ? `Usado por ${c.usado_por_email || 'usuario removido'} em ${formatarDataConvite(c.usado_em)}`
+            : `Valido ate ${formatarDataConvite(c.expira_em)}`;
+
+        const acoes = c.situacao === 'ativo'
+            ? `<button class="shiny-cta1 btn-convite" onclick="copiarCodigo('${c.codigo}')">Copiar código</button>
+               <button class="shiny-cta1 btn-convite" onclick="revogarConvite(${c.id})">Cancelar</button>`
+            : '';
+
+        return `
+        <div class="card-notificacao">
+            <div class="notif-conteudo" style="width: 100%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <h4 class="card-convite-codigo">${c.codigo}</h4>
+                    <span class="badge-status" style="color: ${cores[c.situacao]};">&bull; ${c.situacao}</span>
+                </div>
+                <p>Convite para <strong>${c.tipo}</strong> - criado por ${c.criado_por_email || '-'}</p>
+                <span class="notif-data">${detalhe}</span>
+                <div class="acoes-convite">${acoes}</div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+
+// =========================================================
+// MENU DE PERFIL DO HEADER
+// =========================================================
+
+function preencherMenuPerfil() {
+    const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+    const user = rawUser ? JSON.parse(rawUser) : null;
+    if (!user) return;
+
+    const email = document.getElementById('perfilEmail');
+    const tipo = document.getElementById('perfilTipo');
+    const titulo = document.getElementById('tituloUsuario');
+
+    if (email) email.innerText = user.email || 'Sem e-mail';
+    if (tipo) tipo.innerText = (user.tipo || '').toUpperCase();
+
+    // o titulo da saudacao era fixo em "Colaborador"
+    if (titulo) {
+        titulo.innerText = (user.tipo || '').toLowerCase() === 'admin' ? 'Administrador' : 'Colaborador';
+    }
+}
+
+function alternarMenuPerfil() {
+    const menu = document.getElementById('menuPerfil');
+    const botao = document.getElementById('linkLoginPainel');
+    if (!menu || !botao) return;
+
+    const abrindo = !menu.classList.contains('aberto');
+    menu.classList.toggle('aberto', abrindo);
+    botao.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+}
+
+function fecharMenuPerfil() {
+    const menu = document.getElementById('menuPerfil');
+    const botao = document.getElementById('linkLoginPainel');
+    if (!menu) return;
+    menu.classList.remove('aberto');
+    if (botao) botao.setAttribute('aria-expanded', 'false');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    preencherMenuPerfil();
+
+    const botao = document.getElementById('linkLoginPainel');
+    if (botao) {
+        botao.addEventListener('click', (e) => {
+            e.stopPropagation();
+            alternarMenuPerfil();
+        });
+    }
+});
+
+// fecha ao clicar fora ou apertar Esc
+document.addEventListener('click', (e) => {
+    const wrapper = document.querySelector('.perfil-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) fecharMenuPerfil();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fecharMenuPerfil();
+});

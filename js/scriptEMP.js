@@ -88,6 +88,14 @@ async function carregarTudo() {
 
                 if (document.getElementById('telefone')) document.getElementById('telefone').value = perfil.telefone || '';
                 /*adicionado por sofia ---- EMAIL NO PERFIL DE EMPRESA*/
+                // selects de estado/cidade preenchidos pelo modulo de localizacao
+                if (window.PJLocal) {
+                    PJLocal.preencherEndereco(
+                        { cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' },
+                        { cep: perfil.cep, uf: perfil.uf, cidade: perfil.cidade, bairro: perfil.bairro }
+                    );
+                }
+
                 emailEmpresaAtual = perfil.email || user.email || '';
                 if (document.getElementById('emailEmpresa')) {
                     document.getElementById('emailEmpresa').value = perfil.email || user.email || '';
@@ -385,7 +393,11 @@ document.getElementById('formPerfilEmpresa').addEventListener('submit', async (e
         razao_social: document.getElementById('razao_social').value,
         cnpj: document.getElementById('cnpj').value,
         telefone: document.getElementById('telefone').value,
-        email: document.getElementById('emailEmpresa').value // E-mail editável
+        email: document.getElementById('emailEmpresa').value, // E-mail editável
+        cep: document.getElementById('cep').value,
+        uf: document.getElementById('uf').value,
+        cidade: document.getElementById('cidade').value,
+        bairro: document.getElementById('bairro').value
     };
 
     try {
@@ -548,3 +560,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 carregarTudo();
+
+
+// CEP preenche estado/cidade/bairro sozinho (ViaCEP + IBGE)
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.PJLocal) {
+        PJLocal.ligarCampos({ cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' });
+    }
+});

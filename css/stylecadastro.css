@@ -197,7 +197,10 @@ main {
   transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .campo-pj {
-  max-height: 150px;
+  /* 150px cortava 24px quando os dois campos empilham em tela estreita.
+     O valor so precisa ser maior que o conteudo: e usado pela animacao
+     que recolhe os campos no modo ADM (max-height vai a 0). */
+  max-height: 400px;
   opacity: 1;
   overflow: hidden;
   margin-bottom: 18px;
@@ -218,7 +221,8 @@ main {
     opacity 0.5s ease-in-out,
     margin-bottom 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-pj {
+#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-pj,
+#formCadastro:has(select#tipo option[value="colaborador"]:checked) .campo-pj {
   max-height: 0 !important;
   opacity: 0 !important;
   margin-bottom: 0 !important;
@@ -226,8 +230,9 @@ main {
   padding-bottom: 0 !important;
   visibility: hidden !important;
 }
-#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-admin {
-  max-height: 100px !important;
+#formCadastro:has(select#tipo option[value="admin"]:checked) .campo-admin,
+#formCadastro:has(select#tipo option[value="colaborador"]:checked) .campo-admin {
+  max-height: 160px !important;
   opacity: 1 !important;
   visibility: visible !important;
   margin-bottom: 18px !important;
@@ -474,6 +479,36 @@ main {
   border-radius: 2px;
   transition: all 0.3s ease;
 }
+
+/* =========================================================
+   ESTILIZAÇÃO DOS SELETORES E OPÇÕES (DROPDOWN VERDE)
+========================================================= */
+.campo select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23666666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+  border-radius: 20px !important;
+}
+
+/* ATENÇÃO: o popup aberto do <select> é desenhado pelo sistema
+   operacional, não pelo navegador. No Chrome/Windows ele ignora
+   padding, :hover e :checked do option — era daí que vinha a
+   faixa azul. Quem pinta a lista de verde agora é o listbox em
+   css/select-custom.css + js/selectCustom.js.
+
+   As regras abaixo ficam só como reserva para Firefox/Linux e
+   para o caso de o JS não carregar. Não adianta reforçá-las. */
+.campo select option {
+  background-color: var(--card-bg) !important;
+  color: var(--card-text) !important;
+  font-family: 'Montserrat', sans-serif;
+}
+
 
 /* =========================================================
    VARIÁVEIS DE TEMA (CLARO / ESCURO) - LOGIN
@@ -911,4 +946,31 @@ nav {
     max-height: 150px;
     overflow-y: auto !important;
   }
+}
+/* =========================================================
+   AVISOS DO CAMPO DE CEP
+========================================================= */
+.aviso-cep {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #d9534f;
+}
+
+.buscando-cep {
+  background-image: linear-gradient(90deg,
+      rgba(63, 175, 110, 0) 0%,
+      rgba(63, 175, 110, 0.18) 50%,
+      rgba(63, 175, 110, 0) 100%);
+  background-size: 200% 100%;
+  animation: cep-carregando 1s linear infinite;
+}
+
+@keyframes cep-carregando {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buscando-cep { animation: none; }
 }

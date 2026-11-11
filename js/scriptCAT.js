@@ -73,7 +73,9 @@ async function carregarCatalogo() {
 
         listaMeisGeral = await res.json();
 
-        exibirCatalogo(listaMeisGeral);
+        montarFiltrosLocal();
+
+        filtrarCatalogo();
 
     } catch (err) {
 
@@ -81,6 +83,12 @@ async function carregarCatalogo() {
 
     }
 
+}
+
+function rotuloAtendimento(valor) {
+    if (valor === 'presencial') return 'Presencial';
+    if (valor === 'remoto') return 'Remoto';
+    return 'Presencial ou remoto';
 }
 
 function exibirCatalogo(lista) {
@@ -113,6 +121,7 @@ function exibirCatalogo(lista) {
                     ${m.servicos.map(s => `
 <li style="margin-bottom: 4px;">
 <strong>${s.titulo}</strong>: <span style="color:#28a745; font-weight:bold;">${s.preco ? `R$ ${parseFloat(s.preco).toFixed(2)}` : 'A combinar'}</span>
+<span class="etiqueta-modalidade etiqueta-${s.modalidade || 'ambos'}">${rotuloAtendimento(s.modalidade)}</span>
 
                             ${s.descricao ? `<br><small style="color:#666;">${s.descricao}</small>` : ''}
 </li>
@@ -131,7 +140,8 @@ function exibirCatalogo(lista) {
 
                     ${m.razao_social && m.razao_social !== nomeExibicao ? `<p style="font-size:0.85em; color:#666;"><strong>Razão Social:</strong> ${m.razao_social}</p>` : ''}
 <p><strong>CNPJ:</strong> ${m.cnpj || 'Não informado'}</p>
-<p><strong>Cidade:</strong> ${m.cidade || 'Não informada'}</p>
+<p><strong>Cidade:</strong> ${m.cidade ? (m.cidade + (m.uf ? ' / ' + m.uf : '')) : 'Não informada'}</p>
+<p><strong>Atendimento:</strong> <span class="etiqueta-modalidade etiqueta-${m.modalidade_padrao || 'ambos'}">${rotuloAtendimento(m.modalidade_padrao)}</span></p>
 <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
 <div style="margin-top: 8px; font-size:0.88em; color:#444;">
 <p><strong>Telefone:</strong> ${m.telefone || 'Não informado'}</p>
@@ -162,7 +172,7 @@ let categoriaSelecionada = '';
 
 function selecionarCategoria(botaoClicado, categoria) {
 
-    document.querySelectorAll('.pill-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('#containerCategorias .pill-btn').forEach(btn => btn.classList.remove('active'));
 
     botaoClicado.classList.add('active');
 
@@ -172,11 +182,163 @@ function selecionarCategoria(botaoClicado, categoria) {
 
 }
 
+// =========================================================
+// FILTRO DE MODALIDADE E LOCALIZACAO
+// =========================================================
+
+let modalidadeSelecionada = '';
+
+function selecionarModalidade(botaoClicado, modalidade) {
+    document.querySelectorAll('#containerModalidade .pill-btn').forEach(btn => btn.classList.remove('active'));
+    botaoClicado.classList.add('active');
+    modalidadeSelecionada = modalidade;
+    filtrarCatalogo();
+}
+
+// Um MEI atende "presencial" se o perfil dele aceita presencial
+// OU se ele tem pelo menos um servico presencial cadastrado.
+function atendeModalidade(m, modalidade) {
+    if (!modalidade) return true;
+
+    const padrao = m.modalidade_padrao || 'ambos';
+    if (padrao === modalidade || padrao === 'ambos') return true;
+
+    const servicos = Array.isArray(m.servicos) ? m.servicos : [];
+    return servicos.some(s => s.modalidade === modalidade || s.modalidade === 'ambos');
+}
+
+// Os selects so oferecem estados e cidades onde existe prestador
+function montarFiltrosLocal() {
+    const selUF = document.getElementById('filtroUF');
+    if (!selUF) return;
+
+    const ufs = [...new Set(listaMeisGeral.map(m => m.uf).filter(Boolean))].sort();
+    selUF.innerHTML = '<option value="">Estado</option>' +
+        ufs.map(u => `<option value="${u}">${u}</option>`).join('');
+    if (window.PJSelect) PJSelect.atualizar(selUF);
+
+    montarCidades('');
+    mostrarBotaoMinhaCidade();
+}
+
+function montarCidades(uf) {
+    const selCidade = document.getElementById('filtroCidade');
+    if (!selCidade) return;
+
+    const cidades = [...new Set(
+        listaMeisGeral
+            .filter(m => !uf || m.uf === uf)
+            .map(m => m.cidade)
+            .filter(Boolean)
+    )].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    selCidade.innerHTML = '<option value="">Cidade</option>' +
+        cidades.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (window.PJSelect) PJSelect.atualizar(selCidade);
+}
+
+function aoTrocarUF() {
+    montarCidades(document.getElementById('filtroUF').value);
+    filtrarCatalogo();
+}
+
+// Empresa logada com cidade cadastrada ganha o atalho
+let cidadeEmpresaLogada = null;
+
+async function mostrarBotaoMinhaCidade() {
+    const btn = document.getElementById('btnMinhaCidade');
+    if (!btn) return;
+
+    const raw = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+    const user = raw ? JSON.parse(raw) : null;
+    if (!user || !['empresa', 'empresa_grande'].includes(user.tipo)) return;
+
+    try {
+        const res = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${user.id}`);
+        const perfil = await res.json();
+        if (perfil && perfil.cidade && perfil.uf) {
+            cidadeEmpresaLogada = { cidade: perfil.cidade, uf: perfil.uf };
+            btn.innerText = `Presencial em ${perfil.cidade}`;
+            btn.style.display = 'inline-block';
+        }
+    } catch (err) {
+        console.error('Erro ao buscar cidade da empresa:', err);
+    }
+}
+
+function filtrarPelaMinhaCidade() {
+    if (!cidadeEmpresaLogada) return;
+
+    const selUF = document.getElementById('filtroUF');
+    const selCidade = document.getElementById('filtroCidade');
+
+    // garante que a opcao exista mesmo se ninguem atende la ainda
+    if (![...selUF.options].some(o => o.value === cidadeEmpresaLogada.uf)) {
+        selUF.insertAdjacentHTML('beforeend', `<option value="${cidadeEmpresaLogada.uf}">${cidadeEmpresaLogada.uf}</option>`);
+    }
+    selUF.value = cidadeEmpresaLogada.uf;
+    montarCidades(cidadeEmpresaLogada.uf);
+
+    if (![...selCidade.options].some(o => o.value === cidadeEmpresaLogada.cidade)) {
+        selCidade.insertAdjacentHTML('beforeend', `<option value="${cidadeEmpresaLogada.cidade}">${cidadeEmpresaLogada.cidade}</option>`);
+    }
+    selCidade.value = cidadeEmpresaLogada.cidade;
+
+    // as opcoes podem ter sido inseridas acima: refaz as listas do componente
+    if (window.PJSelect) {
+        PJSelect.atualizar(selUF);
+        PJSelect.atualizar(selCidade);
+    }
+
+    const pillPresencial = [...document.querySelectorAll('#containerModalidade .pill-btn')]
+        .find(b => b.innerText.trim() === 'Presencial');
+    if (pillPresencial) selecionarModalidade(pillPresencial, 'presencial');
+    else filtrarCatalogo();
+}
+
+// Mostra "3 de 7 prestadores" e o link de limpar so quando ha filtro
+function atualizarResumo(qtd, termo, uf, cidade) {
+    const contador = document.getElementById('contadorResultados');
+    const limpar = document.getElementById('btnLimparFiltros');
+    const total = listaMeisGeral.length;
+
+    const temFiltro = Boolean(termo || categoriaSelecionada || modalidadeSelecionada || uf || cidade);
+    const palavra = total === 1 ? 'prestador' : 'prestadores';
+
+    if (contador) {
+        contador.innerHTML = temFiltro
+            ? `<strong>${qtd}</strong> de ${total} ${palavra}`
+            : `<strong>${total}</strong> ${palavra}`;
+    }
+    if (limpar) limpar.style.display = temFiltro ? 'inline' : 'none';
+}
+
+function limparFiltros() {
+    document.getElementById('inputBusca').value = '';
+
+    const primeiraCategoria = document.querySelector('#containerCategorias .pill-btn');
+    if (primeiraCategoria) selecionarCategoria(primeiraCategoria, '');
+
+    const primeiraModalidade = document.querySelector('#containerModalidade .pill-btn');
+    document.querySelectorAll('#containerModalidade .pill-btn').forEach(b => b.classList.remove('active'));
+    if (primeiraModalidade) primeiraModalidade.classList.add('active');
+    modalidadeSelecionada = '';
+
+    const selUF = document.getElementById('filtroUF');
+    selUF.value = '';
+    if (window.PJSelect) PJSelect.sincronizar(selUF);
+    montarCidades('');
+
+    filtrarCatalogo();
+}
+
 function filtrarCatalogo() {
 
     const termo = document.getElementById('inputBusca').value.toLowerCase().trim();
 
     const cat = categoriaSelecionada.toLowerCase().trim();
+    const uf = document.getElementById('filtroUF') ? document.getElementById('filtroUF').value : '';
+    const cidade = document.getElementById('filtroCidade') ? document.getElementById('filtroCidade').value : '';
 
     const filtrados = listaMeisGeral.filter(m => {
 
@@ -188,11 +350,17 @@ function filtrarCatalogo() {
 
         const bateCategoria = cat === '' || categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-        return bateTexto && bateCategoria;
+        const bateModalidade = atendeModalidade(m, modalidadeSelecionada);
+        const bateUF = uf === '' || (m.uf || '') === uf;
+        const bateCidade = cidade === '' || (m.cidade || '') === cidade;
+
+        return bateTexto && bateCategoria && bateModalidade && bateUF && bateCidade;
 
     });
 
     exibirCatalogo(filtrados);
+
+    atualizarResumo(filtrados.length, termo, uf, cidade);
 
 }
 

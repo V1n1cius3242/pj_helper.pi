@@ -1377,3 +1377,232 @@ tr:hover {
     width: 90%; 
   } 
 }
+/* =========================================================
+   ABA DE CONVITES
+========================================================= */
+.barra-convites {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+/* o select customizado entra com width:100%, por isso a
+   largura é controlada aqui pelo container */
+.barra-convites .select-custom {
+  flex: 0 1 280px;
+}
+
+/* o .shiny-cta1 tem width fixo de 85px e cortava o texto */
+.btn-convite {
+  width: auto !important;
+  min-width: 120px;
+  padding: 0 22px !important;
+  white-space: nowrap;
+  cursor: pointer !important;
+}
+
+.acoes-convite {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-convite-codigo {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   MENU DE PERFIL DO HEADER
+========================================================= */
+.perfil-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-perfil {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 200;
+  min-width: 230px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(65, 65, 65, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.menu-perfil.aberto {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu-perfil-rotulo {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin: 0 0 4px;
+}
+
+.menu-perfil-email {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 10px;
+  word-break: break-all;
+}
+
+.menu-perfil-tipo {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(63, 175, 110, 0.15);
+  color: #2e8b57;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.menu-perfil-sair {
+  width: 100%;
+  margin-top: 14px;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 12px;
+  background: #c5221f14;
+  color: #c5221f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.menu-perfil-sair:hover {
+  background: #c5221f26;
+}
+
+.menu-perfil-sair:active {
+  transform: scale(0.97);
+}
+
+[data-theme="dark"] .menu-perfil {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .menu-perfil-email {
+  color: #f1f1f1;
+}
+
+/* =========================================================
+   ESTADOS DE INTERACAO DOS BOTOES
+   (o CSS original so tinha :hover em 4 lugares)
+========================================================= */
+
+/* o cursor de menu de contexto dava a impressao de botao morto */
+.shiny-cta1,
+.shiny-cta1 * {
+  cursor: pointer !important;
+}
+
+.shiny-cta1 {
+  transition: box-shadow 0.3s, transform 0.2s ease, filter 0.2s ease;
+}
+
+.shiny-cta1:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 1px inset,
+              rgba(0, 0, 0, 0.2) 0 -2px 6px inset,
+              rgba(4, 120, 87, 0.45) 0 12px 20px -8px;
+}
+
+.shiny-cta1:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.shiny-cta1:focus-visible,
+.subaba-btn:focus-visible,
+.pill-filtro:focus-visible,
+.btn-acao-sucesso:focus-visible,
+.btn-acao-recusar:focus-visible,
+.buttonsair:focus-visible {
+  outline: 2px solid #3faf6e;
+  outline-offset: 2px;
+}
+
+.subaba-btn,
+.pill-filtro,
+.btn-acao-sucesso,
+.btn-acao-recusar,
+.buttonsair {
+  transition: background-color 0.2s ease, color 0.2s ease,
+              transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.subaba-btn:hover,
+.pill-filtro:hover {
+  background: #e6efe9;
+  color: #2e8b57;
+}
+
+.pill-filtro.ativo:hover {
+  background: #2b2b2b;
+  color: #ffffff;
+}
+
+.btn-acao-sucesso:hover {
+  background: #d9f5e3;
+  box-shadow: 0 4px 10px rgba(56, 161, 105, 0.22);
+}
+
+.btn-acao-recusar:hover {
+  background: #ffe3e3;
+  box-shadow: 0 4px 10px rgba(229, 62, 62, 0.22);
+}
+
+.buttonsair:hover {
+  background-color: #c5221f3d;
+}
+
+.subaba-btn:active,
+.pill-filtro:active,
+.btn-acao-sucesso:active,
+.btn-acao-recusar:active,
+.buttonsair:active {
+  transform: scale(0.96);
+}
+
+[data-theme="dark"] .subaba-btn:hover,
+[data-theme="dark"] .pill-filtro:hover {
+  background: rgba(63, 175, 110, 0.2);
+  color: #6fd79b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shiny-cta1,
+  .subaba-btn,
+  .pill-filtro,
+  .btn-acao-sucesso,
+  .btn-acao-recusar,
+  .buttonsair,
+  .menu-perfil,
+  .menu-perfil-sair {
+    transition: none;
+    animation: none;
+  }
+}

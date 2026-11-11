@@ -33,6 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_empresa.css">
+    <link rel="stylesheet" href="./css/select-custom.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <title>PJ Helper - Empresa</title>
@@ -165,6 +166,36 @@
                         <input type="email" id="emailEmpresa" maxlength="300" required
                             placeholder="contato@empresa.com">
                     </div>
+
+                    <!-- LOCALIZAÇÃO: usada para achar quem atende a sua região -->
+                    <div style="display: flex; gap: 15px;">
+                        <div class="campo-form-empresa" style="width: 180px;">
+                            <label for="cep">CEP:</label>
+                            <input type="text" id="cep" placeholder="00000-000" maxlength="9" inputmode="numeric">
+                        </div>
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="uf">Estado:</label>
+                            <select id="uf" class="select-painel" data-select-custom>
+                                <option value="">Carregando estados...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="cidade">Cidade:</label>
+                            <select id="cidade" class="select-painel" data-select-custom>
+                                <option value="">Escolha o estado primeiro...</option>
+                            </select>
+                        </div>
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" placeholder="Bairro da empresa" maxlength="100">
+                        </div>
+                    </div>
+                    <small class="dica-campo">
+                        A cidade é usada no catálogo para achar prestadores que atendem presencialmente na sua região.
+                    </small>
                     <button type="submit" class="shiny-cta1"
                         style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Salvar perfil da empresa</span>
@@ -248,6 +279,8 @@
         </section>
     </footer>
 
+    <script src="./js/selectCustom.js"></script>
+    <script src="./js/localizacao.js"></script>
     <script src="./js/scriptEMP.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_empresa.css">
+    <link rel="stylesheet" href="./css/select-custom.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <script>
@@ -114,9 +115,43 @@
                         <label>Anos de Experiência:</label>
                         <input type="number" id="anos_experiencia">
                     </div>
+                    <!-- LOCALIZAÇÃO: o CEP preenche estado, cidade e bairro -->
+                    <div style="display: flex; gap: 15px;">
+                        <div class="campo-form-empresa" style="width: 180px;">
+                            <label for="cep">CEP:</label>
+                            <input type="text" id="cep" placeholder="00000-000" maxlength="9" inputmode="numeric">
+                        </div>
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="uf">Estado:</label>
+                            <select id="uf" class="select-painel" data-select-custom>
+                                <option value="">Carregando estados...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="cidade">Cidade:</label>
+                            <select id="cidade" class="select-painel" data-select-custom>
+                                <option value="">Escolha o estado primeiro...</option>
+                            </select>
+                        </div>
+                        <div class="campo-form-empresa" style="flex: 1;">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" placeholder="Seu bairro" maxlength="100">
+                        </div>
+                    </div>
+
                     <div class="campo-form-empresa">
-                        <label>Cidade / Estado:</label>
-                        <input type="text" id="cidade">
+                        <label for="modalidade_padrao">Como você atende:</label>
+                        <select id="modalidade_padrao" class="select-painel" data-select-custom>
+                            <option value="ambos">Presencial e remoto</option>
+                            <option value="presencial">Somente presencial</option>
+                            <option value="remoto">Somente remoto</option>
+                        </select>
+                        <small class="dica-campo">
+                            Isso aparece para as empresas que filtram por atendimento presencial.
+                        </small>
                     </div>
                     <div class="campo-form-empresa">
                         <label>Site Oficial:</label>
@@ -165,9 +200,19 @@
                             <input type="number" step="0.01" id="servico_preco" placeholder="0.00" required>
                         </div>
                     </div>
-                    <div class="campo-form-empresa" style="margin-bottom: 20px;">
-                        <label for="servico_desc">Descrição Curta:</label>
-                        <input type="text" id="servico_desc" placeholder="Detalhes simples do que está incluso no serviço">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div class="campo-form-empresa" style="flex: 1; margin-bottom: 0;">
+                            <label for="servico_desc">Descrição Curta:</label>
+                            <input type="text" id="servico_desc" placeholder="Detalhes simples do que está incluso no serviço">
+                        </div>
+                        <div class="campo-form-empresa" style="width: 240px; margin-bottom: 0;">
+                            <label for="servico_modalidade">Este serviço é:</label>
+                            <select id="servico_modalidade" class="select-painel" data-select-custom>
+                                <option value="ambos">Presencial ou remoto</option>
+                                <option value="presencial">Presencial</option>
+                                <option value="remoto">Remoto</option>
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="shiny-cta1" style="width: auto; height: 42px; padding: 0 25px;">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Cadastrar Serviço</span>
@@ -235,6 +280,8 @@
         </section>
     </footer>
 
+    <script src="./js/selectCustom.js"></script>
+    <script src="./js/localizacao.js"></script>
     <script src="./js/scriptMEI.js"></script>
 </body>
 </html>

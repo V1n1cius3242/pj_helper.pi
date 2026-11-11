@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/stylecadastro.css">
+    <link rel="stylesheet" href="./css/select-custom.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
 
     <title>PJ Helper - Cadastro</title>
@@ -81,11 +82,12 @@
                 <div class="linha-dupla">
                     <div class="campo">
                         <label for="tipo">Tipo de Conta:</label>
-                        <select id="tipo" required>
+                        <select id="tipo" required data-select-custom>
                             <option value="" disabled selected>Selecione o tipo de conta</option>
                             <option value="mei">MEI (Prestador de Serviço)</option>
                             <option value="empresa">Empresa / Contratante</option>
                             <option value="admin">Administrador (ADM)</option>
+                            <option value="colaborador">Colaborador</option>
                         </select>
                     </div>
 
@@ -118,7 +120,7 @@
 
                     <div class="campo">
                         <label for="categoria">Categoria:</label>
-                        <select id="categoria" required>
+                        <select id="categoria" required data-select-custom>
                             <option value="" disabled selected>Selecione...</option>
                             <option value="Agricultura">Agricultura</option>
                             <option value="Alimentação">Alimentação</option>
@@ -129,6 +131,35 @@
                             <option value="Têxtil">Têxtil</option>
                             <option value="Outros">Outros</option>
                         </select>
+                    </div>
+                </div>
+
+                <!-- LOCALIZAÇÃO (preenchida pelo CEP via ViaCEP) -->
+                <div class="linha-dupla campo-pj">
+                    <div class="campo">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" placeholder="00000-000" maxlength="9" inputmode="numeric">
+                    </div>
+
+                    <div class="campo">
+                        <label for="uf">Estado:</label>
+                        <select id="uf" data-select-custom>
+                            <option value="">Carregando estados...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="linha-dupla campo-pj">
+                    <div class="campo">
+                        <label for="cidade">Cidade:</label>
+                        <select id="cidade" data-select-custom>
+                            <option value="">Escolha o estado primeiro...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="bairro">Bairro:</label>
+                        <input type="text" id="bairro" placeholder="Seu bairro" maxlength="100">
                     </div>
                 </div>
 
@@ -156,8 +187,12 @@
 
                 <!-- CAMPO CHAVE ADM -->
                 <div class="campo campo-admin centralizado-adm" id="boxChaveAdmin">
-                    <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Chave de Acesso ADM:</label>
-                    <input type="password" maxlength="150" id="chaveAdmin" placeholder="Digite a chave de segurança">
+                    <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Código de Acesso da Equipe:</label>
+                    <input type="text" maxlength="6" inputmode="numeric" id="chaveAdmin"
+                        placeholder="Código de 6 dígitos enviado pelo administrador">
+                    <small style="color: #777; margin-top: 6px; display: block;">
+                        O código é gerado por um administrador e vale por 7 dias.
+                    </small>
                 </div>
 
                 <button type="submit" id="btnCadastrar">Criar conta</button>
@@ -240,6 +275,8 @@
         });
         
     </script>
+<script src="./js/selectCustom.js"></script>
+<script src="./js/localizacao.js"></script>
 <script src="./js/scriptCAD.js"></script>
 </body>
 

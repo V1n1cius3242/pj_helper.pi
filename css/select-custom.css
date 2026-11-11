@@ -1,0 +1,260 @@
+/* =========================================================
+   SELECT CUSTOMIZADO - PJ HELPER
+   Substitui o dropdown nativo do SO (que ignora CSS e pinta
+   a opção ativa de azul) por um listbox em HTML, estilizado
+   com o verde do site. O <select> original continua no DOM
+   como fonte de verdade: .value, required e :checked seguem
+   funcionando para o resto do código.
+========================================================= */
+
+.select-custom {
+  position: relative;
+  width: 100%;
+}
+
+/* O select nativo fica invisível, ocupando a mesma caixa do
+   botão, para o balão de validação do "required" aparecer no
+   lugar certo. pointer-events: none impede o popup azul. */
+.select-custom > select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---------------------------------------------- o botão */
+
+.select-botao {
+  width: 100%;
+  padding: 13px 40px 13px 15px;
+  border: 1px solid var(--input-border, #ccc);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--input-bg, #ffffff);
+  color: var(--input-text, #000000);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Placeholder ("Selecione...") em cinza, como no nativo */
+.select-botao[data-vazio="true"] .select-valor {
+  color: #9a9a9a;
+}
+
+.select-valor {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-seta {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+  color: #666666;
+}
+
+.select-custom.aberto .select-seta {
+  transform: rotate(180deg);
+}
+
+.select-botao:hover,
+.select-botao:focus-visible,
+.select-custom.aberto .select-botao {
+  border-color: #3faf80;
+  box-shadow: 0 0 6px rgba(36, 148, 32, 0.6), 0 0 6px rgba(62, 206, 93, 0.3);
+  outline: none;
+}
+
+/* ---------------------------------------------- a lista */
+
+/* A lista vive no <body> (position: fixed) e não dentro do campo.
+   Motivo: .linha-dupla.campo-pj usa overflow:hidden + max-height
+   para animar o modo ADM, e isso cortava o dropdown pela metade.
+   O JS posiciona top/left/width a partir do botão. */
+.select-lista {
+  position: fixed;
+  z-index: 9999;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border, rgba(65, 65, 65, 0.15));
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+.select-lista.aberta {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.select-opcao {
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: var(--card-text, #0a0a0a);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* O verde que o option nativo nunca aceitou */
+.select-opcao:hover,
+.select-opcao.ativo {
+  background-color: rgba(63, 175, 110, 0.15);
+  color: #3faf6e;
+}
+
+.select-opcao[aria-selected="true"] {
+  background-color: rgba(63, 175, 110, 0.22);
+  color: #2e8b57;
+  font-weight: 600;
+}
+
+.select-opcao[aria-disabled="true"] {
+  color: #9a9a9a;
+  cursor: default;
+  background-color: transparent;
+}
+
+/* Scrollbar discreta na lista */
+.select-lista::-webkit-scrollbar {
+  width: 8px;
+}
+
+.select-lista::-webkit-scrollbar-thumb {
+  background-color: rgba(63, 175, 110, 0.35);
+  border-radius: 8px;
+}
+
+/* ---------------------------------------------- tema escuro */
+
+[data-theme="dark"] .select-opcao:hover,
+[data-theme="dark"] .select-opcao.ativo {
+  background-color: rgba(63, 175, 110, 0.25);
+  color: #3faf6e;
+}
+
+[data-theme="dark"] .select-opcao[aria-selected="true"] {
+  background-color: rgba(63, 175, 110, 0.32);
+  color: #6fd79b;
+}
+
+[data-theme="dark"] .select-botao[data-vazio="true"] .select-valor,
+[data-theme="dark"] .select-opcao[aria-disabled="true"] {
+  color: #8a8a8a;
+}
+
+[data-theme="dark"] .select-seta {
+  color: #bdbdbd;
+}
+
+/* ---------------------------------------------- acessibilidade */
+
+@media (prefers-reduced-motion: reduce) {
+  .select-lista,
+  .select-seta,
+  .select-opcao,
+  .select-botao {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   CONTEXTOS: o mesmo componente em cada tela, com a cara
+   dos inputs daquela tela
+========================================================= */
+
+/* Paineis MEI e Empresa: inputs menores, borda azulada */
+.campo-form-empresa .select-botao {
+  padding: 10px 40px 10px 14px;
+  border-color: #cbd5e0;
+  font-size: 0.9rem;
+  color: #2d3748;
+  background-color: #ffffff;
+}
+
+.campo-form-empresa .select-botao:hover,
+.campo-form-empresa .select-botao:focus-visible,
+.campo-form-empresa .select-custom.aberto .select-botao {
+  border-color: #3faf6e;
+}
+
+/* Catalogo: selects dentro da barra de filtros, sem borda propria */
+.filtros-local .select-botao {
+  padding: 8px 34px 8px 14px;
+  border-radius: 999px;
+  border-color: transparent;
+  font-size: 13px;
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+.filtros-local .select-botao:hover,
+.filtros-local .select-botao:focus-visible,
+.filtros-local .select-custom.aberto .select-botao {
+  background-color: #e9f6ef;
+  border-color: rgba(63, 175, 110, 0.5);
+  box-shadow: none;
+}
+
+/* com filtro escolhido, o select fica verde para mostrar que esta ativo */
+.filtros-local .select-botao[data-vazio="false"] {
+  background-color: #e9f6ef;
+  color: #2e8b57;
+  font-weight: 600;
+}
+
+/* Tema escuro: as telas que nao definem as variaveis --input-*
+   (paineis e catalogo) caiam no fundo branco do fallback */
+[data-theme="dark"] .select-botao {
+  background-color: var(--input-bg, #161616);
+  color: var(--input-text, #f1f1f1);
+  border-color: var(--input-border, rgba(255, 255, 255, 0.2));
+}
+
+[data-theme="dark"] .campo-form-empresa .select-botao {
+  background-color: #161616;
+  color: #f1f1f1;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .select-lista {
+  background-color: var(--card-bg, #1e1e1e);
+  border-color: var(--card-border, rgba(255, 255, 255, 0.1));
+}
+
+[data-theme="dark"] .select-opcao {
+  color: var(--card-text, #f1f1f1);
+}
+
+[data-theme="dark"] .filtros-local .select-botao {
+  background-color: #262626;
+  border-color: transparent;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .filtros-local .select-botao[data-vazio="false"] {
+  background-color: rgba(63, 175, 110, 0.22);
+  color: #6fd79b;
+}

@@ -1196,3 +1196,242 @@ body {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* =========================================================
+   FILTROS DO CATALOGO
+   Linha 1: busca + estado + cidade + atendimento
+   Linha 2: categorias
+   Linha 3: quantos apareceram + atalhos
+========================================================= */
+.filtros-container {
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.barra-filtros {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.barra-filtros:focus-within {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* a busca vira parte da barra: sem borda propria */
+.filtros-container .barra-filtros .busca-catalogo {
+  flex: 1 1 220px;
+  max-width: none;
+  min-width: 0;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 10px 14px 10px 42px;
+}
+
+.filtros-container .barra-filtros .busca-catalogo:focus {
+  box-shadow: none;
+}
+
+.filtros-local {
+  display: flex;
+  gap: 6px;
+}
+
+.filtros-local .select-custom {
+  width: 160px;
+}
+
+/* atendimento: controle segmentado */
+.segmentado {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: #f3f4f6;
+  border-radius: 999px;
+}
+
+.segmentado .pill-btn {
+  min-width: 0;
+  padding: 7px 14px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.segmentado .pill-btn:hover {
+  background: rgba(17, 24, 39, 0.06);
+  color: #111827;
+}
+
+.segmentado .pill-btn.active {
+  background: #111827;
+  color: #ffffff;
+}
+
+/* categorias: mais leves, em uma linha so (rola no celular) */
+#containerCategorias {
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+
+#containerCategorias::-webkit-scrollbar {
+  display: none;
+}
+
+#containerCategorias .pill-btn {
+  flex: 0 0 auto;
+  min-width: 0;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+/* resumo: contagem + atalhos */
+.resumo-filtros {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 28px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+#contadorResultados strong {
+  color: #111827;
+}
+
+.chip-atalho {
+  padding: 5px 12px;
+  border: 1px solid rgba(63, 175, 110, 0.4);
+  border-radius: 999px;
+  background: rgba(63, 175, 110, 0.1);
+  color: #2e8b57;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chip-atalho:hover {
+  background: rgba(63, 175, 110, 0.2);
+}
+
+.link-limpar {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #6b7280;
+  font-family: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.link-limpar:hover {
+  color: #2e8b57;
+}
+
+.chip-atalho:focus-visible,
+.link-limpar:focus-visible,
+.segmentado .pill-btn:focus-visible,
+#containerCategorias .pill-btn:focus-visible {
+  outline: 2px solid #3faf6e;
+  outline-offset: 2px;
+}
+
+/* etiqueta de presencial/remoto nos cards */
+.etiqueta-modalidade {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+}
+
+.etiqueta-presencial { background: rgba(214, 158, 46, 0.18); color: #b7791f; }
+.etiqueta-remoto     { background: rgba(66, 153, 225, 0.18); color: #2b6cb0; }
+.etiqueta-ambos      { background: rgba(63, 175, 110, 0.18); color: #2e8b57; }
+
+/* ---------- celular: a barra vira um cartao empilhado ---------- */
+@media (max-width: 760px) {
+  .barra-filtros {
+    border-radius: 18px;
+    padding: 8px;
+  }
+
+  .filtros-container .barra-filtros .busca-catalogo {
+    flex-basis: 100%;
+  }
+
+  .filtros-local {
+    flex: 1 1 100%;
+  }
+
+  .filtros-local .select-custom {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .segmentado {
+    flex: 1 1 100%;
+  }
+
+  .segmentado .pill-btn {
+    flex: 1 1 0;
+  }
+}
+
+/* ---------- tema escuro (o CSS antigo usa !important nas pills) ---------- */
+[data-theme="dark"] .barra-filtros {
+  background: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .filtros-container .barra-filtros .busca-catalogo {
+  background-color: transparent !important;
+  border: none !important;
+  color: #f1f1f1 !important;
+}
+
+[data-theme="dark"] .segmentado {
+  background: #262626;
+}
+
+[data-theme="dark"] .segmentado .pill-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #c4c4c4 !important;
+}
+
+[data-theme="dark"] .segmentado .pill-btn.active {
+  background: #2e8b57 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .resumo-filtros,
+[data-theme="dark"] .link-limpar {
+  color: #a0a0a0;
+}
+
+[data-theme="dark"] #contadorResultados strong {
+  color: #f1f1f1;
+}

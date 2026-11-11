@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // CEP preenche estado/cidade/bairro sozinho (ViaCEP + IBGE)
+    if (window.PJLocal) {
+        PJLocal.ligarCampos({ cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' });
+    }
+
     const selectTipo = document.getElementById('tipo');
     const boxChaveAdmin = document.getElementById('boxChaveAdmin');
     const formCadastro = document.getElementById('formCadastro');
@@ -12,9 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('categoria')
     ];
 
-    if (selectTipo.value === 'admin') {
+    // Admin e Colaborador entram por convite e nao preenchem dados de PJ
+    if (selectTipo.value === 'admin' || selectTipo.value === 'colaborador') {
         boxChaveAdmin.style.display = 'block';
-        // Remove obrigatoriedade dos campos de empresa/MEI para o Admin
+        // Remove obrigatoriedade dos campos de empresa/MEI para a equipe
         camposEmpresaMei.forEach(campo => campo.removeAttribute('required'));
     } else {
         boxChaveAdmin.style.display = 'none';
@@ -37,6 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const nomeResponsavel = document.getElementById('nome_responsavel').value.trim();
         const categoria = document.getElementById('categoria').value;
         const descricaoServico = document.getElementById('descricao_servico').value.trim();
+        const cep = document.getElementById('cep').value.trim();
+        const uf = document.getElementById('uf').value;
+        const cidade = document.getElementById('cidade').value;
+        const bairro = document.getElementById('bairro').value.trim();
 
         // Validação de confirmação de senha
         if (senha !== confirmarSenha) {
@@ -51,11 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
             senha,
             tipo,
             chaveAdmin,
+            codigoAcesso: chaveAdmin,
             razao_social: razaoSocial,
             cnpj,
             nome_responsavel: nomeResponsavel,
             categoria,
-            descricao_servico: descricaoServico
+            descricao_servico: descricaoServico,
+            cep,
+            uf,
+            cidade,
+            bairro
         };
 
         try {

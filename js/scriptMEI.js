@@ -47,7 +47,15 @@ async function carregarTudo() {
             document.getElementById('telefone').value = perfil.telefone || '';
             document.getElementById('categoria').value = perfil.categoria || '';
             document.getElementById('anos_experiencia').value = perfil.anos_experiencia || 0;
-            document.getElementById('cidade').value = perfil.cidade || '';
+            document.getElementById('modalidade_padrao').value = perfil.modalidade_padrao || 'ambos';
+            if (window.PJSelect) PJSelect.sincronizar(document.getElementById('modalidade_padrao'));
+            // os selects de estado/cidade sao preenchidos pelo modulo de localizacao
+            if (window.PJLocal) {
+                PJLocal.preencherEndereco(
+                    { cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' },
+                    { cep: perfil.cep, uf: perfil.uf, cidade: perfil.cidade, bairro: perfil.bairro }
+                );
+            }
             document.getElementById('site').value = perfil.site || '';
             document.getElementById('instagram').value = perfil.instagram || '';
             document.getElementById('resumo_servico').value = perfil.resumo_servico || '';
@@ -226,6 +234,13 @@ function toggleNotificacoes() {
 }
 
 // CARREGAR SERVIÇOS
+// texto curto da modalidade, usado na lista de servicos
+function rotuloModalidade(valor) {
+    if (valor === 'presencial') return 'Presencial';
+    if (valor === 'remoto') return 'Remoto';
+    return 'Presencial ou remoto';
+}
+
 async function carregarServicos(meiId) {
     try {
         const resS = await fetch(`http://localhost:3000/servicos?mei_id=${meiId}`);
@@ -237,6 +252,7 @@ async function carregarServicos(meiId) {
                 <li style="margin-bottom:12px; padding:15px; border:1px solid #edf2f7; border-radius:12px; display:flex; justify-content:space-between; align-items:center; background:#fff;">
                     <div>
                         <strong style="color:#2d3748;">${s.titulo}</strong> - <span style="color:#3faf6e; font-weight:bold;">R$ ${s.preco}</span>
+                        <span class="etiqueta-modalidade etiqueta-${s.modalidade || 'ambos'}">${rotuloModalidade(s.modalidade)}</span>
                         ${s.descricao ? `<br><small style="color:#718096;">${s.descricao}</small>` : ''}
                     </div>
                     <button onclick="deletarServico(${s.id}, ${meiId})" class="btn-acao-recusar">Apagar</button>
@@ -389,6 +405,10 @@ document.getElementById('formPerfilMei').addEventListener('submit', async (e) =>
         categoria: document.getElementById('categoria').value,
         anos_experiencia: document.getElementById('anos_experiencia').value,
         cidade: document.getElementById('cidade').value,
+        cep: document.getElementById('cep').value,
+        uf: document.getElementById('uf').value,
+        bairro: document.getElementById('bairro').value,
+        modalidade_padrao: document.getElementById('modalidade_padrao').value,
         site: document.getElementById('site').value,
         instagram: document.getElementById('instagram').value,
         resumo_servico: document.getElementById('resumo_servico').value,
@@ -428,7 +448,8 @@ document.getElementById('formServico').addEventListener('submit', async (e) => {
         mei_id: perfil.id,
         titulo: document.getElementById('servico_titulo').value,
         preco: document.getElementById('servico_preco').value,
-        descricao: document.getElementById('servico_desc').value
+        descricao: document.getElementById('servico_desc').value,
+        modalidade: document.getElementById('servico_modalidade').value
     };
 
     const res = await fetch('http://localhost:3000/servicos', {
@@ -440,6 +461,7 @@ document.getElementById('formServico').addEventListener('submit', async (e) => {
     if (res.ok) {
         mostrarAviso('Serviço cadastrado com sucesso!');
         document.getElementById('formServico').reset();
+        if (window.PJSelect) PJSelect.sincronizar(document.getElementById('servico_modalidade'));
         carregarServicos(perfil.id);
     } else {
         mostrarAviso('Erro ao cadastrar serviço.', true);
@@ -509,3 +531,10 @@ async function executarExclusaoConta() {
 }
 
 carregarTudo();
+
+// CEP preenche estado/cidade/bairro sozinho (ViaCEP + IBGE)
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.PJLocal) {
+        PJLocal.ligarCampos({ cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' });
+    }
+});

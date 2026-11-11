@@ -45,18 +45,60 @@ async function enviarEmail(para, assunto, texto) {
 }
 
 // 1. REGISTRO DE USUÁRIO
+// Gera o codigo do convite no mesmo padrao do token de recuperacao
+// de senha: 6 digitos numericos criados no servidor.
+function gerarCodigoConvite() {
+    return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+// Dias de validade do convite a partir da criacao
+const DIAS_VALIDADE_CONVITE = 7;
+
+// So quem e 'admin' mexe em convites. Colaborador nao cria ninguem.
+function exigirAdmin(usuarioId, callback) {
+    if (!usuarioId) return callback(false);
+    db.query("SELECT id FROM usuarios WHERE id = ? AND tipo = 'admin'", [usuarioId], (err, r) => {
+        callback(!err && r.length > 0);
+    });
+}
+
 app.post(['/cadastro', '/usuarios'], async (req, res) => {
-    let { email, senha, tipo, chaveAdmin, razao_social, cnpj, nome_responsavel, categoria, descricao_servico } = req.body;
+    let { email, senha, tipo, chaveAdmin, codigoAcesso, razao_social, cnpj, nome_responsavel,
+        categoria, descricao_servico, cep, uf, cidade, bairro } = req.body;
     
     if (!email || !senha || !tipo) {
         return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
     }
 
-    if (tipo === 'admin') {
-        const CHAVE_MESTRE_ADM = 'admin123';
-        if (chaveAdmin !== CHAVE_MESTRE_ADM) {
-            return res.status(403).json({ error: 'Chave de acesso ADM inválida!' });
+    // Contas da equipe (admin e colaborador) so entram com convite valido
+    const ehEquipe = (tipo === 'admin' || tipo === 'colaborador');
+    let conviteValido = null;
+
+    if (ehEquipe) {
+        const codigo = String(codigoAcesso || chaveAdmin || '').trim();
+        if (!codigo) {
+            return res.status(400).json({ error: 'Informe o código de acesso recebido do administrador.' });
         }
+
+        const erroConvite = await new Promise((resolve) => {
+            db.query('SELECT * FROM convites WHERE codigo = ?', [codigo], (err, r) => {
+                if (err) return resolve('Erro ao validar o código.');
+                if (r.length === 0) return resolve('Código de acesso inválido!');
+
+                const c = r[0];
+                if (c.revogado_em) return resolve('Este código foi cancelado pelo administrador.');
+                if (c.usado_em) return resolve('Este código já foi utilizado.');
+                if (c.tipo !== tipo) return resolve('Este código serve para cadastro de ' + c.tipo + '.');
+                if (new Date(c.expira_em) <= new Date()) {
+                    return resolve('Este código expirou. Peça um novo ao administrador.');
+                }
+
+                conviteValido = c;
+                resolve(null);
+            });
+        });
+
+        if (erroConvite) return res.status(403).json({ error: erroConvite });
     }
 
     const sqlCheck = 'SELECT id FROM usuarios WHERE email = ?';
@@ -67,7 +109,7 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
         try {
             const senhaHash = await bcrypt.hash(senha, 10);
             // Administradores já entram APROVADOS; MEI e Empresa entram PENDENTES
-            const statusInicial = (tipo === 'admin') ? 'aprovado' : 'pendente';
+            const statusInicial = ehEquipe ? 'aprovado' : 'pendente';
 
             const sqlInsert = 'INSERT INTO usuarios (email, senha, tipo, status) VALUES (?, ?, ?, ?)';
             
@@ -76,31 +118,54 @@ app.post(['/cadastro', '/usuarios'], async (req, res) => {
                 
                 const novoId = resInsert.insertId;
 
+                // Queima o convite: uso unico
+                if (conviteValido) {
+                    db.query(
+                        'UPDATE convites SET usado_por = ?, usado_em = NOW() WHERE id = ? AND usado_em IS NULL',
+                        [novoId, conviteValido.id]
+                    );
+                    db.query(
+                        'INSERT INTO notificacoes (usuario_id, mensagem) VALUES (?, ?)',
+                        [conviteValido.criado_por, 'O convite ' + conviteValido.codigo + ' foi utilizado por ' + email + ' (' + tipo.toUpperCase() + ').']
+                    );
+                }
+
                 if (tipo === 'mei') {
                     const sqlMei = `
-                        INSERT INTO perfis_mei (usuario_id, nome_fantasia, razao_social, cnpj, categoria, resumo_servico) 
-                        VALUES (?, ?, ?, ?, ?, ?)
+                        INSERT INTO perfis_mei (usuario_id, nome_fantasia, razao_social, cnpj, categoria, resumo_servico,
+                                                cep, uf, cidade, bairro)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         ON DUPLICATE KEY UPDATE 
                             nome_fantasia = VALUES(nome_fantasia),
                             razao_social = VALUES(razao_social),
                             cnpj = VALUES(cnpj),
                             categoria = VALUES(categoria),
-                            resumo_servico = VALUES(resumo_servico)
+                            resumo_servico = VALUES(resumo_servico),
+                            cep = VALUES(cep),
+                            uf = VALUES(uf),
+                            cidade = VALUES(cidade),
+                            bairro = VALUES(bairro)
                     `;
-                    db.query(sqlMei, [novoId, nome_responsavel, razao_social, cnpj, categoria, descricao_servico]);
+                    db.query(sqlMei, [novoId, nome_responsavel, razao_social, cnpj, categoria, descricao_servico,
+                        cep || null, uf || null, cidade || null, bairro || null]);
                 } else if (tipo === 'empresa') {
                     const sqlEmpresa = `
-                        INSERT INTO perfis_empresa (usuario_id, razao_social, cnpj) 
-                        VALUES (?, ?, ?)
+                        INSERT INTO perfis_empresa (usuario_id, razao_social, cnpj, cep, uf, cidade, bairro)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
                         ON DUPLICATE KEY UPDATE 
                             razao_social = VALUES(razao_social),
-                            cnpj = VALUES(cnpj)
+                            cnpj = VALUES(cnpj),
+                            cep = VALUES(cep),
+                            uf = VALUES(uf),
+                            cidade = VALUES(cidade),
+                            bairro = VALUES(bairro)
                     `;
-                    db.query(sqlEmpresa, [novoId, razao_social, cnpj]);
+                    db.query(sqlEmpresa, [novoId, razao_social, cnpj,
+                        cep || null, uf || null, cidade || null, bairro || null]);
                 }
 
                 // E-mail de Boas-vindas para o usuário cadastrado
-                if (tipo !== 'admin') {
+                if (!ehEquipe) {
                     enviarEmail(
                         email,
                         'Cadastro em Análise - PJ Helper',
@@ -162,14 +227,15 @@ app.get(['/catalogo-itens', '/servicos'], (req, res) => {
 });
 
 app.post(['/catalogo-itens', '/servicos'], (req, res) => {
-    const { mei_id, titulo, descricao, preco } = req.body;
+    const { mei_id, titulo, descricao, preco, modalidade } = req.body;
     
     if (!mei_id || !titulo) {
         return res.status(400).json({ erro: 'ID do MEI e Título são obrigatórios.' });
     }
 
-    const sql = 'INSERT INTO catalogo_itens (mei_id, titulo, descricao, preco) VALUES (?, ?, ?, ?)';
-    db.query(sql, [mei_id, titulo, descricao, preco], (err) => {
+    const mod = ['presencial', 'remoto', 'ambos'].includes(modalidade) ? modalidade : 'ambos';
+    const sql = 'INSERT INTO catalogo_itens (mei_id, titulo, descricao, preco, modalidade) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [mei_id, titulo, descricao, preco, mod], (err) => {
         if (err) return res.status(500).json({ erro: 'Erro ao registar item no catálogo.' });
         res.json({ sucesso: true });
     });
@@ -221,7 +287,11 @@ app.get(['/perfis-mei', '/catalogo-completo', '/meis'], (req, res) => {
             COALESCE(NULLIF(pm.categoria, ''), 'Geral') AS categoria,
             COALESCE(NULLIF(pm.resumo_servico, ''), 'Sem resumo no momento') AS resumo_servico,
             COALESCE(NULLIF(pm.apresentacao, ''), 'Sem apresentação') AS apresentacao,
-            COALESCE(NULLIF(pm.cidade, ''), 'Não informada') AS cidade,
+            NULLIF(pm.cidade, '') AS cidade,
+            NULLIF(pm.uf, '') AS uf,
+            NULLIF(pm.bairro, '') AS bairro,
+            pm.cep,
+            COALESCE(NULLIF(pm.modalidade_padrao, ''), 'ambos') AS modalidade_padrao,
             COALESCE(NULLIF(pm.telefone, ''), 'Sem telefone') AS telefone,
             COALESCE(NULLIF(pm.cnpj, ''), 'Sem CNPJ') AS cnpj,
             COALESCE(pm.anos_experiencia, 0) AS anos_experiencia,
@@ -262,7 +332,7 @@ app.get('/perfil-empresa', (req, res) => {
 });
 
 app.post('/perfil-empresa', (req, res) => {
-    const { usuario_id, razao_social, cnpj, telefone } = req.body;
+    const { usuario_id, razao_social, cnpj, telefone, cep, uf, cidade, bairro } = req.body;
 
     if (!usuario_id || !razao_social || !cnpj) {
         return res.status(400).json({ erro: 'Razão Social e CNPJ são obrigatórios.' });
@@ -271,12 +341,14 @@ app.post('/perfil-empresa', (req, res) => {
     const sqlCheck = 'SELECT id FROM perfis_empresa WHERE usuario_id = ?';
     db.query(sqlCheck, [usuario_id], (err, results) => {
         if (results && results.length > 0) {
-            db.query('UPDATE perfis_empresa SET razao_social=?, cnpj=?, telefone=? WHERE usuario_id=?', [razao_social, cnpj, telefone, usuario_id], (err2) => {
+            db.query('UPDATE perfis_empresa SET razao_social=?, cnpj=?, telefone=?, cep=?, uf=?, cidade=?, bairro=? WHERE usuario_id=?',
+                [razao_social, cnpj, telefone, cep || null, uf || null, cidade || null, bairro || null, usuario_id], (err2) => {
                 if (err2) return res.status(500).json({ erro: 'Erro ao atualizar dados da empresa.' });
                 res.json({ sucesso: true });
             });
         } else {
-            db.query('INSERT INTO perfis_empresa (usuario_id, razao_social, cnpj, telefone) VALUES (?, ?, ?, ?)', [usuario_id, razao_social, cnpj, telefone], (err2) => {
+            db.query('INSERT INTO perfis_empresa (usuario_id, razao_social, cnpj, telefone, cep, uf, cidade, bairro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [usuario_id, razao_social, cnpj, telefone, cep || null, uf || null, cidade || null, bairro || null], (err2) => {
                 if (err2) return res.status(500).json({ erro: 'Erro ao guardar dados da empresa.' });
                 res.json({ sucesso: true });
             });
@@ -588,6 +660,82 @@ app.post('/admin/marcar-notificacoes-lidas', (req, res) => {
     db.query(sql, [usuario_id], (err) => {
         if (err) return res.status(500).json({ erro: 'Erro ao atualizar notificações.' });
         res.json({ sucesso: true, mensagem: 'Todas as notificações foram marcadas como lidas.' });
+    });
+});
+
+// =========================================================
+// CONVITES DE ACESSO DA EQUIPE (somente administrador)
+// =========================================================
+
+app.post('/admin/gerar-convite', (req, res) => {
+    const { usuario_id, tipo } = req.body;
+
+    if (!['admin', 'colaborador'].includes(tipo)) {
+        return res.status(400).json({ erro: 'Tipo de convite inválido.' });
+    }
+
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem gerar convites.' });
+        }
+
+        const codigo = gerarCodigoConvite();
+        const sql = 'INSERT INTO convites (codigo, tipo, criado_por, expira_em) VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL ? DAY))';
+
+        db.query(sql, [codigo, tipo, usuario_id, DIAS_VALIDADE_CONVITE], (err, result) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao gerar convite.' });
+
+            db.query('SELECT * FROM convites WHERE id = ?', [result.insertId], (err2, r) => {
+                if (err2) return res.status(500).json({ erro: 'Erro ao carregar convite.' });
+                res.json({ sucesso: true, convite: r[0], mensagem: 'Convite gerado com sucesso!' });
+            });
+        });
+    });
+});
+
+app.get('/admin/convites', (req, res) => {
+    const { usuario_id } = req.query;
+
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem ver os convites.' });
+        }
+
+        const sql = `
+            SELECT c.*,
+                   u_criou.email AS criado_por_email,
+                   u_usou.email  AS usado_por_email,
+                   CASE
+                       WHEN c.revogado_em IS NOT NULL THEN 'revogado'
+                       WHEN c.usado_em IS NOT NULL THEN 'usado'
+                       WHEN c.expira_em <= NOW() THEN 'expirado'
+                       ELSE 'ativo'
+                   END AS situacao
+            FROM convites c
+            LEFT JOIN usuarios u_criou ON c.criado_por = u_criou.id
+            LEFT JOIN usuarios u_usou  ON c.usado_por  = u_usou.id
+            ORDER BY c.id DESC
+        `;
+
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao carregar convites.' });
+            res.json(results);
+        });
+    });
+});
+
+app.post('/admin/revogar-convite', (req, res) => {
+    const { usuario_id, convite_id } = req.body;
+
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem cancelar convites.' });
+        }
+
+        db.query('UPDATE convites SET revogado_em = NOW() WHERE id = ? AND usado_em IS NULL', [convite_id], (err) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao cancelar convite.' });
+            res.json({ sucesso: true, mensagem: 'Convite cancelado.' });
+        });
     });
 });
 
