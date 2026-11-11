@@ -180,7 +180,7 @@ main {
   padding: 80px 20px 40px 20px;
 }
 
-/* Tamanho, paddings e espaçamentos originais da contbox restaurados com transição fluida */
+/* Tamanho, paddings e espaçamentos originais da contbox */
 .contbox {
   background: #ffffff;
   padding: 38px;
@@ -194,12 +194,9 @@ main {
   text-align: center;
   position: relative;
   z-index: 10;
-  transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: padding 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s ease, border-color 0.3s ease;
 }
 .campo-pj {
-  /* 150px cortava 24px quando os dois campos empilham em tela estreita.
-     O valor so precisa ser maior que o conteudo: e usado pela animacao
-     que recolhe os campos no modo ADM (max-height vai a 0). */
   max-height: 400px;
   opacity: 1;
   overflow: hidden;
@@ -260,21 +257,7 @@ main {
   gap: 30px;
   width: 100%;
 }
-/* O card começa invisível e deslocado para baixo */
-.contbox.escondido {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: subirCard 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 0.1s; /* Pequeno atraso para garantir o render */
-}
 
-/* Keyframe que faz o card subir e aparecer sozinho ao carregar */
-@keyframes subirCard {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 /* ANIMAÇÃO AO ROLAR / CARREGAR */
 .escondido,
 .contbox:not(.animar-ao-rolar) {
@@ -318,8 +301,7 @@ main {
   max-height: 220px;
   resize: none;
   overflow-y: hidden;
-  transition: height 0.2s ease;
-  transition: all 0.3s ease-in-out !important;
+  transition: height 0.2s ease, all 0.3s ease-in-out !important;
 }
 .campo {
   display: flex;
@@ -495,20 +477,11 @@ main {
   border-radius: 20px !important;
 }
 
-/* ATENÇÃO: o popup aberto do <select> é desenhado pelo sistema
-   operacional, não pelo navegador. No Chrome/Windows ele ignora
-   padding, :hover e :checked do option — era daí que vinha a
-   faixa azul. Quem pinta a lista de verde agora é o listbox em
-   css/select-custom.css + js/selectCustom.js.
-
-   As regras abaixo ficam só como reserva para Firefox/Linux e
-   para o caso de o JS não carregar. Não adianta reforçá-las. */
 .campo select option {
   background-color: var(--card-bg) !important;
   color: var(--card-text) !important;
   font-family: 'Montserrat', sans-serif;
 }
-
 
 /* =========================================================
    VARIÁVEIS DE TEMA (CLARO / ESCURO) - LOGIN
@@ -556,12 +529,6 @@ body {
   color: #ffffff !important;
 }
 
-/* Película de fundo escura no modo escuro */
-[data-theme="dark"] .fundo-catalogo::after {
-  background: rgba(18, 18, 18, 0.92) !important;
-}
-
-/* Card de Login no modo escuro */
 [data-theme="dark"] .login-card {
   background-color: var(--card-bg) !important;
   border-color: var(--card-border) !important;
@@ -574,14 +541,12 @@ body {
   color: var(--card-text) !important;
 }
 
-/* Inputs do formulário no modo escuro */
 [data-theme="dark"] .input-com-icone input {
   background-color: var(--input-bg) !important;
   border-color: var(--input-border) !important;
   color: var(--input-text) !important;
 }
 
-/* Ícones dos inputs visíveis e claros no modo escuro */
 [data-theme="dark"] .input-com-icone .icone-input img {
   filter: brightness(0) invert(1) opacity(0.6) !important;
 }
@@ -594,12 +559,10 @@ body {
   initial-value: 0deg;
   inherits: false;
 }
-/* --- MODO CLARO --- */
 .btn-tema-toggle {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
-  --gradient-shine: #3faf6e; /* Mesma cor exata do sol */
-  /* Bordinha cinza sutil nativa + Linha verde translúcida rodando no gradiente */
+  --gradient-shine: #3faf6e;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
   background: 
     linear-gradient(#ffffff, #ffffff) padding-box, 
@@ -622,7 +585,7 @@ body {
   overflow: hidden;
   box-sizing: border-box;
 }
-/* Hover Modo Claro */
+
 .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(63, 175, 110, 0.25) 0px 1px 1px inset, 
@@ -635,9 +598,8 @@ body {
   box-shadow: rgba(63, 175, 110, 0.15) 0px 1px 1px inset, 
               rgba(63, 175, 110, 0.15) 0px -2px 6px inset, 
               rgba(63, 175, 110, 0.25) 0px 6px 12px -6px !important;
-
 }
-/* --- MODO ESCURO (100% Intacto) --- */
+
 [data-theme="dark"] .btn-tema-toggle {
   --gradient-shine: #3faf6e;
   border: 1px solid transparent !important;
@@ -648,8 +610,8 @@ body {
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset,
               rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
               rgba(0, 0, 0, 0.5) 0px 10px 15px -8px !important;
-
 }
+
 [data-theme="dark"] .btn-tema-toggle::before {
   content: '';
   position: absolute;
@@ -665,6 +627,7 @@ body {
   pointer-events: none;
   z-index: 1;
 }
+
 [data-theme="dark"] .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(20, 206, 61, 0.25) 0px 1px 1px inset, 
@@ -673,7 +636,6 @@ body {
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-/* --- ÍCONES --- */
 .theme-icon-container {
   position: relative;
   width: 20px;
@@ -683,6 +645,7 @@ body {
   justify-content: center;
   z-index: 2;
 }
+
 .theme-icon {
   width: 20px;
   height: 20px;
@@ -692,50 +655,75 @@ body {
   transform: translate(-50%, -50%);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
+
 .sun-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important; 
 }
+
 .moon-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
   color: #3faf6e;
 }
+
 [data-theme="dark"] .sun-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
 }
+
 [data-theme="dark"] .moon-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-/* Atualização no stylecadastro.css */
-
 /* =========================================================
-   CORREÇÃO CIRÚRGICA DO MODAL DE CADASTRO
+   MODAL DE AVISO DE CADASTRO (COM ANIMAÇÃO SUAVE IDÊNTICA À EXCLUSÃO)
 ========================================================= */
-
-/* Fundo da tela do modal com desfoque */
 #modalAvisoSucesso {
+  display: none;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Card principal do modal (Garante zero bordas verdes externas) */
+#modalAvisoSucesso.ativo {
+  display: flex;
+  opacity: 1;
+}
+
 #modalAvisoSucesso > div {
+  background: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
   border-radius: 16px !important;
+  text-align: center;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.185) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
   outline: none !important;
+  font-family: 'Montserrat', sans-serif;
+  
+  /* Animação fluida igual à do modal de exclusão do painel */
+  transform: translateY(25px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+#modalAvisoSucesso.ativo > div {
+  transform: translateY(0) scale(1);
 }
 
 [data-theme="dark"] #modalAvisoSucesso > div {
@@ -752,7 +740,7 @@ nav {
   color: #e0e0e0 !important;
 }
 
-/* CAIXA INTERNA "IMPORTANTE:" - Mantém a listra verde apenas aqui */
+/* CAIXA INTERNA "IMPORTANTE:" */
 #modalAvisoSucesso div[style*="padding: 12px"] {
   border-radius: 6px !important;
   border-left: 4px solid #3faf6e !important;
@@ -947,9 +935,7 @@ nav {
     overflow-y: auto !important;
   }
 }
-/* =========================================================
-   AVISOS DO CAMPO DE CEP
-========================================================= */
+
 .aviso-cep {
   display: block;
   margin-top: 6px;

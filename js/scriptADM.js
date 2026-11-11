@@ -327,7 +327,7 @@ function renderizarCadastros(lista) {
         return `
             <div class="card-painel-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
-                    <h3 class="card-item-titulo" style="margin-bottom: 4px;">ID #${u.id} - <strong>${u.email}</strong></h3>
+                    <h3 class="card-item-titulo" style="margin-bottom: 4px;">ID #${u.id} - ${u.email}</h3>
                     <p style="font-size: 13px; color: #666;">Tipo: <strong>${(u.tipo || 'N/A').toUpperCase()}</strong></p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 15px;">
