@@ -1271,10 +1271,7 @@ box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   .linha {
     width: 90%;
   }
-}   SELECTS, LOCALIZACAO E MODALIDADE
-   O CSS dos paineis so estilizava input/textarea; os selects
-   novos precisam das mesmas regras para nao destoar.
-========================================================= */
+}   
 .select-painel {
   width: 100%;
   padding: 10px 14px;

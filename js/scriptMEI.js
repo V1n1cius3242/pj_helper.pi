@@ -178,7 +178,7 @@ function renderizarNotificacoesTelaMei() {
     if (!container) return;
 
     if (!Array.isArray(__todasNotificacoesMei) || __todasNotificacoesMei.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhuma notificação encontrada.</div>';
+        container.innerHTML = '<div class="card-aviso-vazio">Nenhuma notificação encontrada.</div>';
         return;
     }
 
@@ -247,19 +247,19 @@ async function carregarServicos(meiId) {
         const servs = await resS.json();
         const lista = document.getElementById('listaServicos');
         
-        if (Array.isArray(servs) && servs.length > 0) {
+       if (Array.isArray(servs) && servs.length > 0) {
             lista.innerHTML = servs.map(s => `
-                <li style="margin-bottom:12px; padding:15px; border:1px solid #edf2f7; border-radius:12px; display:flex; justify-content:space-between; align-items:center; background:#fff;">
+                <li class="item-servico-lista-mei" style="margin-bottom:12px; padding:15px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <strong style="color:#2d3748;">${s.titulo}</strong> - <span style="color:#3faf6e; font-weight:bold;">R$ ${s.preco}</span>
+                        <strong class="servico-titulo-texto">${s.titulo}</strong> - <span style="color:#3faf6e; font-weight:bold;">R$ ${s.preco}</span>
                         <span class="etiqueta-modalidade etiqueta-${s.modalidade || 'ambos'}">${rotuloModalidade(s.modalidade)}</span>
-                        ${s.descricao ? `<br><small style="color:#718096;">${s.descricao}</small>` : ''}
+                        ${s.descricao ? `<br><small class="servico-desc-texto">${s.descricao}</small>` : ''}
                     </div>
                     <button onclick="deletarServico(${s.id}, ${meiId})" class="btn-acao-recusar">Apagar</button>
                 </li>
-            `).join('');
-        } else {
-            lista.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhum serviço cadastrado.</div>';
+            `).join('');}
+             else {
+           lista.innerHTML = '<div class="card-aviso-vazio">Nenhum serviço cadastrado.</div>';
         }
     } catch (err) {
         mostrarAviso('Erro ao carregar lista de serviços.', true);
@@ -292,7 +292,7 @@ async function carregarContratos() {
         const contratos = await resC.json();
 
         if (!Array.isArray(contratos) || contratos.length === 0) {
-            container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhuma proposta ou contrato registrado.</div>';
+            container.innerHTML = '<div class="card-aviso-vazio">Nenhuma proposta ou contrato registrado.</div>';
             return;
         }
 
