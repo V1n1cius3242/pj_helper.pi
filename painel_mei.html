@@ -143,7 +143,7 @@
                     </div>
                     <div class="campo-form-empresa">
                         <label>Anos de Experiência:</label>
-                        <input type="number" id="anos_experiencia">
+                        <input type="text" id="anos_experiencia" inputmode="numeric" placeholder="0" autocomplete="off">
                     </div>
                     <!-- LOCALIZAÇÃO: o CEP preenche estado, cidade e bairro -->
                     <div style="display: flex; gap: 15px;">
@@ -196,8 +196,8 @@
                         <input type="text" id="resumo_servico" placeholder="Ex: Manutenção elétrica predial e residencial">
                     </div>
                     <div class="campo-form-empresa">
-                        <label>Apresentação / Biografia:</label>
-                        <textarea id="apresentacao" rows="3" style="width:100%; padding:10px 14px; border:1px solid #cbd5e0; border-radius:15px; font-family:'Montserrat', sans-serif; outline:none;"></textarea>
+                        <label for="apresentacao">Apresentação / Biografia:</label>
+                        <input type="text" id="apresentacao" placeholder="Fale um pouco sobre a sua empresa e serviços...">
                     </div>
                     <button type="submit" class="shiny-cta1" style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Salvar Perfil</span>

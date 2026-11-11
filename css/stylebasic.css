@@ -852,7 +852,7 @@ nav {
 nav {
   display: flex;
   align-items: center;
-  gap: 18px; /* Reduzido ainda mais para eliminar o espaço excessivo */
+  gap: 30px; /* Reduzido ainda mais para eliminar o espaço excessivo */
 }
 
 /* =========================================================
