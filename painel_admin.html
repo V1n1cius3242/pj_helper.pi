@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-       (function () {
+        (function () {
             const temaSalvo = localStorage.getItem('pj_theme');
             if (temaSalvo === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
@@ -30,7 +30,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/stylepainel_admin.css">
     <link rel="stylesheet" href="./css/select-custom.css">
     <link rel="shortcut icon" href="/icon/IconPJ.png">
@@ -41,9 +42,9 @@
 <body>
 
     <div class="header">
-       <a href="homepage.html">
-    <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
-</a>
+        <a href="homepage.html">
+            <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+        </a>
         <input type="checkbox" id="menu-toggle" style="display: none;">
 
         <label for="menu-toggle" class="menu-icon-hamburger">
@@ -59,7 +60,8 @@
             <!-- Botão de Alternância de Tema (Sol e Lua) -->
             <button id="btnTema" class="btn-tema-toggle" title="Alternar Tema">
                 <div class="theme-icon-container">
-                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"></circle>
                         <line x1="12" y1="2" x2="12" y2="4"></line>
                         <line x1="12" y1="20" x2="12" y2="22"></line>
@@ -70,7 +72,8 @@
                         <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
                         <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
                     </svg>
-                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </div>
@@ -80,11 +83,11 @@
                 <button id="linkLoginPainel" class="shiny-cta1" aria-haspopup="menu" aria-expanded="false"
                     aria-controls="menuPerfil" title="Minha conta">
                     <span class="shiny-cta-content1">
-                      <img src="/icon/perfil.png" class="perfil-icon" alt="Minha conta">
+                        <img src="/icon/perfil.png" class="perfil-icon" alt="Minha conta">
                     </span>
                 </button>
 
-                <div id="menuPerfil" class="menu-perfil" role="menu">
+                <div id="menuPerfil" class="menu-perfil " role="menu">
                     <p class="menu-perfil-rotulo">Conectado como</p>
                     <p class="menu-perfil-email" id="perfilEmail">-</p>
                     <span class="menu-perfil-tipo" id="perfilTipo">-</span>
@@ -94,7 +97,7 @@
         </nav>
     </div>
 
-    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+    <main  class="escondido" style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
         <div id="bannerAviso"></div>
 
         <div class="bemvindotopo">
@@ -106,25 +109,29 @@
                 <span class="badge-equipe">
                     <img src="/icon/escudo.png" alt="Escudo" class="escudo"> Equipe PJ Helper
                 </span>
-                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida" alt="">Sair</button>
+                <button onclick="logout()" class="buttonsair"><img src="/icon/saída.png" class="saida"
+                        alt="">Sair</button>
             </div>
         </div>
-        
+
         <!-- CONTAINER DE ABAS PRINCIPAIS -->
         <div class="container-abas-navegacao">
-            <button class="btn-aba-nav ativa" id="aba-btn-solicitacoes" onclick="mudarAba('solicitacoes')">Solicitações</button>
+            <button class="btn-aba-nav ativa" id="aba-btn-solicitacoes"
+                onclick="mudarAba('solicitacoes')">Solicitações</button>
             <button class="btn-aba-nav" id="aba-btn-contratos" onclick="mudarAba('contratos')">Contratos</button>
             <button class="btn-aba-nav" id="aba-btn-cadastros" onclick="mudarAba('cadastros')">Cadastros</button>
-            <button class="btn-aba-nav" id="aba-btn-notificacoes" onclick="mudarAba('notificacoes')">Notificações</button>
+            <button class="btn-aba-nav" id="aba-btn-notificacoes"
+                onclick="mudarAba('notificacoes')">Notificações</button>
             <!-- Só o admin gera convites; o colaborador não vê esta aba -->
-            <button class="btn-aba-nav" id="aba-btn-convites" onclick="mudarAba('convites')" style="display: none;">Convites</button>
+            <button class="btn-aba-nav" id="aba-btn-convites" onclick="mudarAba('convites')"
+                style="display: none;">Convites</button>
         </div>
 
         <!-- 1. SEÇÃO: SOLICITAÇÕES -->
         <div id="secao-solicitacoes" class="secao-aba" style="display: block;">
             <div class="box-busca-filtros">
                 <div class="input-busca-wrapper">
-                  <span class="icone-busca"><img src="/icon/lupa.png" alt="Pesquisar"></span>
+                    <span class="icone-busca"><img src="/icon/lupa.png" alt="Pesquisar"></span>
                     <input type="text" id="buscaSolicitacoes" placeholder="Buscar por empresa, MEI ou demanda...">
                 </div>
                 <div class="linha-filtros-pills">
@@ -160,7 +167,7 @@
 
             <div class="box-busca-filtros">
                 <div class="input-busca-wrapper">
-                     <span class="icone-busca"><img src="/icon/lupa.png" alt="Pesquisar"></span>
+                    <span class="icone-busca"><img src="/icon/lupa.png" alt="Pesquisar"></span>
                     <input type="text" id="buscaCadastros" placeholder="Buscar por nome, responsável ou e-mail...">
                 </div>
                 <div class="linha-filtros-pills">
@@ -185,7 +192,8 @@
                     <option value="colaborador">Convite para Colaborador</option>
                     <option value="admin">Convite para Administrador</option>
                 </select>
-                <button class="shiny-cta1 btn-convite" style="font-weight: 550;" onclick="gerarConvite()">Gerar código</button>
+                <button class="shiny-cta1 btn-convite" style="font-weight: 550;" onclick="gerarConvite()">Gerar
+                    código</button>
             </div>
 
             <p class="contador-resultados" id="contadorConvites"></p>
@@ -194,40 +202,42 @@
 
         <div id="secao-notificacoes" class="secao-aba" style="display: none;">
             <div class="header-notifs" style="margin-bottom: 15px; text-align: right;">
-                <button class="btn-marcar-lidas" style="background: none; border: none; color: #3faf6e; font-weight: 600; cursor: pointer;">✓ Marcar todas como lidas</button>
+                <button class="btn-marcar-lidas"
+                    style="background: none; border: none; color: #3faf6e; font-weight: 600; cursor: pointer;">✓ Marcar
+                    todas como lidas</button>
             </div>
             <!-- CONTAINER ONDE O JS CRIA OS CARDS DE NOTIFICAÇÃO -->
             <div id="listaNotificacoesCards"></div>
         </div>
 
         <!-- MODAIS DE AÇÃO DO ADM -->
-<div id="modalMeet" class="modal-overlay">
-    <div class="modal-card">
-        <h3>Agendar Reunião Google Meet</h3>
-        <input type="hidden" id="meetContratoId">
-        <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
-        <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
-        <label for="inputMeetData">Data e Horário:</label>
-        <input type="datetime-local" id="inputMeetData">
-        <div class="modal-acoes">
-            <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
-            <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
+        <div id="modalMeet" class="modal-overlay">
+            <div class="modal-card">
+                <h3>Agendar Reunião Google Meet</h3>
+                <input type="hidden" id="meetContratoId">
+                <label for="inputMeetLink">Link da Reunião (Google Meet):</label>
+                <input type="url" id="inputMeetLink" placeholder="https://meet.google.com/xyz-abc-def">
+                <label for="inputMeetData">Data e Horário:</label>
+                <input type="datetime-local" id="inputMeetData">
+                <div class="modal-acoes">
+                    <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+                    <button onclick="salvarMeet()" class="btn-salvar">Salvar Reunião</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div id="modalPdf" class="modal-overlay">
-    <div class="modal-card">
-        <h3>Anexar Contrato Digitalizado (PDF)</h3>
-        <input type="hidden" id="pdfContratoId">
-        <label for="inputPdfUrl">URL do Documento PDF:</label>
-        <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
-        <div class="modal-acoes">
-            <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
-            <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
+        <div id="modalPdf" class="modal-overlay">
+            <div class="modal-card">
+                <h3>Anexar Contrato Digitalizado (PDF)</h3>
+                <input type="hidden" id="pdfContratoId">
+                <label for="inputPdfUrl">URL do Documento PDF:</label>
+                <input type="url" id="inputPdfUrl" placeholder="https://drive.google.com/file/d/...">
+                <div class="modal-acoes">
+                    <button onclick="fecharModais()" class="btn-cancelar">Cancelar</button>
+                    <button onclick="salvarPdf()" class="btn-salvar">Anexar PDF</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </main>
 
     <footer class="footer">
@@ -251,13 +261,13 @@
         function mudarAba(nomeAba) {
             const secoes = document.querySelectorAll('.secao-aba');
             secoes.forEach(s => s.style.display = 'none');
-            
+
             const botoes = document.querySelectorAll('.btn-aba-nav');
             botoes.forEach(b => b.classList.remove('ativa'));
 
             const ativa = document.getElementById('secao-' + nomeAba);
             const btnAtivo = document.getElementById('aba-btn-' + nomeAba);
-            
+
             if (ativa) ativa.style.display = 'block';
             if (btnAtivo) btnAtivo.classList.add('ativa');
         }
@@ -287,7 +297,35 @@
                 });
             }
         });
+
     </script>
+    <script>
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('animar-ao-rolar');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -10% 0px'
+        });
+
+        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+    </script>
+    <style>
+        .escondido {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .animar-ao-rolar {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: transform, opacity;
+        }
+    </style>
     <script src="./js/selectCustom.js"></script>
     <script src="./js/scriptADM.js"></script>
 </body>

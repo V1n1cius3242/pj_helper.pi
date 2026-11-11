@@ -81,7 +81,7 @@
         </nav>
     </div>
 
-    <main style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
+    <main class="escondido" style="margin-top: 9vh; min-height: 91vh; padding: 40px; box-sizing: border-box;">
         
         <div id="bannerAviso"></div>
 
@@ -344,5 +344,32 @@
         }
     });
     </script>
+     <script>
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('animar-ao-rolar');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -10% 0px'
+        });
+
+        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+    </script>
+    <style>
+        .escondido {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .animar-ao-rolar {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: transform, opacity;
+        }
+    </style>
 </body>
 </html>
