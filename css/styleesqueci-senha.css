@@ -527,37 +527,139 @@ body {
   filter: brightness(0) invert(1) opacity(0.6) !important;
 }
 
-/* BOTÃO DE TEMA */
+/* =========================================================
+   BOTÃO DE TEMA (Modo Claro)
+========================================================= */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+/* --- MODO CLARO --- */
 .btn-tema-toggle {
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  --gradient-angle: 0deg;
+  --gradient-angle-offset: 0deg;
+  --gradient-shine: #3faf6e; /* Mesma cor exata do sol */
+  /* Bordinha cinza sutil nativa + Linha verde translúcida rodando no gradiente */
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: 
+    linear-gradient(#ffffff, #ffffff) padding-box, 
+    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, rgba(63, 175, 110, 0.2) 5%, rgba(63, 175, 110, 0.85) 15%, rgba(63, 175, 110, 0.2) 25%, transparent 35%, transparent 100%) border-box !important;
   border-radius: 9999px;
-  width: 125px;
+  width: 44px;
   height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--text-color);
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
-  white-space: nowrap;
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: border-spin 2.5s linear infinite;
+  overflow: hidden;
+  box-sizing: border-box;
 }
-
+/* Hover Modo Claro */
 .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
-  border-color: var(--verde-principal) !important;
+  box-shadow: rgba(63, 175, 110, 0.25) 0px 1px 1px inset, 
+              rgba(63, 175, 110, 0.25) 0px -2px 6px inset, 
+              rgba(63, 175, 110, 0.4) 0px 10px 20px -6px !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+.btn-tema-toggle:active {
+  transform: translateY(-1px) !important;
+  box-shadow: rgba(63, 175, 110, 0.15) 0px 1px 1px inset, 
+              rgba(63, 175, 110, 0.15) 0px -2px 6px inset, 
+              rgba(63, 175, 110, 0.25) 0px 6px 12px -6px !important;
+
+}
+/* --- MODO ESCURO (100% Intacto) --- */
+[data-theme="dark"] .btn-tema-toggle {
+  --gradient-shine: #3faf6e;
+  border: 1px solid transparent !important;
+  background: 
+    linear-gradient(#1c2421, #0a0a0a) padding-box, 
+    conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent 0%, #047857 5%, var(--gradient-shine) 15%, #047857 30%, transparent 40%, transparent 100%) border-box !important;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset,
+              rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
+              rgba(0, 0, 0, 0.5) 0px 10px 15px -8px !important;
+
+}
+[data-theme="dark"] .btn-tema-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.95) 0.5px, transparent 0.8px) 0 0 / 4px 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, rgba(0, 0, 0, 1) 75%);
+  mask-image: linear-gradient(120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 1) 48%,
+      rgba(0, 0, 0, 1) 52%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+[data-theme="dark"] .btn-tema-toggle:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: rgba(20, 206, 61, 0.25) 0px 1px 1px inset, 
+              rgba(20, 206, 61, 0.25) 0px -2px 6px inset, 
+              rgba(20, 206, 61, 0.4) 0px 12px 24px -8px !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-[data-theme="dark"] .btn-tema-toggle {
-  background: var(--card-bg) !important;
-  border-color: var(--card-border) !important;
-  color: var(--text-color) !important;
+/* --- ÍCONES --- */
+.theme-icon-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+.sun-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  color: #3faf6e !important; 
+}
+.moon-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
+  color: #3faf6e;
+}
+[data-theme="dark"] .sun-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+}
+[data-theme="dark"] .moon-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  color: #3faf6e !important;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+
 
 /* MEDIA QUERIES (RESPONSIVIDADE E CENTRALIZAÇÃO MOBILE REFINADA) */
 @media (max-width: 768px) {
