@@ -42,7 +42,7 @@ nav {
 .navitens {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* HOVER LUZ VERDE - BOTÃO PRETO */
@@ -88,6 +88,8 @@ nav {
   transition: box-shadow 0.3s, transform 0.3s;
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
 }
 
 .shiny-cta1 {
@@ -152,7 +154,8 @@ nav {
   border-radius: 99px;
   gap: 0.5rem;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 13.5px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @keyframes border-spin {
@@ -206,7 +209,7 @@ main {
 
 .bemvindotopo h3 {
   color: #3faf6e !important;
-  font-weight: 550;
+  font-weight: 600;
   font-size: 1.0rem;
   order: 1;
 }
@@ -240,7 +243,7 @@ main {
   border: none;
   padding: 6px 14px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   font-family: 'Montserrat', sans-serif;
 }
@@ -287,7 +290,6 @@ main {
   margin-bottom: 25px;
 }
 
-/* Espaçamento entre cartões múltiplos na mesma aba */
 .secao-aba .secao-card-conteudo + .secao-card-conteudo {
   margin-top: 25px;
 }
@@ -341,6 +343,7 @@ main {
 .card-notificacao-topo strong {
   color: #2d3748;
   font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .card-notificacao-msg {
@@ -377,9 +380,6 @@ main {
 .badge-ativo-adm { background: #c6f6d5; color: #22543d; }
 .badge-recusado-adm { background: #fee2e2 !important; color: #991b1b !important; }
 
-/* =========================================================
-   ESTILIZAÇÃO DOS CARDS DE SERVIÇOS (MEI) E INPUTS
-========================================================= */
 .item-servico-card {
     display: flex;
     justify-content: space-between;
@@ -421,7 +421,6 @@ main {
     line-height: 1.4;
 }
 
-/* Campos de formulário e inputs com hover verde moderno */
 .campo-form-empresa {
   margin-bottom: 18px;
   text-align: left;
@@ -474,7 +473,6 @@ main {
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* MODAL DE EXCLUSÃO DE CONTA */
 .modal-overlay {
   display: none;
   opacity: 0;
@@ -713,9 +711,6 @@ main {
   transition: all 0.3s ease;
 }
 
-/* =========================================================
-   REMOVER ÍCONES NATIVOS DE AUTOCOMPLETE E PREENCHIMENTO
-========================================================= */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
@@ -731,20 +726,16 @@ input::-ms-reveal {
   pointer-events: none !important;
 }
 
-/* =========================================================
-   BOTÃO DE TEMA (Modo Claro)
-========================================================= */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
-/* --- MODO CLARO --- */
+
 .btn-tema-toggle {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
-  --gradient-shine: #3faf6e; /* Mesma cor exata do sol */
-  /* Bordinha cinza sutil nativa + Linha verde translúcida rodando no gradiente */
+  --gradient-shine: #3faf6e;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
   background: 
     linear-gradient(#ffffff, #ffffff) padding-box, 
@@ -767,7 +758,7 @@ input::-ms-reveal {
   overflow: hidden;
   box-sizing: border-box;
 }
-/* Hover Modo Claro */
+
 .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(63, 175, 110, 0.25) 0px 1px 1px inset, 
@@ -775,14 +766,14 @@ input::-ms-reveal {
               rgba(63, 175, 110, 0.4) 0px 10px 20px -6px !important;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
+
 .btn-tema-toggle:active {
   transform: translateY(-1px) !important;
   box-shadow: rgba(63, 175, 110, 0.15) 0px 1px 1px inset, 
               rgba(63, 175, 110, 0.15) 0px -2px 6px inset, 
               rgba(63, 175, 110, 0.25) 0px 6px 12px -6px !important;
-
 }
-/* --- MODO ESCURO (100% Intacto) --- */
+
 [data-theme="dark"] .btn-tema-toggle {
   --gradient-shine: #3faf6e;
   border: 1px solid transparent !important;
@@ -793,8 +784,8 @@ input::-ms-reveal {
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset,
               rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
               rgba(0, 0, 0, 0.5) 0px 10px 15px -8px !important;
-
 }
+
 [data-theme="dark"] .btn-tema-toggle::before {
   content: '';
   position: absolute;
@@ -810,6 +801,7 @@ input::-ms-reveal {
   pointer-events: none;
   z-index: 1;
 }
+
 [data-theme="dark"] .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(20, 206, 61, 0.25) 0px 1px 1px inset, 
@@ -818,7 +810,6 @@ input::-ms-reveal {
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-/* --- ÍCONES --- */
 .theme-icon-container {
   position: relative;
   width: 20px;
@@ -828,6 +819,7 @@ input::-ms-reveal {
   justify-content: center;
   z-index: 2;
 }
+
 .theme-icon {
   width: 20px;
   height: 20px;
@@ -837,29 +829,30 @@ input::-ms-reveal {
   transform: translate(-50%, -50%);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
+
 .sun-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important; 
 }
+
 .moon-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
   color: #3faf6e;
 }
+
 [data-theme="dark"] .sun-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
 }
+
 [data-theme="dark"] .moon-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important;
 }
 
-/* =========================================================
-   MODO ESCURO (DARK MODE) - PAINEL EMPRESA
-========================================================= */
 [data-theme="dark"] body {
   background-color: #121212 !important;
   color: #f1f1f1 !important;
@@ -927,9 +920,6 @@ input::-ms-reveal {
   color: #ffffff !important;
 }
 
-/* =========================================================
-   AJUSTE DE COR DA CAIXA DE RECUSADO NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] div[style*="background: #fee2e2"],
 [data-theme="dark"] div[style*="background:#fee2e2"] {
   background: rgba(239, 68, 68, 0.15) !important;
@@ -937,9 +927,6 @@ input::-ms-reveal {
   border-left-color: #ef4444 !important;
 }
 
-/* =========================================================
-   REMOVER FUNDO DAS TAGS NO MODO ESCURO (MANTENDO AS CORES DO TEXTO)
-========================================================= */
 [data-theme="dark"] .badge-status-adm,
 [data-theme="dark"] .badge-pendente-adm,
 [data-theme="dark"] .badge-reuniao-adm,
@@ -951,7 +938,6 @@ input::-ms-reveal {
   padding: 0 !important;
 }
 
-/* Caixa de Meet e avisos de reuniões não agendadas */
 [data-theme="dark"] .card-notificacao-rodape,
 [data-theme="dark"] .box-meet-agendado-adm,
 [data-theme="dark"] div[style*="background: #f7fafc"],
@@ -962,7 +948,6 @@ input::-ms-reveal {
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Bloco de Apagar Perfil / Zona de perigo */
 [data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffff"],
 [data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffffff"],
 [data-theme="dark"] .secao-card-conteudo[style*="background-color:#ffff"] {
@@ -992,9 +977,6 @@ input::-ms-reveal {
   background-color: #ffffff !important;
 }
 
-/* =========================================================
-   AJUSTE DE TEXTO E ÍCONE DO MODAL NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] .campo-exclusao label {
   color: #ffffff !important;
 }
@@ -1003,9 +985,6 @@ input::-ms-reveal {
   filter: brightness(0) invert(1) opacity(0.8) !important;
 }
 
-/* =========================================================
-   CORREÇÃO DEFINITIVA DO CARD DE APAGAR PERFIL NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] div.secao-card-conteudo[style*="background-color"] {
   background-color: rgba(30, 30, 30, 0.85) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1014,8 +993,6 @@ input::-ms-reveal {
 [data-theme="dark"] .zona-perigo-container p {
   color: #e0e0e0 !important;
 }
-
-
 
 [data-theme="dark"] #listaServicos,
 [data-theme="dark"] #listaServicos li {
@@ -1030,15 +1007,11 @@ input::-ms-reveal {
   color: #ffffff !important;
 }
 
-/* Correção para estados vazios gerados por JS no modo escuro */
 [data-theme="dark"] .aviso-vazio-dinamico {
   background: rgba(30, 30, 30, 0.85) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: #a0aec0 !important;
 }
-
-
-
 
 .card-aviso-vazio {
   padding: 20px;
@@ -1061,11 +1034,6 @@ input::-ms-reveal {
   color: #ffffff !important;
 }
 
-
-
-/* =========================================================
-   ESTILIZAÇÃO DEFINITIVA DA BIOGRAFIA (CLARO E ESCURO)
-========================================================= */
 .container-bio-custom textarea#apresentacao {
   width: 100% !important;
   padding: 10px 14px !important;

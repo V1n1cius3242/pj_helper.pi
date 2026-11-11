@@ -41,7 +41,7 @@ nav {
 .navitens {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* CONTEÚDO PRINCIPAL CENTRALIZADO */
@@ -76,7 +76,7 @@ main {
 
 .bemvindotopo h3 {
     color: #3faf6e;
-    font-weight: 550;
+    font-weight: 600;
     font-size: 1.0rem;
     order: 1;
 }
@@ -119,17 +119,18 @@ main {
     vertical-align: middle;
     margin-right: 6px; 
     filter: invert(24%) sepia(87%) saturate(4787%) hue-rotate(345deg) brightness(93%) contrast(92%)
-    drop-shadow(0.3px 0.3px 0.3px #c5221f);;
+    drop-shadow(0.3px 0.3px 0.3px #c5221f);
 }
 .buttonsair {
   background-color: #c5221f28;
   border-radius: 20px;
-    color: #c5221f; 
-    border: none; 
-    padding: 6px 12px; 
-    cursor: pointer; 
-    font-weight: 600;
-    font-size: 14px;
+  color: #c5221f; 
+  border: none; 
+  padding: 6px 14px; 
+  cursor: pointer; 
+  font-weight: 600;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
 }
 .perfil-icon {
     width: 15px;
@@ -148,11 +149,10 @@ main {
   width: 16px;
   height: 16px;
   object-fit: contain;
-  filter: grayscale(100%) opacity(0.6); /* Deixa com um tom neutro alinhado ao input */
+  filter: grayscale(100%) opacity(0.6);
   transition: all 0.3s ease;
 }
 
-/* Quando focar no input de busca, a lupa pode destacar um pouco se quiser */
 .input-busca-wrapper input:focus ~ .icone-busca img,
 .input-busca-wrapper:focus-within .icone-busca img {
   filter: invert(52%) sepia(85%) saturate(1432%) hue-rotate(125deg) brightness(97%) contrast(89%);
@@ -171,7 +171,6 @@ main {
     font-size: 18px;
 }
 
-/* BOTÕES E TABELAS */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -187,7 +186,6 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-/* ANIMAÇÃO DE BOTÃO (BOTÃO PRETO COM LUZES) */
 @property --gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -200,8 +198,6 @@ tr:hover {
   --bg-color-top: #1c2421;
   --bg-color-bottom: #0a0a0a;
     
-  cursor:context-menu;
-
   color: rgb(255, 255, 255);
   isolation: isolate;
   z-index: 1;
@@ -223,9 +219,10 @@ tr:hover {
   transition: box-shadow 0.3s, transform 0.3s;
   animation: border-spin 2.5s linear infinite;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
 }
 
-/* CAMADA DAS BOLINHAS VERDES*/
 .shiny-cta1::before {
   content: '';
   position: absolute;
@@ -239,10 +236,9 @@ tr:hover {
       rgba(0, 0, 0, 1) 52%,
       transparent 70%);
   z-index: 1;
-  cursor:context-menu;
 }
+
 .shiny-cta1::after {
-  /* O feixe de luz passando (Shimmer) */
   content: '';
   position: absolute;
   top: 0;
@@ -256,11 +252,9 @@ tr:hover {
   transform: skewX(-25deg);
   animation: shimmer 9s infinite;
   z-index: 2;
-    cursor:context-menu;
 }
 
 .shiny-cta-content1 {
-  cursor:context-menu;
   z-index: 3;
   justify-content: center;
   align-items: center;
@@ -269,8 +263,8 @@ tr:hover {
   border-radius: 99px;
   gap: 0.5rem;
   font-weight: 600;
-  font-size: 15px;
-    cursor:context-menu;
+  font-size: 13.5px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @keyframes border-spin {
@@ -298,11 +292,11 @@ tr:hover {
 }
 
 .designloginnav {
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;  
 }
 
-/* FOOTER DE PONTA A PONTA */
+/* FOOTER */
 .footer {
   position: relative;
   z-index: 10;
@@ -376,11 +370,7 @@ tr:hover {
   transition: all 0.3s ease;
 }
 
-/* =========================================================
-   ESTILIZAÇÃO MODERNA DOS PAINÉIS (PADRÃO DAS FOTOS)
-========================================================= */
-
-/* CONTAINER DE ABAS PRINCIPAIS */
+/* ABAS PRINCIPAIS */
 .container-abas-navegacao {
     display: flex;
     background: #f0f2f5;
@@ -460,7 +450,7 @@ tr:hover {
     font-size: 13px;
     color: #555;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -475,7 +465,7 @@ tr:hover {
     margin-bottom: 15px;
 }
 
-/* CARDS DE SOLICITAÇÃO, CONTRATOS E CADASTROS */
+/* CARDS */
 .card-painel-item {
     background: #ffffff;
     border-radius: 16px;
@@ -501,7 +491,7 @@ tr:hover {
     font-size: 16px;
     color: #2d3748;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .card-item-desc {
@@ -605,7 +595,7 @@ tr:hover {
     font-weight: 600;
 }
 
-/* SUBABAS DE CADASTROS (MEIs / EMPRESAS) */
+/* SUBABAS DE CADASTROS */
 .container-subabas {
     display: flex;
     gap: 10px;
@@ -630,9 +620,7 @@ tr:hover {
     border-color: #3faf6e;
 }
 
-/* =========================================================
-   ESTILIZAÇÃO DOS MODAIS (MEET E PDF)
-========================================================= */
+/* MODAIS */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -754,20 +742,11 @@ tr:hover {
     color: #a0aec0;
 }
 
-/* =========================================================
-   BOTÃO DE TEMA (Modo Claro)
-========================================================= */
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-/* --- MODO CLARO --- */
+/* BOTÃO DE TEMA */
 .btn-tema-toggle {
   --gradient-angle: 0deg;
   --gradient-angle-offset: 0deg;
-  --gradient-shine: #3faf6e; /* Mesma cor exata do sol */
-  /* Bordinha cinza sutil nativa + Linha verde translúcida rodando no gradiente */
+  --gradient-shine: #3faf6e;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
   background: 
     linear-gradient(#ffffff, #ffffff) padding-box, 
@@ -790,7 +769,7 @@ tr:hover {
   overflow: hidden;
   box-sizing: border-box;
 }
-/* Hover Modo Claro */
+
 .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(63, 175, 110, 0.25) 0px 1px 1px inset, 
@@ -798,14 +777,14 @@ tr:hover {
               rgba(63, 175, 110, 0.4) 0px 10px 20px -6px !important;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
+
 .btn-tema-toggle:active {
   transform: translateY(-1px) !important;
   box-shadow: rgba(63, 175, 110, 0.15) 0px 1px 1px inset, 
               rgba(63, 175, 110, 0.15) 0px -2px 6px inset, 
               rgba(63, 175, 110, 0.25) 0px 6px 12px -6px !important;
-
 }
-/* --- MODO ESCURO (100% Intacto) --- */
+
 [data-theme="dark"] .btn-tema-toggle {
   --gradient-shine: #3faf6e;
   border: 1px solid transparent !important;
@@ -816,8 +795,8 @@ tr:hover {
   box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset,
               rgba(0, 0, 0, 0.2) 0px -2px 6px inset, 
               rgba(0, 0, 0, 0.5) 0px 10px 15px -8px !important;
-
 }
+
 [data-theme="dark"] .btn-tema-toggle::before {
   content: '';
   position: absolute;
@@ -833,6 +812,7 @@ tr:hover {
   pointer-events: none;
   z-index: 1;
 }
+
 [data-theme="dark"] .btn-tema-toggle:hover {
   transform: translateY(-4px) !important;
   box-shadow: rgba(20, 206, 61, 0.25) 0px 1px 1px inset, 
@@ -841,7 +821,6 @@ tr:hover {
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-/* --- ÍCONES --- */
 .theme-icon-container {
   position: relative;
   width: 20px;
@@ -851,6 +830,7 @@ tr:hover {
   justify-content: center;
   z-index: 2;
 }
+
 .theme-icon {
   width: 20px;
   height: 20px;
@@ -860,29 +840,31 @@ tr:hover {
   transform: translate(-50%, -50%);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
+
 .sun-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important; 
 }
+
 .moon-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
   color: #3faf6e;
 }
+
 [data-theme="dark"] .sun-icon {
   opacity: 0;
   transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
 }
+
 [data-theme="dark"] .moon-icon {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   color: #3faf6e !important;
 }
 
-/* =========================================================
-   MODO ESCURO (DARK MODE) - PAINEL EMPRESA
-========================================================= */
+/* MODO ESCURO */
 [data-theme="dark"] body {
   background-color: #121212 !important;
   color: #f1f1f1 !important;
@@ -949,9 +931,6 @@ tr:hover {
   color: #ffffff !important;
 }
 
-/* =========================================================
-   AJUSTE DE COR DA CAIXA DE RECUSADO NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] div[style*="background: #fee2e2"],
 [data-theme="dark"] div[style*="background:#fee2e2"] {
   background: rgba(239, 68, 68, 0.15) !important;
@@ -959,9 +938,6 @@ tr:hover {
   border-left-color: #ef4444 !important;
 }
 
-/* =========================================================
-   REMOVER FUNDO DAS TAGS NO MODO ESCURO (MANTENDO AS CORES DO TEXTO)
-========================================================= */
 [data-theme="dark"] .badge-status-adm,
 [data-theme="dark"] .badge-pendente-adm,
 [data-theme="dark"] .badge-reuniao-adm,
@@ -973,7 +949,6 @@ tr:hover {
   padding: 0 !important;
 }
 
-/* Caixa de Meet e avisos de reuniões não agendadas */
 [data-theme="dark"] .card-notificacao-rodape,
 [data-theme="dark"] .box-meet-agendado-adm,
 [data-theme="dark"] div[style*="background: #f7fafc"],
@@ -984,7 +959,6 @@ tr:hover {
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Bloco de Apagar Perfil / Zona de perigo */
 [data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffff"],
 [data-theme="dark"] .secao-card-conteudo[style*="background-color: #ffffff"],
 [data-theme="dark"] .secao-card-conteudo[style*="background-color:#ffff"] {
@@ -1014,11 +988,6 @@ tr:hover {
   background-color: #ffffff !important;
 }
 
-/* =========================================================
-   PADRONIZAÇÃO FINAL DO MODO ESCURO (PAINEL ADM)
-========================================================= */
-
-/* Remover o fundo das tags/badges no modo escuro (mantendo apenas a cor do texto) */
 [data-theme="dark"] .badge-status,
 [data-theme="dark"] .badge-pendente,
 [data-theme="dark"] .badge-reuniao,
@@ -1032,7 +1001,6 @@ tr:hover {
   padding: 0 !important;
 }
 
-/* Botões de Ação do Admin no Modo Escuro */
 [data-theme="dark"] .btn-acao-preto {
   background: #252830 !important;
   color: #ffffff !important;
@@ -1061,7 +1029,6 @@ tr:hover {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Caixa de Meet agendado e detalhes no card */
 [data-theme="dark"] .box-meet-agendado {
   background: #1a1a1a !important;
   color: #a0aec0 !important;
@@ -1069,9 +1036,6 @@ tr:hover {
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* =========================================================
-   CORREÇÃO COMPLETA DO MODO ESCURO - PAINEL ADM
-========================================================= */
 [data-theme="dark"] body {
   background-color: #121212 !important;
   color: #f1f1f1 !important;
@@ -1085,7 +1049,6 @@ tr:hover {
   color: #ffffff !important;
 }
 
-/* Containers e Cards Principais */
 [data-theme="dark"] .bemvindotopo,
 [data-theme="dark"] .secao,
 [data-theme="dark"] .card-painel-item,
@@ -1096,14 +1059,12 @@ tr:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Badge "Equipe PJ Helper" */
 [data-theme="dark"] .badge-equipe {
   background-color: rgba(63, 175, 110, 0.15) !important;
   color: #3faf6e !important;
   border: 1px solid rgba(63, 175, 110, 0.3) !important;
 }
 
-/* Títulos e Textos */
 [data-theme="dark"] .bemvindotopo h2,
 [data-theme="dark"] .secao h3,
 [data-theme="dark"] .card-item-titulo,
@@ -1122,7 +1083,6 @@ tr:hover {
   color: #e0e0e0 !important;
 }
 
-/* Abas Principais */
 [data-theme="dark"] .container-abas-navegacao {
   background: #1a1a1a !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1138,7 +1098,6 @@ tr:hover {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Barra de Pesquisa e Inputs */
 [data-theme="dark"] .input-busca-wrapper,
 [data-theme="dark"] .box-busca-filtros .input-busca-wrapper {
   background-color: #1a1a1a !important;
@@ -1154,7 +1113,6 @@ tr:hover {
   color: #718096 !important;
 }
 
-/* Pills de Filtros e Sub-abas */
 [data-theme="dark"] .pill-filtro {
   background: #1a1a1a !important;
   color: #a0aec0 !important;
@@ -1179,7 +1137,6 @@ tr:hover {
   border-color: #3faf6e !important;
 }
 
-/* Limpeza do Fundo das Tags de Status */
 [data-theme="dark"] .badge-status,
 [data-theme="dark"] .badge-pendente,
 [data-theme="dark"] .badge-reuniao,
@@ -1193,7 +1150,6 @@ tr:hover {
   padding: 0 !important;
 }
 
-/* Botões de Ação nos Cards */
 [data-theme="dark"] .btn-acao-preto {
   background: #252830 !important;
   color: #ffffff !important;
@@ -1223,7 +1179,6 @@ tr:hover {
   color: #fca5a5 !important;
 }
 
-/* Modais */
 [data-theme="dark"] .modal-card {
   background: #1e1e1e !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -1250,17 +1205,11 @@ tr:hover {
   cursor: pointer !important;
 }
 
-/* =========================================================
-   CORREÇÃO DE CAPITALIZAÇÃO DAS TAGS DE STATUS
-========================================================= */
 [data-theme="dark"] .card-painel-item .badge-status,
 .card-painel-item .badge-status {
   text-transform: capitalize !important;
 }
 
-/* =========================================================
-   AJUSTE DE TEXTO E ÍCONE DO MODAL NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] .campo-exclusao label {
   color: #ffffff !important;
 }
@@ -1269,9 +1218,6 @@ tr:hover {
   filter: brightness(0) invert(1) opacity(0.8) !important;
 }
 
-/* =========================================================
-   CORREÇÃO DEFINITIVA DO CARD DE APAGAR PERFIL NO MODO ESCURO
-========================================================= */
 [data-theme="dark"] div.secao-card-conteudo[style*="background-color"] {
   background-color: rgba(30, 30, 30, 0.85) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1280,7 +1226,7 @@ tr:hover {
 [data-theme="dark"] .zona-perigo-container p {
   color: #e0e0e0 !important;
 }
-/* RESPONSIVIDADE (MEDIA QUERIES) */
+
 @media (max-width: 768px) { 
   .header { 
     padding: 0 5%; 
@@ -1359,7 +1305,7 @@ tr:hover {
   }
 
   main {
-      padding: 20px 10px; /* Reduz espaçamento lateral em telas menores */
+      padding: 20px 10px;
   }
 
   .bemvindotopo {
@@ -1377,9 +1323,8 @@ tr:hover {
     width: 90%; 
   } 
 }
-/* =========================================================
-   ABA DE CONVITES
-========================================================= */
+
+/* ABA DE CONVITES */
 .barra-convites {
   display: flex;
   align-items: center;
@@ -1388,19 +1333,19 @@ tr:hover {
   margin-bottom: 18px;
 }
 
-/* o select customizado entra com width:100%, por isso a
-   largura é controlada aqui pelo container */
 .barra-convites .select-custom {
   flex: 0 1 280px;
 }
 
-/* o .shiny-cta1 tem width fixo de 85px e cortava o texto */
 .btn-convite {
   width: auto !important;
   min-width: 120px;
   padding: 0 22px !important;
   white-space: nowrap;
   cursor: pointer !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
 }
 
 .acoes-convite {
@@ -1417,9 +1362,7 @@ tr:hover {
   font-weight: 700;
 }
 
-/* =========================================================
-   MENU DE PERFIL DO HEADER
-========================================================= */
+/* MENU DE PERFIL DO HEADER */
 .perfil-wrapper {
   position: relative;
   display: inline-block;
@@ -1455,6 +1398,7 @@ tr:hover {
   letter-spacing: 1px;
   color: #999;
   margin: 0 0 4px;
+  font-weight: 600;
 }
 
 .menu-perfil-email {
@@ -1508,12 +1452,7 @@ tr:hover {
   color: #f1f1f1;
 }
 
-/* =========================================================
-   ESTADOS DE INTERACAO DOS BOTOES
-   (o CSS original so tinha :hover em 4 lugares)
-========================================================= */
-
-/* o cursor de menu de contexto dava a impressao de botao morto */
+/* INTERAÇÃO E PESO DOS BOTÕES */
 .shiny-cta1,
 .shiny-cta1 * {
   cursor: pointer !important;
@@ -1540,6 +1479,8 @@ tr:hover {
 .pill-filtro:focus-visible,
 .btn-acao-sucesso:focus-visible,
 .btn-acao-recusar:focus-visible,
+.btn-acao-preto:focus-visible,
+.btn-acao-secundario:focus-visible,
 .buttonsair:focus-visible {
   outline: 2px solid #3faf6e;
   outline-offset: 2px;
@@ -1549,9 +1490,12 @@ tr:hover {
 .pill-filtro,
 .btn-acao-sucesso,
 .btn-acao-recusar,
+.btn-acao-preto,
+.btn-acao-secundario,
 .buttonsair {
   transition: background-color 0.2s ease, color 0.2s ease,
               transform 0.15s ease, box-shadow 0.2s ease;
+  font-weight: 600 !important;
 }
 
 .subaba-btn:hover,
@@ -1583,6 +1527,8 @@ tr:hover {
 .pill-filtro:active,
 .btn-acao-sucesso:active,
 .btn-acao-recusar:active,
+.btn-acao-preto:active,
+.btn-acao-secundario:active,
 .buttonsair:active {
   transform: scale(0.96);
 }
@@ -1599,6 +1545,8 @@ tr:hover {
   .pill-filtro,
   .btn-acao-sucesso,
   .btn-acao-recusar,
+  .btn-acao-preto,
+  .btn-acao-secundario,
   .buttonsair,
   .menu-perfil,
   .menu-perfil-sair {

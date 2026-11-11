@@ -123,19 +123,19 @@
                 <form id="formPerfilMei">
                     <div class="campo-form-empresa">
                         <label>Razão Social:</label>
-                        <input type="text" id="razao_social" required placeholder="Nome do MEI LTDA">
+                        <input type="text" id="razao_social" maxlength="200" required placeholder="Nome do MEI LTDA">
                     </div>
                     <div class="campo-form-empresa">
-                        <label>Nome Fantasia / Usuário:</label>
-                        <input type="text" id="nome_fantasia" required placeholder="Nome Fantasia">
+                        <label>Nome Fantasia / Usuário / Responsável:</label>
+                        <input type="text" id="nome_fantasia" maxlength="200" required placeholder="Nome Fantasia / Responsável">
                     </div>
                     <div class="campo-form-empresa">
                         <label>CNPJ:</label>
-                        <input type="text" id="cnpj" required placeholder="00.000.000/0001-00">
+                        <input type="text" id="cnpj" maxlength="18" required placeholder="00.000.000/0001-00">
                     </div>
                     <div class="campo-form-empresa">
                         <label>Telefone / WhatsApp:</label>
-                        <input type="text" id="telefone" required placeholder="(00) 00000-0000">
+                        <input type="text" id="telefone" maxlength="15" required placeholder="(00) 00000-0000">
                     </div>
                     <div class="campo-form-empresa">
                         <label>Categoria:</label>
@@ -185,19 +185,19 @@
                     </div>
                     <div class="campo-form-empresa">
                         <label>Site Oficial:</label>
-                        <input type="url" id="site" placeholder="https://...">
+                        <input type="url" id="site" maxlength="200" placeholder="https://...">
                     </div>
                     <div class="campo-form-empresa">
                         <label>Instagram:</label>
-                        <input type="text" id="instagram" placeholder="@seuusuario">
+                        <input type="text" id="instagram" maxlength="200" placeholder="@seuusuario">
                     </div>
                     <div class="campo-form-empresa">
                         <label>Resumo Rápido do Serviço:</label>
-                        <input type="text" id="resumo_servico" placeholder="Ex: Manutenção elétrica predial e residencial">
+                        <input type="text" id="resumo_servico" maxlength="200" placeholder="Ex: Manutenção elétrica predial e residencial">
                     </div>
                     <div class="campo-form-empresa">
                         <label for="apresentacao">Apresentação / Biografia:</label>
-                        <input type="text" id="apresentacao" placeholder="Fale um pouco sobre a sua empresa e serviços...">
+                        <input type="text" id="apresentacao" maxlength="250" placeholder="Fale um pouco sobre a sua empresa e serviços...">
                     </div>
                     <button type="submit" class="shiny-cta1" style="margin-top: 15px; width: auto; height: 42px; padding: 0 25px;">
                         <span style="font-weight: 550;" class="shiny-cta-content1">Salvar Perfil</span>
@@ -319,7 +319,6 @@
         const textoTema = document.getElementById('textoTema');
         const htmlElement = document.documentElement;
 
-        // Aplica o tema salvo anteriormente
         const temaSalvo = localStorage.getItem('pj_theme');
         if (temaSalvo === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
@@ -329,7 +328,6 @@
             if (textoTema) textoTema.innerText = 'Tema Escuro';
         }
 
-        // Alterna o tema ao clicar
         if (btnTema) {
             btnTema.addEventListener('click', () => {
                 const atual = htmlElement.getAttribute('data-theme');
