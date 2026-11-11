@@ -1267,6 +1267,7 @@ body {
   box-shadow: none;
   font-size: 13px;
   color: #4b5563;
+  font-weight: 600;
 }
 
 .segmentado .pill-btn:hover {
@@ -1297,6 +1298,7 @@ body {
   min-width: 0;
   padding: 6px 14px;
   font-size: 13px;
+  font-weight: 550;
 }
 
 /* resumo: contagem + atalhos */
@@ -1399,7 +1401,13 @@ body {
     flex: 1 1 0;
   }
 }
+.navitens.nav-clientes {
+  color: #3faf6e !important;
+}
 
+[data-theme="dark"] .navitens.nav-clientes {
+  color: #3faf6e !important;
+}
 /* ---------- tema escuro (o CSS antigo usa !important nas pills) ---------- */
 [data-theme="dark"] .barra-filtros {
   background: #1a1a1a;
