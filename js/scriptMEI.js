@@ -35,9 +35,47 @@ function normalizarUrl(url) {
     return url;
 }
 
+// Máscaras de formatação automática para CNPJ e Telefone
+document.addEventListener('DOMContentLoaded', () => {
+    const inputCnpj = document.getElementById('cnpj');
+    if (inputCnpj) {
+        inputCnpj.addEventListener('input', (e) => {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 14) v = v.slice(0, 14);
+            if (v.length > 12) {
+                v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+            } else if (v.length > 8) {
+                v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{0,4})$/, '$1.$2.$3/$4');
+            } else if (v.length > 5) {
+                v = v.replace(/^(\d{2})(\d{3})(\d{0,3})$/, '$1.$2.$3');
+            } else if (v.length > 2) {
+                v = v.replace(/^(\d{2})(\d{0,3})$/, '$1.$2');
+            }
+            e.target.value = v;
+        });
+    }
+
+    const inputTelefone = document.getElementById('telefone');
+    if (inputTelefone) {
+        inputTelefone.addEventListener('input', (e) => {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 11) v = v.slice(0, 11);
+            if (v.length > 10) {
+                v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+            } else if (v.length > 6) {
+                v = v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+            } else if (v.length > 2) {
+                v = v.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
+            } else if (v.length > 0) {
+                v = v.replace(/^(\d{0,2})$/, '($1');
+            }
+            e.target.value = v;
+        });
+    }
+});
+
 async function carregarTudo() {
     try {
-        // Perfil MEI
         const resP = await fetch(`http://localhost:3000/perfil-mei?usuario_id=${user.id}`);
         const perfil = await resP.json();
         if (perfil && perfil.id) {
@@ -49,7 +87,7 @@ async function carregarTudo() {
             document.getElementById('anos_experiencia').value = perfil.anos_experiencia || 0;
             document.getElementById('modalidade_padrao').value = perfil.modalidade_padrao || 'ambos';
             if (window.PJSelect) PJSelect.sincronizar(document.getElementById('modalidade_padrao'));
-            // os selects de estado/cidade sao preenchidos pelo modulo de localizacao
+            
             if (window.PJLocal) {
                 PJLocal.preencherEndereco(
                     { cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' },
@@ -80,7 +118,6 @@ async function carregarTudo() {
     }
 }
 
-// NOTIFICAÇÕES DINÂMICAS DO MEI (PUXANDO OS DADOS DA EMPRESA)
 async function carregarNotificacoesDinamicasMei() {
     try {
         const resContratos = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=mei`);
@@ -233,8 +270,6 @@ function toggleNotificacoes() {
     renderizarNotificacoesTelaMei();
 }
 
-// CARREGAR SERVIÇOS
-// texto curto da modalidade, usado na lista de servicos
 function rotuloModalidade(valor) {
     if (valor === 'presencial') return 'Presencial';
     if (valor === 'remoto') return 'Remoto';
@@ -281,7 +316,6 @@ async function deletarServico(id, meiId) {
     }
 }
 
-// CARREGAR CONTRATOS DO MEI EXIBINDO OS DADOS DA EMPRESA LOGO ABAIXO
 async function carregarContratos() {
     const container = document.getElementById('listaContratos');
     if (!container) return;
@@ -298,7 +332,6 @@ async function carregarContratos() {
 
         container.innerHTML = contratos.map(c => {
             const linkMeet = normalizarUrl(c.link_reuniao);
-            const linkPdf = normalizarUrl(c.contrato_digitalizado_url);
             const dataFormatada = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : 'Aguardando agendamento';
             
             const statusBruto = (c.status || 'pendente').trim().toLowerCase();
@@ -346,7 +379,6 @@ async function carregarContratos() {
                 </div>
                 ` : ''}
 
-                <!-- BLOCO COM OS DADOS DA EMPRESA CONTRATANTE LOGO ABAIXO -->
                 <div style="border-top: 1px solid #edf2f7; padding-top: 12px; margin-top: 12px; font-size: 13px; color: #4a5568; background: #f7fafc; padding: 12px; border-radius: 8px;">
                     <div style="font-weight: 700; color: #2d3748; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Dados da Empresa Contratante</div>
                     <div><strong>Razão Social:</strong> <span class="texto-verde-empresa">${nomeEmpresa}</span></div>
@@ -393,7 +425,6 @@ async function responderContrato(id, status, empresaId) {
     }
 }
 
-// SALVAR PERFIL MEI
 document.getElementById('formPerfilMei').addEventListener('submit', async (e) => {
     e.preventDefault();
     const dados = {
@@ -433,7 +464,6 @@ document.getElementById('formPerfilMei').addEventListener('submit', async (e) =>
     }
 });
 
-// CADASTRAR NOVO SERVIÇO
 document.getElementById('formServico').addEventListener('submit', async (e) => {
     e.preventDefault();
     const resP = await fetch(`http://localhost:3000/perfil-mei?usuario_id=${user.id}`);
@@ -468,7 +498,6 @@ document.getElementById('formServico').addEventListener('submit', async (e) => {
     }
 });
 
-// FUNÇÕES DO MODAL DE EXCLUSÃO
 function abrirModalExclusao() {
     const modal = document.getElementById('modalExcluirConta');
     if (modal) {
@@ -532,7 +561,6 @@ async function executarExclusaoConta() {
 
 carregarTudo();
 
-// CEP preenche estado/cidade/bairro sozinho (ViaCEP + IBGE)
 document.addEventListener('DOMContentLoaded', () => {
     if (window.PJLocal) {
         PJLocal.ligarCampos({ cep: 'cep', uf: 'uf', cidade: 'cidade', bairro: 'bairro' });
