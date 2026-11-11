@@ -1161,6 +1161,18 @@ box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   color: #e0e0e0 !important;
 }
 
+/* =========================================================
+   CORREÇÃO DEFINITIVA PARA ESTADOS VAZIOS (DARK MODE)
+========================================================= */
+[data-theme="dark"] #listaNotificacoesContainer > div,
+[data-theme="dark"] #listaContratos > div,
+[data-theme="dark"] .secao-aba div[style*="background:#fff"],
+[data-theme="dark"] .secao-aba div[style*="background: #fff"] {
+  background: rgba(30, 30, 30, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #a0aec0 !important;
+}
+
 /* ==========================================================
    MEDIA QUERIES (RESPONSIVIDADE INTACTA)
    ========================================================== */

@@ -124,51 +124,45 @@ async function carregarNotificacoesDinamicasMei() {
         let contratosMei = resContratos.ok ? await resContratos.json() : [];
         let notifsDinamicas = [];
 
-        let mapaEmpresas = {};
-        try {
-            let resEmp = await fetch('http://localhost:3000/perfis-empresa');
-            if (resEmp.ok) {
-                const listaEmp = await resEmp.json();
-                if (Array.isArray(listaEmp)) {
-                    listaEmp.forEach(e => {
-                        const idChave = e.usuario_id || e.id;
-                        if (idChave) mapaEmpresas[idChave] = e;
-                    });
-                }
-            }
-        } catch (eEmp) {
-            console.warn('Não foi possível carregar o mapa geral de empresas:', eEmp);
-        }
-
         if (Array.isArray(contratosMei)) {
             for (let c of contratosMei) {
                 const status = (c.status || '').trim().toLowerCase();
-                const tituloServico = c.titulo_servico || 'Serviço Proposto';
+                const tituloServico = c.titulo_servico || 'Proposta de Serviço';
                 const valorServico = c.valor ? `R$ ${parseFloat(c.valor).toFixed(2)}` : 'A combinar';
                 const temMeet = c.link_reuniao && c.link_reuniao.trim() !== '';
                 const dataReuniao = c.data_reuniao ? new Date(c.data_reuniao).toLocaleString('pt-BR') : '';
 
-                let empresaId = c.empresa_usuario_id || c.usuario_id_empresa || c.empresa_id;
+                // Tenta achar o ID da empresa em qualquer variação possível que o banco mande
+                let empresaId = c.empresa_usuario_id || c.contratante_usuario_id || c.empresa_id || c.id_empresa || c.usuario_empresa_id;
 
-                let razaoEmpresa = c.razao_social_empresa || c.razao_social || c.nome_empresa || '';
-                let cnpjEmpresa = c.cnpj_empresa || c.cnpj || '';
+                let nomeEmpresa = c.razao_social_empresa || c.razao_social || c.nome_empresa || c.nome_fantasia || '';
                 let telefoneEmpresa = c.telefone_empresa || c.telefone || '';
                 let emailEmpresa = c.email_empresa || c.email || '';
 
-                if (empresaId && mapaEmpresas[empresaId]) {
-                    const dadosMapa = mapaEmpresas[empresaId];
-                    razaoEmpresa = razaoEmpresa || dadosMapa.razao_social || 'Empresa Contratante';
-                    cnpjEmpresa = cnpjEmpresa || dadosMapa.cnpj || 'Não informado';
-                    telefoneEmpresa = telefoneEmpresa || dadosMapa.telefone || 'Não informado';
-                    emailEmpresa = emailEmpresa || dadosMapa.email || 'Não informado';
+                // Se faltou o nome ou contato no contrato, busca diretamente na API de perfil daquela empresa específica!
+                if ((!nomeEmpresa || nomeEmpresa === 'Empresa Contratante' || !telefoneEmpresa || telefoneEmpresa === 'Não informado') && empresaId) {
+                    try {
+                        const resPerfilEmp = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${empresaId}`);
+                        if (resPerfilEmp.ok) {
+                            const pEmp = await resPerfilEmp.json();
+                            if (pEmp) {
+                                nomeEmpresa = pEmp.razao_social || pEmp.nome_fantasia || nomeEmpresa;
+                                telefoneEmpresa = pEmp.telefone || telefoneEmpresa;
+                                emailEmpresa = pEmp.email || emailEmpresa;
+                            }
+                        }
+                    } catch (errPerfil) {
+                        console.warn('Não foi possível buscar o perfil individual da empresa:', errPerfil);
+                    }
                 }
 
-                razaoEmpresa = razaoEmpresa || 'Empresa Contratante';
+                // Fallbacks finais se nada for encontrado
+                nomeEmpresa = nomeEmpresa || 'Empresa Contratante';
                 telefoneEmpresa = telefoneEmpresa || 'Não informado';
                 emailEmpresa = emailEmpresa || 'Não informado';
 
                 let dadosEmpresaObj = {
-                    razao_social_empresa: razaoEmpresa,
+                    nome_empresa: nomeEmpresa,
                     telefone_empresa: telefoneEmpresa,
                     email_empresa: emailEmpresa
                 };
@@ -182,13 +176,13 @@ async function carregarNotificacoesDinamicasMei() {
                 } else if (status.includes('recusado') || status.includes('negado')) {
                     notifsDinamicas.push({
                         ...dadosEmpresaObj,
-                        mensagem: `A proposta para o serviço "${tituloServico}" foi recusada.`,
+                        mensagem: `A proposta referente ao serviço "${tituloServico}" foi recusada.`,
                         tipo: 'recusado'
                     });
                 } else if (status.includes('concluido') || status.includes('concluído') || status.includes('firmado') || status.includes('aceit')) {
                     notifsDinamicas.push({
                         ...dadosEmpresaObj,
-                        mensagem: `O contrato para o serviço "${tituloServico}" foi aceito/firmado com sucesso!`,
+                        mensagem: `Proposta aceita! O contrato para "${tituloServico}" foi firmado.`,
                         tipo: 'firmado'
                     });
                 }
@@ -196,7 +190,7 @@ async function carregarNotificacoesDinamicasMei() {
                 if (temMeet) {
                     notifsDinamicas.push({
                         ...dadosEmpresaObj,
-                        mensagem: `Reunião agendada no Google Meet para "${tituloServico}"${dataReuniao ? ` em ${dataReuniao}` : ''}.`,
+                        mensagem: `Reunião agendada via Google Meet para "${tituloServico}"${dataReuniao ? ` em ${dataReuniao}` : ''}.`,
                         tipo: 'reuniao'
                     });
                 }
@@ -215,7 +209,7 @@ function renderizarNotificacoesTelaMei() {
     if (!container) return;
 
     if (!Array.isArray(__todasNotificacoesMei) || __todasNotificacoesMei.length === 0) {
-        container.innerHTML = '<div class="card-aviso-vazio">Nenhuma notificação encontrada.</div>';
+        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhuma notificação encontrada.</div>';
         return;
     }
 
@@ -236,10 +230,6 @@ function renderizarNotificacoesTelaMei() {
             badgeTexto = 'Nova • Aceito';
         }
 
-        const nomeEmp = n.razao_social_empresa || 'Empresa Contratante';
-        const telEmp = n.telefone_empresa || 'Não informado';
-        const emailEmp = n.email_empresa || 'Não informado';
-
         return `
         <div class="card-notificacao-custom">
             <div class="card-notificacao-topo">
@@ -248,13 +238,12 @@ function renderizarNotificacoesTelaMei() {
             </div>
             <p class="card-notificacao-msg">${n.mensagem}</p>
             <div class="card-notificacao-rodape">
-                Empresa: <strong class="texto-verde-empresa">${nomeEmp}</strong> | Contato: <strong class="texto-verde-empresa">${telEmp}</strong> | E-mail: <strong class="texto-verde-empresa">${emailEmp}</strong>
+                Empresa: <strong class="texto-verde-empresa">${n.nome_empresa}</strong> | Contato: <strong class="texto-verde-empresa">${n.telefone_empresa}</strong> | E-mail: <strong class="texto-verde-empresa">${n.email_empresa}</strong>
             </div>
         </div>
         `;
     }).join('');
 }
-
 function marcarTodasComoLidasMei() {
     __todasNotificacoesMei = [];
     renderizarNotificacoesTelaMei();
