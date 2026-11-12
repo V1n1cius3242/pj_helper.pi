@@ -681,6 +681,7 @@ app.post('/admin/marcar-notificacoes-lidas', (req, res) => {
 // Rota para listar convites no painel admin
 // Exemplo para a rota /admin/convites com CORS habilitado
 app.get('/admin/convites', async (c) => {
+  // Adiciona os headers de CORS para permitir requisições do Pages
   c.header('Access-Control-Allow-Origin', '*');
   c.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   c.header('Access-Control-Allow-Headers', 'Content-Type');
