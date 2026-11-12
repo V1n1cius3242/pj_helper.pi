@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/stylebasic.css">
+    <link rel="shortcut icon" href="/icon/IconPJ.png">
+
+    <title>PJ Helper - Home</title>
+
+    <!-- SCRIPT DOS CARROSSEIS (INÍCIO DO HEAD PARA ALTA PERFORMANCE) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === 1. CARROSSEL DE IMAGENS (Fundo) ===
+            const imgs = document.querySelectorAll('.carrossel img');
+            if (imgs.length > 0) {
+                let imgIdx = 0;
+                // Exibe a primeira imagem imediatamente
+                imgs[0].style.opacity = '1';
+
+                setInterval(() => {
+                    const proxIdx = (imgIdx + 1) % imgs.length;
+                    imgs[imgIdx].style.opacity = '0';
+                    imgs[proxIdx].style.opacity = '1';
+                    imgIdx = proxIdx;
+                }, 4000); // Troca a cada 4 segundos
+            }
+
+            // === 2. CARROSSEL DE PALAVRAS (Texto) ===
+            const listaPalavras = document.querySelector('.carrossel-lista');
+            if (listaPalavras) {
+                let palavraIdx = 0;
+                const totalPalavras = 3; // 3 palavras únicas (Confiáveis, Seguros, Garantidos)
+
+                setInterval(() => {
+                    palavraIdx = (palavraIdx + 1) % (totalPalavras + 1);
+                    const isMobile = window.innerWidth <= 768;
+                    const alturaPasso = isMobile ? 55 : 80;
+
+                    // Quando chega ao final da lista duplicada, reseta instantaneamente sem transição visível
+                    if (palavraIdx === 0) {
+                        listaPalavras.style.transition = 'none';
+                        listaPalavras.style.transform = 'translateY(0px)';
+                    } else {
+                        listaPalavras.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1)';
+                        listaPalavras.style.transform = `translateY(-${palavraIdx * alturaPasso}px)`;
+                    }
+                }, 3000); // Troca a cada 3 segundos
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <a href="homepage.html">
+    <img class="iconimg" src="/icon/LogoPJ.png" alt="Logo">
+</a>
+        <input type="checkbox" id="menu-toggle" style="display: none;">
+
+        <label for="menu-toggle" class="menu-icon-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a class="navitens" href="homepage.html" style="color:#3faf6e;">Home</a>
+            <a class="navitens" href="catalogo.html">Clientes</a>
+            <a class="navitens" href="paginasobre.html">Sobre</a>
+
+            <!-- Botão de Alternância de Tema (Sol e Lua perfeitamente alinhados) -->
+            <button id="btnTema" class="btn-tema-toggle" title="Alternar Tema">
+                <div class="theme-icon-container">
+                    <!-- Ícone do Sol (Perfeitamente centralizado e sem traços no meio) -->
+                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <line x1="12" y1="2" x2="12" y2="4"></line>
+                        <line x1="12" y1="20" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line>
+                        <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="4" y2="12"></line>
+                        <line x1="20" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
+                        <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
+                    </svg>
+                    <!-- Ícone da Lua -->
+                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </div>
+            </button>
+
+            <button id="botaoLogin" onclick="window.location.href='login.html'" class="shiny-cta1">
+                <span class="shiny-cta-content1">Login</span>
+            </button>
+
+            <button id="linkLoginPainel" class="shiny-cta1"
+                style="display: none; width: 85px; height: 38px; padding: 0 15px; align-items: center; justify-content: center;">
+                <span class="shiny-cta-content1"
+                    style="display: inline-flex; align-items: center; justify-content: center;">
+                    <img src="/icon/perfil.png" class="perfil-icon" alt="Perfil"
+                        style="width: 15px; height: auto; filter: brightness(0) invert(1);">
+                </span>
+            </button>
+        </nav>
+    </div>
+    <main>
+        <div class="supCarrossel">
+            <a href="paginasobre.html">
+                <button class="sobrebutton escondido">
+                    <img class="iconverde" style="width: 13px;" src="/icon/escudo.png" alt="">
+                    Plataforma de intermediação segura
+                    <img class="iconverde" src="/icon/seta-direita.png" style="width: 10px;" alt="">
+                </button>
+            </a>
+            <div class="text1sup escondido">
+                <h1>Contratos</h1>
+            </div>
+            <div class="carrosselletra escondido">
+                <ul class="carrossel-lista">
+                    <li class="carrossel-item">Confiáveis</li>
+                    <li class="carrossel-item">Seguros</li>
+                    <li class="carrossel-item">Garantidos</li>
+                    <li class="carrossel-item">Confiáveis</li>
+                </ul>
+            </div>
+            <div class="text2sup escondido">Conectamos MEIs e microempresas a grandes empresas com segurança contratual, valores
+                justos e prazos garantidos.
+                A ponte que seu negócio precisa para crescer.</div>
+            <div class="grupo-botoes escondido">
+                <button onclick="window.location.href='catalogo.html'" class="button1sup">Ver Clientes</button>
+                <button onclick="window.location.href='cadastro.html'" class="shiny-cta">
+                    <span class="shiny-cta-content">
+                        Cadastre-se
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="itenscarrossel">
+            <div class="carrossel">
+                <img src="icon/img1carrossel.jpg" fetchpriority="high" alt="">
+                <img src="icon/img2carrossel.jpg" loading="lazy" alt="">
+                <img src="icon/img3carrossel.jpg" loading="lazy" alt="">
+            </div>
+        </div>
+
+        <section class="grupotextimg escondido">
+            <div class="image-group-1 animar-ao-rolar">
+                <img class="img-rounded-large"
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
+                    alt="Profissional com tablet" />
+                <img class="img-circle-overlay"
+                    src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600"
+                    alt="Técnico de capacete amarela" />
+            </div>
+            <div class="text-card">
+                <span class="span">SOBRE NÓS</span>
+                <h2 class="titulospan">O elo entre o <span style="color: #3faf6e;">pequeno empreendedor</span> e o <span
+                        style="color: #3faf6e;">grande mercado</span></h2>
+                <p class="textspan">A PJ Helper nasceu para resolver um problema real: MEIs e microempresas com serviços
+                    de qualidade que não conseguem alcançar grandes empresas.
+                    Nós fazemos essa ponte com segurança contratual e transparência. <br><br> Imagine um produtor rural
+                    que abastece uma rede de hortifruti, ou uma confeiteira que fornece para eventos corporativos. Nós
+                    garantimos que cada contrato seja cumprido.
+                </p>
+                <button onclick="window.location.href='cadastro.html'" class="shiny-cta">
+                    <span class="shiny-cta-content">
+                        Quero me cadastrar
+                    </span>
+                </button>
+            </div>
+        </section>
+        <section>
+            <div class="textpasso escondido">
+                <h3 class="span2">PASSO A PASSO</h3>
+                <h2 class="subspan2">Como funciona?</h2>
+                <p class="textspan2">Em três etapas simples, conectamos seu negócio a novas oportunidades.</p>
+            </div>
+            <div class="cards escondido">
+                <div class="card">
+                    <div class="imgcard"><img class="imgcardsub1"
+                            src="/icon/verificacao-da-lista-da-area-de-transferencia.png" alt=""></div>
+                    <div class="numcard" style="color:#3faf6e;"><strong>01</strong></div>
+                    <div class="nomecard">Cadastro</div>
+                    <div class="textcard1">MEIs e empresas se cadastram com CNPJ. Verificamos tudo para garantir
+                        segurança.</div>
+                </div>
+                <div class="card escondido">
+                    <div class="imgcard"><img class="imgcardsub2" src="/icon/aperto-de-maos.png" alt=""></div>
+                    <div class="numcard" style="color:#3faf6e;"><strong>02</strong></div>
+                    <div class="nomecard">Conexão</div>
+                    <div class="textcard1">Empresas encontram MEIs por categoria de serviço. A plataforma conecta quem
+                        precisa a quem resolve.</div>
+                </div>
+                <div class="card escondido">
+                    <div class="imgcard"><img class="imgcardsub3" src="/icon/documento.png" alt=""></div>
+                    <div class="numcard" style="color:#3faf6e;"><strong>03</strong></div>
+                    <div class="nomecard">Contrato Garantido</div>
+                    <div class="textcard1">Geramos contratos formais com cláusulas claras. Fiscalizamos valores, prazos
+                        e entregas.</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="escondido">
+                <div class="textimgfoco escondido">
+                    <div class="textfoco">
+                        <div class="subfoco">Dedicação e Foco </div>Nossa equipe acompanha cada contrato de perto. Do
+                        primeiro contato à entrega final, estamos presentes para garantir
+                        que tudo funcione como acordado. Seu crescimento é o nosso sucesso.
+                    </div>
+                    <div class="imgfoco"><img src="/icon/grupoimg1.avif" alt=""></div>
+                </div>
+            </div>
+
+        </section>
+        <section>
+            <div class="escondido">
+                <h3 class="span2">VANTAGENS</h3>
+                <h2 class="subspan2">Por que usar a PJ Helper?</h2>
+            </div>
+            <div class="mincards escondido">
+                <div class="mincard">
+                    <div class="minimgcard"><img class="minimgcardsub1" src="/icon/escudo.png" alt=""></div>
+                    <div class="minnomecard">Segurança Jurídica</div>
+                    <div class="mintextcard1">Contratos fiscalizados pela nossa equipe do início ao fim.</div>
+                </div>
+                <div class="mincard escondido">
+                    <div class="minimgcard"><img class="minimgcardsub2" src="/icon/dolar.png" alt=""></div>
+                    <div class="minnomecard">Taxa Transparente</div>
+                    <div class="mintextcard1">Apenas 5% a 10% sobre o contrato. Sem surpresas. </div>
+                </div>
+                <div class="mincard escondido">
+                    <div class="minimgcard"><img class="minimgcardsub3" src="/icon/almoco-foguete.png" alt=""></div>
+                    <div class="minnomecard">Acesso ao Mercado</div>
+                    <div class="mintextcard1">MEIs ganham visibilidade para empresas consolidadas.</div>
+                </div>
+                <div class="mincard escondido">
+                    <div class="minimgcard"><img class="minimgcardsub4" src="/icon/verificacao-de-cracha.png" alt="">
+                    </div>
+                    <div class="minnomecard">Tudo Formalizado</div>
+                    <div class="mintextcard1">Transações via CNPJ, rastreáveis e profissionais.</div>
+                </div>
+            </div>
+        </section>
+        <section class="escondido">
+            <div class="mtv-card">
+                <h1 class="mtv-cardtext">"O único modo de fazer um excelente trabalho é amar o que você faz."</h1>
+                <p class="mtv-cardmin">-Steve Jobs</p>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <section class="bloco1footer">
+            <h3 class="spanfooter">COMEÇE HOJE </h3>
+            <h2 class="subspanfooter">Pronto para <span style="color: #3faf6e;">crescer?</span></h2>
+            <p>Cadastre-se agora e conecte seu negócio a grandes oportunidades.</p>
+        </section>
+        <section>
+            <div class="fundo">
+                <div class="buttonsfinais">
+                    <button onclick="window.location.href='cadastro.html'" class="shiny-cta2">Criar conta
+                        grátis</button>
+                    <button onclick="window.location.href='catalogo.html'" class="button1footer">Ver clientes</button>
+                </div>
+            </div>
+        </section>
+        <section class="bloco2footer">
+            <div class="footer-icon"><img src="/icon/IconPJ.png" alt=""></div>
+            <div class="footer-text1">
+                <h3>PJ <span style="color: #3faf6e;">HELPER</span></h3>
+            </div>
+            <div class="footer-text2">
+                <p>Soluções inteligentes que simplificam a rotina do seu CNPJ. <br>
+                    O parceiro ideal para você focar apenas no que importa: o seu crescimento.</p>
+            </div>
+        </section>
+        <section class="linhafooter">
+            <div class="linha"></div>
+            <p class="direitosautorais">© 2026 PJ Helper. Todos os direitos reservados.</p>
+        </section>
+    </footer>
+
+    <script>
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('animar-ao-rolar');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -10% 0px'
+        });
+
+        document.querySelectorAll('.escondido').forEach((elemento) => observador.observe(elemento));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawUser = localStorage.getItem('usuarioLogado') || localStorage.getItem('usuario');
+            const botaoLogin = document.getElementById('botaoLogin');
+            const btnPerfil = document.getElementById('linkLoginPainel');
+
+            if (rawUser) {
+                try {
+                    const user = JSON.parse(rawUser);
+                    const tipo = user && user.tipo ? user.tipo.toString().toLowerCase() : '';
+
+                    let destino = 'login.html';
+                    if (tipo === 'admin') destino = 'painel_admin.html';
+                    else if (tipo === 'mei') destino = 'painel_mei.html';
+                    else if (tipo === 'empresa' || tipo === 'empresa_grande') destino = 'painel_empresa.html';
+
+                    if (botaoLogin) botaoLogin.style.display = 'none';
+                    if (btnPerfil) {
+                        btnPerfil.onclick = () => { window.location.href = destino; };
+                        btnPerfil.style.display = 'inline-flex';
+                    }
+                } catch (e) {
+                    if (botaoLogin) botaoLogin.style.display = 'inline-flex';
+                    if (btnPerfil) btnPerfil.style.display = 'none';
+                }
+            } else {
+                if (botaoLogin) botaoLogin.style.display = 'inline-flex';
+                if (btnPerfil) btnPerfil.style.display = 'none';
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnTema = document.getElementById('btnTema');
+            const textoTema = document.getElementById('textoTema');
+            const htmlElement = document.documentElement;
+
+            // Aplica o tema salvo anteriormente
+            const temaSalvo = localStorage.getItem('pj_theme');
+            if (temaSalvo === 'dark') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                if (textoTema) textoTema.innerText = 'Tema Claro';
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                if (textoTema) textoTema.innerText = 'Tema Escuro';
+            }
+
+            // Alterna o tema ao clicar
+            if (btnTema) {
+                btnTema.addEventListener('click', () => {
+                    const atual = htmlElement.getAttribute('data-theme');
+                    if (atual === 'dark') {
+                        htmlElement.removeAttribute('data-theme');
+                        localStorage.setItem('pj_theme', 'light');
+                        if (textoTema) textoTema.innerText = 'Tema Escuro';
+                    } else {
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('pj_theme', 'dark');
+                        if (textoTema) textoTema.innerText = 'Tema Claro';
+                    }
+                });
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

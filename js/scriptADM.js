@@ -73,13 +73,13 @@ async function carregarAdmin() {
         }
 
         // 1. Carregar Usuários
-        const resUsers = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/dados');
+        const resUsers = await fetch('http://localhost:3000/admin/dados');
         const dadosUsers = await resUsers.json();
         cacheUsuarios = dadosUsers.usuarios || [];
         aplicarFiltrosCadastros();
 
         // 2. Carregar Reuniões e Contratos
-        const resReunioes = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/reunioes');
+        const resReunioes = await fetch('http://localhost:3000/admin/reunioes');
         cacheContratos = await resReunioes.json();
         aplicarFiltroSolicitacoes('todas');
         renderizarContratos(cacheContratos);
@@ -96,7 +96,7 @@ async function carregarAdmin() {
 async function carregarNotificacoesAdmin() {
     if (!adminIdGlobal) return;
     try {
-        const resNotifs = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/notificacoes?usuario_id=${adminIdGlobal}`);
+        const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${adminIdGlobal}`);
         const notificacoes = await resNotifs.json();
         renderizarNotificacoes(notificacoes);
     } catch (err) {
@@ -108,7 +108,7 @@ async function carregarNotificacoesAdmin() {
 async function marcarTodasComoLidas() {
     if (!adminIdGlobal) return;
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/marcar-notificacoes-lidas', {
+        const res = await fetch('http://localhost:3000/admin/marcar-notificacoes-lidas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario_id: adminIdGlobal })
@@ -400,7 +400,7 @@ async function alterarStatusUsuario(usuarioId, novoStatus) {
     if (!confirm(`Tem certeza que deseja marcar este usuário como ${novoStatus.toUpperCase()}?`)) return;
 
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/aprovar-usuario', {
+        const res = await fetch('http://localhost:3000/admin/aprovar-usuario', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario_id: usuarioId, status: novoStatus })
@@ -442,7 +442,7 @@ async function salvarMeet() {
     }
 
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/agendar-reuniao', {
+        const res = await fetch('http://localhost:3000/admin/agendar-reuniao', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -477,7 +477,7 @@ async function salvarPdf() {
     }
 
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/anexar-contrato', {
+        const res = await fetch('http://localhost:3000/admin/anexar-contrato', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -503,7 +503,7 @@ async function salvarPdf() {
 
 async function confirmarContrato(contratoId) {
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/confirmar-contrato', {
+        const res = await fetch('http://localhost:3000/admin/confirmar-contrato', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contrato_id: contratoId, status: 'concluido' })
@@ -523,7 +523,7 @@ async function confirmarContrato(contratoId) {
 
 async function atualizarStatusContrato(contratoId, novoStatus) {
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/confirmar-contrato', {
+        const res = await fetch('http://localhost:3000/admin/confirmar-contrato', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contrato_id: contratoId, status: novoStatus })
@@ -549,7 +549,7 @@ carregarAdmin();
 async function carregarConvites() {
     if (!adminIdGlobal) return;
     try {
-        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/admin/convites?usuario_id=${adminIdGlobal}`);
+        const res = await fetch(`http://localhost:3000/admin/convites?usuario_id=${adminIdGlobal}`);
         const lista = await res.json();
         if (!res.ok) throw new Error(lista.erro || 'Erro ao carregar convites.');
         renderizarConvites(lista);
@@ -564,7 +564,7 @@ async function gerarConvite() {
     const tipo = document.getElementById('tipoConvite').value;
 
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/gerar-convite', {
+        const res = await fetch('http://localhost:3000/admin/gerar-convite', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario_id: adminIdGlobal, tipo })
@@ -584,7 +584,7 @@ async function revogarConvite(conviteId) {
     if (!confirm('Tem certeza que deseja cancelar este convite?')) return;
 
     try {
-        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/admin/revogar-convite', {
+        const res = await fetch('http://localhost:3000/admin/revogar-convite', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario_id: adminIdGlobal, convite_id: conviteId })

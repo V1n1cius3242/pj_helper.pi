@@ -8,7 +8,7 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
     mensagem.innerText = ''
 
     try {
-        const resposta = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/login', {
+        const resposta = await fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })
@@ -39,7 +39,7 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
     } catch (erro) {
         console.error('Erro de conexão:', erro)
         mensagem.style.color = 'red'
-        mensagem.innerText = 'Erro ao conectar com o servidor.'
+        mensagem.innerText = 'Erro ao conectar com o servidor Node.js.'
     }
 });
 const observador = new IntersectionObserver((entradas) => {

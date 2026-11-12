@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/cadastro', {
+            const response = await fetch('http://localhost:3000/cadastro', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -95,11 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     mensagemEl.innerHTML = '';
                     
                     // Exibe a Modal de Aviso em HTML que já está pronta no cadastro_2.html
-                    const modalAviso = document.getElementById('modalAvisoSucesso');
-                    if (modalAviso) {
-                        modalAviso.style.display = 'flex';
-                        setTimeout(() => modalAviso.classList.add('ativo'), 10);
-                    }
+                   // Exibe a Modal de Aviso com a classe .ativo para acionar a animação suave
+const modalAviso = document.getElementById('modalAvisoSucesso');
+if (modalAviso) {
+    modalAviso.style.display = 'flex';
+    setTimeout(() => modalAviso.classList.add('ativo'), 10);
+}
                 }
             } else {
                 mensagemEl.style.color = '#d9534f';
@@ -217,6 +218,8 @@ if (canvas) {
         requestAnimationFrame(animate);
     }
     
+
     resize();
     requestAnimationFrame(animate);
+    
 }
