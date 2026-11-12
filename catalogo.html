@@ -89,8 +89,8 @@
         <div class="header-topo escondido">
             <div>
                 <p style="color: #3faf6e; font-weight:530">Catálogo</p>
-                <h2 style="margin: 0; color: #000000;">Nossos clientes</h2>
-                <small style="color: #414141; font-size: 15px;">Encontre os melhores profissionais para a sua
+                <h2 style="margin: 0; color: var(--card-text);">Nossos clientes</h2>
+                <small style="color: var(--text-muted); font-size: 15px;">Encontre os melhores profissionais para a sua
                     empresa</small>
             </div>
             <span></span>
@@ -160,7 +160,7 @@
 
         <!-- GRID DE CARDS -->
         <div id="gridCatalogo" class="grid-3  escondido">
-            <p style="color:#888; grid-column: 1 / -1;">Carregando prestadores MEI...</p>
+            <p style="color:var(--text-muted); grid-column: 1 / -1;">Carregando prestadores MEI...</p>
         </div>
 
     </main>
@@ -171,14 +171,14 @@
             <h3 style="margin-top:10px;color:#3faf6e; font-size: 1.3rem; font-weight: bold;">Solicitar ou Propor Serviço
             </h3>
             <p id="modalNomeMei"
-                style="font-weight:600; color: #414141; margin-bottom:15px; font-size: 1rem; margin-top: 5px;"></p>
+                style="font-weight:600; color: var(--text-muted); margin-bottom:15px; font-size: 1rem; margin-top: 5px;"></p>
 
             <form id="formModalProposta">
                 <input type="hidden" id="modal_mei_usuario_id">
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem; margin-top: 30px; font-weight: 600; margin-bottom: 7px; color: #414141; display:block;">Serviço
+                        style="font-size: 0.88rem; margin-top: 30px; font-weight: 600; margin-bottom: 7px; color: var(--text-muted); display:block;">Serviço
                         / Projeto Desejado:</label>
                     <input type="text" id="modal_titulo_servico"
                         placeholder="Ex: Manutenção Elétrica ou Site Institucional" required>
@@ -186,21 +186,21 @@
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem;margin-top: 20px; font-weight: 600; margin-bottom: 7px; color: #414141; display:block;">Valor
+                        style="font-size: 0.88rem;margin-top: 20px; font-weight: 600; margin-bottom: 7px; color: var(--text-muted); display:block;">Valor
                         Oferecido / Estimado (R$):</label>
                     <input type="number" step="0.01" id="modal_valor" placeholder="Ex: 350.00" required>
                 </div>
 
                 <div class="campo" style="margin-bottom:14px; text-align: left;">
                     <label
-                        style="font-size: 0.88rem; font-weight: 600; margin-top: 20px; color: #444; display:block;">Descrição
+                        style="font-size: 0.88rem; font-weight: 600; margin-top: 20px; color: var(--text-muted); display:block;">Descrição
                         do Projeto:</label>
                     <textarea id="modal_descricao" class="no-scrollbar" rows="5"
                         placeholder="Explique brevemente o que sua empresa precisa..." required></textarea>
                 </div>
 
                 <div
-                    style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid #eee; padding-top: 4px;">
+                    style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top: 1px solid var(--card-border); padding-top: 4px;">
                     <button type="button" onclick="fecharModal()" class="btn-cancelar-modal">Cancelar</button>
                     <span class="shiny-cta-content3">
                         <button type="submit" class="shiny-cta3">Enviar Proposta</button>
@@ -225,20 +225,20 @@
                 <div class="no-scrollbar" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
                     <div style="margin-bottom: 15px;">
                         <strong
-                            style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 4px;">Resumo:</strong>
+                            style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Resumo:</strong>
                         <div id="modalResumoCorpo" class="modal-bloco-texto no-scrollbar"></div>
                     </div>
 
                     <div id="modalSobreContainer" style="margin-bottom: 10px;">
                         <strong
-                            style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 4px;">Sobre:</strong>
+                            style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Sobre:</strong>
                         <div id="modalSobreCorpo" class="modal-bloco-texto no-scrollbar"></div>
                     </div>
                 </div>
 
                 <!-- COLUNA DIREITA: Serviços Individuais em Quadradinhos (Com rolagem independente se houver muitos) -->
                 <div class="no-scrollbar" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
-                    <strong style="font-size: 0.9rem; color: #414141; display: block; margin-bottom: 10px;">Serviços e
+                    <strong style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Serviços e
                         Tabela de Preços:</strong>
                     <div id="modalServicosCorpo">
                         <!-- Os quadradinhos dos serviços entram aqui dinamicamente -->
@@ -249,7 +249,7 @@
 
 
     <!-- BOTÃO VOLTAR -->
-    <div class='linha-modal' style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px; border-top: 1px solid #eee; padding-top: 15px;">
+    <div class='linha-modal' style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px; border-top: 1px solid var(--card-border); padding-top: 15px;">
         <button type="button" onclick="fecharModalSaberMais()" class="btn-cancelar-modal">Voltar</button>
     </div>
     </div>
@@ -348,7 +348,7 @@
                     });
                     servicosDestino.innerHTML = htmlQuadradinhos;
                 } else {
-                    servicosDestino.innerHTML = '<p style="font-size:0.85em; color:#888; font-style:italic;">Nenhum serviço individual cadastrado.</p>';
+                    servicosDestino.innerHTML = '<p style="font-size:0.85em; color:var(--text-muted); font-style:italic;">Nenhum serviço individual cadastrado.</p>';
                 }
             }
 

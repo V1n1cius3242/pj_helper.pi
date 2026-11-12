@@ -847,6 +847,11 @@ nav {
   --carrossel-gradient: linear-gradient(to top, #f5f5f5 0%, rgba(255, 255, 255, 0) 40%), #f5f5f5bb;
   --verde-principal: #3faf6e;
   --icone-filtro-custom: invert(58%) sepia(41%) saturate(654%) hue-rotate(97deg) brightness(91%) contrast(85%);
+  /* Superficies e estados usados pelos cards dos paineis (modo claro) */
+  --surface-2: #f7fafc;
+  --border-neutro: #cbd5e0;
+  --danger-bg: #fee2e2;
+  --danger-text: #991b1b;
 }
 
 nav {
@@ -996,6 +1001,11 @@ nav {
   --carrossel-gradient: linear-gradient(to top, #121212 0%, rgba(18, 18, 18, 0) 40%), #121212bb;
   --verde-principal: #2e8b57; /* Tom de verde mais fechado e elegante para o modo escuro (Imagem 2) */
   --icone-filtro-custom: brightness(0) invert(1); /* Torna os ícones totalmente brancos e visíveis (Imagem 3) */
+  /* Superficies e estados usados pelos cards dos paineis (modo escuro) */
+  --surface-2: rgba(255, 255, 255, 0.04);
+  --border-neutro: rgba(255, 255, 255, 0.2);
+  --danger-bg: rgba(229, 62, 62, 0.15);
+  --danger-text: #feb2b2;
 }
 
 /* Fundo dos cards de ícones em modo escuro: Verde escuro profundo e sofisticado */

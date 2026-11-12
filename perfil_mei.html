@@ -54,7 +54,7 @@
         const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=mei`)
         const contratos = await resC.json()
         document.getElementById('listaContratos').innerHTML = contratos.map(c => `
-            <div style="border:1px solid #ccc; padding:10px; margin-bottom:8px; border-radius:5px;">
+            <div style="border:1px solid var(--card-border); padding:10px; margin-bottom:8px; border-radius:5px;">
                 <h4>${c.titulo_servico} - R$ ${c.valor}</h4>
                 <p>${c.descricao || ''}</p>
                 <p>Status: <strong>${c.status.toUpperCase()}</strong></p>

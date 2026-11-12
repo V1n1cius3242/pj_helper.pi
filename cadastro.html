@@ -192,7 +192,7 @@
                     <label for="chaveAdmin" style="color: #d9534f; font-weight: bold;">Código de Acesso da Equipe:</label>
                     <input type="text" maxlength="6" inputmode="numeric" id="chaveAdmin"
                         placeholder="Código de 6 dígitos enviado pelo administrador">
-                    <small style="color: #777; margin-top: 6px; display: block;">
+                    <small style="color: var(--text-muted); margin-top: 6px; display: block;">
                         O código é gerado por um administrador e vale por 7 dias.
                     </small>
                 </div>
@@ -211,15 +211,15 @@
 
     <!-- MODAL DE AVISO DE CADASTRO PENDENTE / EMAIL / SPAM -->
     <div id="modalAvisoSucesso" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
-        <div style="background: #ffffff; width: 100%; max-width: 450px; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-family: 'Montserrat', sans-serif;">
+        <div style="background: var(--card-bg); width: 100%; max-width: 450px; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-family: 'Montserrat', sans-serif;">
             <div style="font-size: 50px; margin-bottom: 10px;"></div>
-            <h3 style="color: #333; margin-bottom: 10px; font-weight: 700;">Cadastro Realizado!</h3>
+            <h3 style="color: var(--card-text); margin-bottom: 10px; font-weight: 700;">Cadastro Realizado!</h3>
             
-            <p style="color: #555; font-size: 0.95em; line-height: 1.5; margin-bottom: 15px;">
+            <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.5; margin-bottom: 15px;">
                 Sua conta foi criada e enviada para a análise da nossa equipe.
             </p>
 
-            <div style="background: #f8f9fa; border-left: 4px solid #3faf6e; padding: 12px; text-align: left; border-radius: 6px; font-size: 0.88em; color: #444; margin-bottom: 20px; line-height: 1.4;">
+            <div style="background: var(--surface-2); border-left: 4px solid #3faf6e; padding: 12px; text-align: left; border-radius: 6px; font-size: 0.88em; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">
                 <p style="margin-bottom: 6px;"><strong>Importante:</strong></p>
                 <p>• Assim que sua conta for aprovada, enviaremos um e-mail de confirmação para você.</p>
                 <p style="margin-top: 6px;">• Lembre-se de verificar também a sua pasta de <strong>Spam / Lixo Eletrônico</strong>!</p>

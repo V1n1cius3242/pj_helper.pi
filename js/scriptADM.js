@@ -158,7 +158,7 @@ function renderizarSolicitacoes(lista) {
     if (!container) return;
 
     if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhuma solicitação encontrada para este filtro.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; text-align:center; color:var(--text-muted);">Nenhuma solicitação encontrada para este filtro.</div>';
         if (contador) contador.innerText = '0 solicitações';
         return;
     }
@@ -236,7 +236,7 @@ function renderizarContratos(lista) {
     const contratosAtivos = lista.filter(c => !((c.status || '').toLowerCase()).includes('recusado'));
 
     if (!Array.isArray(contratosAtivos) || contratosAtivos.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum contrato ativo ou em andamento no momento.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; text-align:center; color:var(--text-muted);">Nenhum contrato ativo ou em andamento no momento.</div>';
         return;
     }
 
@@ -256,7 +256,7 @@ function renderizarContratos(lista) {
                     <span>Valor: <strong>R$ ${c.valor || 'A combinar'}</strong></span>
                 </div>
                 <div class="card-item-acoes" style="margin-top: 15px;">
-                    ${linkPdf ? `<a href="${linkPdf}" target="_blank" class="btn-acao-secundario" style="text-decoration:none; display:inline-block;">Baixar versão PDF</a>` : '<em style="font-size:13px; color:#888;">PDF não anexado</em>'}
+                    ${linkPdf ? `<a href="${linkPdf}" target="_blank" class="btn-acao-secundario" style="text-decoration:none; display:inline-block;">Baixar versão PDF</a>` : '<em style="font-size:13px; color:var(--text-muted);">PDF não anexado</em>'}
                     <button onclick="abrirModalPdf(${c.contrato_id})" class="btn-acao-preto">Anexar / Substituir PDF</button>
                 </div>
             </div>
@@ -313,7 +313,7 @@ function renderizarCadastros(lista) {
     if (!container) return;
 
     if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = `<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum registo encontrado para esta categoria.</div>`;
+        container.innerHTML = `<div style="background:var(--card-bg); padding:20px; border-radius:12px; text-align:center; color:var(--text-muted);">Nenhum registo encontrado para esta categoria.</div>`;
         return;
     }
 
@@ -328,14 +328,14 @@ function renderizarCadastros(lista) {
             <div class="card-painel-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 class="card-item-titulo" style="margin-bottom: 4px;">ID #${u.id} - ${u.email}</h3>
-                    <p style="font-size: 13px; color: #666;">Tipo: <strong>${(u.tipo || 'N/A').toUpperCase()}</strong></p>
+                    <p style="font-size: 13px; color: var(--text-muted);">Tipo: <strong>${(u.tipo || 'N/A').toUpperCase()}</strong></p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <span class="badge-status ${badgeClass}">${badgeTexto}</span>
                     ${st === 'pendente' ? `
                         <button onclick="alterarStatusUsuario(${u.id}, 'aprovado')" class="btn-acao-sucesso">Aprovar</button>
                         <button onclick="alterarStatusUsuario(${u.id}, 'recusado')" class="btn-acao-recusar">Recusar</button>
-                    ` : '<em style="font-size:12px; color:#888;">Processado</em>'}
+                    ` : '<em style="font-size:12px; color:var(--text-muted);">Processado</em>'}
                 </div>
             </div>
         `;
@@ -376,7 +376,7 @@ function renderizarNotificacoes(lista) {
     if (!container) return;
 
     if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhuma notificação encontrada no momento.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; text-align:center; color:var(--text-muted);">Nenhuma notificação encontrada no momento.</div>';
         return;
     }
 
@@ -618,7 +618,7 @@ function renderizarConvites(lista) {
     if (!container) return;
 
     if (!Array.isArray(lista) || lista.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; text-align:center; color:#666;">Nenhum convite gerado ate o momento.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; text-align:center; color:var(--text-muted);">Nenhum convite gerado ate o momento.</div>';
         if (contador) contador.innerText = '';
         return;
     }
