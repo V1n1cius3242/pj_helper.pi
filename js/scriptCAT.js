@@ -65,9 +65,9 @@ async function carregarCatalogo() {
 
     try {
 
-        let res = await fetch('http://localhost:3000/perfis-mei');
+        let res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/perfis-mei');
 
-        if (!res.ok) res = await fetch('http://localhost:3000/catalogo-completo');
+        if (!res.ok) res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/catalogo-completo');
 
         if (!res.ok) throw new Error("Erro na rota do catálogo");
 
@@ -254,7 +254,7 @@ async function mostrarBotaoMinhaCidade() {
     if (!user || !['empresa', 'empresa_grande'].includes(user.tipo)) return;
 
     try {
-        const res = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${user.id}`);
+        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/perfil-empresa?usuario_id=${user.id}`);
         const perfil = await res.json();
         if (perfil && perfil.cidade && perfil.uf) {
             cidadeEmpresaLogada = { cidade: perfil.cidade, uf: perfil.uf };
@@ -438,7 +438,7 @@ document.getElementById('formModalProposta').addEventListener('submit', async (e
 
     try {
 
-        let res = await fetch('http://localhost:3000/proposta', {
+        let res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/proposta', {
 
             method: 'POST',
 
@@ -469,4 +469,3 @@ document.getElementById('formModalProposta').addEventListener('submit', async (e
 });
 
 carregarCatalogo();
- 

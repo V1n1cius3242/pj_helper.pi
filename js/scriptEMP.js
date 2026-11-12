@@ -70,7 +70,7 @@ async function carregarTudo() {
 
     try {
 
-        const resPerfil = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${user.id}`);
+        const resPerfil = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/perfil-empresa?usuario_id=${user.id}`);
 
         if (resPerfil.ok) {
 
@@ -129,8 +129,8 @@ async function carregarTudo() {
 /*------------------------------------------*/
 async function carregarNotificacoesDinamicas() {
     try {
-        const resNotifs = await fetch(`http://localhost:3000/notificacoes?usuario_id=${user.id}`);
-        const resContratos = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=empresa`);
+        const resNotifs = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/notificacoes?usuario_id=${user.id}`);
+        const resContratos = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/contratos?usuario_id=${user.id}&tipo=empresa`);
 
         let contratosEmpresa = resContratos.ok ? await resContratos.json() : [];
         let notifsDinamicas = [];
@@ -138,8 +138,8 @@ async function carregarNotificacoesDinamicas() {
         // 1. Tenta carregar a lista de perfis MEI para fazer o cruzamento dos dados sem dar erro 404
         let mapaMeis = {};
         try {
-            let resMeis = await fetch('http://localhost:3000/perfis-mei');
-            if (!resMeis.ok) resMeis = await fetch('http://localhost:3000/catalogo-completo');
+            let resMeis = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/perfis-mei');
+            if (!resMeis.ok) resMeis = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/catalogo-completo');
             
             if (resMeis.ok) {
                 const listaMeis = await resMeis.json();
@@ -287,7 +287,7 @@ async function carregarContratos() {
 
     try {
 
-        const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=empresa`);
+        const resC = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/contratos?usuario_id=${user.id}&tipo=empresa`);
 
         if (!resC.ok) throw new Error();
 
@@ -401,7 +401,7 @@ document.getElementById('formPerfilEmpresa').addEventListener('submit', async (e
     };
 
     try {
-        const res = await fetch('http://localhost:3000/perfil-empresa', {
+        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/perfil-empresa', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -498,13 +498,13 @@ async function executarExclusaoConta() {
 
     try {
 
-        const res = await fetch('http://localhost:3000/deletar-conta', {
+        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/excluir-conta/${user.id}`, {
 
             method: 'DELETE',
 
             headers: { 'Content-Type': 'application/json' },
 
-            body: JSON.stringify({ usuario_id: user.id, senha: senha })
+            body: JSON.stringify({ senha: senha })
 
         });
 

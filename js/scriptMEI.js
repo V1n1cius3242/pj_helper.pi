@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function carregarTudo() {
     try {
-        const resP = await fetch(`http://localhost:3000/perfil-mei?usuario_id=${user.id}`);
+        const resP = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/perfil-mei?usuario_id=${user.id}`);
         const perfil = await resP.json();
         if (perfil && perfil.id) {
             document.getElementById('razao_social').value = perfil.razao_social || '';
@@ -120,7 +120,7 @@ async function carregarTudo() {
 
 async function carregarNotificacoesDinamicasMei() {
     try {
-        const resContratos = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=mei`);
+        const resContratos = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/contratos?usuario_id=${user.id}&tipo=mei`);
         let contratosMei = resContratos.ok ? await resContratos.json() : [];
         let notifsDinamicas = [];
 
@@ -142,7 +142,7 @@ async function carregarNotificacoesDinamicasMei() {
                 // Se faltou o nome ou contato no contrato, busca diretamente na API de perfil daquela empresa específica!
                 if ((!nomeEmpresa || nomeEmpresa === 'Empresa Contratante' || !telefoneEmpresa || telefoneEmpresa === 'Não informado') && empresaId) {
                     try {
-                        const resPerfilEmp = await fetch(`http://localhost:3000/perfil-empresa?usuario_id=${empresaId}`);
+                        const resPerfilEmp = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/perfil-empresa?usuario_id=${empresaId}`);
                         if (resPerfilEmp.ok) {
                             const pEmp = await resPerfilEmp.json();
                             if (pEmp) {
@@ -267,7 +267,7 @@ function rotuloModalidade(valor) {
 
 async function carregarServicos(meiId) {
     try {
-        const resS = await fetch(`http://localhost:3000/servicos?mei_id=${meiId}`);
+        const resS = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/servicos?mei_id=${meiId}`);
         const servs = await resS.json();
         const lista = document.getElementById('listaServicos');
         
@@ -293,7 +293,7 @@ async function carregarServicos(meiId) {
 async function deletarServico(id, meiId) {
     if (!confirm('Tem certeza que deseja apagar este serviço?')) return;
     try {
-        const res = await fetch(`http://localhost:3000/servicos/${id}`, { method: 'DELETE' });
+        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/servicos/${id}`, { method: 'DELETE' });
         if (res.ok) {
             mostrarAviso('Serviço apago com sucesso!');
             carregarServicos(meiId);
@@ -310,7 +310,7 @@ async function carregarContratos() {
     if (!container) return;
 
     try {
-        const resC = await fetch(`http://localhost:3000/contratos?usuario_id=${user.id}&tipo=mei`);
+        const resC = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/contratos?usuario_id=${user.id}&tipo=mei`);
         if (!resC.ok) throw new Error();
         const contratos = await resC.json();
 
@@ -397,7 +397,7 @@ async function carregarContratos() {
 
 async function responderContrato(id, status, empresaId) {
     try {
-        const res = await fetch('http://localhost:3000/atualizar-contrato', {
+        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/atualizar-contrato', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contrato_id: id, status, notificar_usuario_id: empresaId })
@@ -436,7 +436,7 @@ document.getElementById('formPerfilMei').addEventListener('submit', async (e) =>
     };
 
     try {
-        const res = await fetch('http://localhost:3000/perfil-mei', {
+        const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/perfil-mei', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -455,7 +455,7 @@ document.getElementById('formPerfilMei').addEventListener('submit', async (e) =>
 
 document.getElementById('formServico').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const resP = await fetch(`http://localhost:3000/perfil-mei?usuario_id=${user.id}`);
+    const resP = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/perfil-mei?usuario_id=${user.id}`);
     const perfil = await resP.json();
 
     if (!perfil || !perfil.id) {
@@ -471,7 +471,7 @@ document.getElementById('formServico').addEventListener('submit', async (e) => {
         modalidade: document.getElementById('servico_modalidade').value
     };
 
-    const res = await fetch('http://localhost:3000/servicos', {
+    const res = await fetch('https://pj-helper-api.mendoncadocanto.workers.dev/servicos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
@@ -529,10 +529,10 @@ async function executarExclusaoConta() {
     }
 
     try {
-        const res = await fetch('http://localhost:3000/deletar-conta', {
+        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/excluir-conta/${user.id}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario_id: user.id, senha: senha })
+            body: JSON.stringify({ senha: senha })
         });
 
         if (res.ok) {
