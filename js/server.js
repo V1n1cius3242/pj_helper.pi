@@ -668,7 +668,13 @@ app.post('/admin/marcar-notificacoes-lidas', (req, res) => {
 // =========================================================
 
 // Rota para listar convites no painel admin
+// Exemplo para a rota /admin/convites com CORS habilitado
 app.get('/admin/convites', async (c) => {
+  // Cabeçalhos CORS
+  c.header('Access-Control-Allow-Origin', '*');
+  c.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  c.header('Access-Control-Allow-Headers', 'Content-Type');
+
   try {
     const { results } = await c.env.DB.prepare(`
       SELECT c.*, 
