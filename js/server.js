@@ -26,17 +26,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Middleware global de CORS para aceitar requisições do front-end
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
-
 
 async function enviarEmail(para, assunto, texto) {
     try {
@@ -678,76 +667,76 @@ app.post('/admin/marcar-notificacoes-lidas', (req, res) => {
 // CONVITES DE ACESSO DA EQUIPE (somente administrador)
 // =========================================================
 
-// Rota para listar convites no painel admin
-// Exemplo para a rota /admin/convites com CORS habilitado
-app.get('/admin/convites', async (c) => {
-  // Adiciona os headers de CORS para permitir requisições do Pages
-  c.header('Access-Control-Allow-Origin', '*');
-  c.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  c.header('Access-Control-Allow-Headers', 'Content-Type');
+app.post('/admin/gerar-convite', (req, res) => {
+    const { usuario_id, tipo } = req.body;
 
-  try {
-    const { results } = await c.env.DB.prepare(`
-      SELECT c.*, 
-             u1.email AS criado_por_email,
-             u2.email AS usado_por_email,
-             CASE 
-               WHEN c.revogado_em IS NOT NULL THEN 'revogado'
-               WHEN c.usado_em IS NOT NULL THEN 'usado'
-               ELSE 'ativo'
-             END AS status_convite
-      FROM convites c
-      LEFT JOIN usuarios u1 ON c.criado_por = u1.id
-      LEFT JOIN usuarios u2 ON c.usado_por = u2.id
-      ORDER BY c.criado_em DESC
-    `).all();
+    if (!['admin', 'colaborador'].includes(tipo)) {
+        return res.status(400).json({ erro: 'Tipo de convite inválido.' });
+    }
 
-    return c.json(results);
-  } catch (err) {
-    console.error("Erro ao carregar convites:", err);
-    return c.json({ error: "Erro ao carregar convites." }, 500);
-  }
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem gerar convites.' });
+        }
+
+        const codigo = gerarCodigoConvite();
+        const sql = 'INSERT INTO convites (codigo, tipo, criado_por, expira_em) VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL ? DAY))';
+
+        db.query(sql, [codigo, tipo, usuario_id, DIAS_VALIDADE_CONVITE], (err, result) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao gerar convite.' });
+
+            db.query('SELECT * FROM convites WHERE id = ?', [result.insertId], (err2, r) => {
+                if (err2) return res.status(500).json({ erro: 'Erro ao carregar convite.' });
+                res.json({ sucesso: true, convite: r[0], mensagem: 'Convite gerado com sucesso!' });
+            });
+        });
+    });
 });
 
-// Rota para gerar novo convite
-app.post('/admin/gerar-convite', async (c) => {
-  try {
-    const { tipo, criado_por, dias } = await c.req.json();
-    const codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
-    const diasValidade = dias || 7;
+app.get('/admin/convites', (req, res) => {
+    const { usuario_id } = req.query;
 
-    const query = `
-      INSERT INTO convites (codigo, tipo, criado_por, expira_em) 
-      VALUES (?, ?, ?, datetime('now', '+' || ? || ' days'))
-    `;
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem ver os convites.' });
+        }
 
-    await c.env.DB.prepare(query).bind(codigo, tipo || 'colaborador', criado_por, diasValidade).run();
+        const sql = `
+            SELECT c.*,
+                   u_criou.email AS criado_por_email,
+                   u_usou.email  AS usado_por_email,
+                   CASE
+                       WHEN c.revogado_em IS NOT NULL THEN 'revogado'
+                       WHEN c.usado_em IS NOT NULL THEN 'usado'
+                       WHEN c.expira_em <= NOW() THEN 'expirado'
+                       ELSE 'ativo'
+                   END AS situacao
+            FROM convites c
+            LEFT JOIN usuarios u_criou ON c.criado_por = u_criou.id
+            LEFT JOIN usuarios u_usou  ON c.usado_por  = u_usou.id
+            ORDER BY c.id DESC
+        `;
 
-    return c.json({ sucesso: true, mensagem: "Convite gerado com sucesso!", codigo });
-  } catch (err) {
-    console.error("Erro ao gerar convite:", err);
-    return c.json({ error: "Erro ao gerar convite." }, 500);
-  }
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao carregar convites.' });
+            res.json(results);
+        });
+    });
 });
 
-// Rota para revogar convite
-app.post('/admin/revogar-convite', async (c) => {
-  try {
-    const { convite_id } = await c.req.json();
+app.post('/admin/revogar-convite', (req, res) => {
+    const { usuario_id, convite_id } = req.body;
 
-    const query = `
-      UPDATE convites 
-      SET revogado_em = datetime('now') 
-      WHERE id = ? AND usado_em IS NULL AND revogado_em IS NULL
-    `;
+    exigirAdmin(usuario_id, (ehAdmin) => {
+        if (!ehAdmin) {
+            return res.status(403).json({ erro: 'Apenas administradores podem cancelar convites.' });
+        }
 
-    await c.env.DB.prepare(query).bind(convite_id).run();
-
-    return c.json({ sucesso: true, mensagem: "Convite revogado com sucesso!" });
-  } catch (err) {
-    console.error("Erro ao cancelar convite:", err);
-    return c.json({ error: "Erro ao cancelar convite." }, 500);
-  }
+        db.query('UPDATE convites SET revogado_em = NOW() WHERE id = ? AND usado_em IS NULL', [convite_id], (err) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao cancelar convite.' });
+            res.json({ sucesso: true, mensagem: 'Convite cancelado.' });
+        });
+    });
 });
 
 app.listen(3000, () => {
