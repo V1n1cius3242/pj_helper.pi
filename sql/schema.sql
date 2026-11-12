@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS `notificacoes`;
+DROP TABLE IF EXISTS `convites`;
+DROP TABLE IF EXISTS `contratos`;
+DROP TABLE IF EXISTS `catalogo_itens`;
+DROP TABLE IF EXISTS `perfis_empresa`;
+DROP TABLE IF EXISTS `perfis_mei`;
+DROP TABLE IF EXISTS `usuarios`;
+
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `email` TEXT NOT NULL UNIQUE,
