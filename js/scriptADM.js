@@ -549,7 +549,7 @@ carregarAdmin();
 async function carregarConvites() {
     if (!adminIdGlobal) return;
     try {
-        const res = await fetch(`https://pj-helper-api.mendoncadocanto.workers.dev/admin/convites?usuario_id=${adminIdGlobal}`);
+        const res = await fetch(`https://pj-helper-pi.mendoncadocanto.workers.dev/admin/convites`);
         const lista = await res.json();
         if (!res.ok) throw new Error(lista.erro || 'Erro ao carregar convites.');
         renderizarConvites(lista);
