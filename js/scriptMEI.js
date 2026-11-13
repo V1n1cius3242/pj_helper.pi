@@ -209,7 +209,7 @@ function renderizarNotificacoesTelaMei() {
     if (!container) return;
 
     if (!Array.isArray(__todasNotificacoesMei) || __todasNotificacoesMei.length === 0) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhuma notificação encontrada.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--card-border); text-align:center; color:var(--text-muted);">Nenhuma notificação encontrada.</div>';
         return;
     }
 
@@ -344,32 +344,32 @@ async function carregarContratos() {
             const emailEmpresa = c.email_empresa || c.email || 'Não informado';
 
             return `
-            <div class="card-painel-item" style="background: #ffffff; border: 1px solid #edf2f7; border-radius: 16px; padding: 22px 25px; margin-bottom: 18px; box-shadow: 0px 4px 10px rgba(0,0,0,0.02);">
+            <div class="card-painel-item" style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px 25px; margin-bottom: 18px; box-shadow: 0px 4px 10px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span style="font-size: 12px; color: #a0aec0;">Proposta #${c.contrato_id || 'N/A'}</span>
                     <span class="badge-status-adm ${badgeClass}">${badgeTexto}</span>
                 </div>
-                <h3 style="font-size: 16px; color: #2d3748; margin-bottom: 8px; font-weight: 600;">
+                <h3 style="font-size: 16px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;">
                     ${c.titulo_servico || 'Proposta de Serviço'}
                 </h3>
-                <p style="font-size: 14px; color: #4a5568; margin-bottom: 12px; line-height: 1.5;">
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
                     <strong>Descrição:</strong> ${c.descricao || 'Sem detalhes informados.'}
                 </p>
-                <div class="card-item-valores-adm" style="display: flex; gap: 20px; font-size: 13px; color: #718096; margin: 12px 0;">
+                <div class="card-item-valores-adm" style="display: flex; gap: 20px; font-size: 13px; color: var(--text-muted); margin: 12px 0;">
                     <span>Orçamento: <strong style="color: #3faf6e;">R$ ${c.valor || '0,00'}</strong></span>
                     <span>Data da Conversa/Reunião: <strong>${dataFormatada}</strong></span>
                 </div>
 
                 ${linkMeet ? `
-                <div class="box-meet-agendado-adm" style="background: #f7fafc; padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #4a5568; margin-top: 12px; border-left: 4px solid #3faf6e;">
-                    <strong style="color: #2d3748; display: block; margin-bottom: 4px;">Reunião Virtual (Google Meet):</strong>
+                <div class="box-meet-agendado-adm" style="background: var(--surface-2); padding: 12px 16px; border-radius: 10px; font-size: 13px; color: var(--text-muted); margin-top: 12px; border-left: 4px solid #3faf6e;">
+                    <strong style="color: var(--card-text); display: block; margin-bottom: 4px;">Reunião Virtual (Google Meet):</strong>
                     <a href="${linkMeet}" target="_blank" class="card-link-verde-adm" style="color: #3faf6e; font-weight: 600; text-decoration: underline;">Acessar sala da reunião</a>
-                    <small style="color: #718096; margin-left: 8px;">(${dataFormatada})</small>
+                    <small style="color: var(--text-muted); margin-left: 8px;">(${dataFormatada})</small>
                 </div>
                 ` : ''}
 
-                <div style="border-top: 1px solid #edf2f7; padding-top: 12px; margin-top: 12px; font-size: 13px; color: #4a5568; background: #f7fafc; padding: 12px; border-radius: 8px;">
-                    <div style="font-weight: 700; color: #2d3748; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Dados da Empresa Contratante</div>
+                <div style="border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 12px; font-size: 13px; color: var(--text-muted); background: var(--surface-2); padding: 12px; border-radius: 8px;">
+                    <div style="font-weight: 700; color: var(--card-text); margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Dados da Empresa Contratante</div>
                     <div><strong>Razão Social:</strong> <span class="texto-verde-empresa">${nomeEmpresa}</span></div>
                     <div><strong>CNPJ:</strong> ${cnpjEmpresa}</div>
                     <div><strong>Contato / WhatsApp:</strong> ${telefoneEmpresa}</div>
@@ -391,7 +391,7 @@ async function carregarContratos() {
         }).join('');
 
     } catch (err) {
-        container.innerHTML = '<div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #edf2f7; text-align:center; color:#666;">Nenhuma proposta ou contrato encontrado.</div>';
+        container.innerHTML = '<div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--card-border); text-align:center; color:var(--text-muted);">Nenhuma proposta ou contrato encontrado.</div>';
     }
 }
 

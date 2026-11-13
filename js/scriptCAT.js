@@ -97,7 +97,7 @@ function exibirCatalogo(lista) {
 
     if (!Array.isArray(lista) || lista.length === 0) {
 
-        container.innerHTML = '<p style="color:#888; grid-column: 1 / -1;">Nenhum prestador MEI encontrado.</p>';
+        container.innerHTML = '<p style="color:var(--text-muted); grid-column: 1 / -1;">Nenhum prestador MEI encontrado.</p>';
 
         return;
 
@@ -114,23 +114,23 @@ function exibirCatalogo(lista) {
         const userInsta = m.instagram ? m.instagram.replace('@', '').trim() : null;
 
         const servicosHTML = (m.servicos && m.servicos.length > 0) ? `
-<div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #eee;">
+<div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--card-border);">
 <strong>Serviços e Tabela de Preços:</strong>
-<ul style="padding-left: 18px; margin: 6px 0 0 0; font-size: 0.85em; color: #333;">
+<ul style="padding-left: 18px; margin: 6px 0 0 0; font-size: 0.85em; color: var(--card-text);">
 
                     ${m.servicos.map(s => `
 <li style="margin-bottom: 4px;">
 <strong>${s.titulo}</strong>: <span style="color:#28a745; font-weight:bold;">${s.preco ? `R$ ${parseFloat(s.preco).toFixed(2)}` : 'A combinar'}</span>
 <span class="etiqueta-modalidade etiqueta-${s.modalidade || 'ambos'}">${rotuloAtendimento(s.modalidade)}</span>
 
-                            ${s.descricao ? `<br><small style="color:#666;">${s.descricao}</small>` : ''}
+                            ${s.descricao ? `<br><small style="color:var(--text-muted);">${s.descricao}</small>` : ''}
 </li>
 
                     `).join('')}
 </ul>
 </div>
 
-        ` : '<p style="font-size:0.8em; color:#888; margin-top:8px;"><em>Nenhum serviço cadastrado.</em></p>';
+        ` : '<p style="font-size:0.8em; color:var(--text-muted); margin-top:8px;"><em>Nenhum serviço cadastrado.</em></p>';
 
         return `
 <div class="card-mei">
@@ -138,12 +138,12 @@ function exibirCatalogo(lista) {
 <span class="badge-cat">${m.categoria || 'Geral'}</span>
 <h4 style="margin-bottom: 5px;">${nomeExibicao}</h4>
 
-                    ${m.razao_social && m.razao_social !== nomeExibicao ? `<p style="font-size:0.85em; color:#666;"><strong>Razão Social:</strong> ${m.razao_social}</p>` : ''}
+                    ${m.razao_social && m.razao_social !== nomeExibicao ? `<p style="font-size:0.85em; color:var(--text-muted);"><strong>Razão Social:</strong> ${m.razao_social}</p>` : ''}
 <p><strong>CNPJ:</strong> ${m.cnpj || 'Não informado'}</p>
 <p><strong>Cidade:</strong> ${m.cidade ? (m.cidade + (m.uf ? ' / ' + m.uf : '')) : 'Não informada'}</p>
 <p><strong>Atendimento:</strong> <span class="etiqueta-modalidade etiqueta-${m.modalidade_padrao || 'ambos'}">${rotuloAtendimento(m.modalidade_padrao)}</span></p>
 <p><strong>Experiência:</strong> ${m.anos_experiencia || 0} ano(s)</p>
-<div style="margin-top: 8px; font-size:0.88em; color:#444;">
+<div style="margin-top: 8px; font-size:0.88em; color:var(--text-muted);">
 <p><strong>Telefone:</strong> ${m.telefone || 'Não informado'}</p>
 <p><strong>E-mail:</strong> ${m.email || 'Não informado'}</p>
 </div>
@@ -151,10 +151,10 @@ function exibirCatalogo(lista) {
                     ${linkSite ? `<p style="font-size:0.85em; margin-top:4px;"><strong>Site:</strong> <a href="${linkSite}" target="_blank" style="color:#3faf6e; text-decoration:underline;">${m.site}</a></p>` : ''}
 
                     ${userInsta ? `<p style="font-size:0.85em; margin-top:4px;"><strong>Instagram:</strong> <a href="https://instagram.com/${userInsta}" target="_blank" style="color:#3faf6e; text-decoration:underline;">@${userInsta}</a></p>` : ''}
-<div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd;">
-<div><strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: #414141;">Resumo:</strong><div class="modal-descricao-bloco">${m.resumo_servico || 'Sem resumo.'}</div></div>
+<div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--card-border);">
+<div><strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: var(--text-muted);">Resumo:</strong><div class="modal-descricao-bloco">${m.resumo_servico || 'Sem resumo.'}</div></div>
 
-                        ${m.apresentacao ? `<div style="margin-top: 10px;"><strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: #414141;">Sobre:</strong><div class="modal-descricao-bloco">${m.apresentacao}</div></div>` : ''}
+                        ${m.apresentacao ? `<div style="margin-top: 10px;"><strong style="display: block; margin-bottom: 4px; font-size: 0.88rem; color: var(--text-muted);">Sobre:</strong><div class="modal-descricao-bloco">${m.apresentacao}</div></div>` : ''}
 </div>
 
                     ${servicosHTML}
