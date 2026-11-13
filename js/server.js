@@ -610,9 +610,15 @@ app.post('/admin/agendar-reuniao', (req, res) => {
 });
 
 // 9. ROTA DE EXCLUSÃO DE CONTA COM VALIDAÇÃO DE SENHA
-app.delete('/excluir-conta/:id', async (req, res) => {
-    const userId = req.params.id;
+// o painel do MEI e o da empresa chamam DELETE /deletar-conta mandando o id no corpo;
+// a rota antiga /excluir-conta/:id continua valendo
+app.delete(['/excluir-conta/:id', '/deletar-conta'], async (req, res) => {
+    const userId = req.params.id || req.body.usuario_id || req.body.id;
     const { senha } = req.body;
+
+    if (!userId) {
+        return res.status(400).json({ erro: 'ID do usuário é obrigatório.' });
+    }
 
     if (!senha) {
         return res.status(400).json({ erro: 'A senha é obrigatória para excluir a conta.' });
